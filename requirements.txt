@@ -1,0 +1,20 @@
+torch>=2.1.0 --index-url https://download.pytorch.org/whl/cu118
+torch-geometric
+pymatgen
+mp-api
+pyautogen
+chromadb
+psycopg2-binary
+scikit-learn
+gpytorch
+botorch
+pandas
+numpy
+streamlit
+openai
+tiktoken
+pydantic
+streamlit-agraph
+stmol
+plotly
+streamlit-chat

@@ -1,0 +1,34 @@
+[2026-01-24 01:07:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:07:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:07:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:07:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:06] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-24 01:08:06] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-24 01:08:06] [INFO] [src.services.ml.data_manager] Split data: Train=1674, Test=419
+[2026-01-24 01:08:36] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:36] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:36] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:36] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:38] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:38] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:38] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:38] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:40] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:40] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:40] [INFO] [src.agents.core.ml_agent] MLAgent initialized with v3.0 Services.
+[2026-01-24 01:08:40] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services.
+[2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Split data: Train=1674, Test=419

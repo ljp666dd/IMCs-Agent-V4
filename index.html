@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMCs - 多智能体催化剂研究系统</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-link i {
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 2rem;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        .agent-status {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .agent-card.ml::before { background: var(--gradient-1); }
+        .agent-card.theory::before { background: var(--gradient-2); }
+        .agent-card.experiment::before { background: var(--gradient-3); }
+        .agent-card.literature::before { background: var(--gradient-4); }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 1rem;
+        }
+
+        .agent-card.ml .card-icon { background: var(--gradient-1); }
+        .agent-card.theory .card-icon { background: var(--gradient-2); }
+        .agent-card.experiment .card-icon { background: var(--gradient-3); }
+        .agent-card.literature .card-icon { background: var(--gradient-4); }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-metric {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(99, 102, 241, 0.05);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: rgba(99, 102, 241, 0.02);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .badge-warning { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .badge-info { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Feature Section */
+        .feature-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Architecture Image */
+        .architecture-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .architecture-container img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar { background: var(--gradient-1); }
+        .message.assistant .message-avatar { background: var(--gradient-3); }
+
+        .message-content {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .chat-input-container {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+                padding: 1rem;
+            }
+            .logo-text, .nav-text, .sidebar-footer { display: none; }
+            .main-content { margin-left: 80px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🔬</div>
+            <span class="logo-text">IMCs</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span class="nav-text">首页</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-page="agents">
+                    <i class="fas fa-robot"></i>
+                    <span class="nav-text">智能体</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-page="data">
+                    <i class="fas fa-database"></i>
+                    <span class="nav-text">数据</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-page="models">
+                    <i class="fas fa-brain"></i>
+                    <span class="nav-text">模型</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-page="chat">
+                    <i class="fas fa-comments"></i>
+                    <span class="nav-text">对话</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-page="docs">
+                    <i class="fas fa-book"></i>
+                    <span class="nav-text">文档</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="agent-status">
+                <div class="status-title">系统状态</div>
+                <div class="status-item">
+                    <span class="status-dot"></span>
+                    <span>所有智能体就绪</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div class="page active" id="page-home">
+            <header class="page-header">
+                <h1 class="page-title">多智能体催化剂研究系统</h1>
+                <p class="page-subtitle">基于 AI 的金属间化合物 (IMC) 催化剂发现与分析平台</p>
+            </header>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">2093</div>
+                    <div class="stat-label">CIF 结构</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1642</div>
+                    <div class="stat-label">DOS 数据</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">0.90</div>
+                    <div class="stat-label">最佳 R²</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">智能体</div>
+                </div>
+            </div>
+
+            <!-- Agent Cards -->
+            <div class="feature-section">
+                <h2 class="section-title"><i class="fas fa-cubes"></i> 核心智能体</h2>
+                <div class="card-grid">
+                    <div class="card agent-card ml">
+                        <div class="card-icon"><i class="fas fa-brain"></i></div>
+                        <h3 class="card-title">ML 智能体</h3>
+                        <p class="card-desc">XGBoost, LightGBM, DNN + SHAP 可解释性分析</p>
+                        <span class="card-metric">R² = 0.90</span>
+                    </div>
+                    <div class="card agent-card theory">
+                        <div class="card-icon"><i class="fas fa-atom"></i></div>
+                        <h3 class="card-title">理论数据智能体</h3>
+                        <p class="card-desc">Materials Project 集成, CIF 下载, DOS 处理</p>
+                        <span class="card-metric">2093 材料</span>
+                    </div>
+                    <div class="card agent-card experiment">
+                        <div class="card-icon"><i class="fas fa-flask"></i></div>
+                        <h3 class="card-title">实验数据智能体</h3>
+                        <p class="card-desc">LSV, CV, EIS, Tafel 自动分析</p>
+                        <span class="card-metric">5 种测试</span>
+                    </div>
+                    <div class="card agent-card literature">
+                        <div class="card-icon"><i class="fas fa-book-open"></i></div>
+                        <h3 class="card-title">文献阅读智能体</h3>
+                        <p class="card-desc">Semantic Scholar 搜索, 知识提取</p>
+                        <span class="card-metric">自动总结</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="feature-section">
+                <h2 class="section-title"><i class="fas fa-project-diagram"></i> 系统架构</h2>
+                <div class="architecture-container">
+                    <img src="docs/multi_agent_architecture.png" alt="System Architecture" onerror="this.parentElement.innerHTML='<p style=\'color: var(--text-secondary);\'>架构图加载中...</p>'">
+                </div>
+            </div>
+        </div>
+
+        <!-- Agents Page -->
+        <div class="page" id="page-agents">
+            <header class="page-header">
+                <h1 class="page-title">智能体详情</h1>
+                <p class="page-subtitle">查看各智能体的详细功能和状态</p>
+            </header>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>智能体列表</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>智能体</th>
+                            <th>文件</th>
+                            <th>功能</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MLAgent</strong></td>
+                            <td>ml_agent.py</td>
+                            <td>XGBoost, LightGBM, DNN, SHAP</td>
+                            <td><span class="badge badge-success">就绪</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TheoryDataAgent</strong></td>
+                            <td>theory_agent.py</td>
+                            <td>Materials Project 数据下载</td>
+                            <td><span class="badge badge-success">就绪</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>ExperimentDataAgent</strong></td>
+                            <td>experiment_agent.py</td>
+                            <td>电化学数据处理</td>
+                            <td><span class="badge badge-success">就绪</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>LiteratureAgent</strong></td>
+                            <td>literature_agent.py</td>
+                            <td>论文搜索与知识提取</td>
+                            <td><span class="badge badge-success">就绪</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TaskManagerAgent</strong></td>
+                            <td>task_manager.py</td>
+                            <td>中央协调器</td>
+                            <td><span class="badge badge-success">就绪</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Data Page -->
+        <div class="page" id="page-data">
+            <header class="page-header">
+                <h1 class="page-title">数据概览</h1>
+                <p class="page-subtitle">查看已下载的理论计算数据</p>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">2093</div>
+                    <div class="stat-label">CIF 结构文件</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2093</div>
+                    <div class="stat-label">形成能数据</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1642</div>
+                    <div class="stat-label">轨道投影 DOS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1642</div>
+                    <div class="stat-label">DOS 描述符</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>数据文件</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>文件</th>
+                            <th>类型</th>
+                            <th>记录数</th>
+                            <th>位置</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>cifs/</td>
+                            <td>晶体结构</td>
+                            <td>2093</td>
+                            <td>data/theory/cifs/</td>
+                        </tr>
+                        <tr>
+                            <td>formation_energy_full.json</td>
+                            <td>形成能</td>
+                            <td>2093</td>
+                            <td>data/theory/</td>
+                        </tr>
+                        <tr>
+                            <td>orbital_pdos.json</td>
+                            <td>轨道 DOS</td>
+                            <td>1642</td>
+                            <td>data/theory/</td>
+                        </tr>
+                        <tr>
+                            <td>dos_descriptors_full.json</td>
+                            <td>11 个描述符</td>
+                            <td>1642</td>
+                            <td>data/theory/</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Models Page -->
+        <div class="page" id="page-models">
+            <header class="page-header">
+                <h1 class="page-title">ML 模型性能</h1>
+                <p class="page-subtitle">形成能预测模型评估结果</p>
+            </header>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>模型比较</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>模型</th>
+                            <th>R² (测试集)</th>
+                            <th>MAE (eV/atom)</th>
+                            <th>评级</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>XGBoost</strong></td>
+                            <td>0.9047</td>
+                            <td>0.0564</td>
+                            <td><span class="badge badge-success">最佳</span></td>
+                        </tr>
+                        <tr>
+                            <td>LightGBM</td>
+                            <td>0.8992</td>
+                            <td>0.0595</td>
+                            <td><span class="badge badge-success">优秀</span></td>
+                        </tr>
+                        <tr>
+                            <td>GradientBoosting</td>
+                            <td>0.8997</td>
+                            <td>0.0585</td>
+                            <td><span class="badge badge-success">优秀</span></td>
+                        </tr>
+                        <tr>
+                            <td>ExtraTrees</td>
+                            <td>0.8893</td>
+                            <td>0.0598</td>
+                            <td><span class="badge badge-info">良好</span></td>
+                        </tr>
+                        <tr>
+                            <td>RandomForest</td>
+                            <td>0.8623</td>
+                            <td>0.0666</td>
+                            <td><span class="badge badge-info">良好</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="feature-section" style="margin-top: 2rem;">
+                <h2 class="section-title"><i class="fas fa-chart-bar"></i> SHAP 特征重要性</h2>
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特征</th>
+                                <th>重要性</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>std_electronegativity</td>
+                                <td><strong>0.1252</strong></td>
+                                <td>电负性标准差 (最重要!)</td>
+                            </tr>
+                            <tr>
+                                <td>min_atomic_number</td>
+                                <td>0.0614</td>
+                                <td>最小原子序数</td>
+                            </tr>
+                            <tr>
+                                <td>max_atomic_number</td>
+                                <td>0.0255</td>
+                                <td>最大原子序数</td>
+                            </tr>
+                            <tr>
+                                <td>avg_electronegativity</td>
+                                <td>0.0196</td>
+                                <td>平均电负性</td>
+                            </tr>
+                            <tr>
+                                <td>n_elements</td>
+                                <td>0.0159</td>
+                                <td>元素种类数</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Page -->
+        <div class="page" id="page-chat">
+            <header class="page-header">
+                <h1 class="page-title">智能对话</h1>
+                <p class="page-subtitle">与任务管理智能体交互</p>
+            </header>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message assistant">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            您好！我是多智能体研究系统的任务管理器。我可以帮助您：<br><br>
+                            • 发现新的催化剂材料<br>
+                            • 预测材料属性<br>
+                            • 分析实验数据<br>
+                            • 搜索相关文献<br><br>
+                            请告诉我您想做什么？
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="输入您的问题...">
+                    <button class="btn btn-primary" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> 提示: 要使用完整对话功能，请运行 <code>streamlit run src/ui/app.py</code>
+                </p>
+            </div>
+        </div>
+
+        <!-- Docs Page -->
+        <div class="page" id="page-docs">
+            <header class="page-header">
+                <h1 class="page-title">文档</h1>
+                <p class="page-subtitle">使用说明和 API 参考</p>
+            </header>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 1rem;">快速开始</h3>
+                <pre style="background: var(--bg-dark); padding: 1rem; border-radius: 8px; overflow-x: auto;">
+<code># 克隆仓库
+git clone https://github.com/yourusername/IMCs.git
+cd IMCs
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 运行 Web UI
+streamlit run src/ui/app.py</code>
+                </pre>
+            </div>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 1rem;">Python API</h3>
+                <pre style="background: var(--bg-dark); padding: 1rem; border-radius: 8px; overflow-x: auto;">
+<code>from src.agents.core import MLAgent, TheoryDataAgent
+
+# 初始化 ML 智能体
+agent = MLAgent()
+
+# 加载数据并训练
+X, y = agent.load_data_from_cifs("data/theory/cifs", "data/theory/formation_energy_full.json")
+top3 = agent.train_all(X, y)
+
+# 最佳模型: XGBoost (R² = 0.90)</code>
+                </pre>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem;">项目结构</h3>
+                <pre style="background: var(--bg-dark); padding: 1rem; border-radius: 8px; overflow-x: auto;">
+<code>IMCs/
+├── src/
+│   ├── agents/core/          # 5 个核心智能体
+│   │   ├── ml_agent.py
+│   │   ├── theory_agent.py
+│   │   ├── experiment_agent.py
+│   │   ├── literature_agent.py
+│   │   └── task_manager.py
+│   └── ui/                   # Web UI
+├── data/
+│   ├── theory/               # 理论数据
+│   └── ml_agent/             # 训练模型
+└── README.md</code>
+                </pre>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const page = this.dataset.page;
+                
+                // Update nav
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update page
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + page).classList.add('active');
+            });
+        });
+
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            // Add user message
+            messages.innerHTML += `
+                <div class="message user">
+                    <div class="message-avatar"><i class="fas fa-user"></i></div>
+                    <div class="message-content">${text}</div>
+                </div>
+            `;
+            
+            // Simulate response
+            setTimeout(() => {
+                messages.innerHTML += `
+                    <div class="message assistant">
+                        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            我收到了您的问题: "${text}"<br><br>
+                            要获得完整的 AI 响应，请运行 Streamlit 版本：<br>
+                            <code>streamlit run src/ui/app.py</code>
+                        </div>
+                    </div>
+                `;
+                messages.scrollTop = messages.scrollHeight;
+            }, 500);
+            
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Enter key to send
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

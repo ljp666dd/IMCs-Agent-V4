@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Project Data (Large Files)
+data/
+*.pkl
+*.json
+*.csv
+!src/ui/web/package.json
+!src/ui/web/tsconfig.json
+
+# Node
+node_modules/
+dist/
+.next/
