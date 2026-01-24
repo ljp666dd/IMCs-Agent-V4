@@ -14,25 +14,7 @@ import warnings
 from src.core.logger import get_logger, log_exception
 from src.services.theory.mp_client import MPClient
 from src.services.theory.external_db import ExternalDBClient
-from src.services.theory.physics import PhysicsCalc
-from src.services.db.database import DatabaseService
-
-logger = get_logger(__name__)
-
-warnings.filterwarnings("ignore")
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-sys.path.append(BASE_DIR)
-
-
-class DataType:
-    """Types of data that can be downloaded."""
-    CIF = "cif"
-    FORMATION_ENERGY = "formation_energy"
-    DOS = "dos"
-    ORBITAL_DOS = "orbital_dos"
-    BAND_STRUCTURE = "band_structure"
-
+from src.config.config import config as app_config
 
 @dataclass
 class TheoryDataConfig:
@@ -44,7 +26,7 @@ class TheoryDataConfig:
         output_dir (str): Directory to save raw files (legacy/backup).
         elements (List[str]): List of elements to research.
     """
-    api_key: str = "abx7GG5NQg5YncfROEP4vvQi8Tc5Ywqp"
+    api_key: str = app_config.MP_API_KEY
     output_dir: str = "data/theory"
     elements: List[str] = field(default_factory=lambda: [
         "Pt", "Pd", "Ni", "Co", "Fe", "Cu", "Au", "Ag", "Ir", "Rh", "Ru", "Os",

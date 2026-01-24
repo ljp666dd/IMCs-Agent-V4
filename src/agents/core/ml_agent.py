@@ -180,7 +180,13 @@ class MLAgent:
     # ========== Training ==========
     
     def _save_models_to_db(self, results: List[ModelResult]):
-        """Helper to save model results to DB."""
+        """Helper to save model results to DB and Disk."""
+        import joblib
+        
+        # Ensure model directory exists
+        model_dir = os.path.join(self.config.output_dir, "models")
+        os.makedirs(model_dir, exist_ok=True)
+        
         for res in results:
             try:
                 # Prepare metrics JSON
@@ -190,23 +196,31 @@ class MLAgent:
                     "rmse_test": res.rmse_test
                 }
                 
-                # Save to DB
-                # Note: Model object itself is not pickled into DB, we save filepath if available or just metadata.
-                # In v3.3 Trainer refactor, we should ensure models are saved to disk and filepath returned.
-                # Assume Trainer handles disk save or we do it here.
-                # Here we mock filepath as we haven't implemented disk serialization in Trainer yet.
-                filepath = os.path.join(self.config.output_dir, f"{res.name}.pkl")
+                # Save to Disk (Real Persistence)
+                safe_name = "".join(x for x in res.name if x.isalnum() or x in "_-")
+                filepath = os.path.join(model_dir, f"{safe_name}.pkl")
+                joblib.dump(res.model, filepath)
                 
+                # Save to DB
                 self.db.save_model(
                     name=res.name,
                     model_type=res.model_type.value,
-                    target="target_variable", # Needs context
+                    target="target_variable", 
                     metrics=metrics,
                     filepath=filepath
                 )
-                logger.debug(f"Saved model record {res.name} to DB.")
+                logger.debug(f"Saved model {res.name} to {filepath} and DB.")
             except Exception as e:
-                logger.error(f"Failed to save model {res.name} to DB: {e}")
+                logger.error(f"Failed to save model {res.name}: {e}")
+
+    def update_best_model(self):
+        """Update self.best_model based on R2."""
+        if not self.results:
+            return
+        # Sort by R2 descending
+        sorted_models = sorted(self.results, key=lambda x: x.r2_test, reverse=True)
+        self.best_model = sorted_models[0]
+        logger.info(f"Best Model Updated: {self.best_model.name} (R2={self.best_model.r2_test:.3f})")
 
     @log_exception(logger)
     def select_features(self, top_n: int = 15):

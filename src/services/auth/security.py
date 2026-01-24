@@ -1,13 +1,12 @@
-from datetime import datetime, timedelta
-from typing import Optional, Union
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
+from src.config.config import config
 
-# Configuration (In production, load from env)
-SECRET_KEY = "imperial-college-london-imcs-secret-key-2026"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 300
+# Configuration
+SECRET_KEY = config.SECRET_KEY
+ALGORITHM = config.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = config.ACCESS_TOKEN_EXPIRE_MINUTES
 
 # Password Hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
