@@ -17,25 +17,20 @@ if not exist "src" (
 echo [1/2] Starting Backend Server (Port 8000)...
 start "IMCs Backend" cmd /k "python src/api/main.py"
 
-:: 3. Start Frontend (Web UI)
-echo [2/2] Starting Frontend Interface (Port 3000)...
-cd src/ui/web
-if not exist "node_modules" (
-    echo [INFO] Installing frontend dependencies...
-    call npm install
-)
-start "IMCs Frontend" cmd /k "npm run dev"
+:: 3. Start Streamlit UI
+echo [2/2] Starting Streamlit UI (Port 8501)...
+start "IMCs UI" cmd /k "streamlit run src/interface/app.py"
 
-:: 4. Launch Browser (Wait for servers to spin up)
+:: 4. Launch Browser (Wait for services to spin up)
 echo [INFO] Waiting for services to initialize...
 timeout /t 8 >nul
-start http://localhost:3000
+start http://localhost:8501
 
 echo.
 echo ============================================
 echo [SUCCESS] System is starting up!
 echo Backend: http://localhost:8000/docs
-echo Frontend: http://localhost:3000
+echo UI: http://localhost:8501
 echo.
 echo You can close this launcher window now.
 echo ============================================

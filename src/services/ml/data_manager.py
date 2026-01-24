@@ -125,16 +125,18 @@ class DataManager:
         self.y = y
         return X, y
 
+    def prepare_split(self, test_size: float = 0.2, random_state: int = 42):
+        """Split first, then fit scaler on train to avoid leakage."""
         if self.X is None or self.y is None:
             raise ValueError("Data not loaded. Call load_* first.")
-            
-        # 1. Split First (Avoid Data Leakage)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+
+        # Split on raw features
+        X_train_raw, X_test_raw, self.y_train, self.y_test = train_test_split(
             self.X, self.y, test_size=test_size, random_state=random_state
         )
-        
-        # 2. Scale (Fit only on Train)
-        self.X_train = self.scaler.fit_transform(self.X_train)
-        self.X_test = self.scaler.transform(self.X_test)
-        
+
+        # Fit scaler only on train
+        self.X_train = self.scaler.fit_transform(X_train_raw)
+        self.X_test = self.scaler.transform(X_test_raw)
+
         logger.info(f"Split & Scaled data: Train={len(self.X_train)}, Test={len(self.X_test)}")

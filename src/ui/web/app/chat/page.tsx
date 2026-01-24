@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Bot, User, Send, PlayCircle, CheckCircle } from "lucide-react";
 import Link from 'next/link';
+import TaskGraphViewer from "@/components/task-graph-viewer";
 
 interface Message {
     role: 'user' | 'assistant';
@@ -135,31 +136,21 @@ export default function ChatPage() {
 
                                 {/* Bubble */}
                                 <div className={`p-3 rounded-lg text-sm ${msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-white border shadow-sm text-neutral-800'}`}>
-                                    <p>{msg.content}</p>
+                                    <div className="whitespace-pre-wrap font-sans">{msg.content}</div>
 
                                     {/* Plan Card if available */}
                                     {msg.plan && (
-                                        <div className="mt-3 bg-neutral-50 border rounded p-3 text-neutral-900">
-                                            <div className="font-semibold border-b pb-1 mb-2 flex justify-between items-center">
-                                                <span>📋 Execution Plan</span>
-                                                <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">{msg.plan.task_type}</span>
-                                            </div>
-                                            <ul className="space-y-1 text-xs mb-3">
-                                                {/* Task steps are simple dicts according to API */}
-                                                {(msg.plan as any).steps?.map((step: any, i: number) => (
-                                                    <li key={i} className="flex items-start gap-2">
-                                                        <span className="bg-neutral-200 px-1.5 rounded">{i + 1}</span>
-                                                        <span>[{step.agent?.toUpperCase()}] {step.action}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <Button
-                                                size="sm"
-                                                onClick={() => handleExecute(msg.plan!.task_id)}
-                                                className="w-full bg-green-600 hover:bg-green-700"
-                                            >
-                                                <PlayCircle className="w-4 h-4 mr-2" /> Execute
-                                            </Button>
+                                        <div className="mt-4 w-full">
+                                            <TaskGraphViewer plan={msg.plan as any} />
+                                            {msg.plan.status !== 'completed' && msg.plan.status !== 'failed' && (
+                                                <Button
+                                                    size="sm"
+                                                    onClick={() => handleExecute(msg.plan!.task_id)}
+                                                    className="w-full mt-2 bg-green-600 hover:bg-green-700"
+                                                >
+                                                    <PlayCircle className="w-4 h-4 mr-2" /> Start Execution
+                                                </Button>
+                                            )}
                                         </div>
                                     )}
                                 </div>

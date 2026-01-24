@@ -125,6 +125,59 @@ export default function MaterialDetailPage() {
                         </div>
                     </Card>
                 </div>
+
+                {/* Evidence Chain (M3) */}
+                <Card>
+                    <CardHeader className="flex flex-row items-center gap-2">
+                        <Database className="h-5 w-5 text-purple-600" />
+                        <CardTitle>Evidence Chain</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {!material.evidence || material.evidence.length === 0 ? (
+                            <div className="text-neutral-500 text-sm p-4 bg-neutral-100 rounded text-center">
+                                No linked evidence found for this material.
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {material.evidence.map((ev, i) => (
+                                    <div key={i} className="flex items-start gap-4 p-3 border rounded-lg bg-white hover:shadow-sm transition-shadow">
+                                        <div className={`p-2 rounded-full shrink-0 ${ev.source_type === 'experiment' ? 'bg-green-100 text-green-700' :
+                                                ev.source_type === 'literature' ? 'bg-amber-100 text-amber-700' :
+                                                    ev.source_type === 'ml_prediction' ? 'bg-purple-100 text-purple-700' :
+                                                        'bg-blue-100 text-blue-700'
+                                            }`}>
+                                            {ev.source_type === 'experiment' ? <Database size={16} /> : <Database size={16} />}
+                                            {/* Ideally different icons */}
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex justify-between">
+                                                <h4 className="font-semibold text-sm capitalize">{ev.source_type}</h4>
+                                                <span className="text-xs text-neutral-400">{new Date(ev.created_at).toLocaleDateString()}</span>
+                                            </div>
+                                            <p className="text-xs text-neutral-600 font-mono mt-1">ID: {ev.source_id}</p>
+
+                                            {ev.metadata && (
+                                                <div className="mt-2 text-xs bg-neutral-50 p-2 rounded border">
+                                                    {JSON.parse(ev.metadata).filename && (
+                                                        <div className="font-medium">File: {JSON.parse(ev.metadata).filename.split('\\').pop()}</div>
+                                                    )}
+                                                    {/* Render other metadata generically */}
+                                                    <div className="opacity-75 overflow-x-auto">
+                                                        {JSON.stringify(JSON.parse(ev.metadata), null, 1)}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-xs font-bold text-neutral-400">Score</span>
+                                            <span className="text-sm font-bold text-green-600">{ev.score.toFixed(1)}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
             </div>
         </main>
     );

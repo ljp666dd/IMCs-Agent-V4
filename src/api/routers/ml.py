@@ -48,6 +48,9 @@ async def predict(req: PredictionRequest):
     if not ml_service.best_model:
         raise HTTPException(status_code=400, detail="No model trained yet")
     
-    # Mock prediction logic (MLAgent needs predict method exposed ideally)
-    # ml_service.predict(...)
-    return {"prediction": 0.0, "note": "Prediction not fully exposed in Agent Facade yet"}
+    result = ml_service.predict(req.features, req.model_name)
+    
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+        
+    return result

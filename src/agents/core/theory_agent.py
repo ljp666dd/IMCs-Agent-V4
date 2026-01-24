@@ -14,7 +14,11 @@ import warnings
 from src.core.logger import get_logger, log_exception
 from src.services.theory.mp_client import MPClient
 from src.services.theory.external_db import ExternalDBClient
+from src.services.theory.physics import PhysicsCalc
+from src.services.db.database import DatabaseService
 from src.config.config import config as app_config
+
+logger = get_logger(__name__)
 
 @dataclass
 class TheoryDataConfig:
@@ -194,8 +198,12 @@ class TheoryDataAgent:
         return self.db.list_materials(limit)
 
     def get_material_details(self, material_id: str) -> Optional[Dict]:
-        """Get details for a specific material."""
-        return self.db.get_material_by_id(material_id)
+        """Get details for a specific material including evidence."""
+        return self.db.get_material_with_evidence(material_id, include_cif=True)
+
+    def get_material_details_simple(self, material_id: str) -> Optional[Dict]:
+        """Get details for a specific material without CIF (batch-friendly)."""
+        return self.db.get_material_with_evidence(material_id, include_cif=False)
 
     # ========== External DBs ==========
     

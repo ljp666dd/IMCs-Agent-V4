@@ -75,6 +75,15 @@ export const AgentService = {
     }
 };
 
+export interface Evidence {
+    id: number;
+    source_type: 'experiment' | 'literature' | 'theory' | 'ml_prediction';
+    source_id: string;
+    score: number;
+    metadata: any; // JSON
+    created_at: string;
+}
+
 export interface Material {
     id: number;
     material_id: string;
@@ -82,6 +91,7 @@ export interface Material {
     formation_energy: number;
     cif_path: string;
     cif_content?: string;
+    evidence?: Evidence[];
 }
 
 export interface ExperimentResponse {

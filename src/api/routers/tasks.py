@@ -4,6 +4,7 @@ from typing import Dict, Any, List, Optional
 from src.services.task.planner import TaskPlanner
 from src.services.task.executor import PlanExecutor
 from src.services.task.types import TaskPlan, TaskType
+from src.services.db.database import DatabaseService
 
 # Initialize Services
 # In a real app, use Dependency Injection (Depends)
@@ -18,6 +19,7 @@ planner = TaskPlanner()
 from src.agents.core.task_manager import TaskManagerAgent
 # TaskManagerAgent wraps everything. We can rely on it.
 agent_instance = TaskManagerAgent() 
+db = DatabaseService()
 
 router = APIRouter()
 
@@ -35,11 +37,12 @@ class TaskResponse(BaseModel):
 async def create_task(req: TaskRequest):
     """Create a new task plan based on natural language query."""
     plan = agent_instance.create_plan(req.query)
+    from dataclasses import asdict
     return {
         "task_id": plan.task_id,
         "task_type": plan.task_type.value,
         "description": plan.description,
-        "steps": plan.steps,
+        "steps": [asdict(step) for step in plan.steps],
         "status": plan.status
     }
 
@@ -66,6 +69,24 @@ async def execute_task(task_id: str, background_tasks: BackgroundTasks):
 @router.get("/{task_id}")
 async def get_task_status(task_id: str):
     """Get task status."""
+    plan = db.get_plan(task_id)
+    if plan:
+        steps = db.list_plan_steps(task_id)
+        # Reduce to latest status per step_id
+        latest = {}
+        for s in steps:
+            latest[s["step_id"]] = s
+        results = {
+            step_id: (data.get("result") if data.get("result") is not None else None)
+            for step_id, data in latest.items()
+        }
+        return {
+            "task_id": task_id,
+            "status": plan.get("status"),
+            "steps": list(latest.values()),
+            "results": results
+        }
+
     if agent_instance.current_plan and agent_instance.current_plan.task_id == task_id:
         return {
             "task_id": task_id,

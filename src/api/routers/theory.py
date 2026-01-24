@@ -55,3 +55,17 @@ async def get_material(material_id: str):
     if not data:
         raise HTTPException(status_code=404, detail="Material not found")
     return data
+
+class BatchMaterialsRequest(BaseModel):
+    material_ids: List[str]
+    include_cif: bool = False
+
+@router.post("/materials/batch")
+async def get_materials_batch(req: BatchMaterialsRequest):
+    """Get multiple materials with evidence (batch)."""
+    results = []
+    for mid in req.material_ids:
+        data = theory_service.get_material_details_simple(mid)
+        if data:
+            results.append(data)
+    return results

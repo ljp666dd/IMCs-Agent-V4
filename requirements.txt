@@ -11,6 +11,9 @@ botorch
 pandas
 numpy
 streamlit
+fastapi
+uvicorn
+requests
 openai
 tiktoken
 pydantic
@@ -23,3 +26,4 @@ python-jose[cryptography]
 python-multipart
 fastapi-users
 python-dotenv
+scipy

@@ -211,12 +211,31 @@ class ExperimentDataAgent:
             
             # v3.3: Save to Database
             if result:
-                 self.db.save_experiment(
+                 # Auto-Link: Try to find matching material by formula (filename)
+                 # Heuristic: Remove extension, split by underscore/hyphen if complex
+                 formula_guess = os.path.splitext(os.path.basename(file_path))[0].split('_')[0].split('-')[0]
+                 material_rec = self.db.get_material_by_formula(formula_guess)
+                 material_id = material_rec["material_id"] if material_rec else None
+                 
+                 exp_id = self.db.save_experiment(
                      name=result.sample_id,
                      exp_type="LSV",
                      raw_path=file_path,
-                     results=asdict(result)
+                     results=asdict(result),
+                     material_id=material_id
                  )
-                 logger.info(f"Saved LSV results for {result.sample_id} to DB.")
+                 
+                 # M3: Log Evidence Chain
+                 if material_id:
+                     self.db.save_evidence(
+                         material_id=material_id,
+                         source_type="experiment",
+                         source_id=str(exp_id),
+                         score=1.0,
+                         metadata={"filename": file_path, "overpotential": result.overpotential_10mA}
+                     )
+                     logger.info(f"Linked Experiment {exp_id} to Material {material_id} (Evidence Chain created).")
+                 else:
+                     logger.info(f"Saved LSV {exp_id}, but no matching material found for formula '{formula_guess}'.")
                  
         return result

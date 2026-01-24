@@ -151,6 +151,7 @@ class MLAgent:
 
         X_list = []
         y_list = []
+        id_list = []
         
         for row in rows:
             cif_path = row.get("cif_path")
@@ -162,6 +163,7 @@ class MLAgent:
                 if feats is not None:
                     X_list.append(feats)
                     y_list.append(target)
+                    id_list.append(row.get("material_id"))
         
         if X_list:
             X = np.array(X_list)
@@ -172,6 +174,7 @@ class MLAgent:
             self.data_manager.X = X
             self.data_manager.y = y
             self.data_manager.feature_names = feature_names
+            self.data_manager.material_ids = np.array(id_list) if id_list else None
             self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
             logger.info(f"Loaded {len(X)} samples from DB.")
         else:
@@ -205,11 +208,15 @@ class MLAgent:
                 self.db.save_model(
                     name=res.name,
                     model_type=res.model_type.value,
-                    target="target_variable", 
+                    target="target_variable",
                     metrics=metrics,
-                    filepath=filepath
+                    filepath=filepath,
+                    # M4: Registry Metadata
+                    hyperparameters=res.model.get_params() if hasattr(res.model, "get_params") else {},
+                    feature_cols=self.feature_names,
+                    training_size=self.data_manager.X_train.shape[0] if self.data_manager.X_train is not None else 0
                 )
-                logger.debug(f"Saved model {res.name} to {filepath} and DB.")
+                logger.debug(f"Saved model {res.name} to {filepath} and DB (with Hyperparams).")
             except Exception as e:
                 logger.error(f"Failed to save model {res.name}: {e}")
 
@@ -387,6 +394,44 @@ class MLAgent:
         )
         return sorted_models[:k]
 
+    def predict_best(self) -> Dict[str, float]:
+        """
+        Predict using the best available model for all loaded samples.
+        Returns mapping: material_id -> prediction.
+        """
+        if self.data_manager.X is None or self.data_manager.material_ids is None:
+            return {}
+        if not self.results:
+            return {}
+
+        top = self.get_top_models(k=1)
+        if not top:
+            return {}
+        best = top[0]
+        self.best_model = best
+
+        # Scale full X with train-fitted scaler
+        try:
+            X_scaled = self.data_manager.scaler.transform(self.data_manager.X)
+        except Exception:
+            X_scaled = self.data_manager.X
+
+        preds = None
+        if hasattr(best.model, "predict"):
+            preds = best.model.predict(X_scaled)
+        else:
+            return {}
+
+        pred_map = {}
+        for mid, val in zip(self.data_manager.material_ids, preds):
+            if mid is None:
+                continue
+            try:
+                pred_map[str(mid)] = float(val)
+            except Exception:
+                pred_map[str(mid)] = float(np.array(val).item())
+        return pred_map
+
     def get_traditional_models(self) -> Dict[str, Any]:
         """Get dict of initialized model objects."""
         return ModelRegistry.get_traditional_models()
@@ -398,12 +443,6 @@ class MLAgent:
     def interpret_model(self, model_result: ModelResult) -> Optional[Dict[str, Any]]:
         """
         Explain model prediction using SHAP.
-        
-        Args:
-            model_result (ModelResult): Model to explain.
-            
-        Returns:
-            Dict: SHAP values and metadata.
         """
         from src.services.ml.explainer import ModelExplainer
         explainer = ModelExplainer()
@@ -412,7 +451,56 @@ class MLAgent:
         
         return explainer.explain_model(
             model=model_result.model,
-            X_train=self.X_train,
-            feature_names=self.feature_names,
+            X_train=self.data_manager.X_train,
+            feature_names=self.data_manager.feature_names,
             model_type=m_type
         )
+
+    def predict(self, features: List[float], model_name: str = None) -> Dict[str, Any]:
+        """
+        Predict property using trained model.
+        
+        Args:
+            features (List[float]): Input features.
+            model_name (str): Optional specific model to use.
+            
+        Returns:
+            Dict: Prediction result.
+        """
+        target_model = self.best_model
+        
+        # If model_name specific, find it in results
+        if model_name:
+            target_model = next((m for m in self.results if m.name == model_name), None)
+            
+        if not target_model:
+            # Try loading from disk if results empty (e.g. after restart)
+            # This requires a 'load_model' method which we haven't built yet.
+            # Ideally we check self.results or DB registry.
+            # For now, rely on in-memory state or raise error.
+            return {"error": "No trained model found. Please train first."}
+            
+        # Transform features using scaler
+        # Note: DataManager scaler is fitted on X_train. 
+        # We need to access it.
+        try:
+            feats_array = np.array(features).reshape(1, -1)
+            # Determine if we need to scale?
+            # Model was trained on Scaled data.
+            # So we must scale input using the SAME scaler.
+            if self.data_manager.scaler:
+                feats_scaled = self.data_manager.scaler.transform(feats_array)
+            else:
+                feats_scaled = feats_array # Should ensure scaler is loaded
+                
+            prediction = target_model.model.predict(feats_scaled)
+            val = float(prediction[0]) if isinstance(prediction, np.ndarray) else float(prediction)
+            
+            return {
+                "model": target_model.name,
+                "prediction": val,
+                "unit": "eV/atom" # Assuming default target
+            }
+        except Exception as e:
+            logger.error(f"Prediction failed: {e}")
+            return {"error": str(e)}

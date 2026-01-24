@@ -12,6 +12,7 @@ from src.core.logger import get_logger, log_exception
 from src.services.task.types import TaskPlan, TaskType
 from src.services.task.planner import TaskPlanner
 from src.services.task.executor import PlanExecutor
+from src.services.db.database import DatabaseService
 
 # Sub-Agents
 from src.agents.core.ml_agent import MLAgent, MLAgentConfig
@@ -70,6 +71,26 @@ class TaskManagerAgent:
         """Create execution plan."""
         plan = self.planner.create_plan(user_request)
         self.current_plan = plan
+        # Persist plan + initial steps (pending)
+        try:
+            db = DatabaseService()
+            db.create_plan(
+                plan_id=plan.task_id,
+                user_id=None,
+                task_type=plan.task_type.value,
+                description=plan.description
+            )
+            for step in plan.steps:
+                db.log_plan_step(
+                    plan_id=plan.task_id,
+                    step_id=step.step_id,
+                    agent=step.agent,
+                    action=step.action,
+                    status="pending",
+                    dependencies=step.dependencies
+                )
+        except Exception as e:
+            logger.warning(f"Failed to persist plan {plan.task_id}: {e}")
         return plan
     
     def format_plan(self, plan: TaskPlan = None) -> str:
@@ -80,7 +101,7 @@ class TaskManagerAgent:
         output = f"TASK PLAN: {plan.task_id} [{plan.task_type.value}]\n"
         output += f"Description: {plan.description}\nSteps:\n"
         for i, step in enumerate(plan.steps, 1):
-            output += f"  {i}. [{step.get('agent', '').upper()}] {step.get('action', '')}\n"
+            output += f"  {i}. [{step.agent.upper()}] {step.action}\n"
         return output
     
     # ========== Execution ==========
@@ -129,9 +150,12 @@ class TaskManagerAgent:
                 plan = self.create_plan(final_request)
                 self.conversation_state = 'idle'
                 self.draft_plan_context = {}
+                from dataclasses import asdict
+                plan_dict = asdict(plan)
+                plan_dict["task_type"] = plan.task_type.value
                 return {
                     "type": "plan",
-                    "content": plan
+                    "content": plan_dict
                 }
             else:
                 # Accumulate context

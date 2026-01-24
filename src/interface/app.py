@@ -11,6 +11,8 @@ import sys
 import json
 import pandas as pd
 import numpy as np
+import requests
+import time
 
 # Add project root to path
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -83,6 +85,141 @@ def init_session_state():
         st.session_state.current_task = None
     if 'agents_loaded' not in st.session_state:
         st.session_state.agents_loaded = False
+    if 'active_plan' not in st.session_state:
+        st.session_state.active_plan = None
+    if 'active_task_id' not in st.session_state:
+        st.session_state.active_task_id = None
+    if 'task_status' not in st.session_state:
+        st.session_state.task_status = None
+    if 'task_polling' not in st.session_state:
+        st.session_state.task_polling = False
+    if 'selected_material' not in st.session_state:
+        st.session_state.selected_material = None
+
+
+# ========== API Helpers (Task Graph) ==========
+
+API_BASE_URL = os.getenv("IMCS_API_URL", "http://localhost:8000")
+
+def api_create_task(query: str):
+    res = requests.post(f"{API_BASE_URL}/tasks/create", json={"query": query}, timeout=20)
+    res.raise_for_status()
+    return res.json()
+
+def api_execute_task(task_id: str):
+    res = requests.post(f"{API_BASE_URL}/tasks/execute/{task_id}", timeout=20)
+    res.raise_for_status()
+    return res.json()
+
+def api_get_task_status(task_id: str):
+    res = requests.get(f"{API_BASE_URL}/tasks/{task_id}", timeout=20)
+    res.raise_for_status()
+    return res.json()
+
+@st.cache_data(ttl=60)
+def api_list_materials():
+    res = requests.get(f"{API_BASE_URL}/theory/materials", timeout=20)
+    res.raise_for_status()
+    return res.json()
+
+@st.cache_data(ttl=120)
+def api_get_materials_batch(material_ids):
+    res = requests.post(
+        f"{API_BASE_URL}/theory/materials/batch",
+        json={"material_ids": material_ids, "include_cif": False},
+        timeout=30
+    )
+    res.raise_for_status()
+    return res.json()
+
+@st.cache_data(ttl=120)
+def api_get_material_details(material_id: str):
+    res = requests.get(f"{API_BASE_URL}/theory/materials/{material_id}", timeout=20)
+    res.raise_for_status()
+    return res.json()
+
+def render_task_graph(steps):
+    if not steps:
+        st.info("No steps available.")
+        return
+    st.markdown("""
+    <style>
+    .tg-step { border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; background: #0f1117; }
+    .tg-title { font-weight: 600; color: #e5e7eb; font-size: 0.9rem; }
+    .tg-status { font-size: 0.75rem; padding: 2px 8px; border-radius: 999px; background: #1f2937; color: #93c5fd; }
+    .tg-status-ok { background: #064e3b; color: #34d399; }
+    .tg-status-fail { background: #7f1d1d; color: #fca5a5; }
+    .tg-status-run { background: #1e3a8a; color: #93c5fd; }
+    .tg-status-block { background: #3f2f00; color: #facc15; }
+    .tg-deps { margin-top: 6px; }
+    .tg-dep { display: inline-block; margin: 2px 4px 0 0; padding: 2px 6px; border-radius: 999px; font-size: 0.7rem; background: #111827; color: #f9fafb; border: 1px solid #374151; }
+    .tg-meta { color: #9ca3af; font-size: 0.75rem; margin-top: 4px; }
+    </style>
+    """, unsafe_allow_html=True)
+    for s in steps:
+        status = s.get("status", "unknown")
+        status_class = "tg-status"
+        if status == "completed":
+            status_class = "tg-status tg-status-ok"
+        elif status == "failed":
+            status_class = "tg-status tg-status-fail"
+        elif status == "running":
+            status_class = "tg-status tg-status-run"
+        elif status == "blocked":
+            status_class = "tg-status tg-status-block"
+        st.markdown(
+            f"""
+            <div class="tg-step">
+              <div class="tg-title">[{s.get('agent','').upper()}] {s.get('action','')}</div>
+              <div class="tg-meta">Status: <span class="{status_class}">{status}</span></div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        if s.get("result"):
+            try:
+                preview = json.dumps(s.get("result"), ensure_ascii=False)[:240]
+            except Exception:
+                preview = str(s.get("result"))[:240]
+            st.markdown(f"<div class='tg-meta'>Result: <code>{preview}</code></div>", unsafe_allow_html=True)
+            with st.expander(f"Result details: {s.get('step_id','step')}"):
+                try:
+                    full_text = json.dumps(s.get("result"), ensure_ascii=False, indent=2)
+                except Exception:
+                    full_text = str(s.get("result"))
+                st.code(full_text)
+
+
+def render_evidence_chain(material_id: str):
+    """Fetch and render evidence chain for a material."""
+    try:
+        data = api_get_material_details(material_id)
+        evidence = data.get("evidence", [])
+    except Exception as e:
+        st.warning(f"Failed to load evidence: {e}")
+        return
+
+    st.markdown("### Evidence Chain")
+    if not evidence:
+        st.info("No evidence linked yet.")
+        return
+
+    for ev in evidence:
+        ev_type = ev.get("source_type", "unknown")
+        ev_score = ev.get("score", 0)
+        st.markdown(f"**{ev_type}**  | score: `{ev_score}`")
+        meta = ev.get("metadata")
+        if meta:
+            try:
+                if isinstance(meta, str):
+                    meta = json.loads(meta)
+            except Exception:
+                pass
+        st.code(json.dumps(meta, ensure_ascii=False, indent=2))
+        deps = s.get("dependencies") or []
+        if deps:
+            dep_badges = "".join([f"<span class='tg-dep'>{d}</span>" for d in deps])
+            st.markdown(f"<div class='tg-deps'>Dependencies: {dep_badges}</div>", unsafe_allow_html=True)
 
 
 # ========== Agent Loading (Lazy) ==========
@@ -406,60 +543,206 @@ def render_home():
 
 def render_chat():
     """Render chat interface."""
-    st.markdown("## 🤖 智能体对话")
-    
-    agents = load_agents()
-    
+    st.markdown("## Research Assistant")
+
     # Chat history
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
-    
+
     # Input
-    if prompt := st.chat_input("输入您的研究问题..."):
+    if prompt := st.chat_input("Enter your research query..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
-        
+
         with st.chat_message("assistant"):
             try:
-                with st.status("智能体正在思考...", expanded=True) as status:
-                    status.write("正在分析您的请求...")
-                    if agents:
-                        response = agents['task_manager'].chat(prompt)
-                        status.write("生成回复中...")
-                        status.update(label="回复完成", state="complete", expanded=False)
-                        
-                        if response:
-                            st.markdown(response)
-                            st.session_state.messages.append({"role": "assistant", "content": response})
-                        else:
-                            st.warning("智能体没有返回有效内容。请尝试换个说法。")
-                    else:
-                        st.error("智能体未加载")
+                with st.status("Planning...", expanded=True) as status:
+                    status.write("Creating task plan...")
+                    plan = api_create_task(prompt)
+                    st.session_state.active_plan = plan
+                    st.session_state.active_task_id = plan.get("task_id")
+                    st.session_state.task_polling = False
+                    status.update(label="Plan created", state="complete", expanded=False)
+                    st.markdown(f"Plan created: `{plan.get('task_id')}`")
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": f"Plan created: {plan.get('task_id')}"
+                    })
             except Exception as e:
-                st.error(f"智能体执行出错: {e}")
-                import traceback
-                st.error(traceback.format_exc())
-    
+                st.error(f"Task creation failed: {e}")
+
+    # Task Graph Viewer
+    if st.session_state.active_plan:
+        st.markdown("---")
+        st.markdown("### Task Graph (Planned)")
+        render_task_graph(st.session_state.active_plan.get("steps", []))
+
+        col_a, col_b = st.columns([1, 1])
+        with col_a:
+            if st.button("Start Execution", type="primary"):
+                try:
+                    api_execute_task(st.session_state.active_task_id)
+                    st.session_state.task_polling = True
+                    st.success("Execution started.")
+                except Exception as e:
+                    st.error(f"Failed to start: {e}")
+        with col_b:
+            if st.button("Refresh Status"):
+                try:
+                    st.session_state.task_status = api_get_task_status(st.session_state.active_task_id)
+                except Exception as e:
+                    st.warning(f"Status fetch failed: {e}")
+            if st.session_state.task_polling:
+                if st.button("Stop Auto Refresh"):
+                    st.session_state.task_polling = False
+
+        if st.session_state.task_polling and st.session_state.active_task_id:
+            try:
+                st.session_state.task_status = api_get_task_status(st.session_state.active_task_id)
+            except Exception as e:
+                st.warning(f"Status fetch failed: {e}")
+
+        if st.session_state.task_status:
+            st.markdown("### Task Graph (Live Status)")
+            render_task_graph(st.session_state.task_status.get("steps", []))
+            current_status = st.session_state.task_status.get("status", "unknown")
+            st.caption(f"Current status: {current_status}")
+            if current_status in ["completed", "failed", "blocked"]:
+                st.session_state.task_polling = False
+            elif st.session_state.task_polling:
+                time.sleep(3)
+                st.experimental_rerun()
+
+            # Evidence Chain Browser
+            try:
+                mats = api_list_materials()
+                if mats:
+                    options = []
+                    id_by_label = {}
+                    for m in mats:
+                        mid = m.get("material_id")
+                        formula = m.get("formula", "")
+                        if not mid:
+                            continue
+                        label = f"{mid} | {formula}"
+                        options.append(label)
+                        id_by_label[label] = mid
+
+                    if options:
+                        # Default selection
+                        if st.session_state.selected_material is None:
+                            st.session_state.selected_material = id_by_label[options[0]]
+
+                        default_label = None
+                        for label, mid in id_by_label.items():
+                            if mid == st.session_state.selected_material:
+                                default_label = label
+                                break
+                        if default_label is None:
+                            default_label = options[0]
+
+                        selected_label = st.selectbox("Select material to view evidence", options, index=options.index(default_label))
+                        st.session_state.selected_material = id_by_label[selected_label]
+                        render_evidence_chain(st.session_state.selected_material)
+
+                        # Optimized candidate panel (multi-signal score)
+                        st.markdown("### Recommended Candidates (Multi-Signal)")
+
+                        pool = mats[:]
+                        fe_vals = [m.get("formation_energy") for m in pool if m.get("formation_energy") is not None]
+                        if fe_vals:
+                            pool = sorted(pool, key=lambda x: x.get("formation_energy") if x.get("formation_energy") is not None else 1e9)[:50]
+                        else:
+                            pool = pool[:50]
+
+                        ev_weights = {
+                            "experiment": 1.5,
+                            "literature": 1.2,
+                            "ml_prediction": 1.0,
+                            "theory": 0.8
+                        }
+
+                        # Batch fetch evidence for pool
+                        scored_rows = []
+                        ev_scores = []
+                        ids = [m.get("material_id") for m in pool if m.get("material_id")]
+                        details_list = api_get_materials_batch(ids) if ids else []
+                        details_by_id = {d.get("material_id"): d for d in details_list if d.get("material_id")}
+
+                        for m in pool:
+                            mid = m.get("material_id")
+                            if not mid:
+                                continue
+                            details = details_by_id.get(mid, {})
+                            evidence = details.get("evidence", []) if details else []
+
+                            # Evidence score
+                            ev_score_raw = 0.0
+                            ev_counts = {"experiment": 0, "literature": 0, "ml_prediction": 0, "theory": 0}
+                            for ev in evidence:
+                                et = ev.get("source_type", "unknown")
+                                ev_counts[et] = ev_counts.get(et, 0) + 1
+                                ev_score_raw += ev_weights.get(et, 0.5) * float(ev.get("score", 1.0) or 1.0)
+
+                            ev_scores.append(ev_score_raw)
+                            m["_ev_score_raw"] = ev_score_raw
+                            m["_ev_counts"] = ev_counts
+                            scored_rows.append(m)
+
+                        # Normalize FE and Evidence scores
+                        fe_vals = [m.get("formation_energy") for m in scored_rows if m.get("formation_energy") is not None]
+                        fe_min = min(fe_vals) if fe_vals else None
+                        fe_max = max(fe_vals) if fe_vals else None
+                        ev_max = max(ev_scores) if ev_scores else 1.0
+
+                        def fe_score(fe):
+                            if fe is None or fe_min is None or fe_max is None or fe_max == fe_min:
+                                return 0.5
+                            return 1.0 - (fe - fe_min) / (fe_max - fe_min)
+
+                        for m in scored_rows:
+                            fe = m.get("formation_energy")
+                            s_fe = fe_score(fe)
+                            s_ev = (m.get("_ev_score_raw") or 0.0) / ev_max if ev_max else 0.0
+                            # Weighted blend: FE dominates, evidence refines
+                            m["_score"] = 0.65 * s_fe + 0.35 * s_ev
+
+                        ranked = sorted(scored_rows, key=lambda x: x.get("_score", 0), reverse=True)[:10]
+                        if ranked:
+                            df = pd.DataFrame([
+                                {
+                                    "material_id": m.get("material_id"),
+                                    "formula": m.get("formula"),
+                                    "formation_energy": m.get("formation_energy"),
+                                    "evidence": sum(m.get("_ev_counts", {}).values()),
+                                    "score": round(m.get("_score", 0), 3)
+                                } for m in ranked
+                            ])
+                            st.dataframe(df, use_container_width=True)
+                        else:
+                            st.info("No candidates available to rank yet.")
+            except Exception:
+                pass
+
     # Quick prompts
     st.markdown("---")
-    st.markdown("### 💡 示例问题")
-    
+    st.markdown("### Example Queries")
+
     examples = [
-        "寻找最佳的 PtRu 合金 HOR 催化剂",
-        "使用 CGCNN 预测材料的形成能",
-        "分析 d-band center 与催化活性的关系",
-        "查找关于 Pt 基催化剂的最新 arXiv 预印本"
+        "Find ordered alloy candidates for HOR",
+        "Train ML model on current materials database",
+        "Analyze d-band center vs activity",
+        "Search recent HOR catalyst papers"
     ]
-    
+
     cols = st.columns(2)
     for i, example in enumerate(examples):
         with cols[i % 2]:
             if st.button(example, key=f"example_{i}"):
                 st.session_state.messages.append({"role": "user", "content": example})
                 st.rerun()
-
 
 # ========== Data Analysis Page ==========
 
