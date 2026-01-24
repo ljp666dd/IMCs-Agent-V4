@@ -97,7 +97,29 @@ class TheoryDataAgent:
         """
         cif_dir = os.path.join(self.config.output_dir, "cifs")
         
-        # 1. Search Materials
+        # 0. Check Local DB First (Local-First Strategy)
+        # Fetch all materials to filter (assuming DB is handleable size < 10k)
+        local_mats = self.db.list_materials(limit=5000)
+        local_matches = []
+        
+        # Simple filter: checks if formula contains ANY of the target elements
+        # (This mimics the broad search intension)
+        target_elements = set(self.config.elements)
+        for m in local_mats:
+            # Heuristic check: does formula string contain element symbol?
+            # Ideally use pymatgen Composition, but string check is fast proxy for now.
+            # We trust the DB contains valid formulas.
+            mat_formula = m.get("formula", "")
+            if any(el in mat_formula for el in target_elements):
+                local_matches.append(m)
+                
+        # If we have substantial local data (e.g. > 50% of request limit or > 20 items), skip API
+        # This avoids re-downloading Pt every time.
+        if len(local_matches) >= (limit or 10):
+            logger.info(f"Found {len(local_matches)} local materials. Skipping API search.")
+            return len(local_matches)
+
+        # 1. Search Materials (API)
         docs = self.mp.search_materials(
             elements=self.config.elements, 
             limit=limit,
@@ -184,6 +206,14 @@ class TheoryDataAgent:
             json.dump(results, f, indent=2)
             
         return len(results)
+
+    def list_stored_materials(self, limit: int = 100) -> List[Dict]:
+        """List materials stored in the database."""
+        return self.db.list_materials(limit)
+
+    def get_material_details(self, material_id: str) -> Optional[Dict]:
+        """Get details for a specific material."""
+        return self.db.get_material_by_id(material_id)
 
     # ========== External DBs ==========
     

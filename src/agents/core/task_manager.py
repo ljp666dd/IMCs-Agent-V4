@@ -96,8 +96,55 @@ class TaskManagerAgent:
         
     # ========== Interaction ==========
     
+    @log_exception(logger)
+    def process_chat_message(self, message: str) -> Dict[str, Any]:
+        """
+        Process a natural language message from the user.
+        Decides whether to create a Task Plan or return a simple Chat Response.
+        """
+        msg_lower = message.lower().strip()
+        
+        # 1. Heuristic: Is this a Command?
+        # Commands usually start with verbs or are long sentences describing a goal.
+        # Follow-ups are usually short ("2", "yes", "ok") or questions ("why?").
+        
+        is_command = False
+        keywords = ["create plan", "find", "search", "train", "analyze", "discover"]
+        
+        if len(message.split()) > 3 and any(k in msg_lower for k in keywords):
+            is_command = True
+        elif "plan" in msg_lower:
+            is_command = True
+            
+        # 2. Handle Command -> Create Plan
+        if is_command:
+            plan = self.create_plan(message)
+            return {
+                "type": "plan",
+                "content": plan
+            }
+            
+        # 3. Handle Follow-up / Conversation
+        # If we have a previous plan context.. specifically 'recommend' step output.
+        # Since we don't store "last_recommendation" in memory explicitly, we just echo.
+        # Future: Store conversation context.
+        
+        response_text = f"I received: '{message}'.\n"
+        
+        if msg_lower in ["2", "2.", "analysis"]:
+            response_text = "To proceed with Analysis (Step 2), please click the 'Execute' button on the generated plan above. Or say 'Create plan for Analysis' to start a specifc task."
+        elif msg_lower in ["1", "literature"]:
+             response_text = "To review Literature (Step 1), check the plan above."
+        else:
+            response_text += "If this is a new research goal, please describe it in a full sentence (e.g., 'Find catalysts for CO2RR')."
+            
+        return {
+            "type": "chat",
+            "content": response_text
+        }
+
     def chat(self, message: str) -> str:
-        """Simple chat interface (Diagnostic)."""
+        """Simple chat interface (Legacy/Diagnostic)."""
         # In a real app, this would use an LLM.
         # Here we just analyze and basic response.
         task_type = self.analyze_request(message)

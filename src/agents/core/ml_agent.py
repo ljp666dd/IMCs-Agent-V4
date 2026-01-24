@@ -136,10 +136,47 @@ class MLAgent:
         self.data_manager.load_experimental_data(file_path, target_col, feature_cols)
         self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
         
-        # v3.3: Log experiment linkage to DB? 
         # Ideally we link this training session to an Experiment ID.
         # For now, we focus on saving the Model result.
         
+    @log_exception(logger)
+    def load_from_db(self, target_col: str = "formation_energy"):
+        """Load training data directly from Database."""
+        logger.info(f"Loading training data from DB (target={target_col})...")
+        rows = self.db.fetch_training_set(target_col)
+        
+        if not rows:
+            logger.warning("No data found in DB for training.")
+            return
+
+        X_list = []
+        y_list = []
+        
+        for row in rows:
+            cif_path = row.get("cif_path")
+            target = row.get(target_col)
+            
+            if cif_path and os.path.exists(cif_path) and target is not None:
+                # Extract features
+                feats = self.featurizer.extract(cif_path)
+                if feats is not None:
+                    X_list.append(feats)
+                    y_list.append(target)
+        
+        if X_list:
+            X = np.array(X_list)
+            y = np.array(y_list)
+            feature_names = self.featurizer.feature_names
+            
+            # Populate DataManager manually
+            self.data_manager.X = X
+            self.data_manager.y = y
+            self.data_manager.feature_names = feature_names
+            self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
+            logger.info(f"Loaded {len(X)} samples from DB.")
+        else:
+            logger.warning("Failed to extract features for any DB records.")
+
     # ========== Training ==========
     
     def _save_models_to_db(self, results: List[ModelResult]):
@@ -172,13 +209,58 @@ class MLAgent:
                 logger.error(f"Failed to save model {res.name} to DB: {e}")
 
     @log_exception(logger)
-    def train_traditional_models(self) -> List[ModelResult]:
+    def select_features(self, top_n: int = 15):
+        """
+        Perform automated feature selection using Random Forest importance.
+        Updates internal data state to use only selected features.
+        """
+        if self.X_train is None:
+            return
+            
+        logger.info(f"Performing feature selection (target top_n={top_n})...")
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.feature_selection import SelectFromModel
+        
+        # 1. Fit Selector
+        # Use simple RF for robustness
+        selector = SelectFromModel(
+            estimator=RandomForestRegressor(n_estimators=50, random_state=42),
+            max_features=top_n
+        )
+        selector.fit(self.X_train, self.y_train)
+        
+        # 2. Get Mask
+        mask = selector.get_support()
+        selected_indices = np.where(mask)[0]
+        
+        # 3. Update DataManager State
+        # We must filter X_train, X_test and feature_names
+        original_feats = self.data_manager.feature_names
+        new_feats = [original_feats[i] for i in selected_indices]
+        
+        logger.info(f"Selected {len(new_feats)} features: {new_feats}")
+        
+        self.data_manager.X = self.data_manager.X[:, mask]
+        self.data_manager.X_train = self.data_manager.X_train[:, mask]
+        self.data_manager.X_test = self.data_manager.X_test[:, mask]
+        self.data_manager.feature_names = new_feats
+        
+        return new_feats
+
+    @log_exception(logger)
+    def train_traditional_models(self, auto_select_features: bool = True) -> List[ModelResult]:
         """
         Train all traditional ML models (RF, XGB, etc.).
         
+        Args:
+            auto_select_features (bool): If True, run feature selection first.
+            
         Returns:
             List[ModelResult]: Training results.
         """
+        if auto_select_features:
+            self.select_features(top_n=12) # Reasonable default for small datasets
+            
         models = ModelRegistry.get_traditional_models()
         results = self.trainer.train_traditional(
             models, 
@@ -265,6 +347,32 @@ class MLAgent:
         
     # ========== Utilities ==========
     
+    def get_top_models(self, k: int = 3, metric: str = "r2_test") -> List[ModelResult]:
+        """
+        Get top K performing models.
+        
+        Args:
+            k (int): Number of models to return.
+            metric (str): Metric to sort by (descending for r2, ascending for rmse).
+            
+        Returns:
+            List[ModelResult]: Top k models.
+        """
+        if not self.results:
+            return []
+            
+        # Determine sort order
+        reverse = True
+        if "rmse" in metric or "mae" in metric:
+            reverse = False
+            
+        sorted_models = sorted(
+            self.results,
+            key=lambda x: getattr(x, metric, -float('inf')) if getattr(x, metric) is not None else -float('inf'),
+            reverse=reverse
+        )
+        return sorted_models[:k]
+
     def get_traditional_models(self) -> Dict[str, Any]:
         """Get dict of initialized model objects."""
         return ModelRegistry.get_traditional_models()

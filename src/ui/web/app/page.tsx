@@ -1,65 +1,140 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { AgentService } from "@/lib/api";
+import Link from 'next/link';
+import { Activity, Database, Server, Cpu, MessageSquare, Beaker, Brain } from "lucide-react";
 
 export default function Home() {
+  const [status, setStatus] = useState<any>(null);
+  const [theoryStatus, setTheoryStatus] = useState<any>(null);
+
+  useEffect(() => {
+    // Poll status
+    const fetchData = async () => {
+      try {
+        const s = await AgentService.getSystemStatus();
+        setStatus(s);
+        const t = await AgentService.getTheoryStatus();
+        setTheoryStatus(t);
+      } catch (e) {
+        console.error("Failed to fetch status", e);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-neutral-50 p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-neutral-900 tracking-tight">IMCs Engineering Platform</h1>
+            <p className="text-neutral-500 mt-1">Intelligent Materials Catalyst System v3.3</p>
+          </div>
+          <div className="flex items-center space-x-2 text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="font-medium">System Operational</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Status Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">API Status</CardTitle>
+              <Server className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{status ? "Online" : "Connecting..."}</div>
+              <p className="text-xs text-muted-foreground">Backend v{status?.version || '...'}</p>
+            </CardContent>
+          </Card>
+
+          <Link href="/materials" className="block transition-transform hover:scale-105">
+            <Card className="cursor-pointer border-blue-200 hover:bg-blue-50">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-blue-900">Materials DB</CardTitle>
+                <Database className="h-4 w-4 text-blue-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-blue-700">{theoryStatus?.cif_files || 0}</div>
+                <p className="text-xs text-blue-400">View Cached Structures &rarr;</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/chat" className="block transition-transform hover:scale-105">
+            <Card className="cursor-pointer border-green-200 hover:bg-green-50">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-green-900">Research Agent</CardTitle>
+                <MessageSquare className="h-4 w-4 text-green-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-green-700">Chat</div>
+                <p className="text-xs text-green-400">Ask for plans & analysis &rarr;</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Training Jobs</CardTitle>
+              <Activity className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">Active processes</p>
+            </CardContent>
+          </Card>
         </div>
-      </main>
-    </div>
+
+        {/* Recent Activity / Graph Placeholder */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Link href="/experiments" className="block transition-transform hover:scale-105">
+            <Card className="cursor-pointer border-purple-200 hover:bg-purple-50">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-purple-900">Experiments</CardTitle>
+                <Beaker className="h-4 w-4 text-purple-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-purple-700">Workbench</div>
+                <p className="text-xs text-purple-400">Upload Data & Analyze &rarr;</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/ml" className="block transition-transform hover:scale-105">
+            <Card className="cursor-pointer border-blue-200 hover:bg-blue-50">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-blue-900">Machine Learning</CardTitle>
+                <Brain className="h-4 w-4 text-blue-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-blue-700">Model Center</div>
+                <p className="text-xs text-blue-400">Train & Explain Models &rarr;</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Card className="col-span-1">
+            <CardHeader>
+              <CardTitle>Model Performance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[200px] flex items-center justify-center border-2 border-dashed rounded-md bg-neutral-50 text-neutral-400">
+                No models trained
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </main>
   );
 }

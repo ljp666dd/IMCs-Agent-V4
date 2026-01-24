@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
-from services.ml.types import ModelType
+from src.services.ml.types import ModelType
 
 # Service Instance
-from agents.core.ml_agent import MLAgent
+from src.agents.core.ml_agent import MLAgent
 ml_service = MLAgent()
 
 router = APIRouter()

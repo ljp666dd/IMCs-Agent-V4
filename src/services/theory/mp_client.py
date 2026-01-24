@@ -33,17 +33,45 @@ class MPClient:
         if fields is None:
             fields = ["material_id", "structure", "formula_pretty", "formation_energy_per_atom"]
             
-        logger.info(f"Searching MP for {elements} (stable={is_stable})...")
+        logger.info(f"Searching MP for {len(elements)} elements (stable={is_stable})...")
+        all_docs = []
+        seen_ids = set()
+        
         try:
             with MPRester(self.api_key) as mpr:
-                docs = mpr.materials.summary.search(
-                    elements=elements,
-                    is_stable=is_stable,
-                    fields=fields
-                )
-                if limit and len(docs) > limit:
-                    docs = docs[:limit]
-                return docs
+                # MP API 'elements' means AND (contains ALL).
+                # To support broad search (OR), we iterate.
+                # However, to avoid 30+ requests, we focus on the first 5 or just strictly follow the list if small.
+                
+                # Strategy: If list is huge (>3), assume specific single-element searches are desired.
+                # If list is small (e.g. Pt, Ru), maybe user wants Pt-Ru alloy?
+                # User Prompt: "Find HER catalysts" -> Planner gave 30 elements.
+                # We should limit this to top candidates to avoid timeout/spam.
+                
+                search_targets = elements if len(elements) <= 3 else elements[:5] # Limit to top 5 candidates for demo speed
+                if len(elements) > 5:
+                    logger.warning(f"Truncating element list from {len(elements)} to {len(search_targets)} for API safety.")
+                
+                for el in search_targets:
+                    try:
+                        docs = mpr.materials.summary.search(
+                            elements=[el], # Must contain this element
+                            is_stable=is_stable,
+                            fields=fields
+                        )
+                        for d in docs:
+                            if str(d.material_id) not in seen_ids:
+                                all_docs.append(d)
+                                seen_ids.add(str(d.material_id))
+                    except Exception as loop_e:
+                         logger.warning(f"Failed search for {el}: {loop_e}")
+                
+            if limit and len(all_docs) > limit:
+                all_docs = all_docs[:limit]
+            
+            logger.info(f"Found {len(all_docs)} unique materials.")
+            return all_docs
+
         except Exception as e:
             logger.error(f"MP selection failed: {e}")
             return []
@@ -60,6 +88,11 @@ class MPClient:
                 struct = doc.structure
                 if struct:
                     path = os.path.join(output_dir, f"{doc.material_id}.cif")
+                    if os.path.exists(path):
+                        # Skip if already exists to save IO and preserve manually modified files
+                        count += 1
+                        continue
+                        
                     struct.to(filename=path)
                     count += 1
             except Exception as e:

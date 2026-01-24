@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
-from services.task.planner import TaskPlanner
-from services.task.executor import PlanExecutor
-from services.task.types import TaskPlan, TaskType
+from src.services.task.planner import TaskPlanner
+from src.services.task.executor import PlanExecutor
+from src.services.task.types import TaskPlan, TaskType
 
 # Initialize Services
 # In a real app, use Dependency Injection (Depends)
@@ -15,7 +15,7 @@ planner = TaskPlanner()
 
 # Ideally, we should import the initialized agents from a central container.
 # For now, minimal instantiation:
-from agents.core.task_manager import TaskManagerAgent
+from src.agents.core.task_manager import TaskManagerAgent
 # TaskManagerAgent wraps everything. We can rely on it.
 agent_instance = TaskManagerAgent() 
 
@@ -42,6 +42,14 @@ async def create_task(req: TaskRequest):
         "steps": plan.steps,
         "status": plan.status
     }
+
+class ChatRequest(BaseModel):
+    message: str
+
+@router.post("/chat")
+async def chat(req: ChatRequest):
+    """Process a chat message (Conversation or Task Command)."""
+    return agent_instance.process_chat_message(req.message)
 
 @router.post("/execute/{task_id}")
 async def execute_task(task_id: str, background_tasks: BackgroundTasks):

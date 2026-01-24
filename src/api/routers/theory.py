@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 
 # Service Instance
-from agents.core.theory_agent import TheoryDataAgent
+from src.agents.core.theory_agent import TheoryDataAgent
 theory_service = TheoryDataAgent()
 
 router = APIRouter()
@@ -42,3 +42,16 @@ async def download_cifs(req: SearchRequest, background_tasks: BackgroundTasks):
 async def get_status():
     """Get data status."""
     return theory_service.get_status()
+
+@router.get("/materials")
+async def list_materials():
+    """List all materials in DB."""
+    return theory_service.list_stored_materials()
+
+@router.get("/materials/{material_id}")
+async def get_material(material_id: str):
+    """Get material details + CIF."""
+    data = theory_service.get_material_details(material_id)
+    if not data:
+        raise HTTPException(status_code=404, detail="Material not found")
+    return data

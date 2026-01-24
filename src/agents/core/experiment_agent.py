@@ -62,15 +62,13 @@ class LSVResult:
     current_density_max: Optional[float] = None
     onset_potential: Optional[float] = None
     exchange_current_density: Optional[float] = None
-
+    data: Optional[Dict[str, List[float]]] = None
 
 @dataclass
 class TafelResult:
-    """Results from Tafel analysis."""
-    sample_id: str
-    tafel_slope: Optional[float] = None
-    exchange_current: Optional[float] = None
-    r_squared: Optional[float] = None
+    """Results from Tafel analysis.""" # ... (rest of TafelResult unchanged but not in view)
+
+
 
 
 class ExperimentDataAgent:
@@ -181,7 +179,11 @@ class ExperimentDataAgent:
                 sample_id=sample_id,
                 overpotential_10mA=eta_10,
                 current_density_max=float(np.max(J)),
-                onset_potential=onset
+                onset_potential=onset,
+                data={
+                    "voltage": V.tolist(),
+                    "current": J.tolist()
+                }
             )
             return result
             

@@ -24,6 +24,11 @@ class StructureFeaturizer:
          "mixing_enthalpy_proxy", "avg_valence_electrons", "std_valence_electrons", "volume"
     ]
 
+    @property
+    def feature_names(self) -> List[str]:
+        """Return list of feature names."""
+        return self.KNOWN_FEATURES
+
     @log_exception(logger)
     def extract(self, cif_path: str) -> Optional[np.ndarray]:
         """Extract features from a single CIF file."""

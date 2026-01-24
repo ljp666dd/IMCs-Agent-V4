@@ -32,3 +32,975 @@
 [2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
 [2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
 [2026-01-24 01:08:44] [INFO] [src.services.ml.data_manager] Split data: Train=1674, Test=419
+[2026-01-24 09:16:18] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 09:16:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:16:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:16:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:16:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:16:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:16:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 09:16:18] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 09:16:18] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 09:16:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:16:19] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:16:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:16:19] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:19:14] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 09:19:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:19:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:19:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:19:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:19:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:19:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 09:19:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 09:19:14] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 09:19:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:19:14] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:19:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:19:14] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [services.db.database] Database initialized at tests/test_imcs.db
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:25:01] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 09:25:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 09:25:01] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 09:25:01] [INFO] [src.services.task.planner] Created plan task_20260124_092501 ([catalyst_discovery]) for: Find a catalyst for HER
+[2026-01-24 09:49:00] [INFO] [services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:49:44] [INFO] [services.db.database] Database initialized at data/imcs.db
+[2026-01-24 09:55:18] [INFO] [services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:04:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:04:27] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:11:59] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-24 10:11:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:11:59] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=-0.2264
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.2643
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=-0.2695
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-0.3848
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished Ridge: R2=-0.7414
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=-0.6137
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=-1.7311
+[2026-01-24 10:11:59] [INFO] [src.services.ml.trainer] Finished SVR: R2=-0.4287
+[2026-01-24 10:12:01] [INFO] [src.services.ml.trainer] Finished KNN: R2=-0.5945
+[2026-01-24 10:12:01] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5177
+[2026-01-24 10:12:01] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.1048
+[2026-01-24 10:12:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:12:01] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:12:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:12:01] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:12:01] [WARNING] [agents.core.experiment_agent] Could not identify columns for LSV: Index(['V', 'I'], dtype='object')
+[2026-01-24 10:12:01] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 10:12:01] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 10:12:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:12:01] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:12:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:12:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:12:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:12:01] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:12:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 10:12:01] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 10:12:01] [INFO] [src.services.task.planner] Created plan task_20260124_101201 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-24 10:22:36] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 10:22:36] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:36] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:22:36] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:36] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:22:36] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:36] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:22:36] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 10:22:36] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 10:22:36] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:36] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:22:37] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:37] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:22:37] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:22:37] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:22:59] [INFO] [src.services.task.planner] Created plan task_20260124_102259 ([catalyst_discovery]) for: "Find HER catalysts
+[2026-01-24 10:23:20] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102259
+[2026-01-24 10:23:20] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:23:20] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:23:20] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:23:20] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:23:20] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:23:20] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:20] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:23:29] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102259
+[2026-01-24 10:23:29] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:23:29] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:23:29] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:23:29] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:23:29] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:23:29] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:29] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:23:34] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102259
+[2026-01-24 10:23:34] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:23:34] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:23:34] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:23:34] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:23:34] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:23:34] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:23:34] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:24:00] [INFO] [src.services.task.planner] Created plan task_20260124_102400 ([general]) for: 请进行
+[2026-01-24 10:24:07] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102400
+[2026-01-24 10:24:07] [INFO] [src.services.task.executor] Step 1: [task_manager] analyze
+[2026-01-24 10:24:34] [INFO] [src.services.task.planner] Created plan task_20260124_102434 ([property_prediction]) for: Train ML model
+[2026-01-24 10:24:36] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102434
+[2026-01-24 10:24:36] [INFO] [src.services.task.executor] Step 1: [theory] load_data
+[2026-01-24 10:24:36] [INFO] [src.services.task.executor] Step 2: [ml] train_all
+[2026-01-24 10:24:36] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:24:36] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:24:36] [INFO] [src.services.task.executor] Step 3: [ml] shap_analysis
+[2026-01-24 10:24:36] [INFO] [src.services.task.executor] Step 4: [task_manager] summarize
+[2026-01-24 10:25:49] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102434
+[2026-01-24 10:25:49] [INFO] [src.services.task.executor] Step 1: [theory] load_data
+[2026-01-24 10:25:49] [INFO] [src.services.task.executor] Step 2: [ml] train_all
+[2026-01-24 10:25:49] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:25:49] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:25:49] [INFO] [src.services.task.executor] Step 3: [ml] shap_analysis
+[2026-01-24 10:25:49] [INFO] [src.services.task.executor] Step 4: [task_manager] summarize
+[2026-01-24 10:28:48] [INFO] [src.services.task.planner] Created plan task_20260124_102848 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 10:28:52] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102848
+[2026-01-24 10:28:52] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:28:52] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:28:52] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:28:52] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:28:52] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:28:52] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:52] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:28:59] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102848
+[2026-01-24 10:28:59] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:28:59] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:28:59] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:28:59] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:28:59] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:28:59] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:28:59] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:34:54] [INFO] [src.services.task.executor] Executing Plan: task_20260124_102848
+[2026-01-24 10:34:54] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:34:54] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:34:54] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:34:54] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:34:54] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:34:54] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:34:54] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:35:04] [INFO] [src.services.task.planner] Created plan task_20260124_103504 ([catalyst_discovery]) for: "Find HER catalysts
+[2026-01-24 10:35:06] [INFO] [src.services.task.executor] Executing Plan: task_20260124_103504
+[2026-01-24 10:35:06] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:35:06] [ERROR] [src.services.task.executor] Step 1 failed: 'LiteratureAgent' object has no attribute 'search_semantic_scholar'
+[2026-01-24 10:35:06] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:35:06] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:35:06] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-24 10:35:06] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-24 10:35:06] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:43:48] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:43:48] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 10:43:48] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:43:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:43:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:44:43] [INFO] [src.services.task.planner] Created plan task_20260124_104443 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 10:44:45] [INFO] [src.services.task.executor] Executing Plan: task_20260124_104443
+[2026-01-24 10:44:45] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:44:45] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 10:44:46] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 10:44:46] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 10:44:52] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 10:44:52] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:44:52] [INFO] [src.services.theory.mp_client] Searching MP for ['Pt', 'Pd', 'Ni', 'Co', 'Fe', 'Cu', 'Au', 'Ag', 'Ir', 'Rh', 'Ru', 'Os', 'Mo', 'W', 'V', 'Nb', 'Ta', 'Ti', 'Zr', 'Hf', 'Mn', 'Re', 'Cr', 'Zn', 'Cd', 'In', 'Sn', 'Ga', 'Ge', 'Al', 'Sc', 'Y', 'La', 'Ce'] (stable=True)...
+[2026-01-24 10:44:57] [ERROR] [src.services.theory.mp_client] MP selection failed: REST query returned with error status code 422 on URL https://api.materialsproject.org/materials/summary/?elements=Pt%2CPd%2CNi%2CCo%2CFe%2CCu%2CAu%2CAg%2CIr%2CRh%2CRu%2COs%2CMo%2CW%2CV%2CNb%2CTa%2CTi%2CZr%2CHf%2CMn%2CRe%2CCr%2CZn%2CCd%2CIn%2CSn%2CGa%2CGe%2CAl%2CSc%2CY%2CLa%2CCe&is_stable=True&_limit=1000&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom with message:
+elements - String should have at most 60 characters
+[2026-01-24 10:44:57] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:44:57] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 10:44:58] [ERROR] [src.agents.core.ml_agent] Exception in load_from_db: 'StructureFeaturizer' object has no attribute 'feature_names'
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 169, in load_from_db
+    feature_names = self.featurizer.feature_names
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'StructureFeaturizer' object has no attribute 'feature_names'
+[2026-01-24 10:44:58] [ERROR] [src.services.task.executor] Step 3 failed: 'StructureFeaturizer' object has no attribute 'feature_names'
+[2026-01-24 10:44:58] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:47:40] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:47:40] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 10:47:40] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 10:47:40] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 10:47:40] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 10:48:02] [INFO] [src.services.task.planner] Created plan task_20260124_104802 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 10:48:28] [INFO] [src.services.task.executor] Executing Plan: task_20260124_104802
+[2026-01-24 10:48:28] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:48:28] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 10:48:29] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 10:48:29] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 10:48:31] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 10:48:31] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:48:31] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-24 10:48:34] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-24 10:48:56] [INFO] [src.services.theory.mp_client] Found 5 unique materials.
+[2026-01-24 10:48:56] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:48:56] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 10:48:56] [INFO] [src.services.ml.data_manager] Split data: Train=3, Test=1
+[2026-01-24 10:48:56] [INFO] [src.agents.core.ml_agent] Loaded 4 samples from DB.
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished Ridge: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished SVR: R2=nan
+[2026-01-24 10:48:56] [ERROR] [src.services.ml.trainer] Failed to train KNN: Expected n_neighbors <= n_samples_fit, but n_neighbors = 5, n_samples_fit = 3, n_samples = 3
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=nan
+[2026-01-24 10:48:56] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 10:50:19] [INFO] [src.services.task.executor] Executing Plan: task_20260124_104802
+[2026-01-24 10:50:19] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 10:50:19] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 10:50:21] [INFO] [src.services.literature.search_engine] Found 10 papers on SS.
+[2026-01-24 10:50:21] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 10:50:23] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 10:50:23] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 10:50:23] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-24 10:50:23] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-24 10:50:35] [INFO] [src.services.task.planner] Created plan task_20260124_105035 ([general]) for: recommend
+[2026-01-24 10:50:44] [INFO] [src.services.theory.mp_client] Found 5 unique materials.
+[2026-01-24 10:50:44] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 10:50:44] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 10:50:45] [INFO] [src.services.ml.data_manager] Split data: Train=3, Test=1
+[2026-01-24 10:50:45] [INFO] [src.agents.core.ml_agent] Loaded 4 samples from DB.
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished Ridge: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished SVR: R2=nan
+[2026-01-24 10:50:45] [ERROR] [src.services.ml.trainer] Failed to train KNN: Expected n_neighbors <= n_samples_fit, but n_neighbors = 5, n_samples_fit = 3, n_samples = 3
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=nan
+[2026-01-24 10:50:45] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:03:34] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:03:34] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:03:34] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:03:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:03:34] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:03:53] [INFO] [src.services.task.planner] Created plan task_20260124_110353 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:03:55] [INFO] [src.services.task.executor] Executing Plan: task_20260124_110353
+[2026-01-24 11:03:55] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:03:55] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:03:56] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:03:56] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:03:58] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:03:58] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:03:58] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-24 11:04:00] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-24 11:04:22] [INFO] [src.services.theory.mp_client] Found 50 unique materials.
+[2026-01-24 11:04:22] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:04:22] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:04:22] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:04:22] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:04:22] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:04:22] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:04:22] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:04:22] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:04:23] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:04:23] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:04:23] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:04:23] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:04:23] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:04:24] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:04:24] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:04:24] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:04:24] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:18:08] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:18:08] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:18:08] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:18:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:18:08] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:18:53] [INFO] [src.services.task.planner] Created plan task_20260124_111853 ([catalyst_discovery]) for: "Find HER catalysts
+[2026-01-24 11:18:56] [INFO] [src.services.task.executor] Executing Plan: task_20260124_111853
+[2026-01-24 11:18:56] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:18:56] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: "Find HER catalysts
+[2026-01-24 11:18:57] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:18:57] [INFO] [src.services.literature.search_engine] Searching arXiv: "Find HER catalysts
+[2026-01-24 11:19:01] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:19:01] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:19:01] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:19:01] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:19:01] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:19:01] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:19:01] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:19:01] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:19:01] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:19:01] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:19:01] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:19:02] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:19:02] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:19:02] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:19:02] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:19:02] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:19:03] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:19:03] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:19:03] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:19:03] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:20:03] [INFO] [src.services.task.executor] Executing Plan: task_20260124_111853
+[2026-01-24 11:20:03] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:20:03] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: "Find HER catalysts
+[2026-01-24 11:20:04] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:20:04] [INFO] [src.services.literature.search_engine] Searching arXiv: "Find HER catalysts
+[2026-01-24 11:20:06] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:20:06] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:20:06] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:20:06] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:20:06] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:20:06] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:20:06] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:20:06] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:20:06] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:20:07] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:20:07] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:06] [INFO] [src.services.task.planner] Created plan task_20260124_112806 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:28:08] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:08] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:08] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:09] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:09] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:09] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:09] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:28:09] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:10] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:10] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:10] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:11] [INFO] [src.services.literature.search_engine] Found 10 papers on SS.
+[2026-01-24 11:28:11] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:11] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:11] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:11] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:11] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:11] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:11] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:11] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:11] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:11] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:12] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:28:12] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:12] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:12] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:12] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:12] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:12] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:13] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:13] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:13] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:13] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:13] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:13] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:28:13] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:13] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:13] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:14] [INFO] [src.services.literature.search_engine] Found 10 papers on SS.
+[2026-01-24 11:28:14] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:14] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:14] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:14] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:14] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:14] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:14] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:14] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:14] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:15] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:15] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:15] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:15] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:15] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:15] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:15] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:15] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:15] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:15] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:15] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:16] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:16] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:16] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:16] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:16] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:16] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:16] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:16] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:17] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:17] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:17] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:28:22] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112806
+[2026-01-24 11:28:22] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:28:22] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:28:24] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:28:24] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:28:26] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:28:26] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:28:26] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:28:26] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:28:26] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:28:26] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:28:26] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:28:26] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:28:27] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:28:27] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:28:27] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:29:05] [INFO] [src.services.task.planner] Created plan task_20260124_112905 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:29:11] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112905
+[2026-01-24 11:29:11] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:29:11] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:29:12] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:29:12] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:29:14] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:29:14] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:29:14] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:29:14] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:29:14] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:29:14] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:29:14] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:29:14] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:29:15] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:29:15] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:29:17] [INFO] [src.services.task.executor] Executing Plan: task_20260124_112905
+[2026-01-24 11:29:17] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:29:17] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:29:18] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:29:18] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:29:21] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:29:21] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:29:21] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:29:21] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:29:21] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:29:21] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:29:21] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6838
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6409
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.7316
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.6379
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5887
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5094
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.6998
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6902
+[2026-01-24 11:29:21] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.5855
+[2026-01-24 11:29:22] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.5821
+[2026-01-24 11:29:22] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:29:22] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:32:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:32:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:32:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:32:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:32:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:32:30] [INFO] [src.services.task.planner] Created plan task_20260124_113230 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:32:32] [INFO] [src.services.task.executor] Executing Plan: task_20260124_113230
+[2026-01-24 11:32:32] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:32:32] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:32:33] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:32:33] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:32:35] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:32:35] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:32:35] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:32:35] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:32:35] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:32:35] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:32:35] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:32:35] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-24 11:32:35] [INFO] [src.agents.core.ml_agent] Selected 9 features: ['density', 'std_Z', 'std_mass', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-24 11:32:35] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:32:35] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6667
+[2026-01-24 11:32:35] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.5363
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.6951
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7099
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.7494
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.7479
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.7389
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6441
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.6573
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.7006
+[2026-01-24 11:32:36] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:32:36] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:33:13] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:33:13] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:33:13] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:33:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:33:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:33:41] [INFO] [src.services.task.planner] Created plan task_20260124_113341 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:33:44] [INFO] [src.services.task.executor] Executing Plan: task_20260124_113341
+[2026-01-24 11:33:44] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:33:44] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:33:45] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:33:45] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:33:47] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:33:47] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:33:47] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:33:47] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:33:47] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:33:47] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:33:47] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:33:47] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-24 11:33:47] [INFO] [src.services.task.executor] Executing Plan: task_20260124_113341
+[2026-01-24 11:33:47] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:33:47] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:33:47] [INFO] [src.agents.core.ml_agent] Selected 9 features: ['density', 'std_Z', 'std_mass', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6667
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.5363
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.6951
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7099
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.7494
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.7479
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.7389
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6441
+[2026-01-24 11:33:47] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.6573
+[2026-01-24 11:33:48] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.7006
+[2026-01-24 11:33:48] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:33:48] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:33:49] [INFO] [src.services.literature.search_engine] Found 10 papers on SS.
+[2026-01-24 11:33:49] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:33:51] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:33:51] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:33:51] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:33:51] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:33:51] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:33:51] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:33:51] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:33:51] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-24 11:33:51] [INFO] [src.agents.core.ml_agent] Selected 9 features: ['density', 'std_Z', 'std_mass', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6667
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.5363
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.6951
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7099
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.7494
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.7479
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.7389
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6441
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.6573
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.7006
+[2026-01-24 11:33:51] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:33:51] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:35:18] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:35:18] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:35:18] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:35:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:35:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:37:11] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:37:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:37:11] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:37:23] [INFO] [src.services.task.planner] Created plan task_20260124_113723 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:37:32] [INFO] [src.services.task.executor] Executing Plan: task_20260124_113723
+[2026-01-24 11:37:32] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:37:32] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:37:33] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:37:33] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:37:35] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:37:35] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:37:35] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:37:35] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:37:35] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:37:35] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:37:35] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:37:35] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-24 11:37:35] [INFO] [src.agents.core.ml_agent] Selected 9 features: ['density', 'std_Z', 'std_mass', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-24 11:37:35] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:37:35] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6667
+[2026-01-24 11:37:35] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.5363
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.6951
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7099
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.7494
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.7479
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.7389
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6441
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.6573
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.7006
+[2026-01-24 11:37:36] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:37:36] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:40:08] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:40:08] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 11:40:08] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 11:40:08] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 11:40:08] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 11:40:24] [INFO] [src.services.task.planner] Created plan task_20260124_114024 ([catalyst_discovery]) for: Find HER catalysts
+[2026-01-24 11:40:27] [INFO] [src.services.task.executor] Executing Plan: task_20260124_114024
+[2026-01-24 11:40:27] [INFO] [src.services.task.executor] Step 1: [literature] search
+[2026-01-24 11:40:27] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HER catalysts
+[2026-01-24 11:40:28] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-24 11:40:28] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HER catalysts
+[2026-01-24 11:40:30] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-24 11:40:30] [INFO] [src.services.task.executor] Step 2: [theory] download
+[2026-01-24 11:40:30] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-24 11:40:30] [INFO] [src.services.task.executor] Step 3: [ml] train
+[2026-01-24 11:40:30] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-24 11:40:30] [INFO] [src.services.ml.data_manager] Split data: Train=39, Test=10
+[2026-01-24 11:40:30] [INFO] [src.agents.core.ml_agent] Loaded 49 samples from DB.
+[2026-01-24 11:40:30] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-24 11:40:30] [INFO] [src.agents.core.ml_agent] Selected 9 features: ['density', 'std_Z', 'std_mass', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.6667
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.5363
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.6951
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7099
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.7494
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.7479
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.7389
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.6441
+[2026-01-24 11:40:30] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.6573
+[2026-01-24 11:40:31] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.7006
+[2026-01-24 11:40:31] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0092
+[2026-01-24 11:40:31] [INFO] [src.services.task.executor] Step 4: [task_manager] recommend
+[2026-01-24 11:42:05] [INFO] [src.services.task.planner] Created plan task_20260124_114205 ([general]) for: 2
+[2026-01-24 11:42:13] [INFO] [src.services.task.planner] Created plan task_20260124_114213 ([catalyst_discovery]) for: 2. **Analysis**: Use the trained High-Performance Model to screen new candidates
+[2026-01-24 12:03:52] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:03:52] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 12:03:52] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:03:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:03:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 12:04:05] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:04:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 12:04:45] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:04:45] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:04:45] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 12:07:17] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:07:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:07:17] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 12:11:05] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 12:11:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.

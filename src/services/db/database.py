@@ -50,6 +50,37 @@ class DatabaseService:
             cursor.execute(query, (material_id, formula, energy, cif_path))
             return cursor.lastrowid
             
+    def list_materials(self, limit: int = 100) -> List[Dict]:
+        """List stored materials."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM materials ORDER BY created_at DESC LIMIT ?", (limit,))
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+            
+    def get_material_by_id(self, material_id: str) -> Optional[Dict]:
+        """Get material details including CIF content."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM materials WHERE material_id = ?", (material_id,))
+            row = cursor.fetchone()
+            
+            if not row:
+                return None
+            
+            data = dict(row)
+            # Read CIF content if path exists
+            cif_path = data.get("cif_path")
+            if cif_path and os.path.exists(cif_path):
+                with open(cif_path, "r") as f:
+                    data["cif_content"] = f.read()
+            else:
+                data["cif_content"] = None
+                
+            return data
+
     # ========== Experiments ==========
     
     @log_exception(logger)
@@ -64,6 +95,17 @@ class DatabaseService:
             cursor.execute(query, (name, exp_type, raw_path, json.dumps(results)))
             return cursor.lastrowid
             
+    def fetch_training_set(self, target_col: str = "formation_energy") -> List[Dict]:
+        """Fetch data for training."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            # Fetch only rows where target is not null
+            query = f"SELECT material_id, formula, cif_path, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+
     # ========== Models ==========
     
     @log_exception(logger)
