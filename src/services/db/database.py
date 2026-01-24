@@ -35,6 +35,28 @@ class DatabaseService:
             conn.executescript(schema)
         logger.info(f"Database initialized at {self.db_path}")
 
+    # ========== Users (v4.0) ==========
+
+    def create_user(self, username: str, password_hash: str) -> Optional[int]:
+        """Create a new user."""
+        query = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
+        try:
+            with self._get_conn() as conn:
+                cursor = conn.cursor()
+                cursor.execute(query, (username, password_hash))
+                return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            return None # Duplicate username
+
+    def get_user_by_username(self, username: str) -> Optional[Dict]:
+        """Get user by username."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+
     # ========== Materials ==========
     
     @log_exception(logger)

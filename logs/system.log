@@ -1004,3 +1004,18 @@ AttributeError: 'StructureFeaturizer' object has no attribute 'feature_names'
 [2026-01-24 12:11:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
 [2026-01-24 12:11:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
 [2026-01-24 12:11:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-24 16:00:02] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-24 16:00:02] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.

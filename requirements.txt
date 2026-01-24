@@ -18,3 +18,7 @@ streamlit-agraph
 stmol
 plotly
 streamlit-chat
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+fastapi-users

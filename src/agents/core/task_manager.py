@@ -104,39 +104,53 @@ class TaskManagerAgent:
         """
         msg_lower = message.lower().strip()
         
-        # 1. Heuristic: Is this a Command?
-        # Commands usually start with verbs or are long sentences describing a goal.
-        # Follow-ups are usually short ("2", "yes", "ok") or questions ("why?").
+        # Determine State (Basic State Machine)
+        if not hasattr(self, 'conversation_state'):
+            self.conversation_state = 'idle'
+            self.draft_plan_context = {}
+
+        # 1. Start Planning
+        PLAN_KEYWORDS = ["create plan", "find", "search", "train", "analyze", "discover"]
+        is_start_command = any(k in msg_lower for k in PLAN_KEYWORDS) and len(message.split()) > 2
         
-        is_command = False
-        keywords = ["create plan", "find", "search", "train", "analyze", "discover"]
-        
-        if len(message.split()) > 3 and any(k in msg_lower for k in keywords):
-            is_command = True
-        elif "plan" in msg_lower:
-            is_command = True
-            
-        # 2. Handle Command -> Create Plan
-        if is_command:
-            plan = self.create_plan(message)
+        if self.conversation_state == 'idle' and is_start_command:
+            self.conversation_state = 'planning'
+            self.draft_plan_context['objective'] = message
             return {
-                "type": "plan",
-                "content": plan
+                "type": "chat",
+                "content": f"I understand you want to: '{message}'.\n\nBefore I execute, let's refine the plan:\n1. **Literature**: Should I search specifically on arXiv or ChemRxiv?\n2. **Theory**: Do you have target elements in mind (e.g. Pt, Ni)?"
             }
-            
-        # 3. Handle Follow-up / Conversation
-        # If we have a previous plan context.. specifically 'recommend' step output.
-        # Since we don't store "last_recommendation" in memory explicitly, we just echo.
-        # Future: Store conversation context.
-        
+
+        # 2. Refine Plan (Planning Mode)
+        if self.conversation_state == 'planning':
+            if "execute" in msg_lower or "go" in msg_lower or "yes" in msg_lower:
+                # Finalize
+                final_request = f"{self.draft_plan_context.get('objective')} {message}"
+                plan = self.create_plan(final_request)
+                self.conversation_state = 'idle'
+                self.draft_plan_context = {}
+                return {
+                    "type": "plan",
+                    "content": plan
+                }
+            else:
+                # Accumulate context
+                self.draft_plan_context['details'] = message
+                return {
+                    "type": "chat",
+                    "content": "Noted. Any specific requirements for the Machine Learning model? (e.g. 'Use Random Forest' or 'Deep Learning')\n\nType **'Execute'** to start."
+                }
+
+        # 3. Idle / Follow-up Mode
         response_text = f"I received: '{message}'.\n"
-        
         if msg_lower in ["2", "2.", "analysis"]:
-            response_text = "To proceed with Analysis (Step 2), please click the 'Execute' button on the generated plan above. Or say 'Create plan for Analysis' to start a specifc task."
-        elif msg_lower in ["1", "literature"]:
-             response_text = "To review Literature (Step 1), check the plan above."
+            response_text = "To proceed with Analysis (Step 2), please click the 'Execute' button on the plan card."
+        elif msg_lower in ["reset", "cancel"]:
+            self.conversation_state = 'idle'
+            self.draft_plan_context = {}
+            response_text = "Conversation reset. How can I help?"
         else:
-            response_text += "If this is a new research goal, please describe it in a full sentence (e.g., 'Find catalysts for CO2RR')."
+            response_text += "You are in IDLE mode. Type 'Find catalysts...' to start a new task."
             
         return {
             "type": "chat",

@@ -34,6 +34,12 @@ app.include_router(ml.router, prefix="/ml", tags=["Machine Learning"])
 app.include_router(theory.router, prefix="/theory", tags=["Theory"])
 app.include_router(experiment.router, prefix="/experiment", tags=["Experiment"])
 
+try:
+    from src.api.routers import auth
+    app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
+except ImportError:
+    pass # Dependencies not installed yet
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
