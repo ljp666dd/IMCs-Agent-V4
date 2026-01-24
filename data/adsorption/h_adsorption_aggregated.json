@@ -1,0 +1,452 @@
+{
+  "mp-1187702": {
+    "material_id": "mp-1187702",
+    "surface_composition": "W3V",
+    "delta_g_h": -1.30115925916013,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-979289": {
+    "material_id": "mp-979289",
+    "surface_composition": "W3Ta",
+    "delta_g_h": -1.0512535152565476,
+    "num_records": 2,
+    "energy_std": 0.2245232371988095,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-977434": {
+    "material_id": "mp-977434",
+    "surface_composition": "Nb3Ru",
+    "delta_g_h": -0.020986643757140655,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1188030": {
+    "material_id": "mp-1188030",
+    "surface_composition": "Zr3Cd",
+    "delta_g_h": -1.0761065565593242,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-20695": {
+    "material_id": "mp-20695",
+    "surface_composition": "Zr3In",
+    "delta_g_h": -1.091705890458769,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1418": {
+    "material_id": "mp-1418",
+    "surface_composition": "Ni3Fe",
+    "delta_g_h": -0.5174851455721429,
+    "num_records": 6,
+    "energy_std": 0.4466601192380958,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-11501": {
+    "material_id": "mp-11501",
+    "surface_composition": "Ni3Mn",
+    "delta_g_h": -0.4143813481559562,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1184119": {
+    "material_id": "mp-1184119",
+    "surface_composition": "Pd3Cu",
+    "delta_g_h": -0.2259924477611719,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-862621": {
+    "material_id": "mp-862621",
+    "surface_composition": "Pt3Ga",
+    "delta_g_h": 1.0751536365087304,
+    "num_records": 6,
+    "energy_std": 0.8646531567717828,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-20971": {
+    "material_id": "mp-20971",
+    "surface_composition": "Pt3Sn",
+    "delta_g_h": 0.8443490709278194,
+    "num_records": 4,
+    "energy_std": 0.22508100134133857,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-865798": {
+    "material_id": "mp-865798",
+    "surface_composition": "Cu3Ga",
+    "delta_g_h": 0.18705957895974734,
+    "num_records": 3,
+    "energy_std": 0.4611334597795778,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-30836": {
+    "material_id": "mp-30836",
+    "surface_composition": "Pd3Ta",
+    "delta_g_h": 0.10483165224380286,
+    "num_records": 2,
+    "energy_std": 0.2327810757997213,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-672661": {
+    "material_id": "mp-672661",
+    "surface_composition": "Fe3Ga",
+    "delta_g_h": -0.16738446723036304,
+    "num_records": 4,
+    "energy_std": 0.8919606509783443,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1226559": {
+    "material_id": "mp-1226559",
+    "surface_composition": "Co3Ni",
+    "delta_g_h": -0.32298433027872164,
+    "num_records": 4,
+    "energy_std": 0.6194317182737944,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-2377": {
+    "material_id": "mp-2377",
+    "surface_composition": "Mo3Ga",
+    "delta_g_h": 1.1579947264408759,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1225687": {
+    "material_id": "mp-1225687",
+    "surface_composition": "CuNi",
+    "delta_g_h": -0.862092242349604,
+    "num_records": 3,
+    "energy_std": 0.2791808584853738,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1207781": {
+    "material_id": "mp-1207781",
+    "surface_composition": "Y3Ru",
+    "delta_g_h": -1.048186928356671,
+    "num_records": 2,
+    "energy_std": 0.016749355101637775,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-30842": {
+    "material_id": "mp-30842",
+    "surface_composition": "Pd3Zr",
+    "delta_g_h": -0.17286330925978177,
+    "num_records": 2,
+    "energy_std": 0.10482437320024474,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-13495": {
+    "material_id": "mp-13495",
+    "surface_composition": "PdZr",
+    "delta_g_h": -0.16649853258238068,
+    "num_records": 4,
+    "energy_std": 0.3280411017933002,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-999376": {
+    "material_id": "mp-999376",
+    "surface_composition": "NbPt",
+    "delta_g_h": -0.3345298483072554,
+    "num_records": 4,
+    "energy_std": 0.18092639865300575,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1216323": {
+    "material_id": "mp-1216323",
+    "surface_composition": "MoV",
+    "delta_g_h": -0.8063829998090739,
+    "num_records": 4,
+    "energy_std": 0.04021479475747455,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-21260": {
+    "material_id": "mp-21260",
+    "surface_composition": "FeSn",
+    "delta_g_h": -0.15660627609223637,
+    "num_records": 5,
+    "energy_std": 0.4552172928347442,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-10598": {
+    "material_id": "mp-10598",
+    "surface_composition": "CuSn",
+    "delta_g_h": 0.45128687827282005,
+    "num_records": 3,
+    "energy_std": 0.08094500568776694,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1121": {
+    "material_id": "mp-1121",
+    "surface_composition": "CoGa",
+    "delta_g_h": -0.12088664081868217,
+    "num_records": 6,
+    "energy_std": 0.6085785864267927,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1078526": {
+    "material_id": "mp-1078526",
+    "surface_composition": "GaPd",
+    "delta_g_h": 0.334593046739478,
+    "num_records": 4,
+    "energy_std": 0.3199149320787834,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-644311": {
+    "material_id": "mp-644311",
+    "surface_composition": "CuPt",
+    "delta_g_h": -0.24730780505976213,
+    "num_records": 2,
+    "energy_std": 0.062488902200129814,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-894": {
+    "material_id": "mp-894",
+    "surface_composition": "PtZn",
+    "delta_g_h": -0.18487223715689538,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1002104": {
+    "material_id": "mp-1002104",
+    "surface_composition": "LaPt",
+    "delta_g_h": -0.2077416366582554,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-20536": {
+    "material_id": "mp-20536",
+    "surface_composition": "CoSn",
+    "delta_g_h": 0.09062955484208146,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1220316": {
+    "material_id": "mp-1220316",
+    "surface_composition": "NbW",
+    "delta_g_h": -1.3500004278602944,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1002133": {
+    "material_id": "mp-1002133",
+    "surface_composition": "GaLa",
+    "delta_g_h": -0.49011321455961365,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-2369": {
+    "material_id": "mp-2369",
+    "surface_composition": "PdSn",
+    "delta_g_h": 0.40717672614212574,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-21215": {
+    "material_id": "mp-21215",
+    "surface_composition": "InPd",
+    "delta_g_h": 0.3145411481428084,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-975079": {
+    "material_id": "mp-975079",
+    "surface_composition": "Zn3Mn",
+    "delta_g_h": 0.010720468942082562,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-2515": {
+    "material_id": "mp-2515",
+    "surface_composition": "Pt3Cr",
+    "delta_g_h": -0.20134981856151057,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1183648": {
+    "material_id": "mp-1183648",
+    "surface_composition": "Cd3Pd",
+    "delta_g_h": 0.39241373404095725,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-633": {
+    "material_id": "mp-633",
+    "surface_composition": "Sn3La",
+    "delta_g_h": 0.532830257244342,
+    "num_records": 2,
+    "energy_std": 0.09114936029982346,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-11571": {
+    "material_id": "mp-11571",
+    "surface_composition": "Sn3Y",
+    "delta_g_h": 0.664722406242646,
+    "num_records": 2,
+    "energy_std": 0.134375936098877,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-999133": {
+    "material_id": "mp-999133",
+    "surface_composition": "PdTa",
+    "delta_g_h": -0.6873044533594737,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1218218": {
+    "material_id": "mp-1218218",
+    "surface_composition": "FeTa",
+    "delta_g_h": -0.7314279843585325,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-1217954": {
+    "material_id": "mp-1217954",
+    "surface_composition": "NiTa",
+    "delta_g_h": -0.7539034990613516,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "101"
+    ]
+  },
+  "mp-862655": {
+    "material_id": "mp-862655",
+    "surface_composition": "Ru3W",
+    "delta_g_h": -0.5661823660584275,
+    "num_records": 1,
+    "energy_std": 0,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-1183847": {
+    "material_id": "mp-1183847",
+    "surface_composition": "Pd3Co",
+    "delta_g_h": 0.27018985778950605,
+    "num_records": 12,
+    "energy_std": 0.7164680850532111,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-21845": {
+    "material_id": "mp-21845",
+    "surface_composition": "Pd3Fe",
+    "delta_g_h": 0.14112129801898257,
+    "num_records": 12,
+    "energy_std": 0.783435836589867,
+    "facets": [
+      "111"
+    ]
+  },
+  "mp-31138": {
+    "material_id": "mp-31138",
+    "surface_composition": "Pd3Mn",
+    "delta_g_h": -0.20406175048656414,
+    "num_records": 3,
+    "energy_std": 0.060735596414832074,
+    "facets": [
+      "111"
+    ]
+  }
+}

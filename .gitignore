@@ -1,24 +1,33 @@
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-.env
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
 venv/
-.venv/
+.env
+
+# Data Output (User data)
+data/ml_agent/
+data/experimental/
+data/analysis/
+data/theory/
+data/literature/
+data/tasks/
+logs/
 
 # IDE
 .vscode/
 .idea/
 
-# Project Data (Large Files)
-data/
-*.pkl
-*.json
-*.csv
-!src/ui/web/package.json
-!src/ui/web/tsconfig.json
+# Agent
+.gemini/
+.agent/
 
-# Node
-node_modules/
-dist/
-.next/
+# Frontend
+src/ui/web/node_modules/
+src/ui/web/.next/
+src/ui/web/out/
+src/ui/web/build/
+.DS_Store

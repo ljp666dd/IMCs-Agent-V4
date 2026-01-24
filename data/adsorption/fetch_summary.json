@@ -1,0 +1,10 @@
+{
+  "total_reactions_fetched": 15000,
+  "h_filtered_by_adsorbate": 6482,
+  "h_filtered_by_elements": 2109,
+  "h_matched": 470,
+  "oh_filtered_by_adsorbate": 759,
+  "oh_filtered_by_elements": 200,
+  "oh_matched": 17,
+  "unique_matched_compositions": 76
+}
