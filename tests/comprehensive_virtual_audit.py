@@ -5,7 +5,9 @@ import logging
 from typing import List, Dict, Any
 
 # Setup path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR, "src"))
 
 from agents.core.ml_agent import MLAgent
 from agents.core.experiment_agent import ExperimentDataAgent, ExperimentDataConfig

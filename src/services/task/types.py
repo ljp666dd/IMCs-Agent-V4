@@ -22,6 +22,10 @@ class TaskStep:
     status: str = "pending" # pending, running, completed, failed
     result: Any = None
     error: str = None
+    max_retries: int = 0
+    attempts: int = 0
+    max_replans: int = 0
+    replan_attempts: int = 0
 
 @dataclass
 class TaskPlan:

@@ -54,6 +54,12 @@ class MLAgent:
     """
     
     KNOWN_FEATURES = StructureFeaturizer.KNOWN_FEATURES
+    DOS_FEATURE_KEYS = [
+        "d_band_center", "d_band_width", "d_band_filling",
+        "DOS_EF", "DOS_window", "unoccupied_d_states",
+        "epsilon_d_minus_EF", "valence_DOS_slope",
+        "num_DOS_peaks", "first_peak_position", "total_states"
+    ]
     
     def __init__(self, config: MLAgentConfig = None):
         """
@@ -153,14 +159,26 @@ class MLAgent:
         y_list = []
         id_list = []
         
+        # 从数据库读取 CIF 并提取结构特征(当前特征主要来自结构/几何)
         for row in rows:
             cif_path = row.get("cif_path")
             target = row.get(target_col)
+            dos_data = row.get("dos_data")
             
             if cif_path and os.path.exists(cif_path) and target is not None:
                 # Extract features
                 feats = self.featurizer.extract(cif_path)
                 if feats is not None:
+                    # 追加 DOS 描述符(如存在), 否则填 0
+                    dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                    if dos_data:
+                        try:
+                            if isinstance(dos_data, str):
+                                dos_data = json.loads(dos_data)
+                            dos_vec = [float(dos_data.get(k, 0.0)) for k in self.DOS_FEATURE_KEYS]
+                        except Exception:
+                            dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                    feats = np.concatenate([feats, np.array(dos_vec, dtype=np.float32)])
                     X_list.append(feats)
                     y_list.append(target)
                     id_list.append(row.get("material_id"))
@@ -168,7 +186,7 @@ class MLAgent:
         if X_list:
             X = np.array(X_list)
             y = np.array(y_list)
-            feature_names = self.featurizer.feature_names
+            feature_names = self.featurizer.feature_names + [f"dos_{k}" for k in self.DOS_FEATURE_KEYS]
             
             # Populate DataManager manually
             self.data_manager.X = X
@@ -237,8 +255,12 @@ class MLAgent:
         """
         if self.X_train is None:
             return
-            
-        logger.info(f"Performing feature selection (target top_n={top_n})...")
+
+        n_features = self.X_train.shape[1] if hasattr(self.X_train, "shape") else top_n
+        if not n_features:
+            return
+        safe_top_n = min(top_n, n_features)
+        logger.info(f"Performing feature selection (target top_n={safe_top_n})...")
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.feature_selection import SelectFromModel
         
@@ -246,7 +268,7 @@ class MLAgent:
         # Use simple RF for robustness
         selector = SelectFromModel(
             estimator=RandomForestRegressor(n_estimators=50, random_state=42),
-            max_features=top_n
+            max_features=safe_top_n
         )
         selector.fit(self.X_train, self.y_train)
         
@@ -261,9 +283,12 @@ class MLAgent:
         
         logger.info(f"Selected {len(new_feats)} features: {new_feats}")
         
-        self.data_manager.X = self.data_manager.X[:, mask]
-        self.data_manager.X_train = self.data_manager.X_train[:, mask]
-        self.data_manager.X_test = self.data_manager.X_test[:, mask]
+        if getattr(self.data_manager, "X", None) is not None:
+            self.data_manager.X = self.data_manager.X[:, mask]
+        if getattr(self.data_manager, "X_train", None) is not None:
+            self.data_manager.X_train = self.data_manager.X_train[:, mask]
+        if getattr(self.data_manager, "X_test", None) is not None:
+            self.data_manager.X_test = self.data_manager.X_test[:, mask]
         self.data_manager.feature_names = new_feats
         
         return new_feats
@@ -422,6 +447,7 @@ class MLAgent:
         else:
             return {}
 
+        # 输出 material_id -> prediction, 供证据链与推荐使用
         pred_map = {}
         for mid, val in zip(self.data_manager.material_ids, preds):
             if mid is None:

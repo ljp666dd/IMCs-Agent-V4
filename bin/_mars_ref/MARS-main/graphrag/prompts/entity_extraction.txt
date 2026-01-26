@@ -1,0 +1,272 @@
+## Objective
+Extract all entities related to the synthesis process from the given materials science literature and determine the relationships between these entities.
+
+## Entity Extraction Steps
+1. Carefully read the given materials science literature.
+2. Identify and extract the following types of entities:
+   - Reagent names
+   - Equipment names
+   - Precursor names
+   - Final synthesized product names
+   - Reagent dosages
+   - Reaction conditions (e.g., temperature, time, pressure, etc.)
+   - Solvents
+   - Catalysts
+   - Intermediate products
+   - Purification methods
+   - Characterization techniques
+   - Crystallization methods
+   - Reaction vessels
+   - Safety measures
+   - Storage conditions
+   - Reaction atmosphere (e.g., inert gas, oxidizing gas, etc.)
+   - Stirring/mixing methods
+   - Cooling/heating methods
+   - Reaction mechanisms
+   - Yields
+   - Morphology control factors (e.g., surfactants, templates, etc.)
+3. For each identified entity, extract the following information:
+   - Entity name: The specific name of the entity
+   - Entity type: As listed in the types above
+   - Entity description: Brief description of the entity's characteristics or role in the synthesis process
+4. Use the following format to output each entity:
+   ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+## Relationship Extraction Steps
+1. Based on the entities identified in the first step, determine the relationships between entities.
+2. Focus on the following types of relationships:
+   - Relationship between reagents and their dosages
+   - Relationship between precursors and final synthesized products
+   - Relationship between reaction conditions and synthesis steps
+   - Relationship between equipment and specific synthesis steps
+   - Relationship between solvents and reactants
+   - Relationship between catalysts and reaction mechanisms
+   - Relationship between intermediate products and final products
+   - Relationship between purification methods and products
+   - Relationship between characterization techniques and product properties
+   - Relationship between crystallization methods and product morphology
+   - Relationship between reaction vessels and reaction conditions
+   - Relationship between safety measures and specific steps
+   - Relationship between storage conditions and product stability
+   - Relationship between reaction atmosphere and reaction mechanism
+   - Relationship between stirring/mixing methods and reaction homogeneity
+   - Relationship between cooling/heating methods and reaction kinetics
+   - Relationship between morphology control factors and product properties
+3. For each identified relationship, extract the following information:
+   - Source entity: The starting entity of the relationship
+   - Target entity: The ending entity of the relationship
+   - Relationship description: Brief explanation of the relationship between the two entities
+   - Relationship strength: A numeric score from 1-5 indicating the importance or closeness of the relationship
+4. Use the following format to output each relationship:
+   ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+## Output Format
+- Use **{record_delimiter}** as the delimiter for the list of entities and relationships.
+- All output should be in English.
+- When finished, output {completion_delimiter}.
+
+## Example 1
+Input text:
+In a typical nanomaterial synthesis process, 5 millimoles of chloroauric acid (HAuCl4) are dissolved in 20 mL of deionized water. Under continuous stirring, 10 mL of 0.1M sodium citrate solution is slowly added as a reducing agent. The mixture is refluxed at 90°C for 1 hour, during which the solution gradually turns wine-red. The resulting gold nanoparticles are characterized using Transmission Electron Microscopy (TEM). Finally, the nanoparticles are separated by centrifugation and stored at 4°C for future use.
+
+Output:
+("entity"{tuple_delimiter}Chloroauric acid{tuple_delimiter}Precursor{tuple_delimiter}Gold source for gold nanoparticle synthesis, chemical formula HAuCl4)
+{record_delimiter}
+("entity"{tuple_delimiter}Deionized water{tuple_delimiter}Solvent{tuple_delimiter}Pure water used to dissolve reactants)
+{record_delimiter}
+("entity"{tuple_delimiter}Sodium citrate{tuple_delimiter}Reducing agent{tuple_delimiter}Compound used to reduce gold ions to form nanoparticles)
+{record_delimiter}
+("entity"{tuple_delimiter}Gold nanoparticles{tuple_delimiter}Product{tuple_delimiter}Final target product of the synthesis process)
+{record_delimiter}
+("entity"{tuple_delimiter}5 millimoles{tuple_delimiter}Dosage{tuple_delimiter}Amount of chloroauric acid used)
+{record_delimiter}
+("entity"{tuple_delimiter}20 mL{tuple_delimiter}Dosage{tuple_delimiter}Amount of deionized water used)
+{record_delimiter}
+("entity"{tuple_delimiter}10 mL{tuple_delimiter}Dosage{tuple_delimiter}Amount of sodium citrate solution used)
+{record_delimiter}
+("entity"{tuple_delimiter}0.1M{tuple_delimiter}Concentration{tuple_delimiter}Concentration of sodium citrate solution)
+{record_delimiter}
+("entity"{tuple_delimiter}90°C{tuple_delimiter}Reaction condition{tuple_delimiter}Temperature of the reflux reaction)
+{record_delimiter}
+("entity"{tuple_delimiter}1 hour{tuple_delimiter}Reaction condition{tuple_delimiter}Duration of the reflux reaction)
+{record_delimiter}
+("entity"{tuple_delimiter}Transmission Electron Microscopy{tuple_delimiter}Characterization technique{tuple_delimiter}Instrument used to observe the morphology of gold nanoparticles, abbreviated as TEM)
+{record_delimiter}
+("entity"{tuple_delimiter}Centrifugation{tuple_delimiter}Purification method{tuple_delimiter}Method used to separate nanoparticles)
+{record_delimiter}
+("entity"{tuple_delimiter}4°C{tuple_delimiter}Storage condition{tuple_delimiter}Storage temperature for gold nanoparticles)
+{record_delimiter}
+("relationship"{tuple_delimiter}Chloroauric acid{tuple_delimiter}5 millimoles{tuple_delimiter}The dosage of chloroauric acid used is 5 millimoles{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}Deionized water{tuple_delimiter}20 mL{tuple_delimiter}The amount of deionized water used is 20 mL{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}Sodium citrate{tuple_delimiter}Gold nanoparticles{tuple_delimiter}Sodium citrate acts as a reducing agent to form gold nanoparticles{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}90°C{tuple_delimiter}Gold nanoparticles{tuple_delimiter}90°C is the reaction temperature for forming gold nanoparticles{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}Transmission Electron Microscopy{tuple_delimiter}Gold nanoparticles{tuple_delimiter}Transmission Electron Microscopy is used to characterize the morphology of gold nanoparticles{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Centrifugation{tuple_delimiter}Gold nanoparticles{tuple_delimiter}Centrifugation is used to purify and separate gold nanoparticles{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}4°C{tuple_delimiter}Gold nanoparticles{tuple_delimiter}4°C is the storage temperature for gold nanoparticles{tuple_delimiter}2)
+{completion_delimiter}
+
+
+## Example 2
+Input text:
+Synthesis of CsPbBr3 NCs
+As illustrated in Figure S1, the synthesis of CsPbBr3 NCs was carried out at room temperature by the LARP approach, through injection of 1 mL of precursor mixture into 10 mL of toluene under vigorous stirring (Figure S1b). The precursor was prepared by mixing CsBr (0.4 mmol), PbBr2 (0.4 mmol), oleylamine (OLA, 0.5 mL), and oleic acid (OA, 1 mL) in DMF (10 mL) (Figure S1a). Both DMF and toluene were dried from any remaining traces of water prior to use (DMF by adding KnNa12 n[(AlO2)12(SiO2)12], and toluene via distillation). When investigating the influence of water added to the "bad solvent", 1 mL of the dry precursor was injected into a mixture of toluene and water (10 mL + x μL, 0≤x≤60) (Figure S1c). When investigating the influence of water added to the precursor, 1 mL solution taken from the mixture of 1 mL dry precursor and x μL (0≤x≤60) water was injected into dry toluene (Figure S1d).
+
+Output:
+("entity"{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Product{tuple_delimiter}Cesium lead bromide nanocrystals, the target product of the synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}LARP{tuple_delimiter}Synthesis method{tuple_delimiter}Ligand-Assisted Reprecipitation approach used for synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}Precursor mixture{tuple_delimiter}Precursor{tuple_delimiter}Mixture of reagents used to form CsPbBr3 NCs)
+{record_delimiter}
+("entity"{tuple_delimiter}Toluene{tuple_delimiter}Solvent{tuple_delimiter}Organic solvent used in the synthesis process)
+{record_delimiter}
+("entity"{tuple_delimiter}CsBr{tuple_delimiter}Reagent{tuple_delimiter}Cesium bromide, a source of cesium for the nanocrystals)
+{record_delimiter}
+("entity"{tuple_delimiter}PbBr2{tuple_delimiter}Reagent{tuple_delimiter}Lead bromide, a source of lead for the nanocrystals)
+{record_delimiter}
+("entity"{tuple_delimiter}Oleylamine{tuple_delimiter}Reagent{tuple_delimiter}Organic compound used in the synthesis, abbreviated as OLA)
+{record_delimiter}
+("entity"{tuple_delimiter}Oleic acid{tuple_delimiter}Reagent{tuple_delimiter}Organic acid used in the synthesis, abbreviated as OA)
+{record_delimiter}
+("entity"{tuple_delimiter}DMF{tuple_delimiter}Solvent{tuple_delimiter}Dimethylformamide, solvent used to prepare the precursor)
+{record_delimiter}
+("entity"{tuple_delimiter}KnNa12 n[(AlO2)12(SiO2)12]{tuple_delimiter}Drying agent{tuple_delimiter}Compound used to remove water traces from DMF)
+{record_delimiter}
+("entity"{tuple_delimiter}Room temperature{tuple_delimiter}Reaction condition{tuple_delimiter}Temperature at which the synthesis was carried out)
+{record_delimiter}
+("entity"{tuple_delimiter}1 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of precursor mixture injected)
+{record_delimiter}
+("entity"{tuple_delimiter}10 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of toluene used)
+{record_delimiter}
+("entity"{tuple_delimiter}0.4 mmol{tuple_delimiter}Dosage{tuple_delimiter}Amount of CsBr and PbBr2 used)
+{record_delimiter}
+("entity"{tuple_delimiter}0.5 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of oleylamine used)
+{record_delimiter}
+("entity"{tuple_delimiter}1 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of oleic acid used)
+{record_delimiter}
+("entity"{tuple_delimiter}Distillation{tuple_delimiter}Purification method{tuple_delimiter}Method used to dry toluene)
+{record_delimiter}
+("entity"{tuple_delimiter}Water{tuple_delimiter}Additive{tuple_delimiter}Substance added to investigate its influence on the synthesis)
+{record_delimiter}
+("relationship"{tuple_delimiter}LARP{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}LARP is the synthesis method used to produce CsPbBr3 NCs{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}Precursor mixture{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}The precursor mixture is injected to form CsPbBr3 NCs{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}Toluene{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Toluene is the solvent in which CsPbBr3 NCs are formed{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}CsBr{tuple_delimiter}Precursor mixture{tuple_delimiter}CsBr is a component of the precursor mixture{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}PbBr2{tuple_delimiter}Precursor mixture{tuple_delimiter}PbBr2 is a component of the precursor mixture{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}Oleylamine{tuple_delimiter}Precursor mixture{tuple_delimiter}Oleylamine is a component of the precursor mixture{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Oleic acid{tuple_delimiter}Precursor mixture{tuple_delimiter}Oleic acid is a component of the precursor mixture{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}DMF{tuple_delimiter}Precursor mixture{tuple_delimiter}DMF is the solvent used to prepare the precursor mixture{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}KnNa12 n[(AlO2)12(SiO2)12]{tuple_delimiter}DMF{tuple_delimiter}KnNa12 n[(AlO2)12(SiO2)12] is used to dry DMF{tuple_delimiter}2)
+{record_delimiter}
+("relationship"{tuple_delimiter}Room temperature{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}The synthesis of CsPbBr3 NCs is carried out at room temperature{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Distillation{tuple_delimiter}Toluene{tuple_delimiter}Distillation is used to dry toluene{tuple_delimiter}2)
+{record_delimiter}
+("relationship"{tuple_delimiter}Water{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Water is added to investigate its influence on CsPbBr3 NCs synthesis{tuple_delimiter}3)
+{completion_delimiter}
+
+## Example 3
+Input text:
+The CsPbBr3@ZrO2 NCs were obtained via a modified super saturated recrystallization method at room temperature. CsBr and PbBr2, as selected ion sources, were dissolved in N, N-dimethyl formamide (DMF). Oleic acid (OA) and oleylamine (OAm) were then added as surface ligands, followed by a rapid injection into toluene. Upon the injection into the antisolvent of toluene, CsPbBr3 NCs were formed immediately, as shown in Figure 1a. Then Zr(OC4H9)4 was injected into the prepared CsPbBr3 NCs solution to form ZrO2 coating onto the NCs surface. The whole synthesis process was carried out at room temperature in air without extra inert gas and incorporation of water.
+
+1) The hydrolysis reaction of the precursor with water in the air is suggested as follows:
+Zn(OC4H9)4+2H2O→Zr(OH)2(OC4H9)2+2C4H9OH
+
+2) At the same time, the condensation reaction of the precursor is as follows:
+Zr·OH+OH·Zr→·Zr·O·Zr·+H2O
+Zr·OC4H9+HO·Zr→·Zr·O·Zr·+C4H9OH
+
+Synthesis of CsPbBr3 NCs: PbBr2 (0.4 mmol) and CsBr (0.4 mmol) were dissolved in 12 mL DMF. OAm (0.2 mL) and OA (0.6 mL) were added into the above precursor to act as the stabilizer. Then 0.5 mL of the precursor solution was quickly added into toluene (10 mL) under vigorous stirring at 1500 rpm for 10s.
+
+Synthesis of CsPbBr3@ZrO2 NCs: Different amount of Zr(OC4H9)4 (0, 60 µmol) were injected into CsPbBr3 NCs toluene solution (5 mL) and then vigorous vibrated for 10s. After that, the mixture was centrifuged at 8500 rpm for 5 min to obtain the precipitates. Then the precipitates were re-dispersed and preserved in toluene. All the above experiments were carried out at room temperature in air.
+
+Output:
+("entity"{tuple_delimiter}CsPbBr3@ZrO2 NCs{tuple_delimiter}Product{tuple_delimiter}Cesium lead bromide nanocrystals coated with zirconium oxide, the final product of the synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}Super saturated recrystallization method{tuple_delimiter}Synthesis method{tuple_delimiter}Modified method used to obtain CsPbBr3@ZrO2 NCs)
+{record_delimiter}
+("entity"{tuple_delimiter}CsBr{tuple_delimiter}Reagent{tuple_delimiter}Cesium bromide, a source of cesium ions for the nanocrystals)
+{record_delimiter}
+("entity"{tuple_delimiter}PbBr2{tuple_delimiter}Reagent{tuple_delimiter}Lead bromide, a source of lead ions for the nanocrystals)
+{record_delimiter}
+("entity"{tuple_delimiter}N, N-dimethyl formamide{tuple_delimiter}Solvent{tuple_delimiter}Solvent used to dissolve CsBr and PbBr2, abbreviated as DMF)
+{record_delimiter}
+("entity"{tuple_delimiter}Oleic acid{tuple_delimiter}Surface ligand{tuple_delimiter}Organic compound used as a surface ligand, abbreviated as OA)
+{record_delimiter}
+("entity"{tuple_delimiter}Oleylamine{tuple_delimiter}Surface ligand{tuple_delimiter}Organic compound used as a surface ligand, abbreviated as OAm)
+{record_delimiter}
+("entity"{tuple_delimiter}Toluene{tuple_delimiter}Antisolvent{tuple_delimiter}Organic solvent used to induce the formation of nanocrystals)
+{record_delimiter}
+("entity"{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Intermediate product{tuple_delimiter}Cesium lead bromide nanocrystals formed before ZrO2 coating)
+{record_delimiter}
+("entity"{tuple_delimiter}Zr(OC4H9)4{tuple_delimiter}Precursor{tuple_delimiter}Zirconium butoxide, precursor for ZrO2 coating)
+{record_delimiter}
+("entity"{tuple_delimiter}ZrO2{tuple_delimiter}Coating material{tuple_delimiter}Zirconium oxide, used to coat CsPbBr3 NCs)
+{record_delimiter}
+("entity"{tuple_delimiter}Room temperature{tuple_delimiter}Reaction condition{tuple_delimiter}Temperature at which the synthesis was carried out)
+{record_delimiter}
+("entity"{tuple_delimiter}0.4 mmol{tuple_delimiter}Dosage{tuple_delimiter}Amount of PbBr2 and CsBr used in the synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}12 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of DMF used to dissolve PbBr2 and CsBr)
+{record_delimiter}
+("entity"{tuple_delimiter}0.2 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of OAm used in the synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}0.6 mL{tuple_delimiter}Dosage{tuple_delimiter}Volume of OA used in the synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}1500 rpm{tuple_delimiter}Reaction condition{tuple_delimiter}Speed of vigorous stirring during synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}10s{tuple_delimiter}Reaction condition{tuple_delimiter}Duration of stirring during synthesis)
+{record_delimiter}
+("entity"{tuple_delimiter}60 µmol{tuple_delimiter}Dosage{tuple_delimiter}Amount of Zr(OC4H9)4 used for ZrO2 coating)
+{record_delimiter}
+("entity"{tuple_delimiter}8500 rpm{tuple_delimiter}Purification condition{tuple_delimiter}Speed of centrifugation to obtain precipitates)
+{record_delimiter}
+("entity"{tuple_delimiter}5 min{tuple_delimiter}Purification condition{tuple_delimiter}Duration of centrifugation to obtain precipitates)
+{record_delimiter}
+("relationship"{tuple_delimiter}Super saturated recrystallization method{tuple_delimiter}CsPbBr3@ZrO2 NCs{tuple_delimiter}The modified super saturated recrystallization method is used to synthesize CsPbBr3@ZrO2 NCs{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}CsBr{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}CsBr is a source of cesium ions for CsPbBr3 NCs{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}PbBr2{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}PbBr2 is a source of lead ions for CsPbBr3 NCs{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}N, N-dimethyl formamide{tuple_delimiter}CsBr{tuple_delimiter}DMF is used to dissolve CsBr{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}N, N-dimethyl formamide{tuple_delimiter}PbBr2{tuple_delimiter}DMF is used to dissolve PbBr2{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Oleic acid{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}OA acts as a surface ligand for CsPbBr3 NCs{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Oleylamine{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}OAm acts as a surface ligand for CsPbBr3 NCs{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}Toluene{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Toluene acts as an antisolvent to induce the formation of CsPbBr3 NCs{tuple_delimiter}4)
+{record_delimiter}
+("relationship"{tuple_delimiter}Zr(OC4H9)4{tuple_delimiter}ZrO2{tuple_delimiter}Zr(OC4H9)4 is the precursor for ZrO2 coating{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}ZrO2{tuple_delimiter}CsPbBr3@ZrO2 NCs{tuple_delimiter}ZrO2 forms a coating on CsPbBr3 NCs to create CsPbBr3@ZrO2 NCs{tuple_delimiter}5)
+{record_delimiter}
+("relationship"{tuple_delimiter}Room temperature{tuple_delimiter}CsPbBr3@ZrO2 NCs{tuple_delimiter}The synthesis of CsPbBr3@ZrO2 NCs is carried out at room temperature{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}1500 rpm{tuple_delimiter}CsPbBr3 NCs{tuple_delimiter}Vigorous stirring at 1500 rpm is used during the synthesis of CsPbBr3 NCs{tuple_delimiter}3)
+{record_delimiter}
+("relationship"{tuple_delimiter}8500 rpm{tuple_delimiter}CsPbBr3@ZrO2 NCs{tuple_delimiter}Centrifugation at 8500 rpm is used to purify CsPbBr3@ZrO2 NCs{tuple_delimiter}3)
+{completion_delimiter}
+
+
+-Real Data-
+######################
+text: {input_text}
+######################
+output:

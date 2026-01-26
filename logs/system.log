@@ -1019,3 +1019,1872 @@ AttributeError: 'StructureFeaturizer' object has no attribute 'feature_names'
 [2026-01-24 16:00:02] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
 [2026-01-24 16:00:02] [INFO] [src.services.db.database] Database initialized at data/imcs.db
 [2026-01-24 16:00:02] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-25 00:20:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:29] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:20:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:20:30] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-25 00:20:58] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-25 00:20:59] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-25 00:20:59] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-25 00:21:12] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-25 00:21:12] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-25 00:21:12] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-25 00:22:04] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-25 00:22:05] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-25 00:22:05] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-25 00:22:05] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-25 00:22:05] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-25 00:22:05] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-25 00:45:30] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-25 00:45:30] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:30] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-25 00:45:30] [INFO] [src.services.task.planner] Created plan task_20260125_004530 ([general]) for: ?? HOR ????????
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-25 00:45:45] [INFO] [src.services.task.planner] Created plan task_20260125_004545 ([catalyst_discovery]) for: discover HOR ordered alloy candidates
+[2026-01-26 00:02:27] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:27] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:27] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:02:49] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:49] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:02:51] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:02:51] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:03:24] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-26 00:03:24] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-26 00:03:24] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-26 00:26:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:26:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:26:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:26:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:26:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:28:03] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:28:03] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:28:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:28:17] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:28:17] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:55] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:55] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:55] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:29:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:29:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:32:00] [INFO] [src.services.task.planner] Created plan task_20260126_003200 ([catalyst_discovery]) for: 发现 HOR 候选有序合金
+[2026-01-26 00:32:00] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:32:42] [INFO] [src.services.task.executor] Executing Plan: task_20260126_003200
+[2026-01-26 00:32:42] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-26 00:32:42] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 发现 HOR 候选有序合金
+[2026-01-26 00:32:43] [INFO] [src.services.literature.search_engine] Found 6 papers on SS.
+[2026-01-26 00:32:43] [INFO] [src.services.literature.search_engine] Searching arXiv: 发现 HOR 候选有序合金
+[2026-01-26 00:32:46] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-26 00:32:46] [INFO] [src.services.task.executor] Step step_2: [theory] download
+[2026-01-26 00:32:46] [INFO] [src.agents.core.theory_agent] Found 50 local materials. Skipping API search.
+[2026-01-26 00:32:46] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 00:32:49] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 00:32:57] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 00:33:15] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1287635: No density of states data found for mp-1287635
+[2026-01-26 00:33:18] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-21590: No density of states data found for mp-21590
+[2026-01-26 00:33:19] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-735586: No density of states data found for mp-735586
+[2026-01-26 00:33:19] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1200109: No density of states data found for mp-1200109
+[2026-01-26 00:33:20] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-735131: No density of states data found for mp-735131
+[2026-01-26 00:33:21] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1221050: No density of states data found for mp-1221050
+[2026-01-26 00:33:21] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1173859: No density of states data found for mp-1173859
+[2026-01-26 00:33:21] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1223658: No density of states data found for mp-1223658
+[2026-01-26 00:33:22] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-16283: No density of states data found for mp-16283
+[2026-01-26 00:33:22] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-510635: No density of states data found for mp-510635
+[2026-01-26 00:33:23] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1101819: No density of states data found for mp-1101819
+[2026-01-26 00:33:30] [ERROR] [src.services.task.executor] Step step_2 failed (attempt 1): TheoryDataAgent.download_adsorption_energies() got an unexpected keyword argument 'adsorbates'
+[2026-01-26 00:33:30] [INFO] [src.services.task.executor] Step step_5: [theory] download
+[2026-01-26 00:33:30] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 00:33:30] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 00:33:30] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 00:33:39] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 00:33:55] [INFO] [src.services.task.executor] Step step_3: [ml] train
+[2026-01-26 00:33:55] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-26 00:33:55] [WARNING] [src.agents.core.ml_agent] Failed to extract features for any DB records.
+[2026-01-26 00:33:55] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:55] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:56] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-26 00:33:56] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:33:56] [INFO] [src.services.task.executor] Step step_4: [task_manager] recommend
+[2026-01-26 00:35:58] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:35:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:35:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:36:20] [INFO] [src.services.task.planner] Created plan task_20260126_003620 ([catalyst_discovery]) for: 发现 HOR 候选有序合金
+[2026-01-26 00:36:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:36:28] [INFO] [src.services.task.executor] Executing Plan: task_20260126_003620
+[2026-01-26 00:36:28] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-26 00:36:28] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 发现 HOR 候选有序合金
+[2026-01-26 00:36:29] [INFO] [src.services.literature.search_engine] Found 6 papers on SS.
+[2026-01-26 00:36:29] [INFO] [src.services.literature.search_engine] Searching arXiv: 发现 HOR 候选有序合金
+[2026-01-26 00:36:31] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-26 00:36:31] [INFO] [src.services.task.executor] Step step_2: [theory] download
+[2026-01-26 00:36:31] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 00:36:31] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 00:36:31] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 00:36:40] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 00:36:58] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1228561: No density of states data found for mp-1228561
+[2026-01-26 00:36:58] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1361380: No density of states data found for mp-1361380
+[2026-01-26 00:37:02] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-581237: No density of states data found for mp-581237
+[2026-01-26 00:37:04] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-556960: No density of states data found for mp-556960
+[2026-01-26 00:37:07] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1202233: No density of states data found for mp-1202233
+[2026-01-26 00:37:07] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1228231: No density of states data found for mp-1228231
+[2026-01-26 00:37:07] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1228376: No density of states data found for mp-1228376
+[2026-01-26 00:37:08] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1228445: No density of states data found for mp-1228445
+[2026-01-26 00:37:14] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1208208: No density of states data found for mp-1208208
+[2026-01-26 00:37:14] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-21971: No density of states data found for mp-21971
+[2026-01-26 00:37:15] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-556723: No density of states data found for mp-556723
+[2026-01-26 00:37:15] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-6247: No density of states data found for mp-6247
+[2026-01-26 00:37:15] [ERROR] [src.services.task.executor] Step step_2 failed (attempt 1): TheoryDataAgent.download_adsorption_energies() got an unexpected keyword argument 'adsorbates'
+[2026-01-26 00:37:15] [INFO] [src.services.task.executor] Step step_5: [theory] download
+[2026-01-26 00:37:15] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 00:37:15] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 00:37:15] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 00:37:24] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 00:37:40] [INFO] [src.services.task.executor] Step step_3: [ml] train
+[2026-01-26 00:37:40] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-26 00:37:40] [WARNING] [src.agents.core.ml_agent] Failed to extract features for any DB records.
+[2026-01-26 00:37:40] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-26 00:37:40] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 00:37:40] [INFO] [src.services.task.executor] Step step_4: [task_manager] recommend
+[2026-01-26 00:42:50] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:42:50] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:42:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:42:50] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:43:04] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:43:04] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:43:59] [INFO] [src.services.task.planner] Created plan task_20260126_004359 ([catalyst_discovery]) for: 发现 HOR 候选有序合金
+[2026-01-26 00:43:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:52:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:52:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:52:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:53:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:53:34] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:55:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:55:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:58:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:58:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 00:59:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 00:59:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:00:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:00:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:02:42] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:02:42] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:02:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:42] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:02:44] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:02:44] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:03:10] [INFO] [src.services.task.planner] Created plan task_20260126_010310 ([catalyst_discovery]) for: 寻找HOR候选有序合金
+[2026-01-26 01:03:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:03:16] [INFO] [src.services.task.executor] Executing Plan: task_20260126_010310
+[2026-01-26 01:03:16] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-26 01:03:16] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 寻找HOR候选有序合金
+[2026-01-26 01:03:17] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-26 01:03:17] [INFO] [src.services.literature.search_engine] Searching arXiv: 寻找HOR候选有序合金
+[2026-01-26 01:03:19] [INFO] [src.services.literature.search_engine] Found 0 papers on arXiv.
+[2026-01-26 01:03:19] [INFO] [src.services.task.executor] Step step_2: [theory] download
+[2026-01-26 01:03:19] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:03:19] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 01:03:22] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 01:03:31] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 01:03:50] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1211603: No density of states data found for mp-1211603
+[2026-01-26 01:03:50] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1211902: No density of states data found for mp-1211902
+[2026-01-26 01:03:55] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1221018: No density of states data found for mp-1221018
+[2026-01-26 01:03:55] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1219263: No density of states data found for mp-1219263
+[2026-01-26 01:04:17] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-760680: No density of states data found for mp-760680
+[2026-01-26 01:04:20] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1208781: No density of states data found for mp-1208781
+[2026-01-26 01:04:20] [ERROR] [src.services.task.executor] Step step_2 failed (attempt 1): TheoryDataAgent.download_adsorption_energies() got an unexpected keyword argument 'adsorbates'
+[2026-01-26 01:04:20] [INFO] [src.services.task.executor] Step step_5: [theory] download
+[2026-01-26 01:04:20] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:04:20] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 01:04:20] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 01:04:29] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 01:04:46] [INFO] [src.services.task.executor] Step step_3: [ml] train
+[2026-01-26 01:04:46] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-26 01:04:46] [WARNING] [src.agents.core.ml_agent] Failed to extract features for any DB records.
+[2026-01-26 01:04:46] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-26 01:04:46] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:04:46] [INFO] [src.services.task.executor] Step step_4: [task_manager] recommend
+[2026-01-26 01:07:30] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:07:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:07:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:07:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:07:30] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:07:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:30] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:07:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:31] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:07:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:07:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:31] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:07:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:07:32] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:08:03] [INFO] [src.services.task.planner] Created plan task_20260126_010803 ([catalyst_discovery]) for: 推荐HOR候选有序合金
+[2026-01-26 01:08:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:08:11] [INFO] [src.services.task.executor] Executing Plan: task_20260126_010803
+[2026-01-26 01:08:11] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-26 01:08:11] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 推荐HOR候选有序合金
+[2026-01-26 01:08:12] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-26 01:08:12] [INFO] [src.services.literature.search_engine] Searching arXiv: 推荐HOR候选有序合金
+[2026-01-26 01:08:14] [INFO] [src.services.literature.search_engine] Found 0 papers on arXiv.
+[2026-01-26 01:08:14] [INFO] [src.services.task.executor] Step step_2: [theory] download
+[2026-01-26 01:08:14] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:08:14] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 01:08:17] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 01:08:26] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 01:08:48] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-757712: No density of states data found for mp-757712
+[2026-01-26 01:08:51] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104273: No density of states data found for mp-1104273
+[2026-01-26 01:08:51] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104462: No density of states data found for mp-1104462
+[2026-01-26 01:08:52] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104561: No density of states data found for mp-1104561
+[2026-01-26 01:08:52] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104719: No density of states data found for mp-1104719
+[2026-01-26 01:08:52] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104873: No density of states data found for mp-1104873
+[2026-01-26 01:08:53] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1104984: No density of states data found for mp-1104984
+[2026-01-26 01:08:53] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1105077: No density of states data found for mp-1105077
+[2026-01-26 01:08:56] [WARNING] [src.services.theory.mp_client] Failed to get DOS for mp-1194083: No density of states data found for mp-1194083
+[2026-01-26 01:09:04] [ERROR] [src.services.task.executor] Step step_2 failed (attempt 1): TheoryDataAgent.download_adsorption_energies() got an unexpected keyword argument 'adsorbates'
+[2026-01-26 01:09:04] [INFO] [src.services.task.executor] Step step_5: [theory] download
+[2026-01-26 01:09:04] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:09:04] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 01:09:04] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 01:09:13] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 01:09:30] [INFO] [src.services.task.executor] Step step_3: [ml] train
+[2026-01-26 01:09:30] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-26 01:09:30] [WARNING] [src.agents.core.ml_agent] Failed to extract features for any DB records.
+[2026-01-26 01:09:30] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-26 01:09:30] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-26 01:09:30] [INFO] [src.services.task.executor] Step step_4: [task_manager] recommend
+[2026-01-26 01:12:05] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:12:05] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:12:05] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:12:06] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:12:06] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:26:41] [INFO] [services.db.database] Database initialized at tests/test_imcs.db
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:26:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:26:41] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:26:41] [INFO] [src.services.task.planner] Created plan task_20260126_012641 ([catalyst_discovery]) for: Find a catalyst for HER
+[2026-01-26 01:26:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [services.db.database] Database initialized at tests/test_imcs.db
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:28:42] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:42] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:28:42] [INFO] [src.services.task.planner] Created plan task_20260126_012842 ([catalyst_discovery]) for: Find a catalyst for HER
+[2026-01-26 01:28:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:28:59] [INFO] [agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-26 01:28:59] [ERROR] [agents.core.ml_agent] Exception in select_features: max_features == 12, must be <= 5.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 269, in select_features
+    selector.fit(self.X_train, self.y_train)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\feature_selection\_from_model.py", line 360, in fit
+    self._check_max_features(X)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\feature_selection\_from_model.py", line 318, in _check_max_features
+    check_scalar(
+    ~~~~~~~~~~~~^
+        max_features,
+        ^^^^^^^^^^^^^
+    ...<3 lines>...
+        max_val=n_features,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py", line 1947, in check_scalar
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: max_features == 12, must be <= 5.
+[2026-01-26 01:28:59] [ERROR] [agents.core.ml_agent] Exception in train_traditional_models: max_features == 12, must be <= 5.
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 301, in train_traditional_models
+    self.select_features(top_n=12) # Reasonable default for small datasets
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 49, in wrapper
+    raise e
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 269, in select_features
+    selector.fit(self.X_train, self.y_train)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\feature_selection\_from_model.py", line 360, in fit
+    self._check_max_features(X)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\feature_selection\_from_model.py", line 318, in _check_max_features
+    check_scalar(
+    ~~~~~~~~~~~~^
+        max_features,
+        ^^^^^^^^^^^^^
+    ...<3 lines>...
+        max_val=n_features,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\sklearn\utils\validation.py", line 1947, in check_scalar
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: max_features == 12, must be <= 5.
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:28:59] [INFO] [agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:28:59] [WARNING] [agents.core.experiment_agent] Could not identify columns for LSV: Index(['V', 'I'], dtype='object')
+[2026-01-26 01:28:59] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:28:59] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:28:59] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:28:59] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:28:59] [INFO] [src.services.task.planner] Created plan task_20260126_012859 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-26 01:28:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:06] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-26 01:31:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:06] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:31:06] [INFO] [agents.core.ml_agent] Performing feature selection (target top_n=5)...
+[2026-01-26 01:31:06] [INFO] [agents.core.ml_agent] Selected 3 features: ['f0', 'f1', 'f3']
+[2026-01-26 01:31:06] [ERROR] [agents.core.ml_agent] Exception in select_features: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 286, in select_features
+    self.data_manager.X = self.data_manager.X[:, mask]
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+[2026-01-26 01:31:06] [ERROR] [agents.core.ml_agent] Exception in train_traditional_models: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 305, in train_traditional_models
+    self.select_features(top_n=12) # Reasonable default for small datasets
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 49, in wrapper
+    raise e
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\ml_agent.py", line 286, in select_features
+    self.data_manager.X = self.data_manager.X[:, mask]
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+[2026-01-26 01:31:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:06] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:31:06] [INFO] [agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:31:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:06] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:31:06] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:31:06] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HER catalyst
+[2026-01-26 01:31:08] [ERROR] [src.services.literature.search_engine] Semantic Scholar Search Failed: HTTPSConnectionPool(host='api.semanticscholar.org', port=443): Max retries exceeded with url: /graph/v1/paper/search?query=HER+catalyst&limit=0&fields=title%2Cauthors%2Cyear%2Cabstract%2CcitationCount%2CexternalIds%2Curl (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000025114D95D30>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:31:08] [INFO] [src.services.literature.search_engine] Searching arXiv: HER catalyst
+[2026-01-26 01:31:10] [ERROR] [src.services.literature.search_engine] arXiv Search Failed: HTTPConnectionPool(host='127.0.0.1', port=9): Max retries exceeded with url: http://export.arxiv.org/api/query?search_query=all%3AHER+catalyst&start=0&max_results=0&sortBy=relevance&sortOrder=descending (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025114D963C0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:31:10] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:31:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:10] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:31:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:10] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:31:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:10] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:31:10] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:31:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:31:10] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:31:10] [INFO] [src.services.task.planner] Created plan task_20260126_013110 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-26 01:31:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:34] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-26 01:32:34] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:34] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:32:34] [INFO] [agents.core.ml_agent] Performing feature selection (target top_n=5)...
+[2026-01-26 01:32:34] [INFO] [agents.core.ml_agent] Selected 2 features: ['f2', 'f4']
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 01:32:34] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: [WinError 5] 拒绝访问。
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=-1.5581
+[2026-01-26 01:32:34] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: [WinError 5] 拒绝访问。
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-0.8869
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished Ridge: R2=-0.0604
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=-0.1558
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.1733
+[2026-01-26 01:32:34] [INFO] [src.services.ml.trainer] Finished SVR: R2=-0.3156
+[2026-01-26 01:32:35] [INFO] [src.services.ml.trainer] Finished KNN: R2=-0.1903
+[2026-01-26 01:32:35] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=-0.9165
+[2026-01-26 01:32:35] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.3019
+[2026-01-26 01:32:35] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:35] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:32:35] [INFO] [agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:32:35] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:35] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:32:35] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:32:35] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HER catalyst
+[2026-01-26 01:32:37] [ERROR] [src.services.literature.search_engine] Semantic Scholar Search Failed: HTTPSConnectionPool(host='api.semanticscholar.org', port=443): Max retries exceeded with url: /graph/v1/paper/search?query=HER+catalyst&limit=0&fields=title%2Cauthors%2Cyear%2Cabstract%2CcitationCount%2CexternalIds%2Curl (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000020DBCA567B0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:32:37] [INFO] [src.services.literature.search_engine] Searching arXiv: HER catalyst
+[2026-01-26 01:32:39] [ERROR] [src.services.literature.search_engine] arXiv Search Failed: HTTPConnectionPool(host='127.0.0.1', port=9): Max retries exceeded with url: http://export.arxiv.org/api/query?search_query=all%3AHER+catalyst&start=0&max_results=0&sortBy=relevance&sortOrder=descending (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000020DBCA542F0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:32:39] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:32:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:39] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:32:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:39] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:32:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:39] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:32:39] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:32:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:32:39] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:32:39] [INFO] [src.services.task.planner] Created plan task_20260126_013239 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-26 01:32:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:21] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-26 01:33:21] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:21] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:33:21] [INFO] [agents.core.ml_agent] Performing feature selection (target top_n=5)...
+[2026-01-26 01:33:21] [INFO] [agents.core.ml_agent] Selected 1 features: ['f2']
+[2026-01-26 01:33:21] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 01:33:21] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: [WinError 5] 拒绝访问。
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=-36.4398
+[2026-01-26 01:33:22] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: [WinError 5] 拒绝访问。
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-37.1491
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished Ridge: R2=-12.1411
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=-12.2406
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=-14.9477
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished SVR: R2=-20.7617
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished KNN: R2=-16.1243
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=-5.4830
+[2026-01-26 01:33:22] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-9.5814
+[2026-01-26 01:33:22] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:22] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:33:22] [INFO] [agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:33:22] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:22] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:33:22] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:33:22] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HER catalyst
+[2026-01-26 01:33:24] [ERROR] [src.services.literature.search_engine] Semantic Scholar Search Failed: HTTPSConnectionPool(host='api.semanticscholar.org', port=443): Max retries exceeded with url: /graph/v1/paper/search?query=HER+catalyst&limit=0&fields=title%2Cauthors%2Cyear%2Cabstract%2CcitationCount%2CexternalIds%2Curl (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000002743C3556A0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:33:24] [INFO] [src.services.literature.search_engine] Searching arXiv: HER catalyst
+[2026-01-26 01:33:26] [ERROR] [src.services.literature.search_engine] arXiv Search Failed: HTTPConnectionPool(host='127.0.0.1', port=9): Max retries exceeded with url: http://export.arxiv.org/api/query?search_query=all%3AHER+catalyst&start=0&max_results=0&sortBy=relevance&sortOrder=descending (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002743C3541A0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:33:26] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:33:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:26] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:33:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:33:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:33:26] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:33:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:33:26] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:33:26] [INFO] [src.services.task.planner] Created plan task_20260126_013326 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-26 01:33:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [services.db.database] Database initialized at tests/test_imcs.db
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:56:23] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:23] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:56:23] [INFO] [src.services.task.planner] Created plan task_20260126_015623 ([catalyst_discovery]) for: Find a catalyst for HER
+[2026-01-26 01:56:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:42] [INFO] [services.db.database] Database initialized at data/audit_test.db
+[2026-01-26 01:56:42] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:42] [INFO] [agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:56:42] [INFO] [agents.core.ml_agent] Performing feature selection (target top_n=5)...
+[2026-01-26 01:56:42] [INFO] [agents.core.ml_agent] Selected 3 features: ['f0', 'f3', 'f4']
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.2051
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.4790
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.1671
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-1.2615
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.1993
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.1459
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.4369
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished SVR: R2=-0.3835
+[2026-01-26 01:56:42] [INFO] [src.services.ml.trainer] Finished KNN: R2=-0.0989
+[2026-01-26 01:56:43] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=-1.3381
+[2026-01-26 01:56:43] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.0284
+[2026-01-26 01:56:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:43] [INFO] [agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:56:43] [INFO] [agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 01:56:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:43] [INFO] [agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:56:43] [INFO] [agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:56:43] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HER catalyst
+[2026-01-26 01:56:45] [ERROR] [src.services.literature.search_engine] Semantic Scholar Search Failed: HTTPSConnectionPool(host='api.semanticscholar.org', port=443): Max retries exceeded with url: /graph/v1/paper/search?query=HER+catalyst&limit=0&fields=title%2Cauthors%2Cyear%2Cabstract%2CcitationCount%2CexternalIds%2Curl (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001816DF063C0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:56:45] [INFO] [src.services.literature.search_engine] Searching arXiv: HER catalyst
+[2026-01-26 01:56:47] [ERROR] [src.services.literature.search_engine] arXiv Search Failed: HTTPConnectionPool(host='127.0.0.1', port=9): Max retries exceeded with url: http://export.arxiv.org/api/query?search_query=all%3AHER+catalyst&start=0&max_results=0&sortBy=relevance&sortOrder=descending (Caused by ProxyError('Unable to connect to proxy', NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001816DF041A0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。')))
+[2026-01-26 01:56:47] [INFO] [agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 01:56:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:47] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 01:56:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:47] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 01:56:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:47] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 01:56:47] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 01:56:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 01:56:47] [INFO] [agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 01:56:47] [INFO] [src.services.task.planner] Created plan task_20260126_015647 ([catalyst_discovery]) for: Find HER catalyst
+[2026-01-26 01:56:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:50] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:11:57] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:11:57] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:13:02] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-26 10:13:03] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-26 10:13:03] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-26 10:20:43] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:20:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:21:09] [INFO] [src.services.task.planner] Created plan task_20260126_102109 ([catalyst_discovery]) for: Find HOR catalyst for PtRu
+[2026-01-26 10:21:09] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:21:09] [INFO] [src.services.task.executor] Executing Plan: task_20260126_102109
+[2026-01-26 10:21:09] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-26 10:21:09] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: Find HOR catalyst for PtRu
+[2026-01-26 10:21:10] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-26 10:21:10] [INFO] [src.services.literature.search_engine] Searching arXiv: Find HOR catalyst for PtRu
+[2026-01-26 10:21:13] [INFO] [src.services.literature.search_engine] Found 10 papers on arXiv.
+[2026-01-26 10:21:16] [WARNING] [src.services.db.database] Failed to link adsorption evidence: database is locked
+[2026-01-26 10:21:16] [INFO] [src.services.task.executor] Step step_2: [theory] download
+[2026-01-26 10:21:16] [INFO] [src.agents.core.theory_agent] Found 5000 local materials. Skipping API search.
+[2026-01-26 10:21:16] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-26 10:21:18] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-26 10:21:27] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-26 10:35:58] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:35:58] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:38:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:38:18] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:39:30] [INFO] [src.services.task.planner] Created plan task_20260126_103930 ([performance_analysis]) for: 寻找HOR候选有序合计催化剂
+[2026-01-26 10:39:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:39:35] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-01-26 10:39:35] [INFO] [src.services.ml.data_manager] Loaded 2093 samples, 42 features.
+[2026-01-26 10:39:35] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1674, Test=419
+[2026-01-26 10:39:35] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-26 10:39:36] [INFO] [src.agents.core.ml_agent] Selected 7 features: ['min_Z', 'std_electronegativity', 'range_electronegativity', 'avg_radius', 'min_radius', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-01-26 10:39:36] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-26 10:39:37] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.8842
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.8886
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.9084
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.7319
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.5558
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.5562
+[2026-01-26 10:39:38] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.5570
+[2026-01-26 10:39:39] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.8430
+[2026-01-26 10:39:39] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.8793
+[2026-01-26 10:39:39] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.8998
+[2026-01-26 10:39:39] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=0.8823
+[2026-01-26 10:39:39] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-01-26 10:39:40] [INFO] [src.services.ml.trainer] Finished DNN_256_128_64: R2=0.7852
+[2026-01-26 10:39:41] [INFO] [src.services.ml.trainer] Finished DNN_512_256_128: R2=0.7761
+[2026-01-26 10:39:42] [INFO] [src.services.ml.trainer] Finished DNN_128_64_32: R2=0.6619
+[2026-01-26 10:43:10] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:43:10] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:44:59] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:45:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:46:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 10:58:49] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 10:58:49] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:00:27] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:00:27] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:01:01] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:01:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:02:06] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:06] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:02:19] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:02:19] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:03:03] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:03:03] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:25] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:04:25] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:04:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:04:26] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:13] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:05:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:13] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:14] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:05:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:15] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:15] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:15] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:16] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:05:16] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:05:16] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:10:23] [INFO] [src.services.task.planner] Created plan task_20260126_111023 ([performance_analysis]) for: 寻找HOR有序合金催化剂
+[2026-01-26 11:10:23] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:15:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:17:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 11:18:43] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:11:52] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:11:52] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:17:55] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:17:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:55] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:17:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:55] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:17:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:55] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:17:55] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:17:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:55] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:17:55] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:56] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:17:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:56] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:17:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:56] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:17:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:17:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:30] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:18:39] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:26] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:20:48] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:23:41] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:24:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:04] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:44:04] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:44:04] [INFO] [src.services.db.database] Database initialized at C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:44:07] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:44:07] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:44:07] [INFO] [src.services.db.database] Database initialized at C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:45:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:52:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:53:32] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:54:20] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:54:20] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:54:30] [INFO] [src.services.db.database] Database initialized at C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-26 12:58:12] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-26 12:58:13] [INFO] [src.services.db.database] Database initialized at data/imcs.db

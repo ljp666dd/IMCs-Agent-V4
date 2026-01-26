@@ -1,0 +1,780 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A1F84281-829C-453E-8C89-15EB8446B1CD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>zdhsys</RootNamespace>
+    <AssemblyName>AI微纳实验软件</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ICONS66.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EasyModbus, Version=5.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyModbusTCP.5.6.0\lib\net40\EasyModbus.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=6.3.0.90, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.6.3.0.90\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite-net, Version=1.8.116.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\sqlite-net-pcl.1.8.116\lib\netstandard2.0\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=2.0.4.976, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.2.0.4\lib\net461\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.0.4.976, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.0.4\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.nativelibrary, Version=2.0.4.976, Culture=neutral, PublicKeyToken=502ed628492ab262, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.2.0.4\lib\net461\SQLitePCLRaw.nativelibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.4\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Bean\DeviceFields.cs" />
+    <Compile Include="Bean\DeviceFieldsModel.cs" />
+    <Compile Include="Bean\DeviceGroupInfoModel.cs" />
+    <Compile Include="Bean\DeviceInfoModel.cs" />
+    <Compile Include="Bean\FlowModel.cs" />
+    <Compile Include="Bean\OptionFieldsModel2.cs" />
+    <Compile Include="Bean\OptionFieldsModel.cs" />
+    <Compile Include="Bean\OptionModel.cs" />
+    <Compile Include="Bean\Options.cs" />
+    <Compile Include="Bean\RobotInfoModel.cs" />
+    <Compile Include="Bean\SubOptionModel.cs" />
+    <Compile Include="Control\ClearDevice.xaml.cs">
+      <DependentUpon>ClearDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\ColorButton.xaml.cs">
+      <DependentUpon>ColorButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\FlowButton2.xaml.cs">
+      <DependentUpon>FlowButton2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\FlowButton.xaml.cs">
+      <DependentUpon>FlowButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevButton0.xaml.cs">
+      <DependentUpon>DevButton0.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevButton2.xaml.cs">
+      <DependentUpon>DevButton2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevButton1.xaml.cs">
+      <DependentUpon>DevButton1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevButton.xaml.cs">
+      <DependentUpon>DevButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevDevice.xaml.cs">
+      <DependentUpon>DevDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DeviceGroup.xaml.cs">
+      <DependentUpon>DeviceGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DeviceTab.xaml.cs">
+      <DependentUpon>DeviceTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevLiquid.xaml.cs">
+      <DependentUpon>DevLiquid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevOperation3.xaml.cs">
+      <DependentUpon>DevOperation3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevOperation2.xaml.cs">
+      <DependentUpon>DevOperation2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevOperation.xaml.cs">
+      <DependentUpon>DevOperation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevPaging.xaml.cs">
+      <DependentUpon>DevPaging.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevpButton.xaml.cs">
+      <DependentUpon>DevpButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevRobot.xaml.cs">
+      <DependentUpon>DevRobot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\DevTextBox.xaml.cs">
+      <DependentUpon>DevTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\MyControl.xaml.cs">
+      <DependentUpon>MyControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\OptionTab.xaml.cs">
+      <DependentUpon>OptionTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\SwitchButton.xaml.cs">
+      <DependentUpon>SwitchButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\TabButton.xaml.cs">
+      <DependentUpon>TabButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Device\Dev_BG.cs" />
+    <Compile Include="Device\Dev_BG_sub.cs" />
+    <Compile Include="Device\Dev_CZ.cs" />
+    <Compile Include="entity\DevicePoint.cs" />
+    <Compile Include="entity\DevInfo.cs" />
+    <Compile Include="entity\FlowInfo.cs" />
+    <Compile Include="entity\FlowLine.cs" />
+    <Compile Include="entity\Heart.cs" />
+    <Compile Include="entity\MoveData.cs" />
+    <Compile Include="entity\PrintCmd.cs" />
+    <Compile Include="entity\RobotHeart.cs" />
+    <Compile Include="JsonTool\Behaviours\AvalonEditBehaviour.cs" />
+    <Compile Include="JsonTool\Controls\AiButton.cs" />
+    <Compile Include="JsonTool\Converters\Json\BoolToJsonSyntaxHighliting.cs" />
+    <Compile Include="JsonTool\Converters\Json\JObjectToChildren.cs" />
+    <Compile Include="JsonTool\Converters\Json\JPropertyNameToString.cs" />
+    <Compile Include="JsonTool\Converters\Json\JPropertyToChildren.cs" />
+    <Compile Include="JsonTool\Converters\Json\JPropertyToColorConverter.cs" />
+    <Compile Include="JsonTool\Converters\Json\JPropertyValueToString.cs" />
+    <Compile Include="JsonTool\Converters\Json\JValueToColorConverter.cs" />
+    <Compile Include="JsonTool\Converters\MethodToValueConverter.cs" />
+    <Compile Include="JsonTool\Converters\NegateBoolean.cs" />
+    <Compile Include="JsonTool\Converters\TreeviewMarginConverter.cs" />
+    <Compile Include="JsonTool\Helper\BraceFoldingStrategy.cs" />
+    <Compile Include="JsonTool\Helper\LambdaCommand.cs" />
+    <Compile Include="JsonTool\Helper\ObjectUtils.cs" />
+    <Compile Include="JsonTool\ViewModel\JsonViewModel.cs" />
+    <Compile Include="JsonTool\ViewModel\ViewModelBase.cs" />
+    <Compile Include="JsonTool\Views\ChangeValueWin.xaml.cs">
+      <DependentUpon>ChangeValueWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JsonTool\Views\JsonView.xaml.cs">
+      <DependentUpon>JsonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddDeviceFields.xaml.cs">
+      <DependentUpon>AddDeviceFields.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddDeviceGroupInfo.xaml.cs">
+      <DependentUpon>AddDeviceGroupInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddDeviceInfo.xaml.cs">
+      <DependentUpon>AddDeviceInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddDevicePoint.xaml.cs">
+      <DependentUpon>AddDevicePoint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddFlowData.xaml.cs">
+      <DependentUpon>AddFlowData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddFlowDataInfo.xaml.cs">
+      <DependentUpon>AddFlowDataInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddFlowImg.xaml.cs">
+      <DependentUpon>AddFlowImg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\EditFlowButton.xaml.cs">
+      <DependentUpon>EditFlowButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\MessageInfo3.xaml.cs">
+      <DependentUpon>MessageInfo3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\MessageInfo2.xaml.cs">
+      <DependentUpon>MessageInfo2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\OptionNewModel.xaml.cs">
+      <DependentUpon>OptionNewModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddSubOptionNew.xaml.cs">
+      <DependentUpon>AddSubOptionNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddOptionNew.xaml.cs">
+      <DependentUpon>AddOptionNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\SeeJson.xaml.cs">
+      <DependentUpon>SeeJson.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\SelectFlowData2.xaml.cs">
+      <DependentUpon>SelectFlowData2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\SelectFlowData.xaml.cs">
+      <DependentUpon>SelectFlowData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\HomeDeviceInfo.xaml.cs">
+      <DependentUpon>HomeDeviceInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\OptionDetails.xaml.cs">
+      <DependentUpon>OptionDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddSubOptionInfo.xaml.cs">
+      <DependentUpon>AddSubOptionInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddSubOption.xaml.cs">
+      <DependentUpon>AddSubOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddOption.xaml.cs">
+      <DependentUpon>AddOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\RobotInfo.xaml.cs">
+      <DependentUpon>RobotInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\MessageInfo.xaml.cs">
+      <DependentUpon>MessageInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\DeleteInfo.xaml.cs">
+      <DependentUpon>DeleteInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\AddOptionInfo.xaml.cs">
+      <DependentUpon>AddOptionInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DataDeviceTabControl.xaml.cs">
+      <DependentUpon>DataDeviceTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DataFlowTabControl.xaml.cs">
+      <DependentUpon>DataFlowTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DataResultTabControl.xaml.cs">
+      <DependentUpon>DataResultTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DeviceClassTabControl.xaml.cs">
+      <DependentUpon>DeviceClassTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DeviceGroupTabControl.xaml.cs">
+      <DependentUpon>DeviceGroupTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DeviceTabControl.xaml.cs">
+      <DependentUpon>DeviceTabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FlowTab.xaml.cs">
+      <DependentUpon>FlowTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OptionCreateControl.xaml.cs">
+      <DependentUpon>OptionCreateControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SubOptionTab.xaml.cs">
+      <DependentUpon>SubOptionTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UCData.xaml.cs">
+      <DependentUpon>UCData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UCDevice.xaml.cs">
+      <DependentUpon>UCDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UCFlow.xaml.cs">
+      <DependentUpon>UCFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UCHome.xaml.cs">
+      <DependentUpon>UCHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OptionTab.xaml.cs">
+      <DependentUpon>OptionTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UCOption.xaml.cs">
+      <DependentUpon>UCOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Unitils\GetParentWindows.cs" />
+    <Compile Include="Unitils\GlobalEnum.cs" />
+    <Compile Include="Unitils\GlobalUnitils.cs" />
+    <Compile Include="Unitils\GridViewUnitls.cs" />
+    <Compile Include="Unitils\RoborUnitils.cs" />
+    <Compile Include="Unitils\RobotCmd.cs" />
+    <Compile Include="Unitils\SeeJsons.cs" />
+    <Compile Include="Unitils\SqlHelper.cs" />
+    <Compile Include="Unitils\TCPHelper.cs" />
+    <Compile Include="viewModel\GLA.cs" />
+    <Compile Include="ExperimentData.cs" />
+    <Page Include="Control\ClearDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ColorButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\FlowButton2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\FlowButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevButton0.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevButton2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevButton1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DeviceGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DeviceTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevLiquid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevOperation3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevOperation2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Control\DevOperation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevPaging.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevpButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevRobot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\DevTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\MyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\OptionTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\SwitchButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\TabButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JsonTool\Themes\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JsonTool\Themes\Paths.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JsonTool\Themes\TreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JsonTool\Views\ChangeValueWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="JsonTool\Views\JsonView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Popup\AddDeviceFields.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\AddDeviceGroupInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddDeviceInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\AddDevicePoint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\AddFlowData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddFlowDataInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddFlowImg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\EditFlowButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\MessageInfo3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\MessageInfo2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\OptionNewModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddSubOptionNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddOptionNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\SeeJson.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\SelectFlowData2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\SelectFlowData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\HomeDeviceInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\OptionDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddSubOptionInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddSubOption.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popup\RobotInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\MessageInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\DeleteInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popup\AddOptionInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\GlobalResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ScrollViewerDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DataDeviceTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DataFlowTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DataResultTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DeviceClassTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DeviceGroupTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DeviceTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\FlowTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\OptionCreateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\SubOptionTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\UCData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UCDevice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UCFlow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UCHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\OptionTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\UCOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Resources\avalonEditJson.xshd" />
+    <EmbeddedResource Include="Resources\avalonEditJsonReadOnly.xshd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\矩形 105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Group 345.png" />
+    <Resource Include="Image\停止.png" />
+    <Resource Include="Image\列表收起.png" />
+    <Resource Include="Image\初始化.png" />
+    <Resource Include="Image\多边形 1.png" />
+    <Resource Include="Image\安全运行.png" />
+    <Resource Include="Image\实验分析,试剂,实验,检验,DNA检验,化学.png" />
+    <Resource Include="Image\实验室.png" />
+    <Resource Include="Image\恢复.png" />
+    <Resource Include="Image\抽查检查.png" />
+    <Resource Include="Image\机器人.png" />
+    <Resource Include="Image\流程%281%29.png" />
+    <Resource Include="Image\窗口.png" />
+    <Resource Include="Image\线_一键清空.png" />
+    <Resource Include="Image\设备 6.png" />
+    <Resource Include="Image\设备.png" />
+    <Resource Include="Image\语音关闭.png" />
+    <Resource Include="Image\路径.png" />
+    <Resource Include="Image\高温热水加热式.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="窗口.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="矩形 105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="语音关闭.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="列表收起.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\menu\主页.png" />
+    <Resource Include="Image\menu\主页2.png" />
+    <Resource Include="Image\menu\数据.png" />
+    <Resource Include="Image\menu\数据2.png" />
+    <Resource Include="Image\menu\流程.png" />
+    <Resource Include="Image\menu\流程2.png" />
+    <Resource Include="Image\menu\设备.png" />
+    <Resource Include="Image\menu\设备2.png" />
+    <Resource Include="Image\menu\配方.png" />
+    <Resource Include="Image\menu\配方2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\重置.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\搜索.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\model.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\edit.png" />
+    <Resource Include="Image\details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\arrowLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\arrowRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ICONS66.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\move_down.png" />
+    <Resource Include="Image\move_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\see.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsonCSharpClassGeneratorLib\JsonClassGeneratorLib.csproj">
+      <Project>{7bef7eaa-de37-40fb-bd33-3def0685031f}</Project>
+      <Name>JsonClassGeneratorLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets'))" />
+  </Target>
+</Project>

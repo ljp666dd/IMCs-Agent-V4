@@ -154,9 +154,11 @@ class ExperimentDataAgent:
         """
         columns = {c.lower(): c for c in df.columns}
         
-        # Find potential and current columns robustly
-        pot_col = next((c for c in columns if 'potential' in c or 'voltage' in c), None)
-        curr_col = next((c for c in columns if 'current' in c or 'density' in c), None)
+        # Find potential and current columns robustly (include common shorthand V/I)
+        pot_keys = ["potential", "voltage", "ewe", "e", "v"]
+        curr_keys = ["current", "density", "current_density", "currentdensity", "j", "i"]
+        pot_col = next((orig for key, orig in columns.items() if any(k in key for k in pot_keys)), None)
+        curr_col = next((orig for key, orig in columns.items() if any(k in key for k in curr_keys)), None)
         
         if not pot_col or not curr_col:
             logger.warning(f"Could not identify columns for LSV: {df.columns}")
@@ -169,7 +171,7 @@ class ExperimentDataAgent:
             # Overpotential at 10 mA/cm2
             # Logic: Find voltage where |current - 10| is minimal
             idx_10 = np.argmin(np.abs(J - 10.0))
-            eta_10 = float(V[idx_10]) if abs(J[idx_10] - 10) < 5 else None
+            eta_10 = float(V[idx_10]) if abs(J[idx_10] - 10) <= 5 else None
             
             # Onset Potential (0.1 mA/cm2 threshold)
             idx_onset = np.argmin(np.abs(J - 0.1))
@@ -213,6 +215,7 @@ class ExperimentDataAgent:
             if result:
                  # Auto-Link: Try to find matching material by formula (filename)
                  # Heuristic: Remove extension, split by underscore/hyphen if complex
+                 # 经验性关联: 用文件名猜测材料公式(弱关联, 后续可引入更严格映射)
                  formula_guess = os.path.splitext(os.path.basename(file_path))[0].split('_')[0].split('-')[0]
                  material_rec = self.db.get_material_by_formula(formula_guess)
                  material_id = material_rec["material_id"] if material_rec else None
@@ -224,6 +227,32 @@ class ExperimentDataAgent:
                      results=asdict(result),
                      material_id=material_id
                  )
+
+                 # Activity metrics (HOR/HER indicators)
+                 conditions = {
+                     "reference_electrode": self.config.reference_electrode,
+                     "scan_rate_mV_s": self.config.scan_rate_default,
+                 }
+                 metrics = [
+                     ("overpotential_10mA", result.overpotential_10mA, "mV"),
+                     ("overpotential_1mA", result.overpotential_1mA, "mV"),
+                     ("onset_potential", result.onset_potential, "V"),
+                     ("current_density_max", result.current_density_max, "mA/cm2"),
+                     ("exchange_current_density", result.exchange_current_density, "mA/cm2"),
+                 ]
+                 for metric_name, metric_value, unit in metrics:
+                     if metric_value is None:
+                         continue
+                     self.db.save_activity_metric(
+                         material_id=material_id,
+                         metric_name=metric_name,
+                         metric_value=metric_value,
+                         unit=unit,
+                         conditions=conditions,
+                         source="experiment",
+                         source_id=str(exp_id),
+                         metadata={"exp_type": "LSV", "sample_id": result.sample_id}
+                     )
                  
                  # M3: Log Evidence Chain
                  if material_id:

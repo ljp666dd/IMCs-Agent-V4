@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="zdhsys.Control.DevPaging"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:zdhsys.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="520">
+    <UserControl.Resources>
+        <Style x:Key="common" TargetType="Control">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Label x:Name="lb_all" Content="共22条"  Style="{StaticResource common}"/>
+        <ComboBox x:Name="cbb"  Background="White" Style="{StaticResource common}" Margin="20,0,0,0"/>
+        <Button x:Name="btn_left" Click="btn_left_Click" Background="Transparent" Width="30" Height="30" Margin="20,0,0,0" Style="{StaticResource NoBorderButtonStyle2}">
+            <StackPanel Margin="7,0,0,0">
+                <Image x:Name="img_left" Width="15" Height="15" />
+            </StackPanel>
+        </Button>
+        <Button x:Name="btn_1" Content="1"  Style="{StaticResource NoBorderButtonStyle2}"/>
+        <Button x:Name="btn_2" Content="2"  Style="{StaticResource NoBorderButtonStyle2}"/>
+        <Button x:Name="btn_3" Content="3"  Style="{StaticResource NoBorderButtonStyle2}"/>
+        <Button x:Name="btn_4" Content="4"  Style="{StaticResource NoBorderButtonStyle2}"/>
+        <Button x:Name="btn_5" Content="5"  Style="{StaticResource NoBorderButtonStyle2}"/>
+        <Button x:Name="btn_Right" Click="btn_Right_Click" Background="Transparent" Width="30" Height="30" Margin="5,0,0,0" Style="{StaticResource NoBorderButtonStyle2}">
+            <StackPanel Margin="0,0,8,0">
+                <Image x:Name="img_right"  Width="15" Height="15" />
+            </StackPanel>
+        </Button>
+        <Button x:Name="btn_go" Click="btn_go_Click" Content="前往" Foreground="#333333" Background="Transparent" Width="35" Margin="20,0,0,0" Style="{StaticResource NoBorderButtonStyle2}"/>
+        <TextBox x:Name="txt" HorizontalContentAlignment="Center" PreviewTextInput="txt_PreviewTextInput"  Foreground="#333333" Width="40" Height="20" Margin="10,0,0,0"/>
+        <Label Content="页"  Style="{StaticResource common}"/>
+    </StackPanel>
+</UserControl>

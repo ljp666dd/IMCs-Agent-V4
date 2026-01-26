@@ -1,0 +1,620 @@
+.is-sidebar-open {
+    width: 230px;
+}
+
+.aside-box {
+    height: calc(100vh - 175px);
+    overflow: inherit;
+    position: relative;
+
+    .collapse-demo {
+        width: 36px;
+        // height: 100%;
+        height: calc(100% - 260px);
+        background: #093e7a;
+        border: 1px solid rgba(2, 83, 137, 1);
+        padding: 12px;
+        box-sizing: border-box;
+        // transition: all .25s ease;
+        position: fixed;
+        top: 0;
+        right: 0;
+
+        .collapse-title {
+            width: 100%;
+
+            .title {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 400;
+                color: #fff;
+                letter-spacing: 1px;
+            }
+
+            .icon-box {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: 1px solid rgba(2, 83, 137, 1);
+                background: rgba(9, 61, 124, 1);
+                position: absolute;
+                top: 10px;
+                left: -12px;
+                z-index: 2;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .active {
+        width: 230px;
+        padding: 0;
+        background: rgba(0, 37, 78, 1);
+
+        .collapse-title {
+            width: 100%;
+
+            .title {
+                width: 100%;
+                text-align: left;
+                background: rgba(33, 78, 131, 1);
+                height: 54px;
+                line-height: 54px;
+                box-sizing: border-box;
+                padding-left: 30px;
+                font-size: 16px;
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+    }
+
+    .user-box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+        font-size: 14px;
+        color: #fff;
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+
+        img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+    }
+
+    .chart-box {
+        position: fixed;
+        bottom: 20px;
+        right: 6px;
+        width: 230px;
+        height: 230px;
+        // background: url('../../assets/chart/图片9.png') no-repeat;
+        // background-size: cover;
+
+        .body-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            .out-round-list {
+                width: 230px;
+                height: 230px;
+                position: relative;
+
+                .out-round-item {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 8px;
+                    position: absolute;
+
+                    // &:nth-child(1) {
+                    //     top: 89px;
+                    //     left: 117px;
+                    //     transform: translateX(-50%) rotate(0deg);
+                    // }
+                    &:nth-child(1) {
+                        top: 0;
+                        left: 88px;
+                        transform: translateX(-50%) rotate(0deg);
+                    }
+
+                    &:nth-child(2) {
+                        top: 119px;
+                        left: -30px;
+                        transform: translateY(-50%) rotate(-87deg);
+
+                        .round-arrow-box {
+                            transform: rotate(4deg);
+
+                            .round-lage-arrow {
+                                top: 10px;
+                                left: -10px;
+                            }
+
+                            .round-arrow {
+                                top: 26px;
+                                left: 24px;
+                            }
+                        }
+
+                        .model-box {
+                            transform: rotate(84deg);
+                        }
+                    }
+
+                    &:nth-child(3) {
+                        bottom: -8px;
+                        left: 85px;
+                        transform: translateX(-50%) rotate(208deg);
+
+                        .round-arrow-box {
+                            transform: rotate(6deg);
+
+                            .round-lage-arrow {
+                                top: 24px;
+                                left: -8px;
+                            }
+
+                            .round-arrow {
+                                top: 40px;
+                                left: 27px;
+                            }
+                        }
+
+                        .model-box {
+                            transform: rotate(151deg);
+                        }
+                    }
+
+                    &:nth-child(4) {
+                        bottom: 26px;
+                        right: -83px;
+                        transform: translateX(-50%) rotate(136deg);
+
+                        .round-arrow-box {
+                            transform: rotate(2deg);
+
+                            .round-lage-arrow {
+                                top: 21px;
+                                left: -7px;
+                            }
+
+                            .round-arrow {
+                                top: 38px;
+                                left: 27px;
+                            }
+                        }
+
+                        .model-box {
+                            transform: rotate(223deg);
+                        }
+                    }
+
+                    &:nth-child(5) {
+                        top: 62px;
+                        right: -27px;
+                        transform: translateY(-50%) rotate(82deg);
+
+                        .round-arrow-box {
+                            transform: rotate(-15deg);
+
+                            .round-lage-arrow {
+                                top: 29px;
+                                left: -11px;
+                            }
+
+                            .round-arrow {
+                                top: 43px;
+                                left: 22px;
+                            }
+                        }
+
+                        .model-box {
+                            transform: rotate(-84deg);
+                        }
+                    }
+
+                    .round-arrow-box {
+                        width: 50px;
+                        height: 50px;
+                        transform: rotate(0deg);
+                        position: relative;
+
+                        .round-lage-arrow {
+                            width: 61px;
+                            height: 34px;
+                            overflow: hidden;
+                            position: absolute;
+                            top: 19px;
+                            left: -16px;
+
+                            img {
+                                width: 100%;
+                            }
+                        }
+
+                        .round-arrow {
+                            width: 50px;
+                            height: 28px;
+                            overflow: hidden;
+                            position: absolute;
+                            top: 33px;
+                            left: 20px;
+
+                            img {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .model-box {
+                        width: 56px;
+                        height: 56px;
+                        border-radius: 50%;
+                        background: url('../../assets/chart/model.png') no-repeat;
+                        background-size: cover;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding-top: 6px;
+                        box-sizing: border-box;
+
+                        .type-box {
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            line-height: 20px;
+                            font-size: 12px;
+                            color: #333;
+                            background: #deebf7;
+                            text-align: center;
+                        }
+
+                        .model-title {
+                            font-size: 12px;
+                            color: #97d7fb;
+                            transform: scale(0.7);
+                            margin-top: -3px;
+                        }
+                    }
+
+                    .chart-active {
+
+                        .type-box {
+                            color: #fff;
+                            background: #133158;
+                            text-align: center;
+                            z-index: 9;
+                        }
+
+                        .model-title {
+                            color: #333;
+                        }
+
+                        .chart-bg {
+                            position: absolute;
+                            top: 3px;
+                            left: 2.5px;
+                            width: 51px;
+                            height: 51px;
+                            border-radius: 50%;
+                            background: rgb(181 210 236);
+                        }
+                    }
+                }
+            }
+
+            .center-list {
+                width: 180px;
+                height: 180px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                .center-round-list {
+                    position: relative;
+
+                    .center-item {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        column-gap: 6px;
+                        position: absolute;
+
+                        .stand {
+                            width: 12px;
+                        }
+
+                        .out-arrow {
+                            width: 24px;
+                        }
+
+                        .in-arrow {
+                            width: 24px;
+                        }
+
+                        .sit {
+                            width: 14px;
+                        }
+                    }
+
+                    &:nth-child(1) {
+                        .center-item {
+                            transform: rotate(0deg);
+                            top: 40px;
+                            left: 72px;
+                        }
+
+                        .sit {
+                            position: absolute;
+                            left: 34px;
+                            top: 0px;
+                        }
+
+
+                        .in-arrow {
+                            position: absolute;
+                            left: 15px;
+                            top: 0;
+                            transform: rotate(68deg);
+                        }
+
+
+                        .out-arrow {
+                            position: absolute;
+                            left: 9px;
+                            top: 0px;
+                            transform: rotate(70deg);
+                        }
+
+                        .stand {
+                            position: absolute;
+                            left: 3px;
+                            top: 0;
+                        }
+
+                    }
+
+                    &:nth-child(2) {
+                        .center-item {
+                            transform: rotate(-71deg) rotateY(-175deg);
+                            top: 56px;
+                            left: 47px;
+
+                        }
+
+                        .sit {
+                            position: absolute;
+                            left: 29px;
+                            top: -3px;
+                            transform: rotate(-70deg) rotateY(166deg);
+                        }
+
+
+                        .in-arrow {
+                            position: absolute;
+                            left: 15px;
+                            top: 0;
+                            transform: rotate(68deg);
+                        }
+
+
+                        .out-arrow {
+                            position: absolute;
+                            left: 10px;
+                            top: -2px;
+                            transform: rotate(70deg);
+                        }
+
+                        .stand {
+                            position: absolute;
+                            left: 3px;
+                            top: -1px;
+                            transform: rotate(-71deg) rotateY(172deg);
+                        }
+
+                    }
+
+                    &:nth-child(3) {
+                        .center-item {
+                            transform: rotate(-136deg) rotateY(-175deg);
+                            top: 117px;
+                            left: 39px;
+                        }
+
+                        .sit {
+                            position: absolute;
+                            left: 32px;
+                            top: 0px;
+                            transform: rotate(-141deg) rotateY(166deg);
+                        }
+
+
+                        .in-arrow {
+                            position: absolute;
+                            left: 15px;
+                            top: 0;
+                            transform: rotate(68deg);
+                        }
+
+
+                        .out-arrow {
+                            position: absolute;
+                            left: 10px;
+                            top: -2px;
+                            transform: rotate(70deg);
+                        }
+
+                        .stand {
+                            position: absolute;
+                            left: 2px;
+                            top: 4px;
+                            transform: rotate(-112deg) rotateY(172deg);
+                        }
+
+                    }
+
+                    &:nth-child(4) {
+                        .center-item {
+                            transform: rotate(-211deg) rotateY(-175deg);
+                            top: 143px;
+                            left: 109px;
+                        }
+
+                        .sit {
+                            position: absolute;
+                            left: 32px;
+                            top: -3px;
+                            transform: rotate(-225deg) rotateY(166deg);
+                        }
+
+
+                        .in-arrow {
+                            position: absolute;
+                            left: 15px;
+                            top: 0;
+                            transform: rotate(68deg);
+                        }
+
+
+                        .out-arrow {
+                            position: absolute;
+                            left: 10px;
+                            top: -2px;
+                            transform: rotate(70deg);
+                        }
+
+                        .stand {
+                            position: absolute;
+                            left: 4px;
+                            top: 0px;
+                            transform: rotate(-200deg) rotateY(172deg);
+                        }
+
+                    }
+
+                    &:nth-child(5) {
+                        .center-item {
+                            transform: rotate(-299deg);
+                            top: 56px;
+                            left: 131px;
+                        }
+
+                        .sit {
+                            position: absolute;
+                            left: 32px;
+                            top: -4px;
+                            transform: rotate(-420deg);
+                        }
+
+
+                        .in-arrow {
+                            position: absolute;
+                            left: 15px;
+                            top: 0;
+                            transform: rotate(68deg);
+                        }
+
+
+                        .out-arrow {
+                            position: absolute;
+                            left: 10px;
+                            top: -2px;
+                            transform: rotate(70deg);
+                        }
+
+                        .stand {
+                            position: absolute;
+                            left: 9px;
+                            top: -4px;
+                            transform: rotate(-60deg);
+                        }
+
+                    }
+                }
+            }
+
+            .bottom-list {
+                position: absolute;
+                top: 89px;
+                left: 89px;
+
+                .model-box {
+                    width: 58px;
+                    height: 58px;
+                    border-radius: 50%;
+                    background: url('../../assets/chart/model.png') no-repeat;
+                    background-size: cover;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    box-sizing: border-box;
+                    padding-top: 6px;
+
+                    .type-box {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        line-height: 20px;
+                        font-size: 12px;
+                        color: #333;
+                        background: #deebf7;
+                        text-align: center;
+                    }
+
+                    .model-title {
+                        font-size: 12px;
+                        color: #97d7fb;
+                        transform: scale(0.8);
+                    }
+                }
+
+            }
+
+            .model-box {
+                position: relative;
+            }
+
+            .chart-active {
+
+                .type-box {
+                    color: #fff;
+                    background: #133158;
+                    text-align: center;
+                    z-index: 9;
+                }
+
+                .model-title {
+                    color: #333;
+                }
+
+                .chart-bg {
+                    position: absolute;
+                    top: 3px;
+                    left: 2.5px;
+                    width: 51px;
+                    height: 51px;
+                    border-radius: 50%;
+                    background: rgb(181 210 236);
+                }
+            }
+
+        }
+    }
+}

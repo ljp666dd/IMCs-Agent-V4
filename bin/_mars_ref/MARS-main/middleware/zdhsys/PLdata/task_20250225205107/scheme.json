@@ -1,0 +1,223 @@
+{
+  "TaskId": "task_20250225205107",
+  "ExperimentName": "CsPbBr3 Nanocubes Synthesis",
+  "Materials": [
+    {
+      "MaterialId": "M1",
+      "Name": "CsBr",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "99%",
+      "State": "solid"
+    },
+    {
+      "MaterialId": "M2",
+      "Name": "PbBr2",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "99%",
+      "State": "solid"
+    },
+    {
+      "MaterialId": "M3",
+      "Name": "Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "99%",
+      "State": "liquid"
+    },
+    {
+      "MaterialId": "M4",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "99%",
+      "State": "liquid"
+    },
+    {
+      "MaterialId": "M5",
+      "Name": "Oleic Acid",
+      "Amount": "1.0",
+      "Unit": "mL",
+      "Purity": "90%",
+      "State": "liquid"
+    },
+    {
+      "MaterialId": "M6",
+      "Name": "Oleylamine",
+      "Amount": "0.5",
+      "Unit": "mL",
+      "Purity": "80%",
+      "State": "liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "C1",
+      "Name": "Reaction Flask",
+      "Capacity": "100",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Round Bottom",
+      "HeatResistant": "Yes",
+      "PressureRating": "Low"
+    },
+    {
+      "ContainerId": "C2",
+      "Name": "Reaction Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Low"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "E1",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "RPM": "1200"
+      }
+    },
+    {
+      "EquipmentId": "E2",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "MaxRPM": "10000",
+        "RunTime": "10 mins"
+      }
+    },
+    {
+      "EquipmentId": "E3",
+      "Name": "UV-Vis Spectrometer",
+      "Parameters": {
+        "Range": "400-700 nm"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "Stepid": "1",
+      "Description": "Prepare precursor solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "C1",
+          "MaterialId": "",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "M1",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "M2",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "M3",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "M5",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "M6",
+          "EquipmentId": ""
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "C1",
+        "Contents": [
+          {
+            "MaterialId": "M1+M2+M3+M5+M6",
+            "Amount": "Total",
+            "Unit": "Mixed"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "2",
+      "Description": "Inject precursor solution into toluene",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "C2",
+          "MaterialId": "",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C2",
+          "MaterialId": "M4",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "place_container",
+          "ContainerId": "C1",
+          "MaterialId": "M1+M2+M3+M5+M6",
+          "EquipmentId": ""
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "C2",
+        "Contents": [
+          {
+            "MaterialId": "CsPbBr3",
+            "Amount": "0.8",
+            "Unit": "mmol"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "3",
+      "Description": "Purify product by centrifugation",
+      "Actions": [
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C2",
+          "MaterialId": "CsPbBr3",
+          "EquipmentId": "E2"
+        },
+        {
+          "ActionType": "remove_container_from_equipment",
+          "ContainerId": "C2",
+          "MaterialId": "CsPbBr3",
+          "EquipmentId": "E2"
+        }
+      ],
+      "Dependencies": [
+        "2"
+      ],
+      "StepOutput": {
+        "ContainerId": "C2",
+        "Contents": [
+          {
+            "MaterialId": "CsPbBr3",
+            "Amount": "Purified",
+            "Unit": "Solid"
+          }
+        ]
+      }
+    }
+  ]
+}

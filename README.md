@@ -60,6 +60,20 @@ The system uses a modern Service-Oriented Architecture:
 -   **Reproducibility**: Models are serialized to `data/ml_agent/models/`.
 -   **Evidence**: Results link data sources (Literature -> Theory -> Experiment).
 
+## 📚 Docs
+
+-   `docs/user_manual.md`
+-   `docs/developer_manual.md`
+-   `docs/api_reference.md`
+-   `docs/mars_benchmark.md`
+-   `docs/idea_upgrade.md`
+
+## 🧩 Examples & Evaluation
+
+-   `examples/hor-logs/`
+-   `examples/err-deal/`
+-   `evaluate/`
+
 ## 🛠️ Development
 
 **Install Dependencies:**

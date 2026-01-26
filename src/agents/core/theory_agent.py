@@ -32,6 +32,7 @@ class TheoryDataConfig:
     """
     api_key: str = app_config.MP_API_KEY
     output_dir: str = "data/theory"
+    # 默认金属元素集合(限定搜索空间, 供任务图/理论检索/训练筛选统一使用)
     elements: List[str] = field(default_factory=lambda: [
         "Pt", "Pd", "Ni", "Co", "Fe", "Cu", "Au", "Ag", "Ir", "Rh", "Ru", "Os",
         "Mo", "W", "V", "Nb", "Ta", "Ti", "Zr", "Hf", "Mn", "Re", "Cr",
@@ -176,22 +177,99 @@ class TheoryDataAgent:
              
         results = self.mp.get_orbital_dos(material_ids, energy_range)
         
-        # DB Storage for DOS is complex (JSON blob or separate table).
-        # v3.3: Current schema has 'dos_data' TEXT in materials table.
+        # DB Storage for DOS: store compact descriptors to avoid huge blobs.
+        updated = 0
         for mat_id, dos_data in results.items():
-            # We assume the material exists, so we update it.
-            # However, sqlite INSERT OR REPLACE works if we have the PK.
-            # Our save_material uses INSERT OR REPLACE on material_id (UNIQUE).
-            # But wait, save_material arguments are specific.
-            # We might need a raw update or extend save_material.
-            # For now, let's keep JSON for DOS as it's large, but update DB connection if needed.
-            pass
+            descriptors = self.extract_dos_descriptors(dos_data)
+            if descriptors:
+                self.db.update_material_dos(str(mat_id), descriptors)
+                updated += 1
             
         output_path = os.path.join(self.config.output_dir, "orbital_pdos.json")
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2)
             
-        return len(results)
+        return updated
+
+    def _normalize_surface_formula(self, surface: str) -> Optional[str]:
+        """Normalize surface composition string to a formula guess."""
+        if not surface:
+            return None
+        import re
+        token = re.sub(r'[^A-Za-z0-9]', '', surface)
+        if not token:
+            return None
+        try:
+            from pymatgen.core import Composition
+            comp = Composition(token)
+            return comp.reduced_formula
+        except Exception:
+            return token
+
+    def _match_material_by_elements(self, formula_guess: str) -> Optional[Dict]:
+        """Weak matching: find material with the same element set."""
+        if not formula_guess:
+            return None
+        try:
+            from pymatgen.core import Composition
+            target_elements = set([el.symbol for el in Composition(formula_guess).elements])
+        except Exception:
+            return None
+        # Limit scan for speed
+        for m in self.db.list_materials(limit=500):
+            try:
+                els = set([el.symbol for el in Composition(m.get("formula", "")).elements])
+                if els == target_elements:
+                    return m
+            except Exception:
+                continue
+        return None
+
+    def download_adsorption_energies(self, adsorbates: List[str] = None, limit: int = 50) -> int:
+        """
+        Download adsorption energies (H*/OH*) from Catalysis-Hub and link to materials.
+        """
+        adsorbates = adsorbates or ["H*", "OH*"]
+        total_saved = 0
+        for ads in adsorbates:
+            records = self.ext_db.query_catalysis_hub(adsorbate=ads, limit=limit)
+            for rec in records:
+                surface = rec.get("surface", "")
+                facet = rec.get("facet", "")
+                formula_guess = self._normalize_surface_formula(surface)
+                material_rec = self.db.get_material_by_formula(formula_guess) if formula_guess else None
+                if not material_rec and formula_guess:
+                    material_rec = self._match_material_by_elements(formula_guess)
+                material_id = material_rec.get("material_id") if material_rec else None
+
+                rec_id = self.db.save_adsorption_energy(
+                    material_id=material_id,
+                    surface_composition=surface,
+                    facet=facet,
+                    adsorbate=ads,
+                    reaction_energy=rec.get("reaction_energy"),
+                    activation_energy=rec.get("activation_energy"),
+                    source="Catalysis-Hub",
+                    metadata={"equation": rec.get("equation")}
+                )
+                total_saved += 1
+
+                # Evidence link if material resolved
+                if material_id:
+                    self.db.save_evidence(
+                        material_id=material_id,
+                        source_type="adsorption_energy",
+                        source_id=str(rec_id),
+                        score=1.1,
+                        metadata={
+                            "adsorbate": ads,
+                            "reaction_energy": rec.get("reaction_energy"),
+                            "activation_energy": rec.get("activation_energy"),
+                            "surface": surface,
+                            "facet": facet
+                        }
+                    )
+        return total_saved
 
     def list_stored_materials(self, limit: int = 100) -> List[Dict]:
         """List materials stored in the database."""
@@ -215,9 +293,9 @@ class TheoryDataAgent:
         """Query AFLOW database."""
         return self.ext_db.query_aflow(elements or self.config.elements, limit)
         
-    def query_catalysis_hub(self, reaction: str = "HER", limit: int = 50) -> List[Dict]:
-        """Query Catalysis-Hub."""
-        return self.ext_db.query_catalysis_hub(reaction, limit)
+    def query_catalysis_hub(self, adsorbate: str = "H*", limit: int = 50) -> List[Dict]:
+        """Query Catalysis-Hub for adsorption energies."""
+        return self.ext_db.query_catalysis_hub(adsorbate=adsorbate, limit=limit)
 
     def download_adsorption_energies(self, save: bool = True) -> List[Dict]:
         """Download adsorption energies."""

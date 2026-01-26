@@ -1,0 +1,208 @@
+{
+  "TaskId": "task_20250302144026",
+  "ExperimentName": "Synthesis of CsPbBr₃ Nanocubes at Room Temperature",
+  "Materials": [
+    {
+      "MaterialId": "M001",
+      "Name": "Lead bromide",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "≥99%",
+      "State": "Powder"
+    },
+    {
+      "MaterialId": "M002",
+      "Name": "Cesium bromide",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "≥99%",
+      "State": "Powder"
+    },
+    {
+      "MaterialId": "M003",
+      "Name": "N,N-Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "≥99%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M004",
+      "Name": "Oleic acid",
+      "Amount": "0.6",
+      "Unit": "mL",
+      "Purity": "≥99%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M005",
+      "Name": "Oleylamine",
+      "Amount": "0.2",
+      "Unit": "mL",
+      "Purity": "≥99%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M006",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "≥99%",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "C001",
+      "Name": "Precursor Glass Beaker",
+      "Capacity": "20",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Borosilicate Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Atmospheric"
+    },
+    {
+      "ContainerId": "C002",
+      "Name": "Reaction Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Borosilicate Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Atmospheric"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "E001",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "SpeedRange": "0-1500",
+        "Unit": "rpm"
+      }
+    },
+    {
+      "EquipmentId": "E002",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "Speed": "10000",
+        "Unit": "rpm",
+        "Duration": "10",
+        "TimeUnit": "minute"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "Stepid": "1",
+      "Description": "Prepare precursor solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M001"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M002"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M003"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "C001",
+        "Contents": [
+          {
+            "MaterialId": "M001",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "M002",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "M003",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "2",
+      "Description": "Add stabilizing agents to precursor solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M004"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M005"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "C001",
+        "Contents": [
+          {
+            "MaterialId": "M004",
+            "Amount": "0.6",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "M005",
+            "Amount": "0.2",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "3",
+      "Description": "Inject precursor into reaction solvent under stirring",
+      "Actions": [
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C002",
+          "MaterialId": "M006"
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C001",
+          "EquipmentId": "E001"
+        }
+      ],
+      "Dependencies": [
+        "2"
+      ],
+      "StepOutput": {
+        "ContainerId": "C002",
+        "Contents": [
+          {
+            "MaterialId": "M003",
+            "Amount": "10",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "M001",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          }
+        ]
+      }
+    }
+  ]
+}

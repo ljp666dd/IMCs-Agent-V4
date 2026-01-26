@@ -28,11 +28,12 @@ async def health_check():
     return {"status": "ok", "version": "3.3"}
 
 # Include Routers (Lazy import to avoid circular dep issues during init)
-from src.api.routers import tasks, ml, theory, experiment
+from src.api.routers import tasks, ml, theory, experiment, knowledge
 app.include_router(tasks.router, prefix="/tasks", tags=["Tasks"])
 app.include_router(ml.router, prefix="/ml", tags=["Machine Learning"])
 app.include_router(theory.router, prefix="/theory", tags=["Theory"])
 app.include_router(experiment.router, prefix="/experiment", tags=["Experiment"])
+app.include_router(knowledge.router, prefix="/knowledge", tags=["Knowledge"])
 
 try:
     from src.api.routers import auth

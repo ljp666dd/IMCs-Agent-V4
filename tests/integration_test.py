@@ -3,8 +3,10 @@ import os
 import shutil
 import logging
 
-# Add src to path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
+# Add project root and src to path
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(BASE_DIR)
+sys.path.append(os.path.join(BASE_DIR, "src"))
 
 # Configure Logging to console
 logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
@@ -112,11 +114,11 @@ def test_ml_agent(db):
         mock_result = ModelResult(
             name="XGB_Test",
             model_type=ModelType.TRADITIONAL,
+            r2_train=0.97,
             r2_test=0.95,
             mae_test=0.01,
             rmse_test=0.02,
-            model=None,
-            feature_importance={"feat1": 0.5}
+            model=None
         )
         
         # Call the private save helper (we expose it or copy logic)

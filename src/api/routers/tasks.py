@@ -94,3 +94,58 @@ async def get_task_status(task_id: str):
             "results": agent_instance.current_plan.results
         }
     return {"status": "unknown"}
+
+
+@router.get("/{task_id}/report")
+async def get_task_report(task_id: str):
+    """Get task report with snapshot if available."""
+    plan = db.get_plan(task_id)
+    if not plan:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    steps = db.list_plan_steps(task_id)
+    latest = {}
+    for s in steps:
+        latest[s["step_id"]] = s
+    results = {
+        step_id: (data.get("result") if data.get("result") is not None else None)
+        for step_id, data in latest.items()
+    }
+    report = {
+        "task": plan,
+        "steps": list(latest.values()),
+        "results": results
+    }
+
+    # Attach snapshot if exists
+    snap = db.get_snapshot_by_plan(task_id)
+    if snap:
+        items = db.list_snapshot_items(snap["id"])
+        report["snapshot"] = {
+            "meta": snap,
+            "items": items
+        }
+        # Evidence chain for snapshot materials
+        material_ids = [i.get("item_id") for i in items if i.get("item_type") == "material"]
+        evidence_chain = []
+        for mid in material_ids:
+            evidence_chain.append({
+                "material_id": mid,
+                "evidence": db.get_evidence_for_material(mid),
+                "adsorption_energies": db.list_adsorption_energies(mid),
+                "activity_metrics": db.list_activity_metrics(mid),
+            })
+        report["evidence_chain"] = evidence_chain
+    else:
+        report["evidence_chain"] = []
+    return report
+
+
+@router.get("/snapshots/{snapshot_id}")
+async def get_snapshot(snapshot_id: int):
+    """Get snapshot and items by id."""
+    snap = db.get_snapshot(snapshot_id)
+    if not snap:
+        raise HTTPException(status_code=404, detail="Snapshot not found")
+    items = db.list_snapshot_items(snapshot_id)
+    return {"meta": snap, "items": items}

@@ -1,6 +1,6 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from src.core.logger import get_logger, log_exception
-from src.services.task.types import TaskPlan
+from src.services.task.types import TaskPlan, TaskStep
 from src.services.db.database import DatabaseService
 
 logger = get_logger(__name__)
@@ -18,6 +18,142 @@ class PlanExecutor:
         """
         self.agents = agents
         self.db = DatabaseService()
+    
+    def _next_step_id(self, plan: TaskPlan) -> str:
+        """Allocate a unique step_id within a plan."""
+        max_idx = 0
+        for step in plan.steps:
+            sid = getattr(step, "step_id", "")
+            if isinstance(sid, str) and sid.startswith("step_"):
+                try:
+                    max_idx = max(max_idx, int(sid.split("_", 1)[1]))
+                except Exception:
+                    continue
+        return f"step_{max_idx + 1}"
+
+    def _simplify_query(self, query: str) -> str:
+        """Best-effort query simplification for fallback searches."""
+        if not query:
+            return ""
+        import re
+        tokens = re.findall(r"[A-Za-z0-9\\-\\+]+", query)
+        if not tokens:
+            return query.strip()
+        return " ".join(tokens[:8]).strip()
+
+    def _build_replan_spec(self, step: TaskStep) -> Optional[Dict[str, Any]]:
+        """Return a minimal fallback plan when a step fails."""
+        agent = step.agent
+        action = step.action
+
+        if agent == "literature" and action == "search":
+            query = (step.params or {}).get("query", "")
+            simplified = self._simplify_query(query)
+            if simplified and simplified.lower() != query.lower():
+                fallback_query = simplified
+            elif query:
+                fallback_query = f"{query} catalyst"
+            else:
+                fallback_query = "HOR catalyst"
+            return {
+                "note": "fallback: simplified literature query",
+                "steps": [
+                    {
+                        "agent": "literature",
+                        "action": "search",
+                        "params": {"query": fallback_query, "limit": 5},
+                        "deps": []
+                    }
+                ]
+            }
+
+        if agent == "theory" and action == "download":
+            data_types = (step.params or {}).get("data_types") or []
+            fallback_types = ["cif"]
+            if "formation_energy" in data_types:
+                fallback_types = ["cif", "formation_energy"]
+            return {
+                "note": "fallback: reduced theory download scope",
+                "steps": [
+                    {
+                        "agent": "theory",
+                        "action": "download",
+                        "params": {"data_types": fallback_types, "limit": 20},
+                        "deps": []
+                    }
+                ]
+            }
+
+        if agent == "ml" and action in ("train", "train_all"):
+            return {
+                "note": "fallback: refresh theory data then retrain",
+                "steps": [
+                    {
+                        "agent": "theory",
+                        "action": "download",
+                        "params": {"data_types": ["cif", "formation_energy"], "limit": 50},
+                        "deps": []
+                    },
+                    {
+                        "agent": "ml",
+                        "action": action,
+                        "params": step.params or {},
+                        "deps": ["$prev"]
+                    }
+                ]
+            }
+
+        return None
+
+    def _apply_replan(self, plan: TaskPlan, failed_step: TaskStep, spec: Dict[str, Any],
+                      pending: Dict[str, TaskStep]) -> List[str]:
+        """Insert replan steps and rewire dependencies. Returns new step_ids."""
+        new_step_ids: List[str] = []
+        prev_id: Optional[str] = None
+
+        for item in spec.get("steps", []):
+            step_id = self._next_step_id(plan)
+            deps = []
+            for dep in item.get("deps", []):
+                if dep == "$prev":
+                    if prev_id:
+                        deps.append(prev_id)
+                else:
+                    deps.append(dep)
+
+            step = TaskStep(
+                step_id=step_id,
+                agent=item.get("agent", ""),
+                action=item.get("action", ""),
+                params=item.get("params") or {},
+                dependencies=deps,
+                max_retries=item.get("max_retries", 0),
+                max_replans=0
+            )
+            plan.steps.append(step)
+            pending[step.step_id] = step
+            new_step_ids.append(step.step_id)
+            prev_id = step.step_id
+
+            # Persist the new pending step
+            self.db.log_plan_step(
+                plan_id=plan.task_id,
+                step_id=step.step_id,
+                agent=step.agent,
+                action=step.action,
+                status="pending",
+                dependencies=step.dependencies
+            )
+
+        if not new_step_ids:
+            return new_step_ids
+
+        anchor_id = new_step_ids[-1]
+        for step in pending.values():
+            deps = step.dependencies or []
+            if failed_step.step_id in deps:
+                step.dependencies = [anchor_id if d == failed_step.step_id else d for d in deps]
+        return new_step_ids
 
     @log_exception(logger)
     def execute_plan(self, plan: TaskPlan) -> Dict[str, Any]:
@@ -45,6 +181,7 @@ class PlanExecutor:
 
         while pending:
             # Find steps whose dependencies are satisfied
+            # DAG 调度: 仅当依赖已完成时才进入就绪队列
             ready = [
                 s for s in pending.values()
                 if all(dep in completed for dep in (s.dependencies or []))
@@ -69,74 +206,133 @@ class PlanExecutor:
 
             for step in ready:
                 logger.info(f"Step {step.step_id}: [{step.agent}] {step.action}")
-                step.status = "running"
+                max_retries = getattr(step, "max_retries", 0) or 0
+                attempt = 0
 
-                # 2. Log Start
-                self.db.log_plan_step(
-                    plan_id=plan.task_id,
-                    step_id=step.step_id,
-                    agent=step.agent,
-                    action=step.action,
-                    status="running",
-                    dependencies=step.dependencies
-                )
+                while True:
+                    attempt += 1
+                    step.attempts = attempt
+                    step.status = "running"
 
-                try:
-                    result = self._execute_step(step)
-                    step.result = result
-                    step.status = "completed"
-                    plan.results[step.step_id] = result
-
-                    # Capture outputs for evidence aggregation
-                    if step.agent == "literature" and isinstance(result, list):
-                        literature_papers = result
-                    if step.agent == "ml":
-                        if isinstance(result, list):
-                            ml_top_models = result[:3]
-                        elif isinstance(result, dict) and "top_3" in result:
-                            ml_top_models = result.get("top_3", [])
-                        if isinstance(result, dict) and "predictions" in result:
-                            ml_predictions = result.get("predictions", {}) or {}
-
-                    # 3. Log Success
+                    # 2. Log Start
                     self.db.log_plan_step(
                         plan_id=plan.task_id,
                         step_id=step.step_id,
                         agent=step.agent,
                         action=step.action,
-                        status="completed",
-                        result=result,
+                        status="running",
                         dependencies=step.dependencies
                     )
 
-                    completed.add(step.step_id)
-                    pending.pop(step.step_id, None)
+                    try:
+                        result = self._execute_step(step)
+                        step.result = result
+                        step.status = "completed"
+                        plan.results[step.step_id] = result
 
-                except Exception as e:
-                    logger.error(f"Step {step.step_id} failed: {e}")
-                    step.error = str(e)
-                    step.status = "failed"
+                        # Capture outputs for evidence aggregation
+                        if step.agent == "literature" and isinstance(result, list):
+                            literature_papers = result
+                        if step.agent == "ml":
+                            if isinstance(result, list):
+                                ml_top_models = result[:3]
+                            elif isinstance(result, dict) and "top_3" in result:
+                                ml_top_models = result.get("top_3", [])
+                            if isinstance(result, dict) and "predictions" in result:
+                                ml_predictions = result.get("predictions", {}) or {}
 
-                    # 4. Log Failure
-                    self.db.log_plan_step(
-                        plan_id=plan.task_id,
-                        step_id=step.step_id,
-                        agent=step.agent,
-                        action=step.action,
-                        status="failed",
-                        error=str(e),
-                        dependencies=step.dependencies
-                    )
+                        # 3. Log Success
+                        self.db.log_plan_step(
+                            plan_id=plan.task_id,
+                            step_id=step.step_id,
+                            agent=step.agent,
+                            action=step.action,
+                            status="completed",
+                            result=result,
+                            dependencies=step.dependencies
+                        )
 
-                    # Stop execution on failure
-                    plan.status = "failed"
-                    self.db.update_plan_status(plan.task_id, "failed")
-                    return plan.results
+                        completed.add(step.step_id)
+                        pending.pop(step.step_id, None)
+                        break
+
+                    except Exception as e:
+                        logger.error(f"Step {step.step_id} failed (attempt {attempt}): {e}")
+                        step.error = str(e)
+
+                        if attempt <= max_retries:
+                            # Retry
+                            self.db.log_plan_step(
+                                plan_id=plan.task_id,
+                                step_id=step.step_id,
+                                agent=step.agent,
+                                action=step.action,
+                                status="retrying",
+                                error=str(e),
+                                dependencies=step.dependencies
+                            )
+                            continue
+
+                        # Replan on failure (best-effort)
+                        replanned = False
+                        if step.replan_attempts < step.max_replans:
+                            spec = self._build_replan_spec(step)
+                            if spec:
+                                try:
+                                    self.db.update_plan_status(plan.task_id, "replanning")
+                                except Exception:
+                                    pass
+
+                                new_step_ids = self._apply_replan(plan, step, spec, pending)
+                                if new_step_ids:
+                                    step.replan_attempts += 1
+                                    step.status = "replanned"
+                                    self.db.log_plan_step(
+                                        plan_id=plan.task_id,
+                                        step_id=step.step_id,
+                                        agent=step.agent,
+                                        action=step.action,
+                                        status="replanned",
+                                        error=str(e),
+                                        result={"note": spec.get("note"), "new_steps": new_step_ids},
+                                        dependencies=step.dependencies
+                                    )
+                                    replanned = True
+                                    pending.pop(step.step_id, None)
+                                try:
+                                    self.db.update_plan_status(plan.task_id, "executing")
+                                except Exception:
+                                    pass
+
+                        if replanned:
+                            break
+
+                        step.status = "failed"
+
+                        # 4. Log Failure
+                        self.db.log_plan_step(
+                            plan_id=plan.task_id,
+                            step_id=step.step_id,
+                            agent=step.agent,
+                            action=step.action,
+                            status="failed",
+                            error=str(e),
+                            dependencies=step.dependencies
+                        )
+
+                        # Stop execution on failure
+                        plan.status = "failed"
+                        self.db.update_plan_status(plan.task_id, "failed")
+                        return plan.results
                 
         plan.status = "completed"
         self.db.update_plan_status(plan.task_id, "completed")
 
         # Evidence aggregation (best-effort)
+        # 证据链聚合: 将理论/文献/ML 结果挂接到材料实体
+        rag_results = []
+        candidate_ids_snapshot = []
+        materials_snapshot = []
         try:
             theory_agent = self.agents.get("theory")
             if theory_agent:
@@ -166,6 +362,8 @@ class PlanExecutor:
                     candidate_ids = {m.get("material_id") for m in materials if m.get("material_id")}
 
                 materials = [m for m in materials if m.get("material_id") in candidate_ids]
+                candidate_ids_snapshot = list(candidate_ids)
+                materials_snapshot = materials[:]
 
                 def _formula_aliases(formula: str):
                     aliases = set()
@@ -195,7 +393,10 @@ class PlanExecutor:
                         source_type="theory",
                         source_id=str(mid),
                         score=1.0,
-                        metadata={"formation_energy": mat.get("formation_energy")}
+                        metadata={
+                            "formation_energy": mat.get("formation_energy"),
+                            "formula": formula
+                        }
                     )
                     # Literature evidence
                     if literature_papers and formula:
@@ -213,7 +414,15 @@ class PlanExecutor:
                                     source_type="literature",
                                     source_id=getattr(paper, "doi", "") or getattr(paper, "url", "") or "paper",
                                     score=0.8,
-                                    metadata={"title": getattr(paper, "title", ""), "year": getattr(paper, "year", None)}
+                                    metadata={
+                                        "title": getattr(paper, "title", ""),
+                                        "year": getattr(paper, "year", None),
+                                        "abstract": getattr(paper, "abstract", ""),
+                                        "doi": getattr(paper, "doi", ""),
+                                        "url": getattr(paper, "url", ""),
+                                        "authors": getattr(paper, "authors", []),
+                                        "citation_count": getattr(paper, "citation_count", None)
+                                    }
                                 )
                                 break
                     # ML evidence (only if per-material predictions exist)
@@ -225,9 +434,95 @@ class PlanExecutor:
                             score=0.7,
                             metadata={"prediction": ml_predictions.get(mid)}
                         )
+
+                # Knowledge RAG summary (top-5)
+                try:
+                    from src.services.knowledge import KnowledgeRAG, KnowledgeService
+                    rag = KnowledgeRAG(self.db.db_path)
+                    ks = KnowledgeService(self.db.db_path)
+                    for mat in materials[:5]:
+                        mid = mat.get("material_id")
+                        if not mid:
+                            continue
+                        rag_out = rag.query(
+                            query_text=f"HOR activity evidence for {mid}",
+                            top_k=3,
+                            source_type="literature"
+                        )
+                        if rag_out:
+                            rag_results.append({
+                                "material_id": mid,
+                                "results": rag_out
+                            })
+                            for item in rag_out:
+                                source_id = item.get("source_id")
+                                if not source_id:
+                                    continue
+                                ks.upsert_material_evidence(
+                                    material_id=mid,
+                                    source_type=item.get("source_type") or "literature",
+                                    source_id=source_id,
+                                    score=item.get("score"),
+                                    metadata=item
+                                )
+                except Exception as e:
+                    logger.warning(f"Knowledge RAG summary failed: {e}")
         except Exception as e:
             logger.warning(f"Evidence aggregation failed: {e}")
 
+        if rag_results:
+            plan.results["knowledge_rag"] = rag_results
+
+        # Dataset snapshot + reasoning report (best-effort)
+        try:
+            if candidate_ids_snapshot:
+                snap_id = self.db.create_dataset_snapshot(
+                    plan_id=plan.task_id,
+                    name=f"snapshot_{plan.task_id}",
+                    description="Auto snapshot of candidate materials for reproducibility",
+                    metadata={"count": len(candidate_ids_snapshot)}
+                )
+                if snap_id:
+                    for mid in candidate_ids_snapshot:
+                        self.db.add_snapshot_item(
+                            snapshot_id=snap_id,
+                            item_type="material",
+                            item_id=mid,
+                            metadata=None
+                        )
+                    plan.results["dataset_snapshot_id"] = snap_id
+
+            # Reasoning report: evidence counts + knowledge trace
+            from src.services.knowledge import KnowledgeService
+            ks = KnowledgeService(self.db.db_path)
+            report_items = []
+            for mat in materials_snapshot[:5]:
+                mid = mat.get("material_id")
+                if not mid:
+                    continue
+                ev = self.db.get_evidence_for_material(mid)
+                ev_counts = {}
+                for e in ev:
+                    stype = e.get("source_type") or "unknown"
+                    ev_counts[stype] = ev_counts.get(stype, 0) + 1
+                ent = ks.get_entity_by_canonical("material", mid) or ks.get_entity_by_name("material", mid)
+                trace = ks.trace_entity(ent["id"], depth=1) if ent else {}
+                quality = ks.score_material(mid)
+                report_items.append({
+                    "material_id": mid,
+                    "evidence_counts": ev_counts,
+                    "trace": trace,
+                    "knowledge_score": quality.get("score"),
+                    "knowledge_score_detail": quality.get("counts", {})
+                })
+            if report_items:
+                plan.results["reasoning_report"] = report_items
+        except Exception as e:
+            logger.warning(f"Reasoning report failed: {e}")
+
+        # Ensure key outputs exist for downstream UI/reporting
+        plan.results.setdefault("knowledge_rag", [])
+        plan.results.setdefault("reasoning_report", [])
         return plan.results
 
     def _execute_step(self, step) -> Any:
@@ -246,7 +541,7 @@ class PlanExecutor:
         
         if agent_name == "literature":
             if action == "search":
-                return target_agent.search_all_sources(params.get("query", ""))
+                return target_agent.search_all_sources(params.get("query", ""), params.get("limit"))
             elif action == "extract_knowledge":
                 # Assuming LiteratureAgentv3.1 has extract_knowledge(topic)
                 return target_agent.extract_knowledge(params.get("topic", ""))
@@ -255,8 +550,21 @@ class PlanExecutor:
             if action == "load_data":
                 return target_agent.get_status()
             elif action == "download":
-                target_agent.download_structures(limit=50) # Increased limit for valid ML
-                return {"message": "Downloaded structures to DB"}
+                data_types = params.get("data_types") or []
+                limit = params.get("limit", 50)
+                # 默认下载结构, 再按需补充 formation_energy / dos / adsorption
+                if not data_types or "cif" in data_types:
+                    target_agent.download_structures(limit=limit) # Increased limit for valid ML
+                if "formation_energy" in data_types:
+                    target_agent.download_formation_energy()
+                if "dos" in data_types:
+                    mats = target_agent.list_stored_materials(limit=20)
+                    mat_ids = [m.get("material_id") for m in mats if m.get("material_id")]
+                    if mat_ids:
+                        target_agent.download_orbital_dos(material_ids=mat_ids)
+                if "adsorption" in data_types:
+                    target_agent.download_adsorption_energies(adsorbates=["H*", "OH*"], limit=limit)
+                return {"message": "Downloaded theory data to DB", "data_types": data_types}
         
         elif agent_name == "experiment":
              if action == "process":

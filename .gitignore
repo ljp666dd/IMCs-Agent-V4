@@ -32,3 +32,6 @@ src/ui/web/.next/
 src/ui/web/out/
 src/ui/web/build/
 .DS_Store
+
+# Large Files
+bin/MARS-main.zip

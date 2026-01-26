@@ -85,12 +85,114 @@ CREATE TABLE IF NOT EXISTS plan_steps (
 CREATE TABLE IF NOT EXISTS evidence (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     material_id TEXT NOT NULL,           -- materials.material_id
-    source_type TEXT NOT NULL,           -- experiment / literature / theory / ml_prediction
+    source_type TEXT NOT NULL,           -- experiment / literature / theory / ml_prediction / adsorption_energy
     source_id TEXT,
     score REAL,
     metadata TEXT,                       -- JSON
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(material_id) REFERENCES materials(material_id)
+);
+
+-- 3.8 Adsorption Energies (Catalysis-Hub proxy for activity)
+CREATE TABLE IF NOT EXISTS adsorption_energies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    material_id TEXT,                    -- Nullable if only surface composition is known
+    surface_composition TEXT,
+    facet TEXT,
+    adsorbate TEXT,                      -- H* / OH*
+    reaction_energy REAL,
+    activation_energy REAL,
+    source TEXT,
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(material_id) REFERENCES materials(material_id)
+);
+
+-- 3.8.1 Activity Metrics (HOR/HER indicators)
+CREATE TABLE IF NOT EXISTS activity_metrics (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    material_id TEXT,                    -- Nullable if not linked to a known material
+    metric_name TEXT NOT NULL,           -- e.g., overpotential_10mA, exchange_current_density
+    metric_value REAL,
+    unit TEXT,
+    conditions TEXT,                     -- JSON string of test conditions
+    source TEXT,                         -- experiment / literature / database
+    source_id TEXT,                      -- e.g., experiment id or DOI
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(material_id) REFERENCES materials(material_id)
+);
+
+-- 3.9 Knowledge Entities (Knowledge Core)
+CREATE TABLE IF NOT EXISTS knowledge_entities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entity_type TEXT NOT NULL,           -- material / property / adsorbate / reaction / dataset / model / paper
+    name TEXT NOT NULL,
+    canonical_id TEXT,                   -- optional external ID (e.g., mp-1234, DOI)
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(entity_type, name)
+);
+
+-- 3.10 Knowledge Sources (Evidence)
+CREATE TABLE IF NOT EXISTS knowledge_sources (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_type TEXT NOT NULL,           -- literature / experiment / theory / ml_prediction / dataset
+    source_id TEXT,
+    title TEXT,
+    url TEXT,
+    year INTEGER,
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3.11 Knowledge Relations (Triples)
+CREATE TABLE IF NOT EXISTS knowledge_relations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    subject_id INTEGER NOT NULL,
+    predicate TEXT NOT NULL,
+    object_id INTEGER NOT NULL,
+    confidence REAL,
+    evidence_source_id INTEGER,          -- optional main evidence link
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(subject_id) REFERENCES knowledge_entities(id),
+    FOREIGN KEY(object_id) REFERENCES knowledge_entities(id),
+    FOREIGN KEY(evidence_source_id) REFERENCES knowledge_sources(id)
+);
+
+-- 3.12 Relation Evidence (many-to-many)
+CREATE TABLE IF NOT EXISTS knowledge_relation_evidence (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    relation_id INTEGER NOT NULL,
+    source_id INTEGER NOT NULL,
+    score REAL,
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(relation_id) REFERENCES knowledge_relations(id),
+    FOREIGN KEY(source_id) REFERENCES knowledge_sources(id)
+);
+
+-- 3.13 Dataset Snapshots (Reproducibility)
+CREATE TABLE IF NOT EXISTS dataset_snapshots (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    plan_id TEXT,
+    name TEXT,
+    description TEXT,
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(plan_id) REFERENCES plans(id)
+);
+
+-- 3.14 Snapshot Items (materials / models / papers)
+CREATE TABLE IF NOT EXISTS dataset_snapshot_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    snapshot_id INTEGER NOT NULL,
+    item_type TEXT NOT NULL,             -- material / model / paper
+    item_id TEXT NOT NULL,
+    metadata TEXT,                       -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(snapshot_id) REFERENCES dataset_snapshots(id)
 );
 
 -- 4. Chat Sessions (v4.0 History)

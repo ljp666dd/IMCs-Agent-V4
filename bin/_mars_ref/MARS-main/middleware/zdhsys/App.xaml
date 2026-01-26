@@ -1,0 +1,28 @@
+﻿<Application x:Class="zdhsys.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:zdhsys"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/GlobalResources.xaml"/>
+                <ResourceDictionary Source="Themes/ScrollViewerDictionary.xaml"/>
+                <ResourceDictionary Source="JsonTool/Themes/Paths.xaml" />
+                <ResourceDictionary Source="JsonTool/Themes/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="TextBlueBrush"                 Color="#1887bf"     x:Uid="蓝色文字" />
+            <SolidColorBrush x:Key="TextLightBlueBrush"            Color="#4e91b8"     x:Uid="浅蓝或灰蓝色文字" />
+            <SolidColorBrush x:Key="Transparent01"                 Color="#01ffffff"   x:Uid="透明01，不可穿透" />
+            <SolidColorBrush x:Key="TextBtnDisabledBrush"          Color="#333333"     x:Uid="按钮禁用文字" Opacity="0.6" />
+            <SolidColorBrush x:Key="BorderBtnDisabledBrush"        Color="#a0a2a3"     x:Uid="按钮禁用边框" Opacity="0.6" />
+
+
+            <!--按钮背景色-->
+            <LinearGradientBrush x:Key="BtnBlueBackground" EndPoint="0.5,0" StartPoint="0.5,1" x:Uid="蓝色渐变背景">
+                <GradientStop Color="#FF4B9DD3" Offset="0.087"/>
+                <GradientStop Color="#FF69ACD7" Offset="1"/>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -88,6 +88,10 @@ class LiteratureAgent:
         self.papers.extend(results)
         return results
 
+    # Backward-compatible alias for audit/test scripts
+    def search_literature(self, query: str, limit: int = None) -> List[PaperInfo]:
+        return self.search_all_sources(query, limit)
+
     # ========== Analysis ==========
     
     @log_exception(logger)

@@ -1,0 +1,9 @@
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\bin\Release\Xamasoft.JsonClassGenerator.dll
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\bin\Release\Xamasoft.JsonClassGenerator.pdb
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\bin\Release\Newtonsoft.Json.dll
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\Xamasoft.JsonClassGenerator.Properties.Resources.resources
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\JsonClassGeneratorLib.csproj.GenerateResource.cache
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\JsonClassGeneratorLib.csproj.CoreCompileInputs.cache
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\JsonClassGeneratorLib.csproj.CopyComplete
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\Xamasoft.JsonClassGenerator.dll
+F:\CSharp\recCode\20231202\JsonTool-main\JsonCSharpClassGeneratorLib\obj\Release\Xamasoft.JsonClassGenerator.pdb

@@ -1,0 +1,231 @@
+{
+  "TaskId": "task_20250302145610",
+  "ExperimentName": "Synthesis of CsPbBr₃ Nanocubes at Room Temperature",
+  "Materials": [
+    {
+      "MaterialId": "MAT1",
+      "Name": "Cesium bromide",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "99%",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "MAT2",
+      "Name": "Lead bromide",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "99%",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "MAT3",
+      "Name": "Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "99.8%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT4",
+      "Name": "Oleylamine",
+      "Amount": "0.5",
+      "Unit": "mL",
+      "Purity": "70%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT5",
+      "Name": "Oleic acid",
+      "Amount": "1",
+      "Unit": "mL",
+      "Purity": "99%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT6",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "99.9%",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "CON1",
+      "Name": "Round-bottom flask",
+      "Capacity": "20",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Round-bottom",
+      "HeatResistant": "Yes",
+      "PressureRating": "Ambient"
+    },
+    {
+      "ContainerId": "CON2",
+      "Name": "Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Ambient"
+    },
+    {
+      "ContainerId": "CON3",
+      "Name": "Centrifuge tube",
+      "Capacity": "20",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Polypropylene",
+      "Shape": "Conical",
+      "HeatResistant": "No",
+      "PressureRating": "Ambient"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "EQ1",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "SpeedRange": "0-1500 rpm",
+        "TemperatureRange": "Ambient"
+      }
+    },
+    {
+      "EquipmentId": "EQ2",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "MaxSpeed": "15000 rpm",
+        "Capacity": "50 mL"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "StepId": "1",
+      "Description": "Preparation of precursor solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "CON1",
+          "MaterialId": "",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON1",
+          "MaterialId": "MAT1",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON1",
+          "MaterialId": "MAT2",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON1",
+          "MaterialId": "MAT3",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON1",
+          "MaterialId": "",
+          "EquipmentId": "EQ1"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "CON1",
+        "Contents": [
+          {
+            "MaterialId": "MAT1",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "MAT2",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "MAT3",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "2",
+      "Description": "Formation of nanocubes",
+      "Actions": [
+        {
+          "ActionType": "place_container",
+          "ContainerId": "CON2",
+          "MaterialId": "",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON2",
+          "MaterialId": "MAT6",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON2",
+          "MaterialId": "",
+          "EquipmentId": "EQ1"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "CON2",
+        "Contents": [
+          {
+            "MaterialId": "MAT6",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "3",
+      "Description": "Purification of nanocubes",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "CON3",
+          "MaterialId": "",
+          "EquipmentId": ""
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON3",
+          "MaterialId": "",
+          "EquipmentId": "EQ2"
+        }
+      ],
+      "Dependencies": [
+        "2"
+      ],
+      "StepOutput": {
+        "ContainerId": "CON3",
+        "Contents": [
+          {
+            "MaterialId": "",
+            "Amount": "",
+            "Unit": ""
+          }
+        ]
+      }
+    }
+  ]
+}

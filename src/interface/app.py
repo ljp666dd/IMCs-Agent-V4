@@ -9,14 +9,34 @@ import streamlit as st
 import os
 import sys
 import json
+import sqlite3
+from datetime import datetime
+from typing import Dict, Any, List
 import pandas as pd
 import numpy as np
 import requests
 import time
 
-# Add project root to path
+# Add project root to path (ensure local imports work with `streamlit run`)
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(ROOT_DIR)
+if ROOT_DIR not in sys.path:
+    sys.path.append(ROOT_DIR)
+
+from src.services.db.database import DatabaseService
+
+try:
+    from langdetect import detect, LangDetectException
+    HAS_LANGDETECT = True
+except Exception:
+    LangDetectException = Exception
+    HAS_LANGDETECT = False
+
+try:
+    from deep_translator import GoogleTranslator
+    HAS_TRANSLATOR = True
+except Exception:
+    HAS_TRANSLATOR = False
+
 
 # Page config
 st.set_page_config(
@@ -77,10 +97,131 @@ st.markdown("""
 
 # ========== Session State ==========
 
+
+@st.cache_resource(show_spinner=False)
+def get_db_service() -> DatabaseService:
+    return DatabaseService(os.path.join(ROOT_DIR, "data", "imcs.db"))
+
+
+def load_chat_messages(db: DatabaseService, session_id: int) -> None:
+    messages = db.list_chat_messages(session_id)
+    st.session_state.messages = [
+        {"role": m.get("role"), "content": m.get("content")} for m in messages
+    ]
+    last_task_id = None
+    for m in messages:
+        artifacts = m.get("artifacts") or {}
+        if isinstance(artifacts, dict):
+            plan_id = artifacts.get("plan_id")
+            if plan_id:
+                last_task_id = plan_id
+    st.session_state.last_task_id = last_task_id
+    st.session_state.last_loaded_session_id = session_id
+
+
+def detect_language(text: str) -> str:
+    if not text:
+        return "unknown"
+    if HAS_LANGDETECT:
+        try:
+            lang = detect(text)
+            if lang.startswith("zh"):
+                return "zh"
+            if lang.startswith("en"):
+                return "en"
+            return lang
+        except LangDetectException:
+            pass
+    # Fallback: simple heuristic
+    for ch in text:
+        if "一" <= ch <= "鿿":
+            return "zh"
+    return "en"
+
+def translate_text(text: str, target_lang: str = "zh") -> str:
+    if not text:
+        return text
+    if not HAS_TRANSLATOR:
+        return text
+    try:
+        return GoogleTranslator(source="auto", target=target_lang).translate(text)
+    except Exception:
+        return text
+
+UI_TRANSLATIONS = {
+    "首页": "Home",
+    "智能体对话": "Chat",
+    "数据分析": "Data Analysis",
+    "ML 训练": "ML Training",
+    "文献库": "Literature",
+    "API 状态": "API Status",
+    "设置": "Settings",
+    "Evaluation": "Evaluation",
+    "语言": "Language",
+    "自动翻译 UI 文本": "Auto-translate UI text",
+    "科研助手": "Research Assistant",
+    "正在创建任务计划...": "Creating task plan...",
+    "开始执行": "Start Execution",
+    "刷新状态": "Refresh Status",
+    "停止自动刷新": "Stop Auto Refresh",
+    "下载任务报告": "Download Task Report",
+    "导航": "Navigation",
+    "功能模块": "Modules",
+    "数据统计": "Data Stats",
+    "会话管理": "Session Manager",
+    "\u641c\u7d22\u4f1a\u8bdd": "Search Sessions",
+    "选择会话": "Select Session",
+    "新建会话": "New Session",
+    "会话标题": "Session Title",
+    "保存标题": "Save Title",
+    "会话操作": "Session Actions",
+    "导出 JSON": "Export JSON",
+    "导出 Markdown": "Export Markdown",
+    "删除会话": "Delete Session",
+    "确认删除": "Confirm Delete",
+    "没有历史任务可加载": "No task history to load",
+    "当前会话无消息": "No messages in current session",
+    "加载历史任务": "Load Task History",
+    "历史任务已加载": "Task history loaded",
+    "CIF 数量": "CIF Count",
+    "DOS 数量": "DOS Count",
+    "清空缓存 (Clear Cache)": "Clear Cache",
+    "清理缓存并重新加载模型组件": "Clear cache and reload model components",
+    "缓存已清理，正在重新加载...": "Cache cleared, reloading...",
+    "IMCs 科研平台": "IMCs Research Platform",
+    "多智能体科研助手": "Multi-agent research assistant",
+}
+
+
+@st.cache_data(show_spinner=False)
+def translate_ui_text(text: str, target_lang: str = "en") -> str:
+    if not text:
+        return text
+    if not HAS_TRANSLATOR:
+        return text
+    try:
+        return GoogleTranslator(source="auto", target=target_lang).translate(text)
+    except Exception:
+        return text
+
+def ui_text(text: str) -> str:
+    lang = st.session_state.get("ui_lang", "zh")
+    if lang == "zh":
+        return text
+    if text in UI_TRANSLATIONS:
+        return UI_TRANSLATIONS[text]
+    if st.session_state.get("auto_translate_ui"):
+        return translate_ui_text(text, target_lang="en")
+    return text
+
 def init_session_state():
     """Initialize session state variables."""
     if 'messages' not in st.session_state:
         st.session_state.messages = []
+    if 'chat_session_id' not in st.session_state:
+        st.session_state.chat_session_id = None
+    if 'last_loaded_session_id' not in st.session_state:
+        st.session_state.last_loaded_session_id = None
     if 'current_task' not in st.session_state:
         st.session_state.current_task = None
     if 'agents_loaded' not in st.session_state:
@@ -95,6 +236,8 @@ def init_session_state():
         st.session_state.task_polling = False
     if 'selected_material' not in st.session_state:
         st.session_state.selected_material = None
+    if 'last_task_id' not in st.session_state:
+        st.session_state.last_task_id = None
 
 
 # ========== API Helpers (Task Graph) ==========
@@ -138,6 +281,50 @@ def api_get_material_details(material_id: str):
     res.raise_for_status()
     return res.json()
 
+
+def api_knowledge_rag(query: str, material_id: str = None, top_k: int = 5, source_type: str = "literature"):
+    payload = {
+        "query": query,
+        "material_id": material_id,
+        "top_k": top_k,
+        "source_type": source_type
+    }
+    res = requests.post(f"{API_BASE_URL}/knowledge/rag", json=payload, timeout=30)
+    res.raise_for_status()
+    return res.json()
+
+
+def api_knowledge_entity_by_name(entity_type: str, name: str):
+    res = requests.get(
+        f"{API_BASE_URL}/knowledge/entities/by-name",
+        params={"entity_type": entity_type, "name": name},
+        timeout=20
+    )
+    res.raise_for_status()
+    return res.json()
+
+
+def api_knowledge_trace(entity_id: int, depth: int = 1):
+    res = requests.get(
+        f"{API_BASE_URL}/knowledge/trace/{entity_id}",
+        params={"depth": depth, "limit": 200},
+        timeout=20
+    )
+    res.raise_for_status()
+    return res.json()
+
+
+def api_task_report(task_id: str):
+    res = requests.get(f"{API_BASE_URL}/tasks/{task_id}/report", timeout=30)
+    res.raise_for_status()
+    return res.json()
+
+
+def api_snapshot(snapshot_id: int):
+    res = requests.get(f"{API_BASE_URL}/tasks/snapshots/{snapshot_id}", timeout=30)
+    res.raise_for_status()
+    return res.json()
+
 def render_task_graph(steps):
     if not steps:
         st.info("No steps available.")
@@ -167,6 +354,8 @@ def render_task_graph(steps):
             status_class = "tg-status tg-status-run"
         elif status == "blocked":
             status_class = "tg-status tg-status-block"
+        elif status == "replanned":
+            status_class = "tg-status tg-status-block"
         st.markdown(
             f"""
             <div class="tg-step">
@@ -190,11 +379,110 @@ def render_task_graph(steps):
                 st.code(full_text)
 
 
+def build_task_assignment(steps):
+    """Build task assignment table (team/agent/action)."""
+    # 简单的团队映射规则，便于展示协作分工
+    team_map = {
+        "literature": "Scientist Team",
+        "theory": "Scientist Team",
+        "ml": "Analyst Team",
+        "experiment": "Experiment Team",
+        "task_manager": "Orchestrator"
+    }
+    rows = []
+    for s in steps or []:
+        agent = s.get("agent", "")
+        rows.append({
+            "team": team_map.get(agent, "Unknown"),
+            "agent": agent,
+            "action": s.get("action", ""),
+            "dependencies": ",".join(s.get("dependencies") or [])
+        })
+    return pd.DataFrame(rows)
+
+
+def build_task_mermaid(steps):
+    """Build mermaid flow text from steps for copy/paste."""
+    lines = ["graph TD", "  User([User])"]
+    for s in steps or []:
+        sid = s.get("step_id", "")
+        label = f"{s.get('agent','')}:{s.get('action','')}"
+        if sid:
+            lines.append(f"  {sid}[{label}]")
+    for s in steps or []:
+        sid = s.get("step_id", "")
+        deps = s.get("dependencies") or []
+        if not deps and sid:
+            lines.append(f"  User --> {sid}")
+        for dep in deps:
+            lines.append(f"  {dep} --> {sid}")
+    return "\n".join(lines)
+
+
+def build_evidence_mermaid(material_id: str, formula: str, evidence: list) -> str:
+    """Build a simple evidence graph (Mermaid) from material + evidence types."""
+    lines = ["graph LR"]
+    label = material_id or "material"
+    if formula:
+        label = f"{label}\\\\n{formula}"
+    lines.append(f"  M[{label}]")
+
+    counts = {}
+    for ev in evidence or []:
+        et = ev.get("source_type", "unknown")
+        counts[et] = counts.get(et, 0) + 1
+
+    for idx, (etype, cnt) in enumerate(counts.items(), start=1):
+        node_id = f"E{idx}"
+        node_label = f"{etype} ({cnt})"
+        lines.append(f"  {node_id}[{node_label}]")
+        lines.append(f"  {node_id} --> M")
+
+    return "\n".join(lines)
+
+
+def build_knowledge_trace_mermaid(trace: dict) -> str:
+    """Build mermaid from knowledge trace (nodes + edges)."""
+    if not trace:
+        return "graph LR\n  Empty[No trace]"
+    nodes = trace.get("nodes") or []
+    edges = trace.get("edges") or []
+    lines = ["graph LR"]
+
+    def _label(node: dict) -> str:
+        ntype = node.get("entity_type", "")
+        name = node.get("name", "")
+        label = f"{ntype}:{name}" if ntype else name
+        label = label.replace("[", "(").replace("]", ")")
+        return label if label else "node"
+
+    for n in nodes:
+        nid = n.get("id")
+        if nid is None:
+            continue
+        lines.append(f"  N{nid}[{_label(n)}]")
+
+    for e in edges:
+        sid = e.get("subject_id")
+        oid = e.get("object_id")
+        pred = e.get("predicate", "")
+        if sid is None or oid is None:
+            continue
+        if pred:
+            lines.append(f"  N{sid} -->|{pred}| N{oid}")
+        else:
+            lines.append(f"  N{sid} --> N{oid}")
+
+    return "\n".join(lines)
+
+
 def render_evidence_chain(material_id: str):
     """Fetch and render evidence chain for a material."""
     try:
         data = api_get_material_details(material_id)
         evidence = data.get("evidence", [])
+        adsorption = data.get("adsorption_energies", [])
+        activity = data.get("activity_metrics", [])
     except Exception as e:
         st.warning(f"Failed to load evidence: {e}")
         return
@@ -202,7 +490,6 @@ def render_evidence_chain(material_id: str):
     st.markdown("### Evidence Chain")
     if not evidence:
         st.info("No evidence linked yet.")
-        return
 
     for ev in evidence:
         ev_type = ev.get("source_type", "unknown")
@@ -216,10 +503,50 @@ def render_evidence_chain(material_id: str):
             except Exception:
                 pass
         st.code(json.dumps(meta, ensure_ascii=False, indent=2))
-        deps = s.get("dependencies") or []
-        if deps:
-            dep_badges = "".join([f"<span class='tg-dep'>{d}</span>" for d in deps])
-            st.markdown(f"<div class='tg-deps'>Dependencies: {dep_badges}</div>", unsafe_allow_html=True)
+
+    if activity:
+        st.markdown("### Activity Metrics")
+        st.dataframe(pd.DataFrame(activity), use_container_width=True)
+    else:
+        st.markdown("### Activity Metrics")
+        st.info("No activity metrics available.")
+
+    if adsorption:
+        st.markdown("### Adsorption Energies")
+        st.dataframe(pd.DataFrame(adsorption), use_container_width=True)
+    else:
+        st.markdown("### Adsorption Energies")
+        st.info("No adsorption energy records available.")
+
+    # Evidence graph (task graph-like view)
+    st.markdown("### Evidence Graph")
+    mermaid = build_evidence_mermaid(material_id, data.get("formula", ""), evidence)
+    st.code(mermaid, language="mermaid")
+
+    # Knowledge RAG (graph-filtered retrieval)
+    st.markdown("### Knowledge RAG")
+    rag_query = st.text_input("Query knowledge sources", key=f"rag_query_{material_id}")
+    if rag_query:
+        try:
+            rag = api_knowledge_rag(rag_query, material_id=material_id, top_k=5, source_type="literature")
+            st.caption(f"Mode: {rag.get('mode')} | Candidate sources: {rag.get('candidate_sources')}")
+            results = rag.get("results") or []
+            if results:
+                st.table(pd.DataFrame(results))
+            else:
+                st.info("No results.")
+        except Exception as e:
+            st.warning(f"Knowledge RAG failed: {e}")
+
+    # Knowledge Trace (reasoning path)
+    st.markdown("### Knowledge Trace")
+    try:
+        ent = api_knowledge_entity_by_name("material", material_id)
+        trace = api_knowledge_trace(ent.get("id"), depth=1)
+        mermaid = build_knowledge_trace_mermaid(trace)
+        st.code(mermaid, language="mermaid")
+    except Exception as e:
+        st.info(f"Knowledge trace not available: {e}")
 
 
 # ========== Agent Loading (Lazy) ==========
@@ -340,89 +667,149 @@ def get_data_stats():
     return stats
 
 
+# ========== Evaluation Helpers ==========
+
+def compute_evidence_coverage(db_path: str) -> Dict[str, Any]:
+    """Compute evidence coverage statistics from SQLite DB."""
+    if not os.path.exists(db_path):
+        return {"error": f"DB not found: {db_path}"}
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM materials")
+    total = cur.fetchone()[0] or 0
+    cur.execute("SELECT source_type, COUNT(DISTINCT material_id) FROM evidence GROUP BY source_type")
+    rows = cur.fetchall()
+    conn.close()
+    return {"total": total, "rows": rows}
+
+
+def load_ids_from_df(df: pd.DataFrame) -> List[str]:
+    """Extract material ids from a DataFrame."""
+    if df is None or df.empty:
+        return []
+    cols = [c for c in ["material_id", "id", "mid"] if c in df.columns]
+    if not cols:
+        return []
+    col = cols[0]
+    return [str(v).strip() for v in df[col].tolist() if str(v).strip()]
+
+
+def topk_recall(candidates: List[str], ground_truth: set, k: int) -> float:
+    if not ground_truth:
+        return 0.0
+    topk = set(candidates[:k])
+    return len(topk & ground_truth) / len(ground_truth)
+
+
 # ========== Sidebar ==========
 
 def render_sidebar():
     """Render sidebar with navigation and status."""
     with st.sidebar:
-        st.markdown("## 🔬 IMCs Research")
-        st.markdown("*多智能体催化剂研究系统*")
+        st.markdown(f"## {ui_text('IMCs 科研平台')}")
+        st.markdown(ui_text("多智能体科研助手"))
         st.markdown("---")
-        
-        # Navigation
-        page = st.radio(
-            "导航",
-            ["🏠 首页", "🤖 智能体对话", "📊 数据分析", "🧪 ML 训练", 
-             "📚 文献检索", "🔌 API 状态", "⚙️ 设置"],
-            label_visibility="collapsed"
+
+        if "ui_lang" not in st.session_state:
+            st.session_state.ui_lang = "zh"
+        if "auto_translate_ui" not in st.session_state:
+            st.session_state.auto_translate_ui = False
+
+        lang_choice = st.selectbox(
+            "中文 / English",
+            ["中文", "English"],
+            index=0 if st.session_state.ui_lang == "zh" else 1,
+            key="ui_lang_select",
         )
-        
+        st.session_state.ui_lang = "zh" if lang_choice == "中文" else "en"
+        st.checkbox(ui_text("自动翻译 UI 文本"), key="auto_translate_ui")
+
         st.markdown("---")
-        
-        # Agent Status with features
-        st.markdown("### 🤖 智能体状态")
-        
+
+        pages = [
+            ("home", "首页", "Home"),
+            ("chat", "智能体对话", "Chat"),
+            ("data", "数据分析", "Data Analysis"),
+            ("ml", "ML 训练", "ML Training"),
+            ("lit", "文献库", "Literature"),
+            ("api", "API 状态", "API Status"),
+            ("settings", "设置", "Settings"),
+        ]
+        labels = [p[1] if st.session_state.ui_lang == "zh" else p[2] for p in pages]
+        if "page" not in st.session_state:
+            st.session_state.page = "home"
+        default_label = labels[0]
+        label_to_key = {
+            (p[1] if st.session_state.ui_lang == "zh" else p[2]): p[0] for p in pages
+        }
+        for lbl, key in label_to_key.items():
+            if key == st.session_state.page:
+                default_label = lbl
+                break
+        page_label = st.radio(
+            ui_text("导航"),
+            labels,
+            index=labels.index(default_label),
+            label_visibility="collapsed",
+        )
+        page = label_to_key.get(page_label, "home")
+        st.session_state.page = page
+        if st.checkbox(ui_text("Evaluation"), key="nav_evaluation"):
+            page = "evaluation"
+
+        st.markdown("---")
+
+        st.markdown(ui_text("### 功能模块"))
         st.markdown("""
-        **ML Agent** 🟢
+        **ML Agent**
         <span class="feature-badge">CGCNN</span>
         <span class="feature-badge">SchNet</span>
         <span class="feature-badge">Transformer</span>
         """, unsafe_allow_html=True)
-        
+
         st.markdown("""
-        **Theory Agent** 🟢
+        **Theory Agent**
         <span class="feature-badge">MP</span>
         <span class="feature-badge">AFLOW</span>
         <span class="feature-badge">Catalysis-Hub</span>
         """, unsafe_allow_html=True)
-        
+
         st.markdown("""
-        **Experiment Agent** 🟢
+        **Experiment Agent**
         <span class="feature-badge">LSV</span>
         <span class="feature-badge">EIS</span>
         <span class="feature-badge">RDE</span>
         """, unsafe_allow_html=True)
-        
+
         st.markdown("""
-        **Literature Agent** 🟢
+        **Literature Agent**
         <span class="feature-badge">Semantic Scholar</span>
         <span class="feature-badge">arXiv</span>
         """, unsafe_allow_html=True)
-        
+
         st.markdown("---")
-        
-        # Data Status (cached)
-        st.markdown("### 📊 数据状态")
-        
+        st.markdown(ui_text("### 数据统计"))
         stats = get_data_stats()
-        st.metric("CIF 结构", f"{stats.get('n_cifs', 0)}")
-        st.metric("DOS 数据", f"{stats.get('n_dos', 0)}")
-        
+        st.metric(ui_text("CIF 数量"), f"{stats.get('n_cifs', 0)}")
+        st.metric(ui_text("DOS 数量"), f"{stats.get('n_dos', 0)}")
         st.markdown("---")
-        
-        if st.button("♻️ 强制重载核心 (Clear Cache)", help="如果遇到代码更新未生效或模型不全，请点击此按钮"):
-             st.cache_resource.clear()
-             
-             # Aggressive module reload
-             import sys
-             import importlib
-             
-             modules_to_reload = ['src.agents.core.ml_agent', 'src.agents.core']
-             for m in modules_to_reload:
-                 if m in sys.modules:
-                     try:
-                         importlib.reload(sys.modules[m])
-                         print(f"Reloaded {m}")
-                     except Exception as e:
-                         print(f"Failed to reload {m}: {e}")
-             
-             st.success("缓存已清除并强制重载模块！正在重启...")
-             st.rerun()
-             
+        if st.button(
+            ui_text("清空缓存 (Clear Cache)"),
+            help=ui_text("清理缓存并重新加载模型组件"),
+        ):
+            st.cache_resource.clear()
+            import sys
+            import importlib
+            modules_to_reload = ["src.agents.core.ml_agent", "src.agents.core"]
+            for m in modules_to_reload:
+                if m in sys.modules:
+                    try:
+                        importlib.reload(sys.modules[m])
+                    except Exception:
+                        pass
+            st.success(ui_text("缓存已清理，正在重新加载..."))
+            st.rerun()
         return page
-
-
-# ========== Home Page ==========
 
 def render_home():
     """Render home page."""
@@ -543,7 +930,170 @@ def render_home():
 
 def render_chat():
     """Render chat interface."""
-    st.markdown("## Research Assistant")
+    st.markdown(ui_text("智能体对话"))
+
+    db = get_db_service()
+    sessions = db.list_chat_sessions(limit=50)
+    session_ids = {s.get("id") for s in sessions}
+
+    search_term = st.text_input(ui_text("\u641c\u7d22\u4f1a\u8bdd"), key="chat_session_search")
+    if search_term:
+        lowered = search_term.lower()
+        sessions = [s for s in sessions if lowered in (s.get("title") or "").lower()]
+        session_ids = {s.get("id") for s in sessions}
+
+    if st.session_state.chat_session_id is None or st.session_state.chat_session_id not in session_ids:
+        if sessions:
+            st.session_state.chat_session_id = sessions[0].get("id")
+        else:
+            title = f"新会话 {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+            st.session_state.chat_session_id = db.create_chat_session(title)
+            sessions = db.list_chat_sessions(limit=50)
+
+    if st.session_state.chat_session_id and st.session_state.last_loaded_session_id != st.session_state.chat_session_id:
+        load_chat_messages(db, st.session_state.chat_session_id)
+
+    st.markdown(f"### {ui_text('\u4f1a\u8bdd\u7ba1\u7406')}")
+    session_labels = []
+    label_to_id = {}
+    for s in sessions:
+        updated = s.get("updated_at") or s.get("created_at") or ""
+        label = f"{s.get('id')} | {s.get('title')} | {updated}"
+        session_labels.append(label)
+        label_to_id[label] = s.get("id")
+
+    if session_labels:
+        current_label = session_labels[0]
+        for lbl, sid in label_to_id.items():
+            if sid == st.session_state.chat_session_id:
+                current_label = lbl
+                break
+        col_a, col_b = st.columns([3, 1])
+        with col_a:
+            selected_label = st.selectbox(
+                ui_text("选择会话"),
+                session_labels,
+                index=session_labels.index(current_label),
+                key="chat_session_select",
+            )
+        with col_b:
+            if st.button(ui_text("新建会话"), key="chat_new_session"):
+                title = f"新会话 {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+                new_id = db.create_chat_session(title)
+                st.session_state.chat_session_id = new_id
+                st.session_state.last_loaded_session_id = None
+                st.session_state.active_plan = None
+                st.session_state.active_task_id = None
+                st.session_state.task_status = None
+                st.session_state.task_polling = False
+                st.session_state.selected_material = None
+                st.rerun()
+        selected_id = label_to_id.get(selected_label)
+        if selected_id and selected_id != st.session_state.chat_session_id:
+            st.session_state.chat_session_id = selected_id
+            st.session_state.last_loaded_session_id = None
+            st.session_state.active_plan = None
+            st.session_state.active_task_id = None
+            st.session_state.task_status = None
+            st.session_state.task_polling = False
+            st.session_state.selected_material = None
+            st.rerun()
+
+    current_session = (
+        db.get_chat_session(st.session_state.chat_session_id)
+        if st.session_state.chat_session_id
+        else None
+    )
+    with st.form("chat_rename_form", clear_on_submit=False):
+        title_value = current_session.get("title") if current_session else ""
+        new_title = st.text_input(ui_text("会话标题"), value=title_value)
+        submitted = st.form_submit_button(ui_text("保存标题"))
+    if submitted:
+        if st.session_state.chat_session_id and new_title.strip():
+            db.update_chat_session_title(st.session_state.chat_session_id, new_title.strip())
+            st.rerun()
+
+    with st.expander(ui_text("会话操作")):
+        if st.session_state.last_task_id:
+            if st.button(ui_text("加载历史任务"), key="chat_load_task"):
+                try:
+                    status = api_get_task_status(st.session_state.last_task_id)
+                    st.session_state.active_task_id = st.session_state.last_task_id
+                    st.session_state.active_plan = status
+                    st.session_state.task_status = status
+                    st.session_state.task_polling = False
+                    st.success(ui_text("历史任务已加载"))
+                except Exception as e:
+                    st.warning(f"Load task failed: {e}")
+        else:
+            st.info(ui_text("没有历史任务可加载"))
+
+        session_messages = []
+        if st.session_state.chat_session_id:
+            session_messages = db.list_chat_messages(st.session_state.chat_session_id)
+        if session_messages:
+            export_data = {
+                "session": current_session,
+                "messages": session_messages,
+            }
+            export_json = json.dumps(export_data, ensure_ascii=False, indent=2)
+            export_md_lines = [
+                f"# {current_session.get('title', '')}",
+                "",
+            ]
+            for m in session_messages:
+                role = (m.get("role") or "").upper()
+                created_at = m.get("created_at") or ""
+                export_md_lines.append(f"## {role} ({created_at})")
+                export_md_lines.append(m.get("content") or "")
+                export_md_lines.append("")
+            export_md = "\n".join(export_md_lines)
+            st.download_button(
+                ui_text("导出 JSON"),
+                export_json,
+                file_name=f"chat_{st.session_state.chat_session_id}.json",
+                mime="application/json",
+                key="chat_export_json",
+            )
+            st.download_button(
+                ui_text("导出 Markdown"),
+                export_md,
+                file_name=f"chat_{st.session_state.chat_session_id}.md",
+                mime="text/markdown",
+                key="chat_export_md",
+            )
+        else:
+            st.info(ui_text("当前会话无消息"))
+
+        delete_confirm = st.checkbox(ui_text("确认删除"), key="chat_delete_confirm")
+        if st.button(
+            ui_text("删除会话"),
+            disabled=not delete_confirm,
+            key="chat_delete_button",
+        ):
+            if st.session_state.chat_session_id:
+                db.delete_chat_session(st.session_state.chat_session_id)
+                st.session_state.chat_session_id = None
+                st.session_state.last_loaded_session_id = None
+                st.session_state.messages = []
+                st.session_state.active_plan = None
+                st.session_state.active_task_id = None
+                st.session_state.task_status = None
+                st.session_state.task_polling = False
+                st.session_state.selected_material = None
+                st.session_state.last_task_id = None
+                st.rerun()
+
+    st.markdown("---")
+
+    # Query translation controls (use global UI setting by default)
+    if "auto_translate_query" not in st.session_state:
+        st.session_state.auto_translate_query = st.session_state.get("auto_translate_ui", False)
+    if "show_translation" not in st.session_state:
+        st.session_state.show_translation = True
+    with st.expander("Query Translation / 查询翻译"):
+        st.checkbox("Auto-translate EN->ZH for planning", key="auto_translate_query")
+        st.checkbox("Show translated query", key="show_translation")
 
     # Chat history
     for msg in st.session_state.messages:
@@ -551,37 +1101,75 @@ def render_chat():
             st.markdown(msg["content"])
 
     # Input
-    if prompt := st.chat_input("Enter your research query..."):
+    if prompt := st.chat_input(ui_text("请输入研究问题 / Enter your research query")):
+        if not st.session_state.chat_session_id:
+            title = f"新会话 {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+            st.session_state.chat_session_id = db.create_chat_session(title)
         st.session_state.messages.append({"role": "user", "content": prompt})
+        db.add_chat_message(st.session_state.chat_session_id, "user", prompt)
         with st.chat_message("user"):
             st.markdown(prompt)
+
+        prompt_for_api = prompt
+        translated_query = None
+        if st.session_state.get("auto_translate_query"):
+            lang = detect_language(prompt)
+            if lang == "en":
+                translated_query = translate_text(prompt, target_lang="zh")
+                if translated_query and translated_query != prompt:
+                    prompt_for_api = translated_query
 
         with st.chat_message("assistant"):
             try:
                 with st.status("Planning...", expanded=True) as status:
+                    if st.session_state.get("show_translation") and translated_query and translated_query != prompt:
+                        st.caption(f"Translated for planning: {translated_query}")
                     status.write("Creating task plan...")
-                    plan = api_create_task(prompt)
+                    plan = api_create_task(prompt_for_api)
                     st.session_state.active_plan = plan
                     st.session_state.active_task_id = plan.get("task_id")
                     st.session_state.task_polling = False
                     status.update(label="Plan created", state="complete", expanded=False)
                     st.markdown(f"Plan created: `{plan.get('task_id')}`")
+                    msg = f"Plan created: {plan.get('task_id')}"
                     st.session_state.messages.append({
                         "role": "assistant",
-                        "content": f"Plan created: {plan.get('task_id')}"
+                        "content": msg
                     })
+                    db.add_chat_message(
+                        st.session_state.chat_session_id,
+                        "assistant",
+                        msg,
+                        artifacts={"plan_id": plan.get("task_id")},
+                    )
+                    if current_session and current_session.get("title", "").startswith("新会话"):
+                        db.update_chat_session_title(
+                            st.session_state.chat_session_id,
+                            prompt[:40].strip(),
+                        )
             except Exception as e:
-                st.error(f"Task creation failed: {e}")
+                err_msg = f"Task creation failed: {e}"
+                st.error(err_msg)
+                if st.session_state.chat_session_id:
+                    db.add_chat_message(st.session_state.chat_session_id, "assistant", err_msg)
 
     # Task Graph Viewer
     if st.session_state.active_plan:
         st.markdown("---")
         st.markdown("### Task Graph (Planned)")
         render_task_graph(st.session_state.active_plan.get("steps", []))
+        st.markdown("### Task Assignment (Planned)")
+        assignment_df = build_task_assignment(st.session_state.active_plan.get("steps", []))
+        if not assignment_df.empty:
+            st.dataframe(assignment_df, use_container_width=True)
+        else:
+            st.info("No steps to assign.")
+        st.markdown("### Task Flow (Mermaid)")
+        st.code(build_task_mermaid(st.session_state.active_plan.get("steps", [])), language="mermaid")
 
         col_a, col_b = st.columns([1, 1])
         with col_a:
-            if st.button("Start Execution", type="primary"):
+            if st.button(ui_text("开始执行"), type="primary"):
                 try:
                     api_execute_task(st.session_state.active_task_id)
                     st.session_state.task_polling = True
@@ -589,13 +1177,13 @@ def render_chat():
                 except Exception as e:
                     st.error(f"Failed to start: {e}")
         with col_b:
-            if st.button("Refresh Status"):
+            if st.button(ui_text("刷新状态")):
                 try:
                     st.session_state.task_status = api_get_task_status(st.session_state.active_task_id)
                 except Exception as e:
                     st.warning(f"Status fetch failed: {e}")
             if st.session_state.task_polling:
-                if st.button("Stop Auto Refresh"):
+                if st.button(ui_text("停止自动刷新")):
                     st.session_state.task_polling = False
 
         if st.session_state.task_polling and st.session_state.active_task_id:
@@ -613,7 +1201,7 @@ def render_chat():
                 st.session_state.task_polling = False
             elif st.session_state.task_polling:
                 time.sleep(3)
-                st.experimental_rerun()
+                st.rerun()
 
             # Evidence Chain Browser
             try:
@@ -631,7 +1219,6 @@ def render_chat():
                         id_by_label[label] = mid
 
                     if options:
-                        # Default selection
                         if st.session_state.selected_material is None:
                             st.session_state.selected_material = id_by_label[options[0]]
 
@@ -643,106 +1230,15 @@ def render_chat():
                         if default_label is None:
                             default_label = options[0]
 
-                        selected_label = st.selectbox("Select material to view evidence", options, index=options.index(default_label))
+                        selected_label = st.selectbox(
+                            "Select material to view evidence",
+                            options,
+                            index=options.index(default_label),
+                        )
                         st.session_state.selected_material = id_by_label[selected_label]
                         render_evidence_chain(st.session_state.selected_material)
-
-                        # Optimized candidate panel (multi-signal score)
-                        st.markdown("### Recommended Candidates (Multi-Signal)")
-
-                        pool = mats[:]
-                        fe_vals = [m.get("formation_energy") for m in pool if m.get("formation_energy") is not None]
-                        if fe_vals:
-                            pool = sorted(pool, key=lambda x: x.get("formation_energy") if x.get("formation_energy") is not None else 1e9)[:50]
-                        else:
-                            pool = pool[:50]
-
-                        ev_weights = {
-                            "experiment": 1.5,
-                            "literature": 1.2,
-                            "ml_prediction": 1.0,
-                            "theory": 0.8
-                        }
-
-                        # Batch fetch evidence for pool
-                        scored_rows = []
-                        ev_scores = []
-                        ids = [m.get("material_id") for m in pool if m.get("material_id")]
-                        details_list = api_get_materials_batch(ids) if ids else []
-                        details_by_id = {d.get("material_id"): d for d in details_list if d.get("material_id")}
-
-                        for m in pool:
-                            mid = m.get("material_id")
-                            if not mid:
-                                continue
-                            details = details_by_id.get(mid, {})
-                            evidence = details.get("evidence", []) if details else []
-
-                            # Evidence score
-                            ev_score_raw = 0.0
-                            ev_counts = {"experiment": 0, "literature": 0, "ml_prediction": 0, "theory": 0}
-                            for ev in evidence:
-                                et = ev.get("source_type", "unknown")
-                                ev_counts[et] = ev_counts.get(et, 0) + 1
-                                ev_score_raw += ev_weights.get(et, 0.5) * float(ev.get("score", 1.0) or 1.0)
-
-                            ev_scores.append(ev_score_raw)
-                            m["_ev_score_raw"] = ev_score_raw
-                            m["_ev_counts"] = ev_counts
-                            scored_rows.append(m)
-
-                        # Normalize FE and Evidence scores
-                        fe_vals = [m.get("formation_energy") for m in scored_rows if m.get("formation_energy") is not None]
-                        fe_min = min(fe_vals) if fe_vals else None
-                        fe_max = max(fe_vals) if fe_vals else None
-                        ev_max = max(ev_scores) if ev_scores else 1.0
-
-                        def fe_score(fe):
-                            if fe is None or fe_min is None or fe_max is None or fe_max == fe_min:
-                                return 0.5
-                            return 1.0 - (fe - fe_min) / (fe_max - fe_min)
-
-                        for m in scored_rows:
-                            fe = m.get("formation_energy")
-                            s_fe = fe_score(fe)
-                            s_ev = (m.get("_ev_score_raw") or 0.0) / ev_max if ev_max else 0.0
-                            # Weighted blend: FE dominates, evidence refines
-                            m["_score"] = 0.65 * s_fe + 0.35 * s_ev
-
-                        ranked = sorted(scored_rows, key=lambda x: x.get("_score", 0), reverse=True)[:10]
-                        if ranked:
-                            df = pd.DataFrame([
-                                {
-                                    "material_id": m.get("material_id"),
-                                    "formula": m.get("formula"),
-                                    "formation_energy": m.get("formation_energy"),
-                                    "evidence": sum(m.get("_ev_counts", {}).values()),
-                                    "score": round(m.get("_score", 0), 3)
-                                } for m in ranked
-                            ])
-                            st.dataframe(df, use_container_width=True)
-                        else:
-                            st.info("No candidates available to rank yet.")
-            except Exception:
-                pass
-
-    # Quick prompts
-    st.markdown("---")
-    st.markdown("### Example Queries")
-
-    examples = [
-        "Find ordered alloy candidates for HOR",
-        "Train ML model on current materials database",
-        "Analyze d-band center vs activity",
-        "Search recent HOR catalyst papers"
-    ]
-
-    cols = st.columns(2)
-    for i, example in enumerate(examples):
-        with cols[i % 2]:
-            if st.button(example, key=f"example_{i}"):
-                st.session_state.messages.append({"role": "user", "content": example})
-                st.rerun()
+            except Exception as e:
+                st.warning(f"Evidence view failed: {e}")
 
 # ========== Data Analysis Page ==========
 
@@ -1225,155 +1721,155 @@ def render_ml_training():
                             st.error("未找到实验数据文件，请先上传并确保文件有效")
                             ml_agent = None
                         
-                        if ml_agent and ml_agent.X is not None:
-                            all_results = []
+                    if ml_agent and ml_agent.X is not None:
+                        all_results = []
                             
-                            # Define model groups
-                            traditional_models = ["XGBoost", "LightGBM", "RandomForest", 
-                                                  "GradientBoosting", "ExtraTrees", "AdaBoost",
-                                                  "Ridge", "BayesianRidge", "ElasticNet", "SVR", "KNN"]
-                            dnn_models = ["DNN_256_128_64", "DNN_512_256_128", "DNN_128_64_32"]
+                        # Define model groups
+                        traditional_models = ["XGBoost", "LightGBM", "RandomForest", 
+                                              "GradientBoosting", "ExtraTrees", "AdaBoost",
+                                              "Ridge", "BayesianRidge", "ElasticNet", "SVR", "KNN"]
+                        dnn_models = ["DNN_256_128_64", "DNN_512_256_128", "DNN_128_64_32"]
                             
-                            # Train traditional ML models
-                            trad_selected = [m for m in selected_models if m in traditional_models]
-                            if trad_selected:
-                                with st.spinner(f"训练传统 ML 模型 ({len(trad_selected)} 个)..."):
-                                    try:
-                                        trad_results = ml_agent.train_traditional_models()
-                                        # Filter by selected models
-                                        for r in trad_results:
-                                            if r.name in trad_selected or any(s in r.name for s in trad_selected):
-                                                all_results.append(r)
-                                        st.success(f"传统 ML 训练完成: {len(all_results)} 个模型")
-                                    except Exception as e:
-                                        st.warning(f"传统 ML 训练失败: {e}")
+                        # Train traditional ML models
+                        trad_selected = [m for m in selected_models if m in traditional_models]
+                        if trad_selected:
+                            with st.spinner(f"训练传统 ML 模型 ({len(trad_selected)} 个)..."):
+                                try:
+                                    trad_results = ml_agent.train_traditional_models()
+                                    # Filter by selected models
+                                    for r in trad_results:
+                                        if r.name in trad_selected or any(s in r.name for s in trad_selected):
+                                            all_results.append(r)
+                                    st.success(f"传统 ML 训练完成: {len(all_results)} 个模型")
+                                except Exception as e:
+                                    st.warning(f"传统 ML 训练失败: {e}")
                             
-                            # Train DNN with selected architectures
-                            dnn_selected = [m for m in selected_models if m in dnn_models]
-                            if dnn_selected:
-                                with st.spinner(f"正在训练深度学习模型集..."):
-                                    try:
-                                        # MLAgent trains all standard architectures at once
-                                        all_dnn_results = ml_agent.train_deep_learning_models(epochs=50)
+                        # Train DNN with selected architectures
+                        dnn_selected = [m for m in selected_models if m in dnn_models]
+                        if dnn_selected:
+                            with st.spinner(f"正在训练深度学习模型集..."):
+                                try:
+                                    # MLAgent trains all standard architectures at once
+                                    all_dnn_results = ml_agent.train_deep_learning_models(epochs=50)
                                         
-                                        # Filter requested architectures
-                                        filtered_results = []
-                                        for r in all_dnn_results:
-                                            # Check exact name match or if result name is part of selected key
-                                            if r.name in dnn_selected:
-                                                filtered_results.append(r)
+                                    # Filter requested architectures
+                                    filtered_results = []
+                                    for r in all_dnn_results:
+                                        # Check exact name match or if result name is part of selected key
+                                        if r.name in dnn_selected:
+                                            filtered_results.append(r)
                                         
-                                        all_results.extend(filtered_results)
-                                        st.success(f"深度学习训练完成: {len(filtered_results)} 个模型")
+                                    all_results.extend(filtered_results)
+                                    st.success(f"深度学习训练完成: {len(filtered_results)} 个模型")
                                         
-                                    except Exception as e:
-                                        st.warning(f"深度学习训练失败: {e}")
+                                except Exception as e:
+                                    st.warning(f"深度学习训练失败: {e}")
                             
-                            # Train Transformer
-                            if "Transformer" in selected_models:
-                                with st.spinner("训练 Transformer..."):
-                                    try:
-                                        trans_results = ml_agent.train_transformer_models(epochs=50)
-                                        all_results.extend(trans_results)
-                                        st.success("Transformer 训练完成")
-                                    except Exception as e:
-                                        st.warning(f"Transformer 训练失败: {e}")
+                        # Train Transformer
+                        if "Transformer" in selected_models:
+                            with st.spinner("训练 Transformer..."):
+                                try:
+                                    trans_results = ml_agent.train_transformer_models(epochs=50)
+                                    all_results.extend(trans_results)
+                                    st.success("Transformer 训练完成")
+                                except Exception as e:
+                                    st.warning(f"Transformer 训练失败: {e}")
                             
-                            # Train GNN
-                            gnn_models = ["CGCNN", "SchNet", "MEGNet"]
-                            gnn_selected = [m for m in selected_models if m in gnn_models]
+                        # Train GNN
+                        gnn_models = ["CGCNN", "SchNet", "MEGNet"]
+                        gnn_selected = [m for m in selected_models if m in gnn_models]
                             
-                            if gnn_selected:
-                                cif_dir = os.path.join(ROOT_DIR, "data", "theory", "cifs")
-                                if not os.path.exists(cif_dir):
-                                    st.error("未找到 CIF 目录，无法训练 GNN 模型。请确保 `data/theory/cifs` 存在。")
-                                elif ml_agent.material_ids is None:
-                                    st.error("当前数据集缺少 'material_id'，无法匹配 CIF。请点击上方 '重新提取特征' 以确保 ID 被保留。")
-                                else:
-                                    with st.spinner("训练 GNN 模型 (需较长时间)..."):
-                                        try:
-                                            # Build target map using raw loaded data
-                                            target_map = dict(zip(ml_agent.material_ids, ml_agent.y))
-                                            
-                                            # --- GNN Data Diagnostics ---
-                                            # Check libraries
-                                            import importlib
-                                            has_torch = importlib.util.find_spec("torch") is not None
-                                            has_pyg = importlib.util.find_spec("torch_geometric") is not None
-                                            
-                                            # Check explicitly for data matching issues
-                                            cif_files_chk = [f for f in os.listdir(cif_dir) if f.endswith('.cif')]
-                                            cif_ids = set(f.replace('.cif', '') for f in cif_files_chk)
-                                            target_ids = set(target_map.keys())
-                                            common_ids = cif_ids.intersection(target_ids)
-                                            
-                                            st.markdown(f"**GNN 数据检查**: CIF 文件 {len(cif_ids)} 个, 目标 ID {len(target_ids)} 个")
-                                            
-                                            if not has_torch:
-                                                st.error("❌ 未检测到 PyTorch 库。GNN 模型无法运行。请确认已正确安装 `torch`。")
-                                                gnn_results = []
-                                            elif not has_pyg:
-                                                st.error("❌ 未检测到 PyTorch Geometric (PyG)。请安装: `pip install torch-geometric`")
-                                                gnn_results = []
-                                            elif len(common_ids) == 0:
-                                                st.error(f"❌ 严重错误: 没有找到匹配的 ID！请检查 CIF 文件名是否与数据一致。交集为 0。")
-                                                gnn_results = []
-                                            else:
-                                                st.info(f"✅ 环境与数据检查通过 (匹配样本 {len(common_ids)} 个)，开始构建图神经网络...")
-                                                # Train GNN models
-                                                selected_gnn = [m for m in selected_models if m in ["CGCNN", "SchNet", "MEGNet"]]
-                                                gnn_results = ml_agent.train_gnn_models_v2(cif_dir, target_map, epochs=20, model_types=selected_gnn)
-                                            
-                                            all_results.extend(gnn_results)
-                                            
-                                            if gnn_results:
-                                                st.success(f"GNN 训练完成: {len(gnn_results)} 个模型")
-                                            else:
-                                                st.warning("GNN 训练未产生结果 (可能数据不足或环境缺失)")
-                                                
-                                        except Exception as e:
-                                            st.warning(f"GNN 训练失败: {e}")
-                            
-                            # Display results
-                            if all_results:
-                                st.markdown("---")
-                                st.markdown("### 训练结果")
-                                
-                                # Sort by R2
-                                all_results.sort(key=lambda x: x.r2_test, reverse=True)
-                                
-                                result_data = []
-                                for r in all_results[:10]:
-                                    result_data.append({
-                                        "模型": r.name,
-                                        "R² (训练)": f"{r.r2_train:.4f}" if r.r2_train is not None else "N/A",
-                                        "R² (测试)": f"{r.r2_test:.4f}",
-                                        "MAE": f"{r.mae_test:.4f}",
-                                        "RMSE": f"{r.rmse_test:.4f}"
-                                    })
-                                
-                                st.table(pd.DataFrame(result_data))
-                                
-                                # Best model
-                                best = all_results[0]
-                                st.success(f"🏆 最佳模型: {best.name} (R²={best.r2_test:.4f})")
-                                
-                                # SHAP analysis
-                                if enable_shap and best.model is not None:
-                                    with st.spinner("进行 SHAP 分析..."):
-                                        try:
-                                            shap_result = ml_agent.shap_analysis(best)
-                                            # shap_analysis returns (shap_values, feature_importance) tuple
-                                            if shap_result is not None:
-                                                shap_values, feature_importance = shap_result
-                                                if feature_importance is not None:
-                                                    st.markdown("### SHAP 特征重要性 (Top 10)")
-                                                    top_features = feature_importance.head(10)
-                                                    st.bar_chart(top_features.set_index('feature')['importance'])
-                                        except Exception as e:
-                                            st.info(f"SHAP 分析: {e}")
+                        if gnn_selected:
+                            cif_dir = os.path.join(ROOT_DIR, "data", "theory", "cifs")
+                            if not os.path.exists(cif_dir):
+                                st.error("未找到 CIF 目录，无法训练 GNN 模型。请确保 `data/theory/cifs` 存在。")
+                            elif ml_agent.material_ids is None:
+                                st.error("当前数据集缺少 'material_id'，无法匹配 CIF。请点击上方 '重新提取特征' 以确保 ID 被保留。")
                             else:
-                                st.warning("没有成功训练的模型")
+                                with st.spinner("训练 GNN 模型 (需较长时间)..."):
+                                    try:
+                                        # Build target map using raw loaded data
+                                        target_map = dict(zip(ml_agent.material_ids, ml_agent.y))
+                                            
+                                        # --- GNN Data Diagnostics ---
+                                        # Check libraries
+                                        import importlib
+                                        has_torch = importlib.util.find_spec("torch") is not None
+                                        has_pyg = importlib.util.find_spec("torch_geometric") is not None
+                                            
+                                        # Check explicitly for data matching issues
+                                        cif_files_chk = [f for f in os.listdir(cif_dir) if f.endswith('.cif')]
+                                        cif_ids = set(f.replace('.cif', '') for f in cif_files_chk)
+                                        target_ids = set(target_map.keys())
+                                        common_ids = cif_ids.intersection(target_ids)
+                                            
+                                        st.markdown(f"**GNN 数据检查**: CIF 文件 {len(cif_ids)} 个, 目标 ID {len(target_ids)} 个")
+                                            
+                                        if not has_torch:
+                                            st.error("❌ 未检测到 PyTorch 库。GNN 模型无法运行。请确认已正确安装 `torch`。")
+                                            gnn_results = []
+                                        elif not has_pyg:
+                                            st.error("❌ 未检测到 PyTorch Geometric (PyG)。请安装: `pip install torch-geometric`")
+                                            gnn_results = []
+                                        elif len(common_ids) == 0:
+                                            st.error(f"❌ 严重错误: 没有找到匹配的 ID！请检查 CIF 文件名是否与数据一致。交集为 0。")
+                                            gnn_results = []
+                                        else:
+                                            st.info(f"✅ 环境与数据检查通过 (匹配样本 {len(common_ids)} 个)，开始构建图神经网络...")
+                                            # Train GNN models
+                                            selected_gnn = [m for m in selected_models if m in ["CGCNN", "SchNet", "MEGNet"]]
+                                            gnn_results = ml_agent.train_gnn_models_v2(cif_dir, target_map, epochs=20, model_types=selected_gnn)
+                                            
+                                        all_results.extend(gnn_results)
+                                            
+                                        if gnn_results:
+                                            st.success(f"GNN 训练完成: {len(gnn_results)} 个模型")
+                                        else:
+                                            st.warning("GNN 训练未产生结果 (可能数据不足或环境缺失)")
+                                                
+                                    except Exception as e:
+                                        st.warning(f"GNN 训练失败: {e}")
+                            
+                        # Display results
+                        if all_results:
+                            st.markdown("---")
+                            st.markdown("### 训练结果")
+                                
+                            # Sort by R2
+                            all_results.sort(key=lambda x: x.r2_test, reverse=True)
+                                
+                            result_data = []
+                            for r in all_results[:10]:
+                                result_data.append({
+                                    "模型": r.name,
+                                    "R² (训练)": f"{r.r2_train:.4f}" if r.r2_train is not None else "N/A",
+                                    "R² (测试)": f"{r.r2_test:.4f}",
+                                    "MAE": f"{r.mae_test:.4f}",
+                                    "RMSE": f"{r.rmse_test:.4f}"
+                                })
+                                
+                            st.table(pd.DataFrame(result_data))
+                                
+                            # Best model
+                            best = all_results[0]
+                            st.success(f"🏆 最佳模型: {best.name} (R²={best.r2_test:.4f})")
+                                
+                            # SHAP analysis
+                            if enable_shap and best.model is not None:
+                                with st.spinner("进行 SHAP 分析..."):
+                                    try:
+                                        shap_result = ml_agent.shap_analysis(best)
+                                        # shap_analysis returns (shap_values, feature_importance) tuple
+                                        if shap_result is not None:
+                                            shap_values, feature_importance = shap_result
+                                            if feature_importance is not None:
+                                                st.markdown("### SHAP 特征重要性 (Top 10)")
+                                                top_features = feature_importance.head(10)
+                                                st.bar_chart(top_features.set_index('feature')['importance'])
+                                    except Exception as e:
+                                        st.info(f"SHAP 分析: {e}")
+                        else:
+                            st.warning("没有成功训练的模型")
                 else:
                     st.error("无法加载 ML Agent")
     
@@ -1449,6 +1945,70 @@ def render_literature():
                         st.error(f"搜索失败: {e}")
     
     st.markdown("---")
+
+    st.markdown("---")
+    st.markdown(ui_text("### 本地文献库 (data/literature) / Local PDF Library"))
+    lib_dir = os.path.join(ROOT_DIR, "data", "literature")
+    if not os.path.exists(lib_dir):
+        st.info(ui_text(f"文献目录: {lib_dir}"))
+        return
+    pdf_files = [f for f in os.listdir(lib_dir) if f.lower().endswith(".pdf")]
+    if not pdf_files:
+        st.info(ui_text("未发现 PDF 文件"))
+        return
+
+    col_a, col_b = st.columns([2, 1])
+    with col_a:
+        selected_pdf = st.selectbox(ui_text("选择 PDF"), pdf_files)
+    with col_b:
+        max_pages = st.number_input(ui_text("预览页数"), min_value=1, max_value=10, value=3)
+
+    if st.button(ui_text("加载 PDF 预览")):
+        try:
+            import pdfplumber
+            pdf_path = os.path.join(lib_dir, selected_pdf)
+            text_chunks = []
+            with pdfplumber.open(pdf_path) as pdf:
+                for idx, page in enumerate(pdf.pages[:int(max_pages)]):
+                    text = page.extract_text() or ""
+                    if text.strip():
+                        text_chunks.append(text)
+            if text_chunks:
+                st.text_area(ui_text("提取文本"), "\\n\\n".join(text_chunks), height=300)
+            else:
+                st.info(ui_text("未提取到文本（可能是扫描版PDF）"))
+        except Exception as e:
+            st.error(f"PDF 解析失败: {e}")
+
+    st.markdown(ui_text("#### 关键词检索本地文献"))
+    local_query = st.text_input(ui_text("输入关键词"), key="local_pdf_query")
+    if st.button(ui_text("搜索本地库"), key="local_pdf_search"):
+        try:
+            import pdfplumber
+            matches = []
+            for fname in pdf_files:
+                pdf_path = os.path.join(lib_dir, fname)
+                hit_count = 0
+                snippet = ""
+                with pdfplumber.open(pdf_path) as pdf:
+                    for page in pdf.pages[:5]:
+                        text = page.extract_text() or ""
+                        if local_query and local_query.lower() in text.lower():
+                            hit_count += text.lower().count(local_query.lower())
+                            if not snippet:
+                                snippet = text[:500]
+                if hit_count > 0:
+                    matches.append({"file": fname, "hits": hit_count, "snippet": snippet})
+            if matches:
+                st.success(ui_text(f"找到 {len(matches)} 条匹配"))
+                matches = sorted(matches, key=lambda x: x["hits"], reverse=True)
+                for m in matches[:10]:
+                    with st.expander("{} (hits: {})".format(m.get("file"), m.get("hits"))):
+                        st.write(m.get("snippet", ""))
+            else:
+                st.info(ui_text("没有匹配结果"))
+        except Exception as e:
+            st.error(f"搜索失败: {e}")
     
     # Local PDF parsing
     st.markdown("### 📄 本地 PDF 解析")
@@ -1458,6 +2018,76 @@ def render_literature():
     if pdf_file:
         if st.button("解析 PDF"):
             st.info("PDF 解析需要 pdfplumber 库支持")
+
+
+# ========== Evaluation Page ==========
+
+def render_evaluation():
+    """Render evaluation page for evidence coverage and recommendation recall."""
+    st.markdown("## Evaluation")
+
+    # Evidence coverage
+    st.markdown("### Evidence Coverage")
+    db_path = os.path.join(ROOT_DIR, "data", "imcs.db")
+    coverage = compute_evidence_coverage(db_path)
+    if coverage.get("error"):
+        st.warning(coverage["error"])
+    else:
+        st.metric("Total materials", coverage.get("total", 0))
+        rows = coverage.get("rows") or []
+        if rows:
+            data = []
+            total = coverage.get("total") or 0
+            for stype, cnt in rows:
+                ratio = (cnt / total) if total else 0
+                data.append({"source_type": stype, "materials": cnt, "coverage": f"{ratio:.2%}"})
+            st.table(pd.DataFrame(data))
+        else:
+            st.info("No evidence records yet.")
+
+    st.markdown("---")
+
+    # Recommendation recall
+    st.markdown("### Recommendation Recall (Top-K)")
+    st.markdown("Upload candidate list and ground-truth list (CSV).")
+
+    candidates_file = st.file_uploader("Candidates CSV", type=["csv"], key="eval_candidates")
+    gt_file = st.file_uploader("Ground-truth CSV", type=["csv"], key="eval_ground_truth")
+    k_input = st.text_input("K values (comma-separated)", "5,10,20")
+
+    if candidates_file and gt_file:
+        try:
+            cand_df = pd.read_csv(candidates_file)
+            gt_df = pd.read_csv(gt_file)
+
+            # If a score column exists, sort by score descending
+            if "score" in cand_df.columns:
+                cand_df = cand_df.sort_values("score", ascending=False)
+
+            candidates = load_ids_from_df(cand_df)
+            ground_truth = set(load_ids_from_df(gt_df))
+
+            if not candidates:
+                st.warning("No candidate ids found. Expected column: material_id / id / mid.")
+                return
+            if not ground_truth:
+                st.warning("No ground-truth ids found. Expected column: material_id / id / mid.")
+                return
+
+            ks = []
+            for part in k_input.split(","):
+                part = part.strip()
+                if part.isdigit():
+                    ks.append(int(part))
+            if not ks:
+                ks = [5, 10, 20]
+
+            rows = []
+            for k in ks:
+                rows.append({"k": k, "recall": round(topk_recall(candidates, ground_truth, k), 4)})
+            st.table(pd.DataFrame(rows))
+        except Exception as e:
+            st.error(f"Failed to compute recall: {e}")
 
 
 # ========== API Status Page ==========
@@ -1609,22 +2239,24 @@ def main():
             st.rerun()
     
     page = render_sidebar()
-    
-    if page == "🏠 首页":
-        render_home()
-    elif page == "🤖 智能体对话":
-        render_chat()
-    elif page == "📊 数据分析":
-        render_data_analysis()
-    elif page == "🧪 ML 训练":
-        render_ml_training()
-    elif page == "📚 文献检索":
-        render_literature()
-    elif page == "🔌 API 状态":
-        render_api_status()
-    elif page == "⚙️ 设置":
-        render_settings()
+    if page == "evaluation":
+        render_evaluation()
+        return
 
+    if page == "home":
+        render_home()
+    elif page == "chat":
+        render_chat()
+    elif page == "data":
+        render_data_analysis()
+    elif page == "ml":
+        render_ml_training()
+    elif page == "lit":
+        render_literature()
+    elif page == "api":
+        render_api_status()
+    elif page == "settings":
+        render_settings()
 
 if __name__ == "__main__":
     main()

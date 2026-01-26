@@ -1,0 +1,254 @@
+{
+  "TaskId": "task_20250225222203",
+  "ExperimentName": "Synthesis of CsPbBr3 Nanocubes at Room Temperature",
+  "Materials": [
+    {
+      "MaterialId": "MAT001",
+      "Name": "Cesium Bromide",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "Analytical-grade",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "MAT002",
+      "Name": "Lead Bromide",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "Analytical-grade",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "MAT003",
+      "Name": "Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "Lab-grade",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT004",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "Lab-grade",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT005",
+      "Name": "Oleylamine",
+      "Amount": "0.5",
+      "Unit": "mL",
+      "Purity": "Technical-grade",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT006",
+      "Name": "Oleic Acid",
+      "Amount": "1.0",
+      "Unit": "mL",
+      "Purity": "Technical-grade",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "MAT007",
+      "Name": "Water (optional)",
+      "Amount": "0-60",
+      "Unit": "µL",
+      "Purity": "Deionized",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "CON001",
+      "Name": "Reaction Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Ambient"
+    },
+    {
+      "ContainerId": "CON002",
+      "Name": "Anti-Solvent Beaker",
+      "Capacity": "100",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "No",
+      "PressureRating": "Ambient"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "EQ001",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "RPMRange": "0-1500"
+      }
+    },
+    {
+      "EquipmentId": "EQ002",
+      "Name": "Microsyringe",
+      "Parameters": {
+        "VolumeRange": "0.1-1"
+      }
+    },
+    {
+      "EquipmentId": "EQ003",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "MaxSpeed": "15000",
+        "MaxVolume": "50"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "StepId": "1",
+      "Description": "Prepare precursor solution by dissolving CsBr and PbBr2 in DMF with ligands.",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "CON001"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON001",
+          "MaterialId": "MAT001"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON001",
+          "MaterialId": "MAT002"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON001",
+          "MaterialId": "MAT003"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON001",
+          "MaterialId": "MAT005"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON001",
+          "MaterialId": "MAT006"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "CON001",
+        "Contents": [
+          {
+            "MaterialId": "MAT001",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "MAT002",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "MAT003",
+            "Amount": "10",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "MAT005",
+            "Amount": "0.5",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "MAT006",
+            "Amount": "1.0",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "2",
+      "Description": "Prepare an anti-solvent beaker containing toluene.",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "CON002"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "CON002",
+          "MaterialId": "MAT004"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "CON002",
+        "Contents": [
+          {
+            "MaterialId": "MAT004",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "3",
+      "Description": "Inject precursor solution into the anti-solvent.",
+      "Actions": [
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON002",
+          "EquipmentId": "EQ001"
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON001",
+          "EquipmentId": "EQ002"
+        }
+      ],
+      "Dependencies": [
+        "1",
+        "2"
+      ],
+      "StepOutput": {}
+    },
+    {
+      "StepId": "4",
+      "Description": "Centrifuge and collect nanocubes for final output.",
+      "Actions": [
+        {
+          "ActionType": "remove_container_from_equipment",
+          "ContainerId": "CON002",
+          "EquipmentId": "EQ001"
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "CON002",
+          "EquipmentId": "EQ003"
+        }
+      ],
+      "Dependencies": [
+        "3"
+      ],
+      "StepOutput": {
+        "ContainerId": "CON002",
+        "Contents": [
+          {
+            "MaterialId": "Output",
+            "Amount": "Optimized Yield",
+            "Unit": " -- "
+          }
+        ]
+      }
+    }
+  ]
+}

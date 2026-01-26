@@ -1,0 +1,214 @@
+{
+  "TaskId": "task_20250225210851",
+  "ExperimentName": "Room Temperature Synthesis of CsPbBr₃ Nanocubes",
+  "Materials": [
+    {
+      "MaterialId": "1",
+      "Name": "Cesium Bromide",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "High",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "2",
+      "Name": "Lead Bromide",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "High",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "3",
+      "Name": "N,N-Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "High",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "4",
+      "Name": "Oleic Acid",
+      "Amount": "1.0",
+      "Unit": "mL",
+      "Purity": "High",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "5",
+      "Name": "Oleylamine",
+      "Amount": "0.5",
+      "Unit": "mL",
+      "Purity": "High",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "6",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "High",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "C1",
+      "Name": "Glass Vial",
+      "Capacity": "20",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylinder",
+      "HeatResistant": "No",
+      "PressureRating": "Low"
+    },
+    {
+      "ContainerId": "C2",
+      "Name": "Reaction Beaker",
+      "Capacity": "100",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylinder",
+      "HeatResistant": "No",
+      "PressureRating": "Low"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "E1",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "StirringSpeed": "1200",
+        "Unit": "RPM"
+      }
+    },
+    {
+      "EquipmentId": "E2",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "Speed": "10000",
+        "Unit": "RPM"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "StepId": "1",
+      "Description": "Prepare Precursor Solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "1"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "2"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "3"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "4"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C1",
+          "MaterialId": "5"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "C1",
+        "Contents": [
+          {
+            "MaterialId": "7",
+            "Amount": "11.9",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "2",
+      "Description": "Inject Precursor into Antisolvent",
+      "Actions": [
+        {
+          "ActionType": "place_container",
+          "ContainerId": "C2"
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C2",
+          "EquipmentId": "E1"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "C2",
+        "Contents": [
+          {
+            "MaterialId": "8",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "3",
+      "Description": "Purify and Isolate Nanocubes",
+      "Actions": [
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C2",
+          "EquipmentId": "E2"
+        }
+      ],
+      "Dependencies": [
+        "2"
+      ],
+      "StepOutput": {
+        "ContainerId": "C2",
+        "Contents": [
+          {
+            "MaterialId": "9",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "StepId": "4",
+      "Description": "Store the Final Product",
+      "Actions": [
+        {
+          "ActionType": "remove_container_from_equipment",
+          "ContainerId": "C2",
+          "EquipmentId": "E2"
+        }
+      ],
+      "Dependencies": [
+        "3"
+      ],
+      "StepOutput": {
+        "ContainerId": "C2",
+        "Contents": [
+          {
+            "MaterialId": "10",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    }
+  ]
+}

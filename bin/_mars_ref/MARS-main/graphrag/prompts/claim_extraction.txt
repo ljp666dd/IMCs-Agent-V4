@@ -1,0 +1,71 @@
+# Materials Science Claim Extraction Prompt
+
+## Target Activity
+You are an intelligent assistant that helps a materials scientist to analyze claims against certain entities presented in a scientific document related to materials synthesis and characterization.
+
+## Goal
+Given a scientific document that is potentially relevant to materials science, an entity specification, and a claim description, extract all entities that match the entity specification and all claims against those entities.
+
+## Steps
+1. Extract all named entities that match the predefined entity specification. Entity specification can either be a list of entity names or a list of entity types. In the context of materials science, entities may include:
+   - Chemical compounds (e.g., CH3NH3PbBr3, PbBr2)
+   - Solvents (e.g., DMF, toluene)
+   - Synthesis methods (e.g., LARP, hot-injection)
+   - Characterization techniques (e.g., XRD, TEM)
+   - Material properties (e.g., bandgap, quantum yield)
+   - Equipment or instruments (e.g., spectrophotometer, centrifuge)
+
+2. For each entity identified in step 1, extract all claims associated with the entity. Claims need to match the specified claim description, and the entity should be the subject of the claim.
+For each claim, extract the following information:
+   - Subject: name of the entity that is subject of the claim, capitalized. The subject entity is one that is involved in or affected by the action described in the claim. Subject needs to be one of the named entities identified in step 1.
+   - Object: name of the entity that is object of the claim, capitalized. The object entity is one that either interacts with, is produced by, or is affected by the subject entity in the context of the claim. If object entity is unknown, use **NONE**.
+   - Claim Type: overall category of the claim, capitalized. Name it in a way that can be repeated across multiple text inputs, so that similar claims share the same claim type. Examples in materials science context:
+     - SYNTHESIS ROLE
+     - MATERIAL PROPERTY
+     - CHARACTERIZATION METHOD
+     - REACTION MECHANISM
+     - PERFORMANCE METRIC
+   - Claim Status: **TRUE**, **FALSE**, or **SUSPECTED**. TRUE means the claim is confirmed, FALSE means the claim is found to be false, SUSPECTED means the claim is not verified or is hypothetical.
+   - Claim Description: Detailed description explaining the reasoning behind the claim, together with all the related evidence and references. Include specific details such as:
+     - Synthesis conditions (temperature, pressure, time)
+     - Concentration or ratios of reagents
+     - Observed properties or characteristics
+     - Relationship to other materials or processes
+   - Claim Date: Period (start_date, end_date) when the claim was made or the research was conducted. Both start_date and end_date should be in ISO-8601 format. If the claim was made on a single date rather than a date range, set the same date for both start_date and end_date. If date is unknown, return **NONE**.
+   - Claim Source Text: List of **all** quotes from the original text that are relevant to the claim. Include full sentences to provide context.
+
+Format each claim as (<subject_entity>{tuple_delimiter}<object_entity>{tuple_delimiter}<claim_type>{tuple_delimiter}<claim_status>{tuple_delimiter}<claim_start_date>{tuple_delimiter}<claim_end_date>{tuple_delimiter}<claim_description>{tuple_delimiter}<claim_source>)
+
+3. Return output in English as a single list of all the claims identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. When finished, output {completion_delimiter}
+
+## Examples
+Example 1:
+Entity specification: PbBr2, n-octylamine
+Claim description: roles and processes in quantum dots synthesis
+Text: The LARP synthesis is accomplished by simply mixing a solution of CH3NH3PbBr3 precursors in good solvent (N-dimethylformamide, DMF) into a vigorously stirred poor solvent (toluene, hexane, etc.) with longchain organic ligands, which subsequently result in the controlled crystallization of precursors into colloidal nanoparticles. Figure 1 schematically illustrates the typical fabrication process of the LARP technique. In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution. In the precursor solution, DMF acts as a good solvent to dissolve the inorganic salts and small molecules. 
+Output:
+
+(PbBr2{tuple_delimiter}CH3NH3PbBr3 QDs{tuple_delimiter}SYNTHESIS ROLE{tuple_delimiter}TRUE{tuple_delimiter}NONE{tuple_delimiter}NONE{tuple_delimiter}PbBr2 serves as a crucial precursor in the synthesis of CH3NH3PbBr3 quantum dots. It is dissolved in DMF along with other components to form a clear precursor solution, which is essential for the LARP synthesis method. The use of PbBr2 provides the lead source for the formation of the perovskite structure in the quantum dots.{tuple_delimiter}In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution.)
+{record_delimiter}
+(n-octylamine{tuple_delimiter}CH3NH3PbBr3 QDs{tuple_delimiter}SYNTHESIS ROLE{tuple_delimiter}TRUE{tuple_delimiter}NONE{tuple_delimiter}NONE{tuple_delimiter}n-octylamine acts as a long-chain organic ligand in the synthesis of CH3NH3PbBr3 quantum dots. It plays a crucial role in the LARP technique by facilitating the controlled crystallization of precursors into colloidal nanoparticles. The presence of n-octylamine likely contributes to the stabilization and size control of the forming quantum dots during the synthesis process.{tuple_delimiter}The LARP synthesis is accomplished by simply mixing a solution of CH3NH3PbBr3 precursors in good solvent (N-dimethylformamide, DMF) into a vigorously stirred poor solvent (toluene, hexane, etc.) with longchain organic ligands, which subsequently result in the controlled crystallization of precursors into colloidal nanoparticles. In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution.)
+{completion_delimiter}
+
+Example 2:
+Entity specification: CH3NH3PbBr3, DMF
+Claim description: roles and processes involved in material synthesis
+Text: The LARP synthesis is accomplished by simply mixing a solution of CH3NH3PbBr3 precursors in good solvent (N-dimethylformamide, DMF) into a vigorously stirred poor solvent (toluene, hexane, etc.) with longchain organic ligands, which subsequently result in the controlled crystallization of precursors into colloidal nanoparticles. Figure 1 schematically illustrates the typical fabrication process of the LARP technique. In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution. In the precursor solution, DMF acts as a good solvent to dissolve the inorganic salts and small molecules. 
+Output:
+
+(CH3NH3PbBr3{tuple_delimiter}COLLOIDAL NANOPARTICLES{tuple_delimiter}SYNTHESIS MECHANISM{tuple_delimiter}TRUE{tuple_delimiter}NONE{tuple_delimiter}NONE{tuple_delimiter}CH3NH3PbBr3 serves as the key precursor in the LARP synthesis method for producing colloidal nanoparticles. The process involves mixing a solution of CH3NH3PbBr3 precursors in a good solvent (DMF) with a poor solvent (toluene or hexane) containing long-chain organic ligands. This mixing process induces controlled crystallization, resulting in the formation of CH3NH3PbBr3 quantum dots. The use of different solvents and ligands allows for precise control over the nanoparticle formation, which is crucial for tailoring the properties of the resulting quantum dots.{tuple_delimiter}The LARP synthesis is accomplished by simply mixing a solution of CH3NH3PbBr3 precursors in good solvent (N-dimethylformamide, DMF) into a vigorously stirred poor solvent (toluene, hexane, etc.) with longchain organic ligands, which subsequently result in the controlled crystallization of precursors into colloidal nanoparticles. In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution.)
+{record_delimiter}
+(DMF{tuple_delimiter}CH3NH3PbBr3 QDs{tuple_delimiter}SOLVENT ROLE{tuple_delimiter}TRUE{tuple_delimiter}NONE{tuple_delimiter}NONE{tuple_delimiter}DMF (N-dimethylformamide) plays a crucial role as a 'good solvent' in the synthesis of CH3NH3PbBr3 quantum dots using the LARP technique. It is used to dissolve the inorganic salts (PbBr2 and CH3NH3Br) and small molecules (n-octylamine and oleic acid) to form a clear precursor solution. The ability of DMF to fully dissolve these components is essential for the subsequent controlled crystallization process when this solution is mixed with a poor solvent. The choice of DMF as the good solvent is critical for achieving the desired nanoparticle formation and properties in the LARP synthesis method.{tuple_delimiter}The LARP synthesis is accomplished by simply mixing a solution of CH3NH3PbBr3 precursors in good solvent (N-dimethylformamide, DMF) into a vigorously stirred poor solvent (toluene, hexane, etc.) with longchain organic ligands, which subsequently result in the controlled crystallization of precursors into colloidal nanoparticles. In a typical synthesis of CH3NH3PbBr3 QDs, a mixture of PbBr2, CH3NH3Br, n-octylamine, and oleic acid was dissolved into DMF to form a clear precursor solution. In the precursor solution, DMF acts as a good solvent to dissolve the inorganic salts and small molecules.)
+{completion_delimiter}
+
+## Real Data
+Use the following input for your answer.
+Entity specification: {entity_specs}
+Claim description: {claim_description}
+Text: {input_text}
+Output:

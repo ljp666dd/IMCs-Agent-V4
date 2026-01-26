@@ -1,0 +1,459 @@
+.process_box {
+    position: fixed;
+    bottom: 20px;
+    right: 6px;
+    width: 230px;
+    height: 230px;
+    // background: url('../../assets/chart/chart.png') no-repeat;
+    // background-size: cover;
+
+    .body-box {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        .out_list {
+            width: 100%;
+            position: relative;
+
+            .out_item {
+                position: absolute;
+
+                .item_text {
+                    position: relative;
+                    width: 55px;
+                    height: 52px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding-top: 5px;
+
+                    .item_round {
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+
+                    .p {
+                        font-size: 12px;
+                        width: 22px;
+                        height: 16px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transform: scale(0.8);
+                        font-weight: 600;
+                    }
+
+                    .span {
+                        transform: scale(0.6);
+                        font-size: 12px;
+                        margin-top: -4px;
+                    }
+
+                    .dashed_line {
+                        position: absolute;
+                        width: 14px;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+
+                &:nth-child(1) {
+                    top: 82px;
+                    left: 84px;
+
+                    .item_text {
+                        width: 68px;
+                        height: 63px;
+                    }
+
+                    .p {
+                        width: 18px;
+                        height: 18px;
+                        background: #bfd8ee;
+                        color: #fff;
+                    }
+
+                    .span {
+                        color: #649ed2;
+                        margin-top: -6px;
+                    }
+                }
+
+                &:nth-child(2) {
+                    top: 2px;
+                    left: 2px;
+
+                    .p {
+                        background: #FBEEB7;
+                        color: #DAA600;
+                    }
+
+                    .span {
+                        color: #DAA600;
+                    }
+
+                    .dashed_line {
+                        transform: rotate(-90deg);
+                        top: -38px;
+                        left: 113px;
+                    }
+                }
+
+                &:nth-child(3) {
+                    top: 1px;
+                    right: -2px;
+
+                    .p {
+                        background: #c5e0b4;
+                        color: #e58881;
+                    }
+
+                    .span {
+                        color: #5e913b;
+                    }
+
+                    .dashed_line {
+                        top: 61px;
+                        left: 28px;
+                        width: 13.4px;
+                    }
+                }
+
+                &:nth-child(4) {
+                    top: 173px;
+                    right: -2px;
+
+                    .p {
+                        background: #cccfde;
+                        color: #5e913b;
+                    }
+
+                    .span {
+                        color: #5e913b;
+                    }
+
+                    .dashed_line {
+                        transform: rotate(90deg);
+                        top: -23px;
+                        left: -70.6px;
+                    }
+                }
+
+                &:nth-child(5) {
+                    top: 173px;
+                    left: 1px;
+
+                    .p {
+                        background: #edd1cf;
+                        color: #e58881;
+                    }
+
+                    .span {
+                        color: #e58881;
+                    }
+
+                    .dashed_line {
+                        transform: rotate(180deg);
+                        top: -117px;
+                        left: 14px;
+                        width: 13.4px;
+                    }
+                }
+
+                .centent_box {
+                    position: relative;
+
+                    .sector_box {
+                        position: absolute;
+                        z-index: 1;
+
+                        &:nth-child(2) {
+                            top: -50px;
+                            left: 15px;
+                        }
+
+                        .one_box {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+
+                            img:nth-child(1) {
+                                width: 19px;
+                                height: 20px;
+                            }
+
+                            p {
+                                width: 39px;
+                                height: 16px;
+                                border-radius: 50%;
+                                background: #bfd7ec;
+                                color: #447cb8;
+                                margin-top: -3px;
+                                margin-bottom: -1px;
+                                text-align: center;
+                                line-height: 13px;
+
+                                span {
+                                    display: inline-block;
+                                    font-size: 12px;
+                                    transform: scale(0.6);
+                                    margin-left: -2px;
+                                }
+                            }
+
+                            img:nth-child(3) {
+                                width: 2px;
+                                height: 37px;
+                            }
+                        }
+
+                        .two_box {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            position: relative;
+
+                            .top_box {
+                                display: flex;
+                                justify-content: center;
+                                column-gap: 4px;
+                                height: 19px;
+
+                                .arrow_box_left {
+
+                                    img {
+                                        width: 4px;
+                                        height: 15px;
+                                    }
+                                }
+
+                                .person {
+                                    width: 7px;
+                                    height: 15px;
+                                    transform: rotate(45deg);
+                                    margin-top: 2px;
+                                }
+
+                                .arrow_box_right {
+                                    img {
+                                        width: 4px;
+                                        height: 15px;
+                                    }
+                                }
+                            }
+
+                            .admin_box {
+                                position: absolute;
+                                top: 19px;
+                                left: 3px;
+                                width: 34px;
+                                height: 16px;
+                                border-radius: 50%;
+                                background: #fcf7d9;
+                                line-height: 12px;
+
+                                span {
+                                    display: inline-block;
+                                    font-size: 12px;
+                                    transform: scale(0.6);
+                                    margin-left: -2px;
+                                }
+                            }
+
+                            .bottom_box {
+                                position: absolute;
+                                top: 37px;
+                                left: -12px;
+                                display: flex;
+                                justify-content: center;
+
+                                p {
+                                    width: 2px;
+                                    height: 8px;
+                                    display: flex;
+                                    writing-mode: vertical-rl;
+
+                                    span {
+                                        font-size: 12px;
+                                        transform: scale(0.5);
+                                        display: inline-block;
+                                        width: 100%;
+                                        height: 100%;
+                                        line-height: 4px;
+                                    }
+                                }
+
+                                .sit {
+                                    width: 15px;
+                                    height: 19px;
+                                    transform: rotate(46deg)
+                                }
+
+                                .down_arrow {
+                                    width: 14px;
+                                    height: 29px;
+                                    margin-left: -3px;
+                                }
+
+                                .up_arrow {
+                                    width: 14px;
+                                    height: 29px;
+                                    margin-left: -2px;
+                                }
+
+                                .stand {
+                                    width: 15px;
+                                    height: 18px;
+                                    transform: rotate(46deg);
+                                    margin-top: 4px;
+                                    margin-left: -2px;
+                                }
+                            }
+                        }
+
+                        &:nth-child(3) {
+                            top: -32px;
+                            left: -46px;
+                            transform: rotate(315deg);
+                        }
+
+                        &:nth-child(4) {
+                            top: -33px;
+                            right: -43px;
+                            transform: rotate(45deg);
+
+                            .two_box {
+                                .top_box {
+                                    .person {
+                                        transform: rotate(-43deg);
+                                    }
+                                }
+
+                                .admin_box {
+                                    top: 18px;
+                                    left: -12px;
+                                    background: #daefdb;
+                                }
+
+                                .bottom_box {
+                                    top: 36px;
+                                    left: -23px;
+
+                                    .stand {
+                                        transform: rotate(-43deg);
+                                        margin-top: 7px;
+                                        margin-left: 0;
+                                    }
+
+                                    .sit {
+                                        transform: rotate(-46deg);
+                                        margin-top: 4px;
+                                        margin-left: 1px;
+                                    }
+                                }
+                            }
+                        }
+
+                        &:nth-child(5) {
+                            bottom: -28px;
+                            right: -46px;
+                            transform: rotate(133deg);
+
+                            .two_box {
+                                .top_box {
+                                    .person {
+                                        transform: rotate(-135deg);
+                                        margin-top: 4px;
+                                    }
+                                }
+
+                                .admin_box {
+                                    top: 17px;
+                                    left: -3px;
+                                    transform: rotate(10deg);
+                                    background: #d8dae8;
+                                }
+
+                                .bottom_box {
+                                    top: 35px;
+                                    left: -11px;
+
+                                    .stand {
+                                        transform: rotate(-43deg);
+                                        margin-top: 7px;
+                                        margin-left: 0;
+                                    }
+
+                                    .sit {
+                                        transform: rotate(-123deg);
+                                        margin-top: 1px;
+                                        margin-left: 2px;
+                                    }
+
+                                    .up_arrow {
+                                        margin-left: -3px;
+                                    }
+                                }
+                            }
+                        }
+
+                        &:nth-child(6) {
+                            bottom: -28px;
+                            left: -48px;
+                            transform: rotate(230deg);
+
+                            .two_box {
+                                .top_box {
+                                    .person {
+                                        transform: rotate(-231deg);
+                                        margin-top: 5px;
+                                        margin-left: 1px
+                                    }
+                                }
+
+                                .admin_box {
+                                    top: 20px;
+                                    left: -15px;
+                                    transform: rotate(-9deg);
+                                    background: #fceeed;
+                                }
+
+                                .bottom_box {
+                                    top: 36px;
+                                    left: -25px;
+                                    transform: rotate(-5deg);
+
+                                    .stand {
+                                        transform: rotate(109deg);
+                                        margin-top: 6px;
+                                        margin-left: 0px;
+                                    }
+
+                                    .sit {
+                                        transform: rotate(137deg);
+                                        margin-top: 6px;
+                                        margin-left: 2px;
+                                    }
+
+                                    .up_arrow {
+                                        margin-left: -3px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

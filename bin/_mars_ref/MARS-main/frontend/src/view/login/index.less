@@ -1,0 +1,63 @@
+.login-box {
+    width: 100vw;
+    height: 100vh;
+    background: url('../../assets/login/background.png') no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .content {
+        max-width: 560px;
+        min-width: 450px;
+        background: rgba(255, 255, 255, 0.8);
+        box-sizing: border-box;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0px 15px 15px 0px rgba(0, 0, 0, 0.05);
+
+        .title {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            column-gap: 12px;
+            margin-bottom: 24px;
+
+            img {
+                width: 40px;
+                height: 40px;
+            }
+
+            span {
+                font-size: 32px;
+                color: #333;
+                font-weight: 600;
+            }
+        }
+
+        .code-box {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            column-gap: 12px;
+        }
+
+        :deep(.el-form) {
+            margin-bottom: 34px;
+
+            .el-input__inner {
+                height: 56px;
+                font-size: 16px;
+            }
+        }
+
+        .btn-box {
+            width: 100%;
+
+            .el-button {
+                width: 100%;
+                height: 60px;
+            }
+        }
+    }
+}

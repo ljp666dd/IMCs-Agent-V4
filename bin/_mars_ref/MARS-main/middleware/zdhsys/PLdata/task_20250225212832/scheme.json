@@ -1,0 +1,236 @@
+{
+  "TaskId": "task_20250225212832",
+  "ExperimentName": "Synthesis of CsPbBr3 Nanocubes",
+  "Materials": [
+    {
+      "MaterialId": "M001",
+      "Name": "Cesium Bromide",
+      "Amount": 85.1238,
+      "Unit": "mg",
+      "Purity": "99.99%",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "M002",
+      "Name": "Lead Bromide",
+      "Amount": 146.8032,
+      "Unit": "mg",
+      "Purity": "99.99%",
+      "State": "Solid"
+    },
+    {
+      "MaterialId": "M003",
+      "Name": "Dimethylformamide",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "Anhydrous",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M004",
+      "Name": "Oleic Acid",
+      "Amount": "1.0",
+      "Unit": "mL",
+      "Purity": "Technical",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M005",
+      "Name": "Oleylamine",
+      "Amount": "0.5",
+      "Unit": "mL",
+      "Purity": "70%",
+      "State": "Liquid"
+    },
+    {
+      "MaterialId": "M006",
+      "Name": "Toluene",
+      "Amount": "10",
+      "Unit": "mL",
+      "Purity": "Anhydrous",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "C001",
+      "Name": "Glass Reaction Flask",
+      "Capacity": "25",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Round-bottom",
+      "HeatResistant": "Yes",
+      "PressureRating": "Atmospheric"
+    },
+    {
+      "ContainerId": "C002",
+      "Name": "Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Atmospheric"
+    },
+    {
+      "ContainerId": "C003",
+      "Name": "Centrifuge Tube",
+      "Capacity": "15",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Polypropylene",
+      "Shape": "Conical",
+      "HeatResistant": "No",
+      "PressureRating": "None"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "E001",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "SpeedRangeRpm": "0-1500",
+        "TemperatureControl": "No"
+      }
+    },
+    {
+      "EquipmentId": "E002",
+      "Name": "Centrifuge",
+      "Parameters": {
+        "MaxSpeedRpm": "10000",
+        "TemperatureControl": "No"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "Stepid": "1",
+      "Description": "Preparation of precursor solution",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "C001",
+          "MaterialId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M001"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M002"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M003"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M004"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C001",
+          "MaterialId": "M005"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "C001",
+        "Contents": [
+          {
+            "MaterialId": "M001",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "M002",
+            "Amount": "0.4",
+            "Unit": "mmol"
+          },
+          {
+            "MaterialId": "M003",
+            "Amount": "10",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "M004",
+            "Amount": "1",
+            "Unit": "mL"
+          },
+          {
+            "MaterialId": "M005",
+            "Amount": "0.5",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "2",
+      "Description": "Injection of precursor solution into toluene",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "C002",
+          "MaterialId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "C002",
+          "MaterialId": "M006"
+        },
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C001",
+          "EquipmentId": "E001"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "C002",
+        "Contents": [
+          {
+            "MaterialId": "M006",
+            "Amount": "10",
+            "Unit": "mL"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "3",
+      "Description": "Centrifugation of nanoparticle solution",
+      "Actions": [
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "C003",
+          "EquipmentId": "E002"
+        },
+        {
+          "ActionType": "remove_container_from_equipment",
+          "ContainerId": "C003",
+          "EquipmentId": "E002"
+        }
+      ],
+      "Dependencies": [
+        "2"
+      ],
+      "StepOutput": {
+        "ContainerId": "C003",
+        "Contents": [
+          {
+            "MaterialId": "",
+            "Amount": "",
+            "Unit": ""
+          }
+        ]
+      }
+    }
+  ]
+}

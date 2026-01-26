@@ -51,6 +51,10 @@ def load_theorist():
         return model
     return None
 
+@st.cache_resource
+def load_experimental_agent():
+    return ExperimentalAgent()
+
 def gaussian_expansion(distances, dmin=0, dmax=8, step=0.2):
     filter_points = torch.arange(dmin, dmax + step, step)
     sigma = step
@@ -511,74 +515,68 @@ with tab2:
                                 match_mat = formula
                                 break
 
-@st.cache_resource
-def load_experimental_agent():
-    return ExperimentalAgent()
-
-# ... (Inside Chat Loop) ...
-
                     # Execute if valid material found OR explicit keywords present
-                    if match_mat or "Pt" in prompt or "合金" in prompt or "alloy" in prompt.lower():
-                       query = match_mat if match_mat else prompt
-                       
-                       # 1. Theoretical Agent
-                       model = load_theorist()
-                       meta_map = load_metadata_map()
-                       name, pred = predict_material(model, query, meta_map)
-                       
-                       # 2. Experimental Agent
-                       exp_agent = load_experimental_agent()
-                       exp_results = exp_agent.query_literature(query)
-                       
-                       found_any = False
-                       
-                       # --- DISPLAY THEORY ---
-                       if name:
-                           found_any = True
-                           form_e = pred["formation_energy"].item()
-                           desc_vals = pred["descriptors"][0].tolist()
-                           desc_keys = [
-                                "d_band_center", "d_band_width", "d_band_filling", "DOS_EF", 
-                                "DOS_window_-0.3_0.3", "unoccupied_d_states_0_0.5", "epsilon_d_minus_EF",
-                                "sp_d_hybridization", "orbital_ratio_d", "valence_DOS_slope",
-                                "num_DOS_peaks", "first_peak_position"
-                           ]
-                           
-                           st.write(f"{t['analysis_complete']} **{name} (Theoretical Prediction)**")
-                           st.caption("✅ Valid Structure Found in Database")
-                           
-                           # Metrics
-                           col_m1, col_m2, col_m3 = st.columns(3)
-                           col_m1.metric("Formation Energy", f"{form_e:.3f} eV")
-                           col_m2.metric("d-band Center", f"{desc_vals[0]:.2f} eV")
-                           col_m3.metric("d-band Width", f"{desc_vals[1]:.2f} eV")
-                           
-                           # Descriptors
-                           with st.expander("Show Theoretical Descriptors", expanded=False):
-                               st.dataframe(pd.DataFrame({"Descriptor": desc_keys, "Value": [f"{v:.4f}" for v in desc_vals]}), use_container_width=True)
+                    if match_mat or "Pt" in prompt or "???" in prompt or "alloy" in prompt.lower():
+                        query = match_mat if match_mat else prompt
+                        
+                        # 1. Theoretical Agent
+                        model = load_theorist()
+                        meta_map = load_metadata_map()
+                        name, pred = predict_material(model, query, meta_map)
+                        
+                        # 2. Experimental Agent
+                        exp_agent = load_experimental_agent()
+                        exp_results = exp_agent.query_literature(query)
+                        
+                        found_any = False
+                        
+                        # --- DISPLAY THEORY ---
+                        if name:
+                            found_any = True
+                            form_e = pred["formation_energy"].item()
+                            desc_vals = pred["descriptors"][0].tolist()
+                            desc_keys = [
+                                 "d_band_center", "d_band_width", "d_band_filling", "DOS_EF", 
+                                 "DOS_window_-0.3_0.3", "unoccupied_d_states_0_0.5", "epsilon_d_minus_EF",
+                                 "sp_d_hybridization", "orbital_ratio_d", "valence_DOS_slope",
+                                 "num_DOS_peaks", "first_peak_position"
+                            ]
+                            
+                            st.write(f"{t['analysis_complete']} **{name} (Theoretical Prediction)**")
+                            st.caption("??Valid Structure Found in Database")
+                            
+                            # Metrics
+                            col_m1, col_m2, col_m3 = st.columns(3)
+                            col_m1.metric("Formation Energy", f"{form_e:.3f} eV")
+                            col_m2.metric("d-band Center", f"{desc_vals[0]:.2f} eV")
+                            col_m3.metric("d-band Width", f"{desc_vals[1]:.2f} eV")
+                            
+                            # Descriptors
+                            with st.expander("Show Theoretical Descriptors", expanded=False):
+                                st.dataframe(pd.DataFrame({"Descriptor": desc_keys, "Value": [f"{v:.4f}" for v in desc_vals]}), use_container_width=True)
 
-                           # DOS
-                           st.plotly_chart(plot_dos(pred["dos"][0]), use_container_width=True)
-                       
-                       # --- DISPLAY EXPERIMENT ---
-                       if exp_results:
-                           found_any = True
-                           st.markdown("---")
-                           st.subheader(f"🧪 Experimental Data ({len(exp_results)} Matches)")
-                           
-                           for res in exp_results:
-                               with st.container(border=True):
-                                   c1, c2 = st.columns([3, 1])
-                                   c1.markdown(f"**{res['formula']}** - {res['reference']}")
-                                   c2.metric("Overpotential", f"{res['overpotential_10mA']} mV")
-                                   st.caption(f"Method: {res.get('synthesis_method','N/A')} | Electrolyte: {res.get('electrolyte','N/A')}")
-                       
-                       if not found_any:
-                           st.warning(f"No Theoretical or Experimental data found for '{query}'.\nTry standard alloys (e.g., 'Pt3Co') or known HEAs (e.g., 'PtFeCoNiCu').")
-                    
+                            # DOS
+                            st.plotly_chart(plot_dos(pred["dos"][0]), use_container_width=True)
+                        
+                        # --- DISPLAY EXPERIMENT ---
+                        if exp_results:
+                            found_any = True
+                            st.markdown("---")
+                            st.subheader(f"?? Experimental Data ({len(exp_results)} Matches)")
+                            
+                            for res in exp_results:
+                                with st.container(border=True):
+                                    c1, c2 = st.columns([3, 1])
+                                    c1.markdown(f"**{res['formula']}** - {res['reference']}")
+                                    c2.metric("Overpotential", f"{res['overpotential_10mA']} mV")
+                                    st.caption(f"Method: {res.get('synthesis_method','N/A')} | Electrolyte: {res.get('electrolyte','N/A')}")
+                        
+                        if not found_any:
+                            st.warning(f"No Theoretical or Experimental data found for '{query}'.\nTry standard alloys (e.g., 'Pt3Co') or known HEAs (e.g., 'PtFeCoNiCu').")
+                     
                     else:
-                       st.write(t['processing'])
-                       time.sleep(1)
+                        st.write(t['processing'])
+                        time.sleep(1)
 
     with col_log:
         st.subheader(t['system_terminal'])

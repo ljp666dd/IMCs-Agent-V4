@@ -57,6 +57,106 @@ class DatabaseService:
             row = cursor.fetchone()
             return dict(row) if row else None
 
+    # ========== Chat Sessions & Messages (v4.0) ==========
+
+    def create_chat_session(self, title: str, user_id: Optional[int] = None) -> int:
+        """Create a chat session and return its id."""
+        query = "INSERT INTO chat_sessions (user_id, title) VALUES (?, ?)"
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (user_id, title))
+            return cursor.lastrowid
+
+    def list_chat_sessions(self, limit: int = 50, user_id: Optional[int] = None) -> List[Dict]:
+        """List chat sessions ordered by last update."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            if user_id is None:
+                cursor.execute(
+                    "SELECT * FROM chat_sessions ORDER BY updated_at DESC LIMIT ?",
+                    (limit,),
+                )
+            else:
+                cursor.execute(
+                    "SELECT * FROM chat_sessions WHERE user_id = ? ORDER BY updated_at DESC LIMIT ?",
+                    (user_id, limit),
+                )
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+
+    def get_chat_session(self, session_id: int) -> Optional[Dict]:
+        """Get a chat session by id."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM chat_sessions WHERE id = ?", (session_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+
+    def update_chat_session_title(self, session_id: int, title: str):
+        """Update chat session title."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE chat_sessions SET title = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+                (title, session_id),
+            )
+
+    def touch_chat_session(self, session_id: int):
+        """Touch chat session updated_at."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+                (session_id,),
+            )
+
+    def add_chat_message(self, session_id: int, role: str, content: str, artifacts: Dict = None) -> int:
+        """Add a chat message to a session."""
+        artifacts_json = json.dumps(artifacts) if artifacts else None
+        query = """
+        INSERT INTO chat_messages (session_id, role, content, artifacts)
+        VALUES (?, ?, ?, ?)
+        """
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (session_id, role, content, artifacts_json))
+            msg_id = cursor.lastrowid
+            cursor.execute(
+                "UPDATE chat_sessions SET updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+                (session_id,),
+            )
+            return msg_id
+
+    def list_chat_messages(self, session_id: int) -> List[Dict]:
+        """List chat messages for a session."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM chat_messages WHERE session_id = ? ORDER BY created_at ASC",
+                (session_id,),
+            )
+            rows = cursor.fetchall()
+            messages = []
+            for row in rows:
+                data = dict(row)
+                if data.get("artifacts"):
+                    try:
+                        data["artifacts"] = json.loads(data["artifacts"])
+                    except Exception:
+                        pass
+                messages.append(data)
+            return messages
+
+    def delete_chat_session(self, session_id: int):
+        """Delete a chat session and its messages."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM chat_messages WHERE session_id = ?", (session_id,))
+            cursor.execute("DELETE FROM chat_sessions WHERE id = ?", (session_id,))
+
     # ========== Plans & Steps (v4.0) ==========
 
     def create_plan(self, plan_id: str, user_id: Optional[int], task_type: str, description: str):
@@ -82,6 +182,7 @@ class DatabaseService:
         # Given we want trace, simple INSERT is best. To avoid clutter, maybe check existence?
         # Actually, `plan_steps` has an auto-increment ID.
         # For simplicity in v4 Pilot, just INSERT log entry.
+        # 采用追加式日志, 便于追踪每次状态变化
         
         query = """
         INSERT INTO plan_steps (plan_id, step_id, agent, action, dependencies, status, result, error)
@@ -207,6 +308,9 @@ class DatabaseService:
                 else:
                     data["cif_content"] = None
             data["evidence"] = self.get_evidence_for_material(material_id)
+            # 附加吸附能记录(若存在)
+            data["adsorption_energies"] = self.list_adsorption_energies(material_id)
+            data["activity_metrics"] = self.list_activity_metrics(material_id)
             return data
 
     def get_material_by_formula(self, formula: str) -> Optional[Dict]:
@@ -233,7 +337,23 @@ class DatabaseService:
         with self._get_conn() as conn:
             cursor = conn.cursor()
             cursor.execute(query, (material_id, source_type, source_id, score, meta_json))
-            return cursor.lastrowid
+            evid_id = cursor.lastrowid
+
+        # Best-effort sync into Knowledge Core
+        try:
+            from src.services.knowledge import KnowledgeService
+            ks = KnowledgeService(self.db_path)
+            ks.upsert_material_evidence(
+                material_id=material_id,
+                source_type=source_type,
+                source_id=source_id,
+                score=score,
+                metadata=metadata,
+            )
+        except Exception as e:
+            logger.warning(f"Knowledge sync failed: {e}")
+
+        return evid_id
 
     def get_evidence_for_material(self, material_id: str) -> List[Dict]:
         """Get all evidence linked to a material."""
@@ -243,6 +363,67 @@ class DatabaseService:
             cursor.execute("SELECT * FROM evidence WHERE material_id = ? ORDER BY created_at DESC", (material_id,))
             rows = cursor.fetchall()
             return [dict(row) for row in rows]
+
+    # ========== Dataset Snapshots (Reproducibility) ==========
+
+    def create_dataset_snapshot(self, plan_id: Optional[str], name: str,
+                                description: str = "", metadata: Dict = None) -> Optional[int]:
+        """Create a dataset snapshot entry."""
+        meta_json = json.dumps(metadata) if metadata else None
+        query = """
+        INSERT INTO dataset_snapshots (plan_id, name, description, metadata)
+        VALUES (?, ?, ?, ?)
+        """
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (plan_id, name, description, meta_json))
+            return cursor.lastrowid
+
+    def add_snapshot_item(self, snapshot_id: int, item_type: str, item_id: str,
+                          metadata: Dict = None) -> Optional[int]:
+        """Add an item to a dataset snapshot."""
+        meta_json = json.dumps(metadata) if metadata else None
+        query = """
+        INSERT INTO dataset_snapshot_items (snapshot_id, item_type, item_id, metadata)
+        VALUES (?, ?, ?, ?)
+        """
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (snapshot_id, item_type, item_id, meta_json))
+            return cursor.lastrowid
+
+    def list_snapshot_items(self, snapshot_id: int) -> List[Dict]:
+        """List items of a dataset snapshot."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM dataset_snapshot_items WHERE snapshot_id = ? ORDER BY created_at DESC",
+                (snapshot_id,),
+            )
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+
+    def get_snapshot(self, snapshot_id: int) -> Optional[Dict]:
+        """Get snapshot metadata by id."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM dataset_snapshots WHERE id = ?", (snapshot_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+
+    def get_snapshot_by_plan(self, plan_id: str) -> Optional[Dict]:
+        """Get latest snapshot for a plan."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM dataset_snapshots WHERE plan_id = ? ORDER BY created_at DESC LIMIT 1",
+                (plan_id,),
+            )
+            row = cursor.fetchone()
+            return dict(row) if row else None
 
     # ========== Experiments ==========
     
@@ -264,10 +445,140 @@ class DatabaseService:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             # Fetch only rows where target is not null
-            query = f"SELECT material_id, formula, cif_path, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
+            query = f"SELECT material_id, formula, cif_path, dos_data, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
             cursor.execute(query)
             rows = cursor.fetchall()
             return [dict(row) for row in rows]
+
+    # ========== Adsorption Energies (Catalysis-Hub) ==========
+
+    def save_adsorption_energy(self, material_id: Optional[str], surface_composition: str,
+                               facet: str, adsorbate: str,
+                               reaction_energy: Optional[float],
+                               activation_energy: Optional[float],
+                               source: str = "Catalysis-Hub",
+                               metadata: Dict = None) -> int:
+        """Save adsorption energy record (proxy for activity)."""
+        query = """
+        INSERT INTO adsorption_energies
+        (material_id, surface_composition, facet, adsorbate, reaction_energy, activation_energy, source, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        meta_json = json.dumps(metadata) if metadata else None
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (
+                material_id,
+                surface_composition,
+                facet,
+                adsorbate,
+                reaction_energy,
+                activation_energy,
+                source,
+                meta_json
+            ))
+            record_id = cursor.lastrowid
+
+            # Link as evidence when material_id is known
+            if material_id:
+                try:
+                    self.save_evidence(
+                        material_id=material_id,
+                        source_type="adsorption_energy",
+                        source_id=str(record_id),
+                        score=0.8,
+                        metadata={
+                            "surface_composition": surface_composition,
+                            "facet": facet,
+                            "adsorbate": adsorbate,
+                            "reaction_energy": reaction_energy,
+                            "activation_energy": activation_energy,
+                            "source": source,
+                        }
+                    )
+                except Exception as e:
+                    logger.warning(f"Failed to link adsorption evidence: {e}")
+
+            return record_id
+
+    def list_adsorption_energies(self, material_id: str) -> List[Dict]:
+        """List adsorption energy records for a material."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM adsorption_energies WHERE material_id = ? ORDER BY created_at DESC",
+                (material_id,)
+            )
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+
+
+    # ========== Activity Metrics (HOR/HER Indicators) ==========
+
+    def save_activity_metric(self, material_id: Optional[str], metric_name: str,
+                             metric_value: Optional[float], unit: Optional[str] = None,
+                             conditions: Dict = None, source: str = "experiment",
+                             source_id: Optional[str] = None, metadata: Dict = None) -> int:
+        """Save activity metric record and link as evidence when possible."""
+        query = """
+        INSERT INTO activity_metrics
+        (material_id, metric_name, metric_value, unit, conditions, source, source_id, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        cond_json = json.dumps(conditions) if conditions else None
+        meta_json = json.dumps(metadata) if metadata else None
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                query,
+                (material_id, metric_name, metric_value, unit, cond_json, source, source_id, meta_json)
+            )
+            record_id = cursor.lastrowid
+
+        if material_id:
+            try:
+                self.save_evidence(
+                    material_id=material_id,
+                    source_type="activity_metric",
+                    source_id=str(record_id),
+                    score=0.9,
+                    metadata={
+                        "metric_name": metric_name,
+                        "metric_value": metric_value,
+                        "unit": unit,
+                        "conditions": conditions,
+                        "source": source,
+                        "source_id": source_id,
+                    }
+                )
+            except Exception as e:
+                logger.warning(f"Failed to link activity metric evidence: {e}")
+
+        return record_id
+
+    def list_activity_metrics(self, material_id: str) -> List[Dict]:
+        """List activity metrics for a material."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT * FROM activity_metrics WHERE material_id = ? ORDER BY created_at DESC",
+                (material_id,)
+            )
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+    def update_material_dos(self, material_id: str, dos_data: Dict) -> None:
+        """Update DOS descriptors for a material (JSON)."""
+        if dos_data is None:
+            return
+        dos_json = json.dumps(dos_data)
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE materials SET dos_data = ? WHERE material_id = ?",
+                (dos_json, material_id)
+            )
 
     # ========== Models ==========
     

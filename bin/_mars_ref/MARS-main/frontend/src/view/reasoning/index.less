@@ -1,0 +1,103 @@
+.reasoning-content {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    .content-left {
+        width: 100%;
+
+        .body-box {
+            width: 100%;
+            overflow: auto;
+            height: calc(90vh - 175px);
+
+            &::-webkit-scrollbar {
+                width: 4px;
+                height: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #1A87CA;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background: #1A87CA;
+            }
+        }
+
+        .content-box {
+            width: calc(100% - 48px);
+            padding-top: 30px;
+
+            .tip-box {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                column-gap: 12px;
+
+                .tip-text {
+                    color: #fff;
+                    font-size: 16px;
+                }
+            }
+
+            .active_item {
+                // width: 104px;
+                box-sizing: border-box;
+                padding: 0 8px;
+                font-size: 14px;
+                height: 32px;
+                margin: 0;
+                color: rgba(73, 252, 255, 0.80);
+                border-radius: 32px;
+                border: 1px solid rgba(24, 91, 197, 1);
+                box-shadow: 0px 0px 6px 0px rgba(0, 213, 250, 1) inset;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                column-gap: 4px;
+                background: #0C3870;
+                margin-bottom: 8px;
+
+                .el-icon {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background: linear-gradient(180deg, #62FAF8 0%, #2DC9FE 100%);
+                }
+            }
+        }
+    }
+
+    .camera_dialog {
+        position: fixed;
+        top: 0;
+        left: 66px;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        column-gap: 12px;
+
+        .camera_item {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            width: 72px;
+
+            span {
+                font-size: 12px;
+                color: #fff;
+            }
+        }
+    }
+
+    .message_btn {
+        position: fixed;
+        top: 0;
+        left: 150px;
+        cursor: pointer;
+    }
+}

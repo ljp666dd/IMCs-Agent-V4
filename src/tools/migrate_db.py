@@ -73,6 +73,92 @@ def migrate():
             error TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(plan_id) REFERENCES plans(id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS adsorption_energies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            material_id TEXT,
+            surface_composition TEXT,
+            facet TEXT,
+            adsorbate TEXT,
+            reaction_energy REAL,
+            activation_energy REAL,
+            source TEXT,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(material_id) REFERENCES materials(material_id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS activity_metrics (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            material_id TEXT,
+            metric_name TEXT NOT NULL,
+            metric_value REAL,
+            unit TEXT,
+            conditions TEXT,
+            source TEXT,
+            source_id TEXT,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(material_id) REFERENCES materials(material_id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS knowledge_entities (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            entity_type TEXT NOT NULL,
+            name TEXT NOT NULL,
+            canonical_id TEXT,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(entity_type, name)
+        );""",
+        """CREATE TABLE IF NOT EXISTS knowledge_sources (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_type TEXT NOT NULL,
+            source_id TEXT,
+            title TEXT,
+            url TEXT,
+            year INTEGER,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );""",
+        """CREATE TABLE IF NOT EXISTS knowledge_relations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject_id INTEGER NOT NULL,
+            predicate TEXT NOT NULL,
+            object_id INTEGER NOT NULL,
+            confidence REAL,
+            evidence_source_id INTEGER,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(subject_id) REFERENCES knowledge_entities(id),
+            FOREIGN KEY(object_id) REFERENCES knowledge_entities(id),
+            FOREIGN KEY(evidence_source_id) REFERENCES knowledge_sources(id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS knowledge_relation_evidence (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            relation_id INTEGER NOT NULL,
+            source_id INTEGER NOT NULL,
+            score REAL,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(relation_id) REFERENCES knowledge_relations(id),
+            FOREIGN KEY(source_id) REFERENCES knowledge_sources(id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS dataset_snapshots (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            plan_id TEXT,
+            name TEXT,
+            description TEXT,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(plan_id) REFERENCES plans(id)
+        );""",
+        """CREATE TABLE IF NOT EXISTS dataset_snapshot_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            snapshot_id INTEGER NOT NULL,
+            item_type TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            metadata TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(snapshot_id) REFERENCES dataset_snapshots(id)
         );"""
     ]
     

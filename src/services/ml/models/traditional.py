@@ -25,13 +25,13 @@ def get_traditional_models() -> Dict[str, Any]:
     
     models = {
         "RandomForest": RandomForestRegressor(
-            n_estimators=200, max_depth=15, random_state=42, n_jobs=-1
+            n_estimators=200, max_depth=15, random_state=42, n_jobs=1
         ),
         "GradientBoosting": GradientBoostingRegressor(
             n_estimators=200, max_depth=5, learning_rate=0.1, random_state=42
         ),
         "ExtraTrees": ExtraTreesRegressor(
-            n_estimators=200, max_depth=15, random_state=42, n_jobs=-1
+            n_estimators=200, max_depth=15, random_state=42, n_jobs=1
         ),
         "AdaBoost": AdaBoostRegressor(n_estimators=100, random_state=42),
         "Ridge": Ridge(alpha=1.0),
@@ -44,7 +44,7 @@ def get_traditional_models() -> Dict[str, Any]:
     if HAS_XGBOOST:
         models["XGBoost"] = xgb.XGBRegressor(
             n_estimators=200, max_depth=6, learning_rate=0.1,
-            random_state=42, n_jobs=-1, verbosity=0
+            random_state=42, n_jobs=1, verbosity=0
         )
     else:
         logger.warning("XGBoost not installed. Skipping.")
@@ -52,7 +52,7 @@ def get_traditional_models() -> Dict[str, Any]:
     if HAS_LIGHTGBM:
         models["LightGBM"] = lgb.LGBMRegressor(
             n_estimators=200, max_depth=6, learning_rate=0.1,
-            random_state=42, n_jobs=-1, verbose=-1
+            random_state=42, n_jobs=1, verbose=-1
         )
     else:
         logger.warning("LightGBM not installed. Skipping.")

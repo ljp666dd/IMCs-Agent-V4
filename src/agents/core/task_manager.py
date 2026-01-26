@@ -124,6 +124,7 @@ class TaskManagerAgent:
         Decides whether to create a Task Plan or return a simple Chat Response.
         """
         msg_lower = message.lower().strip()
+        task_type = self.analyze_request(message)
         
         # Determine State (Basic State Machine)
         if not hasattr(self, 'conversation_state'):
@@ -133,8 +134,9 @@ class TaskManagerAgent:
         # 1. Start Planning
         PLAN_KEYWORDS = ["create plan", "find", "search", "train", "analyze", "discover"]
         is_start_command = any(k in msg_lower for k in PLAN_KEYWORDS) and len(message.split()) > 2
-        
-        if self.conversation_state == 'idle' and is_start_command:
+        should_start = task_type != TaskType.GENERAL
+
+        if self.conversation_state == 'idle' and (is_start_command or should_start):
             self.conversation_state = 'planning'
             self.draft_plan_context['objective'] = message
             return {

@@ -27,3 +27,5 @@ python-multipart
 fastapi-users
 python-dotenv
 scipy
+langdetect
+deep-translator

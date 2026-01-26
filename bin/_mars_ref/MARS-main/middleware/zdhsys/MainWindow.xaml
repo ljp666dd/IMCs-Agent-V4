@@ -1,0 +1,70 @@
+﻿<Window x:Class="zdhsys.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:zdhsys" 
+        xmlns:local1="clr-namespace:zdhsys.Control"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Title="MainWindow" Height="900" Width="1600" Background="#FFF2F7FF" WindowStartupLocation="CenterScreen">
+    
+    <Grid x:Name="Gd">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="Cd_Left"  Width="200" />
+            <ColumnDefinition  Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="White">
+            
+            <Grid x:Name="Gd_Left" Margin="20,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="BtnMenu" HorizontalAlignment="Right" Margin="0,30,0,0" Height="20" Width="20" Click="BtnMenu_Click">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image Source="列表收起.png"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label Grid.Row="1" VerticalAlignment="Top" Height="2" Background="#D8E9FF"/>
+
+                <local1:DevpButton x:Name="Btn_home" Click="Btn_home_Click" HorizontalAlignment="Center" Width="150" Height="40" Grid.Row="2"/>
+                <local1:DevpButton x:Name="Btn_option" Click="Btn_home_Click" HorizontalAlignment="Center" Width="150" Height="40" Grid.Row="3"/>
+                <local1:DevpButton x:Name="Btn_flow" Click="Btn_home_Click" HorizontalAlignment="Center" Width="150" Height="40" Grid.Row="4"/>
+                <local1:DevpButton x:Name="Btn_device" Click="Btn_home_Click" HorizontalAlignment="Center" Width="150" Height="40" Grid.Row="5"/>
+                <local1:DevpButton x:Name="Btn_data" Click="Btn_home_Click" HorizontalAlignment="Center" Width="150" Height="40" Grid.Row="6"/>
+            </Grid>
+        </Border>
+        <Grid x:Name="Gd_Right" Grid.Column="1" Background="#F2F7FF">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height ="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <local1:ImageButton Grid.Column="1" x:Name="btn_min" Height="50" Click="Btn_Min_Click"/>
+                <local1:ImageButton Grid.Column="2" x:Name="btn_max" Height="50" Click="Btn_Max_Click"/>
+                <local1:ImageButton Grid.Column="3" x:Name="btn_close" Height="50" Click="Btn_Close_Click"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="10">
+                <ContentControl x:Name="dcc" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

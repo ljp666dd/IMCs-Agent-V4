@@ -1,0 +1,125 @@
+{
+  "TaskId": "task_20250225173342",
+  "ExperimentName": "Synthesis of CsPbBr3 Nanocubes",
+  "Materials": [
+    {
+      "MaterialId": "1",
+      "Name": "Cesium Bromide",
+      "Amount": "0.1",
+      "Unit": "g",
+      "Purity": "99.99%",
+      "State": "Powder"
+    },
+    {
+      "MaterialId": "2",
+      "Name": "Lead Bromide",
+      "Amount": "0.2",
+      "Unit": "g",
+      "Purity": "99.99%",
+      "State": "Powder"
+    },
+    {
+      "MaterialId": "3",
+      "Name": "Toluene",
+      "Amount": "5",
+      "Unit": "mL",
+      "Purity": "99%",
+      "State": "Liquid"
+    }
+  ],
+  "Containers": [
+    {
+      "ContainerId": "1",
+      "Name": "Beaker",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Cylindrical",
+      "HeatResistant": "Yes",
+      "PressureRating": "Not Applicable"
+    },
+    {
+      "ContainerId": "2",
+      "Name": "Reaction Flask",
+      "Capacity": "250",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Round Bottom",
+      "HeatResistant": "Yes",
+      "PressureRating": "Moderate"
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "1",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "SpeedRange": "200-1200 rpm",
+        "TemperatureRange": "20-200 °C"
+      }
+    }
+  ],
+  "RobotWorkflow": [
+    {
+      "Stepid": "1",
+      "Description": "Dissolve CsBr and PbBr2 in toluene and stir at room temperature.",
+      "Actions": [
+        {
+          "ActionType": "pick_container",
+          "ContainerId": "2",
+          "MaterialId": ""
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "2",
+          "MaterialId": "1"
+        },
+        {
+          "ActionType": "pick_container_with_material",
+          "ContainerId": "2",
+          "MaterialId": "2"
+        }
+      ],
+      "Dependencies": [],
+      "StepOutput": {
+        "ContainerId": "2",
+        "Contents": [
+          {
+            "MaterialId": "1",
+            "Amount": "0.1",
+            "Unit": "g"
+          },
+          {
+            "MaterialId": "2",
+            "Amount": "0.2",
+            "Unit": "g"
+          }
+        ]
+      }
+    },
+    {
+      "Stepid": "2",
+      "Description": "Characterize the final product using spectroscopy.",
+      "Actions": [
+        {
+          "ActionType": "place_container_into_equipment",
+          "ContainerId": "2",
+          "EquipmentId": "1"
+        }
+      ],
+      "Dependencies": [
+        "1"
+      ],
+      "StepOutput": {
+        "ContainerId": "2",
+        "Contents": [
+          {
+            "MaterialId": "CsPbBr3 Crystals",
+            "Amount": "Calculated",
+            "Unit": "Not Defined"
+          }
+        ]
+      }
+    }
+  ]
+}

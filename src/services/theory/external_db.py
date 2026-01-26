@@ -80,15 +80,15 @@ class ExternalDBClient:
         return results
 
     @log_exception(logger)
-    def query_catalysis_hub(self, reaction: str = "HER", limit: int = 50) -> List[Dict]:
+    def query_catalysis_hub(self, adsorbate: str = "H*", limit: int = 50) -> List[Dict]:
         """Query Catalysis-Hub for adsorption energies."""
-        logger.info(f"Querying Catalysis-Hub for {reaction}...")
+        logger.info(f"Querying Catalysis-Hub for adsorbate={adsorbate}...")
         results = []
         url = "https://api.catalysis-hub.org/graphql"
         
         query = """
         {
-          reactions(first: %d, reactants: "H*") {
+          reactions(first: %d, reactants: "%s") {
             edges {
               node {
                 Equation
@@ -100,7 +100,7 @@ class ExternalDBClient:
             }
           }
         }
-        """ % limit
+        """ % (limit, adsorbate)
         
         try:
             response = requests.post(url, json={"query": query}, timeout=15)
@@ -115,7 +115,8 @@ class ExternalDBClient:
                         "reaction_energy": node.get("reactionEnergy"),
                         "activation_energy": node.get("activationEnergy"),
                         "surface": node.get("surfaceComposition", ""),
-                        "facet": node.get("facet", "")
+                        "facet": node.get("facet", ""),
+                        "adsorbate": adsorbate
                     })
             logger.info(f"Retrieved {len(results)} entries from CatHub.")
         except Exception as e:

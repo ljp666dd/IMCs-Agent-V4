@@ -1,0 +1,43 @@
+{
+  "TaskId": "task_20250225205855",
+  "ExperimentName": "Synthesis of CsPbBr3 Nanocubes at Room Temperature",
+  "Containers": [
+    {
+      "ContainerId": "C001",
+      "Name": "Reaction Flask",
+      "Capacity": "50",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Glass",
+      "Shape": "Round Bottom",
+      "HeatResistant": "Yes",
+      "PressureRating": ""
+    },
+    {
+      "ContainerId": "C002",
+      "Name": "Centrifuge Tube",
+      "Capacity": "15",
+      "Unit": "mL",
+      "MaterialOfConstruction": "Plastic",
+      "Shape": "Conical",
+      "HeatResistant": "No",
+      "PressureRating": ""
+    }
+  ],
+  "Equipments": [
+    {
+      "EquipmentId": "E001",
+      "Name": "Ultrasonicator",
+      "Parameters": {
+        "Power": "100W",
+        "Duration": "1 hour"
+      }
+    },
+    {
+      "EquipmentId": "E002",
+      "Name": "Magnetic Stirrer",
+      "Parameters": {
+        "Speed": "Adjustable"
+      }
+    }
+  ]
+}

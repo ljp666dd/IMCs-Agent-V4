@@ -1,0 +1,126 @@
+.reasoning-box {
+    width: 100%;
+    margin-bottom: 24px;
+
+    .problem-item {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+
+        .title-box {
+            width: 100%;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 4px;
+
+            p {
+                font-size: 16px;
+                color: #fff;
+                font-weight: 600;
+            }
+
+            span {
+                font-size: 14px;
+                color: #fff;
+            }
+        }
+
+        .reasoning-item {
+            width: 100%;
+
+            .title {
+                width: 100%;
+                display: flex;
+                column-gap: 8px;
+                align-items: center;
+                margin-bottom: 6px;
+
+                img {
+                    width: 34px;
+                    height: 34px;
+                }
+
+                span {
+                    font-size: 16px;
+                    color: #fff;
+                    font-weight: 600;
+                }
+
+                .active_item {
+                    box-sizing: border-box;
+                    padding: 0 8px;
+                    font-size: 14px;
+                    height: 24px;
+                    margin: 0;
+                    color: rgba(73, 252, 255, 0.80);
+                    border-radius: 24px;
+                    border: 1px solid rgba(24, 91, 197, 1);
+                    box-shadow: 0px 0px 6px 0px rgba(0, 213, 250, 1) inset;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    column-gap: 3px;
+                    background: #0C3870;
+
+                    img {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+            }
+
+            .reasoning-content {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+
+                .reasoning-text {
+                    width: calc(100% - 46px);
+                    border-radius: 6px;
+                    background: rgba(3, 52, 90, 0.5);
+                    border: 1px solid #0061A6;
+                    box-shadow: 0px 0px 16px 0px rgba(0, 149, 230, 1) inset;
+                    padding: 16px;
+                    font-size: 14px;
+                    color: #fff;
+                    box-sizing: border-box;
+
+                    .show-box {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+
+                .active {
+                    background: rgba(42, 163, 255, 0.6);
+                    border: 2px solid #0FFBFF;
+                }
+
+                .icon-box {
+                    height: 46px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .el-icon {
+                        width: 20px;
+                        height: 20px;
+                        background: #093D7C;
+                        border: 1px solid #025389;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+
+        .complete-box {
+            font-size: 14px;
+            color: #2F88BF;
+        }
+    }
+
+}
