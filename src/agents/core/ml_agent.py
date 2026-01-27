@@ -149,7 +149,12 @@ class MLAgent:
     def load_from_db(self, target_col: str = "formation_energy"):
         """Load training data directly from Database."""
         logger.info(f"Loading training data from DB (target={target_col})...")
-        rows = self.db.fetch_training_set(target_col)
+        try:
+            from src.agents.core.theory_agent import TheoryDataConfig
+            allowed = TheoryDataConfig().elements
+        except Exception:
+            allowed = None
+        rows = self.db.fetch_training_set(target_col, allowed_elements=allowed)
         
         if not rows:
             logger.warning("No data found in DB for training.")

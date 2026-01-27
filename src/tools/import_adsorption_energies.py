@@ -11,6 +11,31 @@ import sys
 sys.path.append(BASE_DIR)
 
 from src.services.db.database import DatabaseService
+from src.agents.core.theory_agent import TheoryDataConfig
+
+
+def _lookup_formula(db: DatabaseService, material_id: str) -> Optional[str]:
+    if not material_id:
+        return None
+    try:
+        with db._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT formula FROM materials WHERE material_id = ?", (material_id,))
+            row = cursor.fetchone()
+            return row[0] if row else None
+    except Exception:
+        return None
+
+
+def _allowed_formula(formula: Optional[str], allowed: set) -> bool:
+    if not formula:
+        return False
+    try:
+        from pymatgen.core import Composition
+        elements = {el.symbol for el in Composition(formula).elements}
+        return elements.issubset(allowed)
+    except Exception:
+        return False
 
 
 def _to_none(value: Any) -> Optional[Any]:
@@ -65,6 +90,7 @@ def main():
         raise SystemExit(f"Missing required columns: {sorted(missing)}")
 
     db = DatabaseService(db_path=args.db_path)
+    allowed = set(TheoryDataConfig().elements)
     total = 0
     inserted = 0
     skipped = 0
@@ -79,6 +105,11 @@ def main():
             continue
 
         material_id = _to_none(row.get("material_id"))
+        if material_id:
+            formula = _lookup_formula(db, material_id)
+            if not _allowed_formula(formula, allowed):
+                skipped += 1
+                continue
         reaction_energy = _to_float(row.get("reaction_energy"))
         activation_energy = _to_float(row.get("activation_energy"))
         metadata = _parse_json(row.get("metadata"))

@@ -18,6 +18,52 @@ class DatabaseService:
         
     def _get_conn(self):
         return sqlite3.connect(self.db_path)
+
+    def _filter_material_records(self, records: List[Dict], allowed_elements: Optional[List[str]] = None) -> List[Dict]:
+        """Filter material records by allowed elements (formula subset)."""
+        if not allowed_elements:
+            return records
+        allowed = set(allowed_elements)
+        try:
+            from pymatgen.core import Composition
+        except Exception:
+            return records
+        filtered = []
+        for rec in records:
+            formula = rec.get("formula") or rec.get("formula_pretty")
+            if not formula:
+                continue
+            try:
+                elements = {el.symbol for el in Composition(formula).elements}
+            except Exception:
+                continue
+            if elements.issubset(allowed):
+                filtered.append(rec)
+        return filtered
+
+    def _allowed_material_ids(self, allowed_elements: Optional[List[str]] = None) -> Optional[set]:
+        """Return allowed material_id set based on formula filtering."""
+        if not allowed_elements:
+            return None
+        allowed = set(allowed_elements)
+        try:
+            from pymatgen.core import Composition
+        except Exception:
+            return None
+        material_ids = set()
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT material_id, formula FROM materials")
+            for material_id, formula in cursor.fetchall():
+                if not material_id or not formula:
+                    continue
+                try:
+                    elements = {el.symbol for el in Composition(formula).elements}
+                except Exception:
+                    continue
+                if elements.issubset(allowed):
+                    material_ids.add(material_id)
+        return material_ids
         
     @log_exception(logger)
     def _init_db(self):
@@ -247,16 +293,17 @@ class DatabaseService:
             cursor.execute(query, (material_id, formula, energy, cif_path))
             return cursor.lastrowid
             
-    def list_materials(self, limit: int = 100) -> List[Dict]:
+    def list_materials(self, limit: int = 100, allowed_elements: Optional[List[str]] = None) -> List[Dict]:
         """List stored materials."""
         with self._get_conn() as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM materials ORDER BY created_at DESC LIMIT ?", (limit,))
             rows = cursor.fetchall()
-            return [dict(row) for row in rows]
+            records = [dict(row) for row in rows]
+            return self._filter_material_records(records, allowed_elements)
 
-    def list_materials_since(self, created_at: str, limit: int = 100) -> List[Dict]:
+    def list_materials_since(self, created_at: str, limit: int = 100, allowed_elements: Optional[List[str]] = None) -> List[Dict]:
         """List materials created since a timestamp."""
         with self._get_conn() as conn:
             conn.row_factory = sqlite3.Row
@@ -266,7 +313,8 @@ class DatabaseService:
                 (created_at, limit),
             )
             rows = cursor.fetchall()
-            return [dict(row) for row in rows]
+            records = [dict(row) for row in rows]
+            return self._filter_material_records(records, allowed_elements)
             
     def get_material_by_id(self, material_id: str) -> Optional[Dict]:
         """Get material details including CIF content."""
@@ -312,6 +360,91 @@ class DatabaseService:
             data["adsorption_energies"] = self.list_adsorption_energies(material_id)
             data["activity_metrics"] = self.list_activity_metrics(material_id)
             return data
+
+    # ========== Evidence & Coverage ==========
+
+    def get_evidence_stats(self, allowed_elements: Optional[List[str]] = None) -> Dict[str, Any]:
+        """Return system-wide evidence coverage stats."""
+        stats: Dict[str, Any] = {}
+        allowed_ids = self._allowed_material_ids(allowed_elements)
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            if not allowed_ids:
+                cursor.execute("SELECT COUNT(*) AS total FROM materials")
+                stats["total_materials"] = cursor.fetchone()["total"] or 0
+
+                cursor.execute("SELECT COUNT(*) AS total FROM materials WHERE formation_energy IS NOT NULL")
+                stats["formation_energy_count"] = cursor.fetchone()["total"] or 0
+
+                cursor.execute("SELECT COUNT(*) AS total FROM materials WHERE dos_data IS NOT NULL")
+                stats["dos_count"] = cursor.fetchone()["total"] or 0
+
+                cursor.execute("SELECT source_type, COUNT(DISTINCT material_id) AS cnt FROM evidence GROUP BY source_type")
+                stats["evidence_by_source"] = {row["source_type"]: row["cnt"] for row in cursor.fetchall()}
+
+                cursor.execute("SELECT COUNT(*) AS total FROM adsorption_energies")
+                stats["adsorption_rows"] = cursor.fetchone()["total"] or 0
+                cursor.execute("SELECT COUNT(DISTINCT material_id) AS total FROM adsorption_energies WHERE material_id IS NOT NULL")
+                stats["adsorption_materials"] = cursor.fetchone()["total"] or 0
+
+                cursor.execute("SELECT COUNT(*) AS total FROM activity_metrics")
+                stats["activity_rows"] = cursor.fetchone()["total"] or 0
+                cursor.execute("SELECT COUNT(DISTINCT material_id) AS total FROM activity_metrics WHERE material_id IS NOT NULL")
+                stats["activity_materials"] = cursor.fetchone()["total"] or 0
+            else:
+                cursor.execute("SELECT material_id, formation_energy, dos_data FROM materials")
+                total = 0
+                fe_count = 0
+                dos_count = 0
+                for row in cursor.fetchall():
+                    mid = row["material_id"]
+                    if mid not in allowed_ids:
+                        continue
+                    total += 1
+                    if row["formation_energy"] is not None:
+                        fe_count += 1
+                    if row["dos_data"] is not None:
+                        dos_count += 1
+                stats["total_materials"] = total
+                stats["formation_energy_count"] = fe_count
+                stats["dos_count"] = dos_count
+
+                cursor.execute("SELECT material_id, source_type FROM evidence")
+                ev_map: Dict[str, set] = {}
+                for row in cursor.fetchall():
+                    mid = row["material_id"]
+                    if mid not in allowed_ids:
+                        continue
+                    stype = row["source_type"] or "unknown"
+                    ev_map.setdefault(stype, set()).add(mid)
+                stats["evidence_by_source"] = {k: len(v) for k, v in ev_map.items()}
+
+                cursor.execute("SELECT material_id FROM adsorption_energies WHERE material_id IS NOT NULL")
+                ads_rows = 0
+                ads_ids = set()
+                for (mid,) in cursor.fetchall():
+                    if mid in allowed_ids:
+                        ads_rows += 1
+                        ads_ids.add(mid)
+                stats["adsorption_rows"] = ads_rows
+                stats["adsorption_materials"] = len(ads_ids)
+
+                cursor.execute("SELECT material_id FROM activity_metrics WHERE material_id IS NOT NULL")
+                act_rows = 0
+                act_ids = set()
+                for (mid,) in cursor.fetchall():
+                    if mid in allowed_ids:
+                        act_rows += 1
+                        act_ids.add(mid)
+                stats["activity_rows"] = act_rows
+                stats["activity_materials"] = len(act_ids)
+
+            cursor.execute("SELECT COUNT(*) AS total FROM models")
+            stats["model_count"] = cursor.fetchone()["total"] or 0
+
+        return stats
 
     def get_material_by_formula(self, formula: str) -> Optional[Dict]:
         """Get material by formula (Exact Match)."""
@@ -439,7 +572,8 @@ class DatabaseService:
             cursor.execute(query, (name, exp_type, raw_path, json.dumps(results), material_id))
             return cursor.lastrowid
             
-    def fetch_training_set(self, target_col: str = "formation_energy") -> List[Dict]:
+    def fetch_training_set(self, target_col: str = "formation_energy",
+                           allowed_elements: Optional[List[str]] = None) -> List[Dict]:
         """Fetch data for training."""
         with self._get_conn() as conn:
             conn.row_factory = sqlite3.Row
@@ -448,7 +582,8 @@ class DatabaseService:
             query = f"SELECT material_id, formula, cif_path, dos_data, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
             cursor.execute(query)
             rows = cursor.fetchall()
-            return [dict(row) for row in rows]
+            records = [dict(row) for row in rows]
+            return self._filter_material_records(records, allowed_elements)
 
     # ========== Adsorption Energies (Catalysis-Hub) ==========
 

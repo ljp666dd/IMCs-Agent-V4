@@ -21,7 +21,11 @@ async def search_materials(req: SearchRequest):
     # We might need to expose a pure search method in Agent or access Service directly.
     # For now, let's use the underlying Service directly for purity.
     
-    docs = theory_service.mp.search_materials(req.elements, limit=req.limit)
+    allowed = set(theory_service.config.elements)
+    elements = [el for el in req.elements if el in allowed]
+    if not elements:
+        return []
+    docs = theory_service.mp.search_materials(elements, limit=req.limit)
     return [
         {
             "material_id": str(d.material_id),

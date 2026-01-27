@@ -36,6 +36,13 @@ class TaskPlanner:
     """
     Service for generating execution plans from user requests.
     """
+
+    def __init__(self):
+        try:
+            from src.services.task.meta_controller import MetaController
+            self.meta_controller = MetaController()
+        except Exception:
+            self.meta_controller = None
     
     @log_exception(logger)
     def analyze_request(self, user_request: str) -> TaskType:
@@ -124,6 +131,47 @@ class TaskPlanner:
             return step_id
 
         # Template-based Planning (Rule Engine)
+        dynamic_specs = []
+        if self.meta_controller:
+            try:
+                dynamic_specs, _stats = self.meta_controller.build_initial_steps(task_type, user_request)
+            except Exception:
+                dynamic_specs = []
+
+        # If we have dynamic specs, build plan from them
+        if dynamic_specs:
+            step_id_map = {}
+            for spec in dynamic_specs:
+                deps = []
+                for dep in spec.get("deps", []):
+                    if dep == "$literature":
+                        if "literature" in step_id_map:
+                            deps.append(step_id_map["literature"])
+                    elif dep == "$theory":
+                        if "theory" in step_id_map:
+                            deps.append(step_id_map["theory"])
+                    elif dep == "$ml":
+                        if "ml" in step_id_map:
+                            deps.append(step_id_map["ml"])
+                    elif dep == "$experiment":
+                        if "experiment" in step_id_map:
+                            deps.append(step_id_map["experiment"])
+                    else:
+                        deps.append(dep)
+
+                step_id = add_step(
+                    spec.get("agent"),
+                    spec.get("action"),
+                    spec.get("params") or {},
+                    deps=deps
+                )
+                # Track last step id per agent for dependency mapping
+                step_id_map[spec.get("agent")] = step_id
+
+            logger.info(f"Created plan {task_id} ([{task_type.value}]) for: {user_request} (dynamic)")
+            return plan
+
+        # Fallback to static template
         if task_type == TaskType.CATALYST_DISCOVERY:
             # 1. Literature Search
             s1 = add_step("literature", "search", {"query": user_request}, max_retries=1, max_replans=1)

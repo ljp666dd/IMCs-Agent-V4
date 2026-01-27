@@ -233,3 +233,14 @@ def create_activity_metric(req: ActivityMetricCreate):
 @router.get("/activity/{material_id}")
 def list_activity_metrics(material_id: str):
     return db.list_activity_metrics(material_id)
+
+
+@router.get("/stats")
+def get_knowledge_stats():
+    """Return evidence coverage and data stats for meta-controller/UI."""
+    try:
+        from src.agents.core.theory_agent import TheoryDataConfig
+        allowed = TheoryDataConfig().elements
+    except Exception:
+        allowed = None
+    return db.get_evidence_stats(allowed_elements=allowed)

@@ -253,3 +253,6 @@
 - Added session export/delete and task history reload in chat UI.
 - Added session search in chat UI.
 - Added file-level upgrade checklist: docs/upgrade_checklist.md.
+- 2026-01-26: Added meta-controller (evidence-driven planning + follow-ups) and /knowledge/stats; evaluation UI shows evidence stats.
+- 2026-01-26: Added P2 tools (DOS backfill + synthetic activity generator) and P2 test checklist.
+- 2026-01-27: Enforced element restriction across theory API, ML training, evidence stats, and import tools (TheoryDataConfig.elements only).

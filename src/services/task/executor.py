@@ -18,6 +18,12 @@ class PlanExecutor:
         """
         self.agents = agents
         self.db = DatabaseService()
+        try:
+            from src.services.task.meta_controller import MetaController
+            self.meta_controller = MetaController(self.db)
+        except Exception:
+            self.meta_controller = None
+        self.max_adaptive_rounds = 1
     
     def _next_step_id(self, plan: TaskPlan) -> str:
         """Allocate a unique step_id within a plan."""
@@ -155,6 +161,53 @@ class PlanExecutor:
                 step.dependencies = [anchor_id if d == failed_step.step_id else d for d in deps]
         return new_step_ids
 
+    def _append_dynamic_steps(self, plan: TaskPlan, specs: List[Dict[str, Any]],
+                               pending: Dict[str, TaskStep]) -> List[str]:
+        """Append meta-controller suggested steps to the plan."""
+        new_step_ids: List[str] = []
+        step_id_map = {}
+
+        for step in plan.steps:
+            if step.agent:
+                step_id_map[step.agent] = step.step_id
+
+        for item in specs:
+            step_id = self._next_step_id(plan)
+            deps = []
+            for dep in item.get("deps", []):
+                if isinstance(dep, str) and dep.startswith("$"):
+                    key = dep[1:]
+                    if key in step_id_map:
+                        deps.append(step_id_map[key])
+                else:
+                    deps.append(dep)
+
+            step = TaskStep(
+                step_id=step_id,
+                agent=item.get("agent", ""),
+                action=item.get("action", ""),
+                params=item.get("params") or {},
+                dependencies=deps,
+                max_retries=item.get("max_retries", 0),
+                max_replans=0
+            )
+            plan.steps.append(step)
+            pending[step.step_id] = step
+            new_step_ids.append(step.step_id)
+
+            self.db.log_plan_step(
+                plan_id=plan.task_id,
+                step_id=step.step_id,
+                agent=step.agent,
+                action=step.action,
+                status="pending",
+                dependencies=step.dependencies
+            )
+
+            step_id_map[step.agent] = step.step_id
+
+        return new_step_ids
+
     @log_exception(logger)
     def execute_plan(self, plan: TaskPlan) -> Dict[str, Any]:
         """Execute all steps in the plan (DAG aware + Persisted)."""
@@ -179,152 +232,172 @@ class PlanExecutor:
         ml_top_models = []
         ml_predictions = {}
 
-        while pending:
-            # Find steps whose dependencies are satisfied
-            # DAG 调度: 仅当依赖已完成时才进入就绪队列
-            ready = [
-                s for s in pending.values()
-                if all(dep in completed for dep in (s.dependencies or []))
-            ]
+        adaptive_rounds = 0
+        while True:
+            while pending:
+                # Find steps whose dependencies are satisfied
+                # DAG 调度: 仅当依赖已完成时才进入就绪队列
+                ready = [
+                    s for s in pending.values()
+                    if all(dep in completed for dep in (s.dependencies or []))
+                ]
 
-            if not ready:
-                # Deadlock or unmet deps -> mark remaining as blocked
-                for step in pending.values():
-                    step.status = "blocked"
-                    self.db.log_plan_step(
-                        plan_id=plan.task_id,
-                        step_id=step.step_id,
-                        agent=step.agent,
-                        action=step.action,
-                        status="blocked",
-                        error="Dependencies not met",
-                        dependencies=step.dependencies
-                    )
-                plan.status = "blocked"
-                self.db.update_plan_status(plan.task_id, "blocked")
-                return plan.results
-
-            for step in ready:
-                logger.info(f"Step {step.step_id}: [{step.agent}] {step.action}")
-                max_retries = getattr(step, "max_retries", 0) or 0
-                attempt = 0
-
-                while True:
-                    attempt += 1
-                    step.attempts = attempt
-                    step.status = "running"
-
-                    # 2. Log Start
-                    self.db.log_plan_step(
-                        plan_id=plan.task_id,
-                        step_id=step.step_id,
-                        agent=step.agent,
-                        action=step.action,
-                        status="running",
-                        dependencies=step.dependencies
-                    )
-
-                    try:
-                        result = self._execute_step(step)
-                        step.result = result
-                        step.status = "completed"
-                        plan.results[step.step_id] = result
-
-                        # Capture outputs for evidence aggregation
-                        if step.agent == "literature" and isinstance(result, list):
-                            literature_papers = result
-                        if step.agent == "ml":
-                            if isinstance(result, list):
-                                ml_top_models = result[:3]
-                            elif isinstance(result, dict) and "top_3" in result:
-                                ml_top_models = result.get("top_3", [])
-                            if isinstance(result, dict) and "predictions" in result:
-                                ml_predictions = result.get("predictions", {}) or {}
-
-                        # 3. Log Success
+                if not ready:
+                    # Deadlock or unmet deps -> mark remaining as blocked
+                    for step in pending.values():
+                        step.status = "blocked"
                         self.db.log_plan_step(
                             plan_id=plan.task_id,
                             step_id=step.step_id,
                             agent=step.agent,
                             action=step.action,
-                            status="completed",
-                            result=result,
+                            status="blocked",
+                            error="Dependencies not met",
+                            dependencies=step.dependencies
+                        )
+                    plan.status = "blocked"
+                    self.db.update_plan_status(plan.task_id, "blocked")
+                    return plan.results
+
+                for step in ready:
+                    logger.info(f"Step {step.step_id}: [{step.agent}] {step.action}")
+                    max_retries = getattr(step, "max_retries", 0) or 0
+                    attempt = 0
+
+                    while True:
+                        attempt += 1
+                        step.attempts = attempt
+                        step.status = "running"
+
+                        # 2. Log Start
+                        self.db.log_plan_step(
+                            plan_id=plan.task_id,
+                            step_id=step.step_id,
+                            agent=step.agent,
+                            action=step.action,
+                            status="running",
                             dependencies=step.dependencies
                         )
 
-                        completed.add(step.step_id)
-                        pending.pop(step.step_id, None)
-                        break
+                        try:
+                            result = self._execute_step(step)
+                            step.result = result
+                            step.status = "completed"
+                            plan.results[step.step_id] = result
 
-                    except Exception as e:
-                        logger.error(f"Step {step.step_id} failed (attempt {attempt}): {e}")
-                        step.error = str(e)
+                            # Capture outputs for evidence aggregation
+                            if step.agent == "literature" and isinstance(result, list):
+                                literature_papers = result
+                            if step.agent == "ml":
+                                if isinstance(result, list):
+                                    ml_top_models = result[:3]
+                                elif isinstance(result, dict) and "top_3" in result:
+                                    ml_top_models = result.get("top_3", [])
+                                if isinstance(result, dict) and "predictions" in result:
+                                    ml_predictions = result.get("predictions", {}) or {}
 
-                        if attempt <= max_retries:
-                            # Retry
+                            # 3. Log Success
                             self.db.log_plan_step(
                                 plan_id=plan.task_id,
                                 step_id=step.step_id,
                                 agent=step.agent,
                                 action=step.action,
-                                status="retrying",
+                                status="completed",
+                                result=result,
+                                dependencies=step.dependencies
+                            )
+
+                            completed.add(step.step_id)
+                            pending.pop(step.step_id, None)
+                            break
+
+                        except Exception as e:
+                            logger.error(f"Step {step.step_id} failed (attempt {attempt}): {e}")
+                            step.error = str(e)
+
+                            if attempt <= max_retries:
+                                # Retry
+                                self.db.log_plan_step(
+                                    plan_id=plan.task_id,
+                                    step_id=step.step_id,
+                                    agent=step.agent,
+                                    action=step.action,
+                                    status="retrying",
+                                    error=str(e),
+                                    dependencies=step.dependencies
+                                )
+                                continue
+
+                            # Replan on failure (best-effort)
+                            replanned = False
+                            if step.replan_attempts < step.max_replans:
+                                spec = self._build_replan_spec(step)
+                                if spec:
+                                    try:
+                                        self.db.update_plan_status(plan.task_id, "replanning")
+                                    except Exception:
+                                        pass
+
+                                    new_step_ids = self._apply_replan(plan, step, spec, pending)
+                                    if new_step_ids:
+                                        step.replan_attempts += 1
+                                        step.status = "replanned"
+                                        self.db.log_plan_step(
+                                            plan_id=plan.task_id,
+                                            step_id=step.step_id,
+                                            agent=step.agent,
+                                            action=step.action,
+                                            status="replanned",
+                                            error=str(e),
+                                            result={"note": spec.get("note"), "new_steps": new_step_ids},
+                                            dependencies=step.dependencies
+                                        )
+                                        replanned = True
+                                        pending.pop(step.step_id, None)
+                                    try:
+                                        self.db.update_plan_status(plan.task_id, "executing")
+                                    except Exception:
+                                        pass
+
+                            if replanned:
+                                break
+
+                            step.status = "failed"
+
+                            # 4. Log Failure
+                            self.db.log_plan_step(
+                                plan_id=plan.task_id,
+                                step_id=step.step_id,
+                                agent=step.agent,
+                                action=step.action,
+                                status="failed",
                                 error=str(e),
                                 dependencies=step.dependencies
                             )
-                            continue
 
-                        # Replan on failure (best-effort)
-                        replanned = False
-                        if step.replan_attempts < step.max_replans:
-                            spec = self._build_replan_spec(step)
-                            if spec:
-                                try:
-                                    self.db.update_plan_status(plan.task_id, "replanning")
-                                except Exception:
-                                    pass
-
-                                new_step_ids = self._apply_replan(plan, step, spec, pending)
-                                if new_step_ids:
-                                    step.replan_attempts += 1
-                                    step.status = "replanned"
-                                    self.db.log_plan_step(
-                                        plan_id=plan.task_id,
-                                        step_id=step.step_id,
-                                        agent=step.agent,
-                                        action=step.action,
-                                        status="replanned",
-                                        error=str(e),
-                                        result={"note": spec.get("note"), "new_steps": new_step_ids},
-                                        dependencies=step.dependencies
-                                    )
-                                    replanned = True
-                                    pending.pop(step.step_id, None)
-                                try:
-                                    self.db.update_plan_status(plan.task_id, "executing")
-                                except Exception:
-                                    pass
-
-                        if replanned:
-                            break
-
-                        step.status = "failed"
-
-                        # 4. Log Failure
-                        self.db.log_plan_step(
-                            plan_id=plan.task_id,
-                            step_id=step.step_id,
-                            agent=step.agent,
-                            action=step.action,
-                            status="failed",
-                            error=str(e),
-                            dependencies=step.dependencies
-                        )
-
-                        # Stop execution on failure
-                        plan.status = "failed"
-                        self.db.update_plan_status(plan.task_id, "failed")
-                        return plan.results
+                            # Stop execution on failure
+                            plan.status = "failed"
+                            self.db.update_plan_status(plan.task_id, "failed")
+                            return plan.results
                 
+            if self.meta_controller and adaptive_rounds < self.max_adaptive_rounds:
+                try:
+                    existing = [
+                        {"agent": s.agent, "action": s.action, "params": s.params, "deps": s.dependencies}
+                        for s in plan.steps
+                    ]
+                    followups = self.meta_controller.suggest_followups(
+                        plan.task_type, plan.description, existing
+                    )
+                    if followups:
+                        self._append_dynamic_steps(plan, followups, pending)
+                        adaptive_rounds += 1
+                        continue
+                except Exception as e:
+                    logger.warning(f"Meta-controller follow-up failed: {e}")
+
+            break
+
         plan.status = "completed"
         self.db.update_plan_status(plan.task_id, "completed")
 
@@ -339,7 +412,12 @@ class PlanExecutor:
                 plan_record = self.db.get_plan(plan.task_id)
                 created_at = plan_record.get("created_at") if plan_record else None
                 if created_at:
-                    materials = self.db.list_materials_since(created_at, limit=50)
+                    try:
+                        from src.agents.core.theory_agent import TheoryDataConfig
+                        allowed = TheoryDataConfig().elements
+                    except Exception:
+                        allowed = None
+                    materials = self.db.list_materials_since(created_at, limit=50, allowed_elements=allowed)
                 else:
                     materials = theory_agent.list_stored_materials(limit=20)
                 if not materials:

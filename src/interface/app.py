@@ -325,6 +325,12 @@ def api_snapshot(snapshot_id: int):
     res.raise_for_status()
     return res.json()
 
+
+def api_knowledge_stats():
+    res = requests.get(f"{API_BASE_URL}/knowledge/stats", timeout=20)
+    res.raise_for_status()
+    return res.json()
+
 def render_task_graph(steps):
     if not steps:
         st.info("No steps available.")
@@ -813,118 +819,57 @@ def render_sidebar():
 
 def render_home():
     """Render home page."""
-    st.markdown('<h1 class="main-header">🔬 多智能体催化剂研究系统</h1>', unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style="text-align: center; padding: 1rem; color: #666;">
-        <b>v2.0</b> | 100% 符合设计规划 | 5 个核心智能体 | 完整 ML + GNN 支持
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Feature cards - 4 columns
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        <div class="agent-card">
-            <h3>🤖 ML 智能体</h3>
-            <p><b>传统 ML:</b> XGBoost, LightGBM, RF</p>
-            <p><b>深度学习:</b> DNN, Transformer</p>
-            <p><b>GNN:</b> CGCNN, SchNet, MEGNet</p>
-            <p><b>SHAP:</b> 特征重要性分析</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div class="agent-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-            <h3>📊 理论数据</h3>
-            <p><b>Materials Project:</b> CIF, DOS, 能带</p>
-            <p><b>AFLOW:</b> 弹性常数</p>
-            <p><b>Catalysis-Hub:</b> 吸附能</p>
-            <p><b>OQMD:</b> 形成能</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div class="agent-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-            <h3>🧪 实验分析</h3>
-            <p><b>电化学:</b> LSV, CV, EIS, Tafel</p>
-            <p><b>RDE/RRDE:</b> 电子转移数</p>
-            <p><b>格式:</b> CSV, Excel, EC-Lab, CHI</p>
-            <p><b>自动检测:</b> 数据类型识别</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown("""
-        <div class="agent-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-            <h3>📚 文献检索</h3>
-            <p><b>Semantic Scholar:</b> 论文搜索</p>
-            <p><b>arXiv:</b> 预印本</p>
-            <p><b>本地 PDF:</b> 解析提取</p>
-            <p><b>知识提取:</b> 自动总结</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
+    st.markdown(f"# {ui_text('IMCs 科研平台')}")
+    st.write(ui_text("面向 HOR 候选有序合金发现的多智能体科研平台。"))
     st.markdown("---")
-    
-    # System Architecture
-    st.markdown("### 🏗️ 系统架构")
-    
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.markdown("""
-        ```
-        用户 ←→ 任务管理智能体 (TaskManagerAgent)
-                    ↓
-            ┌───────┼───────┐
-            ↓       ↓       ↓
-          ML智能体  理论数据   文献阅读
-                    ↓       ↓
-                 实验数据智能体
-        ```
-        """)
-    
-    with col2:
-        st.markdown("""
-        **工作流程:**
-        1. 接收用户问题
-        2. 分析需求 → 生成计划
-        3. 调度相关智能体
-        4. 整合结果
-        5. 推荐实验方案
-        """)
-    
-    st.markdown("---")
-    
-    # Quick actions
-    st.markdown("### 🚀 快速开始")
-    
+
+    st.markdown(f"### {ui_text('\u5feb\u6377\u5165\u53e3')}")
     col1, col2, col3, col4 = st.columns(4)
-    
+
     with col1:
-        if st.button("🔍 发现新催化剂", use_container_width=True):
-            st.session_state.page = "🤖 智能体对话"
-            st.rerun()
-    
-    with col2:
-        if st.button("📈 训练预测模型", use_container_width=True):
-            st.session_state.page = "🧪 ML 训练"
-            st.rerun()
-    
-    with col3:
-        if st.button("📊 分析实验数据", use_container_width=True):
-            st.session_state.page = "📊 数据分析"
-            st.rerun()
-    
-    with col4:
-        if st.button("📚 搜索文献", use_container_width=True):
-            st.session_state.page = "📚 文献检索"
+        if st.button(ui_text("打开智能体对话"), use_container_width=True):
+            st.session_state.page = "chat"
             st.rerun()
 
+    with col2:
+        if st.button(ui_text("进入 ML 训练"), use_container_width=True):
+            st.session_state.page = "ml"
+            st.rerun()
+
+    with col3:
+        if st.button(ui_text("进入数据分析"), use_container_width=True):
+            st.session_state.page = "data"
+            st.rerun()
+
+    with col4:
+        if st.button(ui_text("进入文献库"), use_container_width=True):
+            st.session_state.page = "lit"
+            st.rerun()
+
+    st.markdown("---")
+
+    st.markdown(f"### {ui_text('\u7cfb\u7edf\u6982\u89c8')}")
+    st.markdown("- 任务图：自动拆解任务、执行调度、状态跟踪")
+    st.markdown("- 证据链：理论/文献/ML/实验证据可追溯")
+    st.markdown("- 知识库：本地文献 + RAG 检索 + 图谱追踪")
+    st.markdown("- 闭环演化：新数据进入后可迭代模型与推荐")
+
+    st.markdown("---")
+    st.markdown(f"### {ui_text('\u793a\u4f8b\u95ee\u9898')}")
+
+    examples = [
+        "Find ordered alloy candidates for HOR",
+        "Train ML model on current materials database",
+        "Analyze d-band center vs activity",
+        "Search recent HOR catalyst papers",
+    ]
+
+    cols = st.columns(2)
+    for i, example in enumerate(examples):
+        with cols[i % 2]:
+            if st.button(example, key=f"example_{i}"):
+                st.session_state.messages.append({"role": "user", "content": example})
+                st.rerun()
 
 # ========== Chat Page ==========
 
@@ -1244,161 +1189,147 @@ def render_chat():
 
 def render_data_analysis():
     """Render data analysis page."""
-    st.markdown("## 📊 数据分析")
-    
-    tab1, tab2, tab3, tab4 = st.tabs(["理论数据", "实验数据", "RDE/RRDE 分析", "数据可视化"])
-    
+    st.markdown(f"## {ui_text('\u6570\u636e\u5206\u6790')}")
+
+    tab1, tab2, tab3, tab4 = st.tabs([
+        ui_text("理论数据"),
+        ui_text("实验数据"),
+        ui_text("RDE/RRDE 分析"),
+        ui_text("数据可视化"),
+    ])
+
     with tab1:
-        st.markdown("### 📂 理论计算数据")
-        
+        st.markdown(f"### {ui_text('\u7406\u8bba\u6570\u636e')}")
+
         col1, col2 = st.columns([2, 1])
-        
         with col1:
             fe_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_full.json")
             if os.path.exists(fe_file):
                 with open(fe_file) as f:
                     fe_data = json.load(f)
-                
                 df = pd.DataFrame(fe_data)
-                
+
                 col_a, col_b, col_c = st.columns(3)
                 with col_a:
-                    st.metric("材料总数", len(df))
+                    st.metric(ui_text("材料总数"), len(df))
                 with col_b:
-                    st.metric("平均形成能", f"{df['formation_energy'].mean():.3f} eV/atom")
+                    if 'formation_energy' in df.columns:
+                        st.metric(ui_text("平均形成能"), f"{df['formation_energy'].mean():.3f} eV/atom")
                 with col_c:
-                    st.metric("标准差", f"{df['formation_energy'].std():.3f}")
-                
+                    if 'formation_energy' in df.columns:
+                        st.metric(ui_text("形成能标准差"), f"{df['formation_energy'].std():.3f}")
+
                 st.dataframe(df.head(20), use_container_width=True)
             else:
-                st.info("未找到形成能数据")
-        
+                st.info(ui_text("未找到形成能数据"))
+
         with col2:
-            st.markdown("### 下载新数据")
-            
-            data_source = st.selectbox("数据源", [
-                "Materials Project",
-                "AFLOW",
-                "Catalysis-Hub"
-            ])
-            
-            if st.button("🔄 下载数据"):
+            st.markdown(f"### {ui_text('\u4e0b\u8f7d\u65b0\u6570\u636e')}")
+            data_source = st.selectbox(
+                ui_text("数据源"),
+                ["Materials Project", "AFLOW", "Catalysis-Hub"],
+            )
+            if st.button(ui_text("开始下载")):
                 agents = load_agents()
                 if agents:
-                    with st.spinner("正在下载..."):
+                    with st.spinner(ui_text("正在下载...")):
                         if data_source == "AFLOW":
                             results = agents['theory'].query_aflow(elements=['Pt'], limit=20)
-                            st.success(f"下载了 {len(results)} 条记录")
+                            st.success(f"Downloaded {len(results)} records")
                         elif data_source == "Catalysis-Hub":
                             results = agents['theory'].query_catalysis_hub(reaction='HER', limit=20)
-                            st.success(f"下载了 {len(results)} 条记录")
-    
+                            st.success(f"Downloaded {len(results)} records")
+                        else:
+                            st.info("Materials Project download is not wired here.")
+
     with tab2:
-        st.markdown("### 📁 上传实验数据")
-        
+        st.markdown(f"### {ui_text('\u4e0a\u4f20\u5b9e\u9a8c\u6570\u636e')}")
         uploaded_file = st.file_uploader(
-            "支持格式: CSV, Excel, EC-Lab (.mpt), CHI (.txt)", 
+            ui_text("支持格式: CSV, Excel, EC-Lab (.mpt), CHI (.txt)"),
             type=['csv', 'xlsx', 'mpt', 'txt']
         )
-        
+
         if uploaded_file:
             try:
                 file_ext = uploaded_file.name.split('.')[-1].lower()
-                
                 if file_ext == 'csv':
                     df = pd.read_csv(uploaded_file)
                 elif file_ext == 'xlsx':
                     df = pd.read_excel(uploaded_file)
                 else:
-                    st.info(f"检测到 {file_ext.upper()} 文件，请保存后使用 process_file() 分析")
+                    st.info(f"Detected {file_ext.upper()} file. Please save and analyze manually.")
                     df = None
-                
+
                 if df is not None:
                     st.dataframe(df, use_container_width=True)
-                    
-                    data_type = st.selectbox("数据类型", ["自动检测", "LSV", "CV", "Tafel", "EIS", "稳定性"])
-                    
-                    if st.button("🔬 分析数据"):
-                        st.info("分析中...")
-                        
+                    data_type = st.selectbox(
+                        ui_text("数据类型"),
+                        ["Auto", "LSV", "CV", "Tafel", "EIS", "Stability"],
+                    )
+                    if st.button(ui_text("分析数据")):
+                        st.info(ui_text("正在分析..."))
             except Exception as e:
-                st.error(f"读取文件失败: {e}")
-        
+                st.error(f"File read failed: {e}")
+
         st.markdown("---")
-        st.markdown("### 📂 扫描数据文件夹")
-        folder_path = st.text_input("输入本地数据目录", value="data/experimental")
-        if st.button("开始扫描目录"):
+        st.markdown(f"### {ui_text('\u626b\u63cf\u6570\u636e\u6587\u4ef6\u5939')}")
+        folder_path = st.text_input(ui_text("输入本地数据目录"), value="data/experimental")
+        if st.button(ui_text("开始扫描")):
             if os.path.exists(folder_path):
                 try:
                     agents = load_agents()
                     if agents:
                         result = agents['experiment'].scan_directory(folder_path)
-                        
                         col1, col2 = st.columns(2)
                         with col1:
-                            st.metric("总文件数", result['total_files'])
+                            st.metric(ui_text("总文件数"), result.get('total_files', 0))
                         with col2:
-                            st.metric("有效数据文件", result['valid_files'])
-                        
-                        if result['valid_files'] > 0:
-                            st.success("扫描成功！检测到以下数据类型:")
-                            st.json(result['data_types'])
-                            
-                            # Auto-process hint
-                            st.info("💡 提示: 您可以在 'ML 训练' 页面选择 '实验数据' 源来使用这些数据进行训练。")
+                            st.metric(ui_text("有效数据文件"), result.get('valid_files', 0))
+
+                        if result.get('valid_files', 0) > 0:
+                            st.success(ui_text("扫描成功，检测到以下数据类型"))
+                            st.json(result.get('data_types'))
                         else:
-                            st.warning("未检测到支持的实验数据文件 (.csv, .xlsx, .mpt)")
-                            if result['errors']:
-                                st.error(f"错误: {result['errors']}")
+                            st.warning(ui_text("未检测到支持的数据文件"))
+                            if result.get('errors'):
+                                st.error(f"Errors: {result.get('errors')}")
                 except Exception as e:
-                    st.error(f"扫描失败: {e}")
+                    st.error(f"Scan failed: {e}")
             else:
-                st.error("目录不存在")
-    
+                st.error(ui_text("目录不存在"))
+
     with tab3:
-        st.markdown("### ⚡ RDE/RRDE 分析")
-        
+        st.markdown(f"### {ui_text('RDE/RRDE 分析')}")
         st.markdown("""
-        **RDE (旋转圆盘电极):**
-        - 极限电流密度
-        - 半波电位
-        - 动力学电流
-        
-        **RRDE (旋转环盘电极):**
-        - 电子转移数 (n)
-        - HO₂⁻ 产率
+        **RDE:** limiting current, half-wave potential, kinetics
+        **RRDE:** electron transfer number (n), H2O2 yield
         """)
-        
-        rrde_file = st.file_uploader("上传 RRDE 数据", type=['csv', 'xlsx'], key="rrde")
-        
+
+        rrde_file = st.file_uploader(ui_text("上传 RRDE 数据"), type=['csv', 'xlsx'], key="rrde")
         if rrde_file:
-            collection_eff = st.slider("收集效率 (N)", 0.2, 0.5, 0.37)
-            
-            if st.button("计算电子转移数"):
-                st.info("使用 analyze_rrde() 进行分析...")
-    
+            collection_eff = st.slider(ui_text("收集效率 (N)"), 0.2, 0.5, 0.37)
+            if st.button(ui_text("计算电子转移数")):
+                st.info(ui_text("请使用 analyze_rrde() 进行分析"))
+
     with tab4:
-        st.markdown("### 📈 数据可视化")
-        
+        st.markdown(f"### {ui_text('\u6570\u636e\u53ef\u89c6\u5316')}")
         desc_file = os.path.join(ROOT_DIR, "data", "theory", "dos_descriptors_full.json")
         if os.path.exists(desc_file):
             with open(desc_file) as f:
                 desc_data = json.load(f)
-            
             df = pd.DataFrame(desc_data)
-            
+
             col1, col2 = st.columns(2)
-            
             with col1:
-                st.markdown("#### d-band center 分布")
+                st.markdown("#### d-band center")
                 if 'd_band_center' in df.columns:
                     st.bar_chart(df['d_band_center'].dropna().head(50))
-            
             with col2:
-                st.markdown("#### d-band width 分布")
+                st.markdown("#### d-band width")
                 if 'd_band_width' in df.columns:
                     st.bar_chart(df['d_band_width'].dropna().head(50))
-
+        else:
+            st.info(ui_text("未找到 DOS 特征数据"))
 
 # ========== ML Training Page ==========
 
@@ -1894,100 +1825,102 @@ def render_ml_training():
 
 def render_literature():
     """Render literature search page."""
-    st.markdown("## 📚 文献检索")
-    
+    st.markdown(f"## {ui_text('\u6587\u732e\u68c0\u7d22')}")
+
     col1, col2, col3 = st.columns([3, 1, 1])
-    
     with col1:
-        query = st.text_input("🔍 搜索关键词", placeholder="例如: PtRu alloy HOR catalyst")
-    
+        query = st.text_input(ui_text("输入检索关键词"), placeholder="e.g. PtRu alloy HOR catalyst")
     with col2:
-        source = st.selectbox("数据源", ["全部", "Semantic Scholar", "arXiv"])
-    
+        source = st.selectbox(ui_text("数据源"), ["All", "Semantic Scholar", "arXiv"])
     with col3:
-        n_results = st.number_input("结果数量", 5, 50, 10)
-        min_citations = st.number_input("最低引用 (IF替代)", 0, 1000, 0, help="通过引用数筛选高影响力论文")
-    
-    if st.button("搜索", type="primary"):
+        n_results = st.number_input(ui_text("结果数量"), 5, 50, 10)
+        min_citations = st.number_input(ui_text("最低引用数"), 0, 1000, 0)
+
+    if st.button(ui_text("搜索"), type="primary"):
         if query:
             agents = load_agents()
             if agents:
-                with st.spinner("搜索中..."):
+                with st.spinner(ui_text("正在搜索...")):
                     try:
-                        if source == "全部":
+                        if source == "All":
                             papers = agents['literature'].search_all_sources(query, n_results)
                         elif source == "arXiv":
                             papers = agents['literature'].search_arxiv(query, n_results)
                         else:
                             papers = agents['literature'].search_semantic_scholar(query, n_results)
-                        
-                        # Filter by citations
+
                         if papers and min_citations > 0:
                             papers = [p for p in papers if getattr(p, 'citation_count', 0) >= min_citations]
-                        
+
                         if papers:
-                            st.success(f"找到 {len(papers)} 篇论文 (引用 >= {min_citations})")
-                            
+                            st.success(f"Found {len(papers)} papers")
                             for i, paper in enumerate(papers, 1):
                                 with st.expander(f"{i}. {paper.title} (Cite: {paper.citation_count})"):
-                                    st.markdown(f"**作者**: {', '.join(paper.authors[:5])}")
-                                    st.markdown(f"**年份**: {paper.year} | **引用**: {paper.citation_count}")
+                                    st.markdown(f"**Authors**: {', '.join(paper.authors[:5])}")
+                                    st.markdown(f"**Year**: {paper.year} | **Citations**: {paper.citation_count}")
                                     if paper.abstract:
-                                        st.markdown(f"**摘要**: {paper.abstract[:500]}...")
+                                        st.markdown(f"**Abstract**: {paper.abstract[:500]}...")
                                     if paper.url:
-                                        st.markdown(f"[🔗 查看原文]({paper.url})")
+                                        st.markdown(f"[View Paper]({paper.url})")
                         else:
-                            if min_citations > 0:
-                                st.warning(f"未找到引用数 >= {min_citations} 的相关文献")
-                            else:
-                                st.info("未找到相关文献")
+                            st.info(ui_text("未找到相关文献"))
                     except Exception as e:
-                        st.error(f"搜索失败: {e}")
-    
-    st.markdown("---")
+                        st.error(f"Search failed: {e}")
 
     st.markdown("---")
+
+    # Local library
     st.markdown(ui_text("### 本地文献库 (data/literature) / Local PDF Library"))
-    lib_dir = os.path.join(ROOT_DIR, "data", "literature")
-    if not os.path.exists(lib_dir):
-        st.info(ui_text(f"文献目录: {lib_dir}"))
+    base_dir = os.path.join(ROOT_DIR, "data", "literature")
+    default_dir = os.path.join(base_dir, "papers")
+    if not os.path.exists(base_dir):
+        st.info(ui_text(f"文献目录: {base_dir}"))
         return
-    pdf_files = [f for f in os.listdir(lib_dir) if f.lower().endswith(".pdf")]
-    if not pdf_files:
+
+    search_root = default_dir if os.path.exists(default_dir) else base_dir
+    pdf_paths = []
+    for root, _, files in os.walk(search_root):
+        for fname in files:
+            if fname.lower().endswith('.pdf'):
+                pdf_paths.append(os.path.join(root, fname))
+
+    if not pdf_paths:
         st.info(ui_text("未发现 PDF 文件"))
         return
 
+    labels = [os.path.relpath(p, base_dir) for p in pdf_paths]
+    label_to_path = {label: path for label, path in zip(labels, pdf_paths)}
+
     col_a, col_b = st.columns([2, 1])
     with col_a:
-        selected_pdf = st.selectbox(ui_text("选择 PDF"), pdf_files)
+        selected_label = st.selectbox(ui_text("选择 PDF"), labels)
     with col_b:
         max_pages = st.number_input(ui_text("预览页数"), min_value=1, max_value=10, value=3)
 
     if st.button(ui_text("加载 PDF 预览")):
         try:
             import pdfplumber
-            pdf_path = os.path.join(lib_dir, selected_pdf)
+            pdf_path = label_to_path.get(selected_label)
             text_chunks = []
             with pdfplumber.open(pdf_path) as pdf:
-                for idx, page in enumerate(pdf.pages[:int(max_pages)]):
+                for page in pdf.pages[:int(max_pages)]:
                     text = page.extract_text() or ""
                     if text.strip():
                         text_chunks.append(text)
             if text_chunks:
-                st.text_area(ui_text("提取文本"), "\\n\\n".join(text_chunks), height=300)
+                st.text_area(ui_text("提取文本"), "\n\n".join(text_chunks), height=300)
             else:
-                st.info(ui_text("未提取到文本（可能是扫描版PDF）"))
+                st.info(ui_text("未提取到文本，可能是扫描 PDF"))
         except Exception as e:
-            st.error(f"PDF 解析失败: {e}")
+            st.error(f"PDF parse failed: {e}")
 
-    st.markdown(ui_text("#### 关键词检索本地文献"))
+    st.markdown(ui_text("#### 本地文献搜索"))
     local_query = st.text_input(ui_text("输入关键词"), key="local_pdf_query")
     if st.button(ui_text("搜索本地库"), key="local_pdf_search"):
         try:
             import pdfplumber
             matches = []
-            for fname in pdf_files:
-                pdf_path = os.path.join(lib_dir, fname)
+            for pdf_path in pdf_paths:
                 hit_count = 0
                 snippet = ""
                 with pdfplumber.open(pdf_path) as pdf:
@@ -1998,7 +1931,7 @@ def render_literature():
                             if not snippet:
                                 snippet = text[:500]
                 if hit_count > 0:
-                    matches.append({"file": fname, "hits": hit_count, "snippet": snippet})
+                    matches.append({"file": os.path.relpath(pdf_path, base_dir), "hits": hit_count, "snippet": snippet})
             if matches:
                 st.success(ui_text(f"找到 {len(matches)} 条匹配"))
                 matches = sorted(matches, key=lambda x: x["hits"], reverse=True)
@@ -2008,23 +1941,33 @@ def render_literature():
             else:
                 st.info(ui_text("没有匹配结果"))
         except Exception as e:
-            st.error(f"搜索失败: {e}")
-    
-    # Local PDF parsing
-    st.markdown("### 📄 本地 PDF 解析")
-    
-    pdf_file = st.file_uploader("上传 PDF 文件", type=['pdf'])
-    
-    if pdf_file:
-        if st.button("解析 PDF"):
-            st.info("PDF 解析需要 pdfplumber 库支持")
+            st.error(f"Search failed: {e}")
 
+    st.markdown("### 本地 PDF 解析")
+    pdf_file = st.file_uploader(ui_text("上传 PDF 文件"), type=['pdf'])
+    if pdf_file:
+        if st.button(ui_text("解析 PDF")):
+            st.info(ui_text("PDF 解析需要 pdfplumber 支持"))
 
 # ========== Evaluation Page ==========
 
 def render_evaluation():
     """Render evaluation page for evidence coverage and recommendation recall."""
     st.markdown("## Evaluation")
+
+    st.markdown("### Evidence Stats (Meta-controller)")
+    try:
+        stats = api_knowledge_stats()
+        cols = st.columns(3)
+        cols[0].metric("Total materials", stats.get("total_materials", 0))
+        cols[1].metric("DOS records", stats.get("dos_count", 0))
+        cols[2].metric("Models", stats.get("model_count", 0))
+        st.caption(
+            "Evidence coverage: literature/ML/experiment counts and activity/adsorption proxies."
+        )
+        st.json(stats)
+    except Exception as e:
+        st.info(f"Stats unavailable: {e}")
 
     # Evidence coverage
     st.markdown("### Evidence Coverage")

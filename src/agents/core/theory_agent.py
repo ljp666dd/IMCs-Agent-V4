@@ -86,7 +86,7 @@ class TheoryDataAgent:
         
         # 0. Check Local DB First (Local-First Strategy)
         # Fetch all materials to filter (assuming DB is handleable size < 10k)
-        local_mats = self.db.list_materials(limit=5000)
+        local_mats = self.db.list_materials(limit=5000, allowed_elements=self.config.elements)
         local_matches = []
         
         # Simple filter: checks if formula contains ANY of the target elements
@@ -216,7 +216,7 @@ class TheoryDataAgent:
         except Exception:
             return None
         # Limit scan for speed
-        for m in self.db.list_materials(limit=500):
+        for m in self.db.list_materials(limit=500, allowed_elements=self.config.elements):
             try:
                 els = set([el.symbol for el in Composition(m.get("formula", "")).elements])
                 if els == target_elements:
@@ -273,15 +273,36 @@ class TheoryDataAgent:
 
     def list_stored_materials(self, limit: int = 100) -> List[Dict]:
         """List materials stored in the database."""
-        return self.db.list_materials(limit)
+        return self.db.list_materials(limit, allowed_elements=self.config.elements)
 
     def get_material_details(self, material_id: str) -> Optional[Dict]:
         """Get details for a specific material including evidence."""
-        return self.db.get_material_with_evidence(material_id, include_cif=True)
+        data = self.db.get_material_with_evidence(material_id, include_cif=True)
+        if not data:
+            return None
+        if not self._formula_allowed(data.get("formula")):
+            return None
+        return data
 
     def get_material_details_simple(self, material_id: str) -> Optional[Dict]:
         """Get details for a specific material without CIF (batch-friendly)."""
-        return self.db.get_material_with_evidence(material_id, include_cif=False)
+        data = self.db.get_material_with_evidence(material_id, include_cif=False)
+        if not data:
+            return None
+        if not self._formula_allowed(data.get("formula")):
+            return None
+        return data
+
+    def _formula_allowed(self, formula: Optional[str]) -> bool:
+        """Check formula elements subset of allowed list."""
+        if not formula:
+            return False
+        try:
+            from pymatgen.core import Composition
+            elements = {el.symbol for el in Composition(formula).elements}
+        except Exception:
+            return False
+        return elements.issubset(set(self.config.elements))
 
     # ========== External DBs ==========
     

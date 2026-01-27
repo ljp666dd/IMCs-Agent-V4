@@ -20,6 +20,10 @@ Scope: Multi-agent research platform (Streamlit UI + FastAPI + DB + agents)
   - src/services/db/database.py (consistent evidence metadata)
   - src/services/task/executor.py (attach evidence per step)
   - src/services/task/planner.py (step output format)
+- Evidence-driven planning (meta-controller)
+  - src/services/task/meta_controller.py (coverage rules)
+  - src/services/task/planner.py (dynamic initial plan)
+  - src/services/task/executor.py (adaptive follow-up steps)
 - UI evidence binding to task/session
   - src/interface/app.py (task report panel per session)
   - src/api/routers/tasks.py (report endpoint to include evidence chain)
@@ -29,6 +33,9 @@ Scope: Multi-agent research platform (Streamlit UI + FastAPI + DB + agents)
   - data/templates/activity_metrics_template.csv
   - src/tools/import_activity_metrics.py
   - src/api/routers/knowledge.py (activity endpoints)
+- Synthetic activity metrics (for validation)
+  - src/tools/generate_synthetic_activity_metrics.py
+  - data/experimental/synthetic_activity_metrics.csv
 - Adsorption data ingestion
   - data/templates/adsorption_energies_template.csv
   - src/tools/import_adsorption_energies.py
@@ -36,6 +43,7 @@ Scope: Multi-agent research platform (Streamlit UI + FastAPI + DB + agents)
   - src/agents/core/theory_agent.py (extract features)
   - src/services/db/database.py (store descriptors)
   - src/agents/core/ml_agent.py (feature use)
+  - src/tools/backfill_dos_descriptors.py (backfill into DB)
 
 ## P3 - ML Training + Explainability
 - Stable ML training flow
