@@ -25,13 +25,18 @@ class SearchEngine:
             params = {
                 "query": query,
                 "limit": limit,
-                "fields": "title,authors,year,abstract,citationCount,externalIds,url"
+                "fields": "title,authors,year,abstract,citationCount,externalIds,url,isOpenAccess,openAccessPdf"
             }
             
             response = requests.get(url, params=params, timeout=30)
             if response.status_code == 200:
                 data = response.json()
                 for item in data.get("data", []):
+                    open_access = bool(item.get("isOpenAccess"))
+                    pdf_url = ""
+                    oa_pdf = item.get("openAccessPdf") or {}
+                    if isinstance(oa_pdf, dict):
+                        pdf_url = oa_pdf.get("url") or ""
                     paper = PaperInfo(
                         title=item.get("title", ""),
                         authors=[a.get("name", "") for a in item.get("authors", [])[:5]],
@@ -39,6 +44,8 @@ class SearchEngine:
                         abstract=item.get("abstract", "") or "",
                         doi=item.get("externalIds", {}).get("DOI", ""),
                         url=item.get("url", ""),
+                        pdf_url=pdf_url,
+                        is_open_access=open_access,
                         citation_count=item.get("citationCount", 0) or 0
                     )
                     papers.append(paper)

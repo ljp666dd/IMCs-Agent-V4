@@ -29,3 +29,5 @@ python-dotenv
 scipy
 langdetect
 deep-translator
+pdfplumber
+PyPDF2

@@ -67,6 +67,8 @@ class MetaController:
 
     def _build_step_specs(self, task_type: TaskType, user_request: str, decisions: Dict[str, bool]) -> List[Dict[str, Any]]:
         specs: List[Dict[str, Any]] = []
+        request_lower = (user_request or "").lower()
+        wants_hor = "hor" in request_lower or "hydrogen oxidation" in request_lower
 
         if decisions.get("need_literature"):
             specs.append({
@@ -74,6 +76,25 @@ class MetaController:
                 "action": "search",
                 "params": {"query": user_request, "limit": 10},
                 "deps": [],
+            })
+            if wants_hor:
+                specs.append({
+                    "agent": "literature",
+                    "action": "harvest_hor_seed",
+                    "params": {
+                        "query": user_request,
+                        "limit": 12,
+                        "max_pdfs": 5,
+                        "min_elements": 2,
+                        "persist": True,
+                    },
+                    "deps": [],
+                })
+            specs.append({
+                "agent": "literature",
+                "action": "extract_knowledge",
+                "params": {"topic": user_request},
+                "deps": ["$literature"],
             })
 
         if decisions.get("need_theory") or decisions.get("need_dos") or decisions.get("need_adsorption"):
@@ -121,6 +142,12 @@ class MetaController:
             specs.append({
                 "agent": "task_manager",
                 "action": "recommend",
+                "params": {},
+                "deps": deps,
+            })
+            specs.append({
+                "agent": "task_manager",
+                "action": "knowledge_pack",
                 "params": {},
                 "deps": deps,
             })

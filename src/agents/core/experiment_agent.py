@@ -64,6 +64,19 @@ class LSVResult:
     exchange_current_density: Optional[float] = None
     data: Optional[Dict[str, List[float]]] = None
 
+
+@dataclass
+class RDEResult:
+    """Results from RDE analysis across multiple rotation speeds."""
+    sample_id: str
+    jk_by_potential: Dict[str, float] = field(default_factory=dict)
+    exchange_current_density: Optional[float] = None
+    tafel_slope: Optional[float] = None
+    mass_activity: Optional[float] = None
+    reference_potential: Optional[float] = None
+    rpm_values: List[int] = field(default_factory=list)
+    data: Optional[Dict[str, Any]] = None
+
 @dataclass
 class TafelResult:
     """Results from Tafel analysis.""" # ... (rest of TafelResult unchanged but not in view)
@@ -163,6 +176,202 @@ class ExperimentDataAgent:
         if not pot_col or not curr_col:
             logger.warning(f"Could not identify columns for LSV: {df.columns}")
             return LSVResult(sample_id=sample_id)
+
+    def _extract_potential_current(self, df: pd.DataFrame) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+        columns = {c.lower(): c for c in df.columns}
+        pot_keys = ["potential", "voltage", "ewe"]
+        curr_keys = ["current", "current_density", "currentdensity", "density"]
+        pot_col = next((orig for key, orig in columns.items() if any(k in key for k in pot_keys)), None)
+        if pot_col is None:
+            pot_col = next((orig for key, orig in columns.items() if key in ["e", "v"]), None)
+        curr_col = next((orig for key, orig in columns.items() if any(k in key for k in curr_keys)), None)
+        if curr_col is None:
+            curr_col = next((orig for key, orig in columns.items() if key in ["j", "i"]), None)
+        if curr_col == pot_col:
+            curr_col = next(
+                (orig for key, orig in columns.items() if key not in [pot_col.lower()] and "current" in key),
+                None,
+            )
+        if not pot_col or not curr_col:
+            return None, None
+        V = df[pot_col].values.astype(float)
+        J = df[curr_col].values.astype(float)
+        return V, J
+
+    def _parse_rpm_from_name(self, filename: str) -> Optional[int]:
+        import re
+        match = re.search(r"(\d+)\s*rpm", filename.lower())
+        if match:
+            try:
+                return int(match.group(1))
+            except Exception:
+                return None
+        return None
+
+    def analyze_rde_series(
+        self,
+        file_paths: List[str],
+        sample_id: str,
+        reference_potential: float = 0.2,
+        loading_mg_cm2: float = 0.25,
+        precious_fraction: float = 0.20,
+        conditions: Optional[Dict[str, Any]] = None,
+    ) -> RDEResult:
+        """Analyze multiple LSV curves (different RPM) to estimate Jk, J0, and MA."""
+        if not file_paths:
+            return RDEResult(sample_id=sample_id)
+
+        rpm_to_curve = {}
+        for path in file_paths:
+            df = self.load_csv(path)
+            V, J = self._extract_potential_current(df)
+            if V is None or J is None:
+                continue
+            rpm = self._parse_rpm_from_name(os.path.basename(path))
+            if rpm is None:
+                continue
+            rpm_to_curve[rpm] = (V, J)
+
+        rpm_values = sorted(rpm_to_curve.keys(), reverse=True)
+        if len(rpm_values) < 2:
+            return RDEResult(sample_id=sample_id, rpm_values=rpm_values)
+
+        # Build a common potential grid
+        all_v = np.concatenate([rpm_to_curve[r][0] for r in rpm_values])
+        v_min, v_max = float(np.min(all_v)), float(np.max(all_v))
+        grid = np.linspace(v_min, v_max, 6)
+
+        jk_by_potential = {}
+        details = {"fits": {}}
+
+        for v in grid:
+            js = []
+            xs = []
+            for rpm in rpm_values:
+                V, J = rpm_to_curve[rpm]
+                j_interp = np.interp(v, V, J)
+                if j_interp == 0:
+                    continue
+                omega = rpm * 2 * np.pi / 60.0
+                xs.append(1.0 / np.sqrt(omega))
+                js.append(1.0 / j_interp)
+            if len(xs) < 2:
+                continue
+            coeff = np.polyfit(xs, js, 1)
+            slope, intercept = coeff[0], coeff[1]
+            if intercept <= 0:
+                continue
+            jk = 1.0 / intercept
+            jk_by_potential[f"{v:.3f}"] = float(jk)
+            details["fits"][f"{v:.3f}"] = {"slope": float(slope), "intercept": float(intercept)}
+
+        # Estimate J0 from low overpotential region (first 3 potentials)
+        j0 = None
+        tafel_slope = None
+        if jk_by_potential:
+            items = sorted(jk_by_potential.items(), key=lambda kv: float(kv[0]))
+            low = items[:3]
+            xs = []
+            ys = []
+            for v_str, jk in low:
+                if jk <= 0:
+                    continue
+                xs.append(float(v_str))
+                ys.append(np.log10(jk))
+            if len(xs) >= 2:
+                coef = np.polyfit(xs, ys, 1)
+                slope = coef[0]
+                intercept = coef[1]
+                tafel_slope = float(1.0 / slope) if slope != 0 else None
+                j0 = float(10 ** intercept)
+
+        # Mass activity at reference potential
+        jk_ref = None
+        if jk_by_potential:
+            # use nearest potential
+            nearest = min(jk_by_potential.keys(), key=lambda k: abs(float(k) - reference_potential))
+            jk_ref = jk_by_potential.get(nearest)
+        mass_activity = None
+        if jk_ref is not None:
+            denom = loading_mg_cm2 * precious_fraction
+            if denom > 0:
+                mass_activity = float(jk_ref / denom)
+
+        result = RDEResult(
+            sample_id=sample_id,
+            jk_by_potential=jk_by_potential,
+            exchange_current_density=j0,
+            tafel_slope=tafel_slope,
+            mass_activity=mass_activity,
+            reference_potential=reference_potential,
+            rpm_values=rpm_values,
+            data=details,
+        )
+
+        # Save experiment + metrics
+        formula_guess = sample_id.split('_')[0].split('-')[0]
+        material_rec = self.db.get_material_by_formula(formula_guess)
+        material_id = material_rec["material_id"] if material_rec else None
+        exp_id = self.db.save_experiment(
+            name=sample_id,
+            exp_type="RDE",
+            raw_path=";".join(file_paths),
+            results=asdict(result),
+            material_id=material_id,
+        )
+
+        metric_conditions = conditions or {
+            "reference_electrode": self.config.reference_electrode,
+            "scan_rate_mV_s": self.config.scan_rate_default,
+        }
+
+        if material_id:
+            if jk_ref is not None:
+                self.db.save_activity_metric(
+                    material_id=material_id,
+                    metric_name="Jk_ref",
+                    metric_value=jk_ref,
+                    unit="mA/cm2",
+                    conditions=metric_conditions,
+                    source="experiment",
+                    source_id=str(exp_id),
+                    metadata={"reference_potential": reference_potential},
+                )
+            if j0 is not None:
+                self.db.save_activity_metric(
+                    material_id=material_id,
+                    metric_name="exchange_current_density",
+                    metric_value=j0,
+                    unit="mA/cm2",
+                    conditions=metric_conditions,
+                    source="experiment",
+                    source_id=str(exp_id),
+                    metadata={"reference_potential": reference_potential},
+                )
+            if mass_activity is not None:
+                self.db.save_activity_metric(
+                    material_id=material_id,
+                    metric_name="mass_activity",
+                    metric_value=mass_activity,
+                    unit="mA/mg",
+                    conditions=metric_conditions,
+                    source="experiment",
+                    source_id=str(exp_id),
+                    metadata={
+                        "loading_mg_cm2": loading_mg_cm2,
+                        "precious_fraction": precious_fraction,
+                        "reference_potential": reference_potential,
+                    },
+                )
+            self.db.save_evidence(
+                material_id=material_id,
+                source_type="experiment",
+                source_id=str(exp_id),
+                score=1.0,
+                metadata={"exp_type": "RDE", "files": file_paths},
+            )
+
+        return result
             
         V = df[pot_col].values
         J = df[curr_col].values

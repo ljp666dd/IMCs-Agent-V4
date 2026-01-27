@@ -1,3 +1,5 @@
+import json
+import os
 from typing import Dict, Any, Optional, List
 from src.core.logger import get_logger, log_exception
 from src.services.task.types import TaskPlan, TaskStep
@@ -24,6 +26,7 @@ class PlanExecutor:
         except Exception:
             self.meta_controller = None
         self.max_adaptive_rounds = 1
+        self._active_plan: Optional[TaskPlan] = None
     
     def _next_step_id(self, plan: TaskPlan) -> str:
         """Allocate a unique step_id within a plan."""
@@ -226,6 +229,7 @@ class PlanExecutor:
         self.db.update_plan_status(plan.task_id, "executing")
         
         logger.info(f"Executing Plan: {plan.task_id}")
+        self._active_plan = plan
         pending = {s.step_id: s for s in plan.steps}
         completed = set()
         literature_papers = []
@@ -287,7 +291,8 @@ class PlanExecutor:
 
                             # Capture outputs for evidence aggregation
                             if step.agent == "literature" and isinstance(result, list):
-                                literature_papers = result
+                                if result and hasattr(result[0], "title"):
+                                    literature_papers = result
                             if step.agent == "ml":
                                 if isinstance(result, list):
                                     ml_top_models = result[:3]
@@ -601,6 +606,7 @@ class PlanExecutor:
         # Ensure key outputs exist for downstream UI/reporting
         plan.results.setdefault("knowledge_rag", [])
         plan.results.setdefault("reasoning_report", [])
+        self._active_plan = None
         return plan.results
 
     def _execute_step(self, step) -> Any:
@@ -623,6 +629,18 @@ class PlanExecutor:
             elif action == "extract_knowledge":
                 # Assuming LiteratureAgentv3.1 has extract_knowledge(topic)
                 return target_agent.extract_knowledge(params.get("topic", ""))
+            elif action == "harvest_hor_seed":
+                return target_agent.harvest_hor_seed(
+                    query=params.get("query", ""),
+                    limit=params.get("limit", 10),
+                    max_pdfs=params.get("max_pdfs", 5),
+                    min_elements=params.get("min_elements", 2),
+                    persist=bool(params.get("persist", False)),
+                )
+            elif action == "ingest_local_library":
+                return target_agent.ingest_local_library(
+                    min_elements=params.get("min_elements", 2)
+                )
         
         elif agent_name == "theory":
             if action == "load_data":
@@ -722,6 +740,30 @@ class PlanExecutor:
                 report.append("3. **Next Step**: Upload experimental characterization data to `/experiments` for validation.")
                 
                 return {"recommendation": "\n\n".join(report)}
+            elif action == "knowledge_pack":
+                try:
+                    plan = self._active_plan
+                    try:
+                        from src.agents.core.theory_agent import TheoryDataConfig
+                        allowed = TheoryDataConfig().elements
+                    except Exception:
+                        allowed = None
+                    pack = {
+                        "task_id": plan.task_id if plan else None,
+                        "query": plan.description if plan else None,
+                        "task_type": plan.task_type.value if plan else None,
+                        "evidence_stats": self.db.get_evidence_stats(allowed_elements=allowed),
+                        "knowledge_rag": (plan.results.get("knowledge_rag") if plan else []),
+                        "reasoning_report": (plan.results.get("reasoning_report") if plan else []),
+                    }
+                    out_dir = os.path.join("data", "tasks")
+                    os.makedirs(out_dir, exist_ok=True)
+                    out_path = os.path.join(out_dir, f"knowledge_{plan.task_id if plan else 'unknown'}.json")
+                    with open(out_path, "w", encoding="utf-8") as f:
+                        json.dump(pack, f, ensure_ascii=False, indent=2)
+                    return {"knowledge_pack": pack, "path": out_path}
+                except Exception as e:
+                    return {"error": f"knowledge_pack failed: {e}"}
             elif action == "summarize":
                  return {"summary": "Task completed."}
                  

@@ -105,3 +105,18 @@ streamlit run src/interface/app.py
 - 2026-01-25: Added MARS benchmark doc `docs/mars_benchmark.md`
 - 2026-01-25: Added examples and evaluation folders for reproducible demos
 - 2026-01-25: Added idea upgrade doc `docs/idea_upgrade.md`
+
+
+## 8. Literature-Driven HOR Pipeline (One Command)
+
+Run a full pipeline in one command:
+**online literature harvest -> seed CSV -> metrics + LSV generation -> import -> LSV analysis**
+
+```powershell
+python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
+```
+
+Outputs:
+- `data/experimental/literature_hor_seed.csv`
+- `data/experimental/literature_activity_metrics.csv`
+- `data/experimental/literature_rde_lsv/`

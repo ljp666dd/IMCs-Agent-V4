@@ -22,6 +22,21 @@ We provide a **One-Click Launcher** for Windows users.
 
 ---
 
+## 📚 Literature-Driven HOR Pipeline (One Command)
+
+This pipeline runs: **online literature harvest → seed CSV → metrics + LSV generation → import → LSV analysis**.
+
+```powershell
+python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
+```
+
+Outputs:
+- `data/experimental/literature_hor_seed.csv`
+- `data/experimental/literature_activity_metrics.csv`
+- `data/experimental/literature_rde_lsv/` (LSV curves + manifest)
+
+---
+
 ## 🛡️ Security & Configuration
 
 **CRITICAL**: You must configure secrets before running.

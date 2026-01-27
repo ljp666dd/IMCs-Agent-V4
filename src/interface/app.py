@@ -331,6 +331,48 @@ def api_knowledge_stats():
     res.raise_for_status()
     return res.json()
 
+def load_knowledge_pack(task_id: str):
+    if not task_id:
+        return None
+    path = os.path.join(ROOT_DIR, "data", "tasks", f"knowledge_{task_id}.json")
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+def render_knowledge_pack(pack: dict):
+    if not pack:
+        return
+    st.markdown("### Knowledge Pack")
+    meta_cols = st.columns(3)
+    meta_cols[0].metric("Task ID", pack.get("task_id") or "-")
+    meta_cols[1].metric("Task Type", pack.get("task_type") or "-")
+    meta_cols[2].metric("Query", (pack.get("query") or "")[:20] + "..." if pack.get("query") else "-")
+
+    stats = pack.get("evidence_stats") or {}
+    if stats:
+        st.markdown("#### Evidence Stats")
+        st.json(stats)
+
+    report = pack.get("reasoning_report") or []
+    if report:
+        st.markdown("#### Reasoning Report (Top Materials)")
+        try:
+            st.dataframe(pd.DataFrame(report), use_container_width=True)
+        except Exception:
+            st.json(report)
+
+    rag = pack.get("knowledge_rag") or []
+    if rag:
+        st.markdown("#### Knowledge RAG (Top)")
+        try:
+            st.dataframe(pd.DataFrame(rag), use_container_width=True)
+        except Exception:
+            st.json(rag)
+
 def render_task_graph(steps):
     if not steps:
         st.info("No steps available.")
@@ -1185,6 +1227,13 @@ def render_chat():
             except Exception as e:
                 st.warning(f"Evidence view failed: {e}")
 
+        # Knowledge Pack (evidence-driven summary)
+        pack_task_id = st.session_state.active_task_id or st.session_state.last_task_id
+        pack = load_knowledge_pack(pack_task_id)
+        if pack:
+            st.markdown("---")
+            render_knowledge_pack(pack)
+
 # ========== Data Analysis Page ==========
 
 def render_data_analysis():
@@ -1876,6 +1925,22 @@ def render_literature():
     if not os.path.exists(base_dir):
         st.info(ui_text(f"文献目录: {base_dir}"))
         return
+    col_idx_a, col_idx_b = st.columns([1, 2])
+    with col_idx_a:
+        if st.button("Index local PDFs to knowledge graph"):
+            agents = load_agents()
+            if agents and agents.get("literature"):
+                with st.spinner("Indexing local PDFs..."):
+                    try:
+                        res = agents["literature"].ingest_local_library()
+                        st.success(f"Indexed {res.get('indexed_sources', 0)} sources, linked {res.get('linked_materials', 0)} materials.")
+                    except Exception as e:
+                        st.error(f"Indexing failed: {e}")
+            else:
+                st.error("Literature agent not available.")
+    with col_idx_b:
+        st.caption("This indexes local PDFs into knowledge_sources and links detected formulas to materials.")
+
 
     search_root = default_dir if os.path.exists(default_dir) else base_dir
     pdf_paths = []

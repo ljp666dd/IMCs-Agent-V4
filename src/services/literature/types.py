@@ -10,6 +10,8 @@ class PaperInfo:
     abstract: str = ""
     doi: str = ""
     url: str = ""
+    pdf_url: str = ""
+    is_open_access: bool = False
     citation_count: int = 0
     keywords: List[str] = field(default_factory=list)
     full_text: str = ""
