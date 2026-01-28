@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 from src.services.task.planner import TaskPlanner
 from src.services.task.executor import PlanExecutor
-from src.services.task.types import TaskPlan, TaskType
+from src.services.task.types import TaskPlan, TaskType, TaskStep
 from src.services.db.database import DatabaseService
 
 # Initialize Services
@@ -33,6 +33,63 @@ class TaskResponse(BaseModel):
     steps: List[Dict]
     status: str
 
+
+def _restore_plan_from_db(task_id: str) -> Optional[TaskPlan]:
+    plan_row = db.get_plan(task_id)
+    if not plan_row:
+        return None
+    steps = db.list_plan_steps(task_id)
+    latest = {}
+    for s in steps:
+        latest[s["step_id"]] = s
+
+    try:
+        task_type = TaskType(plan_row.get("task_type"))
+    except Exception:
+        task_type = TaskType.GENERAL
+
+    plan = TaskPlan(
+        task_id=task_id,
+        task_type=task_type,
+        description=plan_row.get("description") or "",
+        steps=[],
+        status=plan_row.get("status") or "pending",
+    )
+
+    def _step_rank(step_id: str) -> int:
+        if isinstance(step_id, str) and step_id.startswith("step_"):
+            try:
+                return int(step_id.split("_", 1)[1])
+            except Exception:
+                return 10 ** 9
+        return 10 ** 9
+
+    for step_id in sorted(latest.keys(), key=_step_rank):
+        row = latest[step_id]
+        params = row.get("params") or {}
+        deps = row.get("dependencies") or []
+        status = row.get("status") or "pending"
+        if status in ("completed", "replanned", "skipped"):
+            step_status = "completed"
+        elif status in ("failed", "blocked"):
+            step_status = status
+        else:
+            step_status = "pending"
+        step = TaskStep(
+            step_id=step_id,
+            agent=row.get("agent", ""),
+            action=row.get("action", ""),
+            params=params,
+            dependencies=deps,
+            status=step_status,
+            result=row.get("result"),
+            error=row.get("error"),
+        )
+        plan.steps.append(step)
+        if step.result is not None:
+            plan.results[step_id] = step.result
+    return plan
+
 @router.post("/create", response_model=TaskResponse)
 async def create_task(req: TaskRequest):
     """Create a new task plan based on natural language query."""
@@ -57,14 +114,61 @@ async def chat(req: ChatRequest):
 @router.post("/execute/{task_id}")
 async def execute_task(task_id: str, background_tasks: BackgroundTasks):
     """Execute a task (Async)."""
-    # In a real DB-backed app, we load plan from DB.
-    # Here we use the in-memory current_plan from agent_instance (Singleton-ish).
+    # If not in memory, attempt to restore from DB for resume/confirmation.
     if not agent_instance.current_plan or agent_instance.current_plan.task_id != task_id:
-        raise HTTPException(status_code=404, detail="Task not found in memory (DB not connected in API yet)")
+        restored = _restore_plan_from_db(task_id)
+        if not restored:
+            raise HTTPException(status_code=404, detail="Task not found in memory or DB")
+        agent_instance.current_plan = restored
+
+    plan = agent_instance.current_plan
+    if plan.status in ("completed", "failed", "blocked"):
+        return {"message": f"Task already {plan.status}", "task_id": task_id}
     
     # Run in background
     background_tasks.add_task(agent_instance.execute_plan, agent_instance.current_plan)
     return {"message": "Task execution started", "task_id": task_id}
+
+
+class GapConfirmRequest(BaseModel):
+    run_step_ids: List[str] = []
+    mark_complete: bool = False
+
+
+@router.post("/{task_id}/confirm_gap")
+async def confirm_gap_fill(task_id: str, req: GapConfirmRequest):
+    """Confirm or skip evidence gap steps before continuing."""
+    plan = db.get_plan(task_id)
+    if not plan:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    steps = db.list_plan_steps(task_id)
+    latest = {}
+    for s in steps:
+        latest[s["step_id"]] = s
+
+    pending_ids = [sid for sid, row in latest.items() if (row.get("status") in ("pending", "running"))]
+    run_ids = set(req.run_step_ids or [])
+    skip_ids = [sid for sid in pending_ids if sid not in run_ids]
+
+    for sid in skip_ids:
+        row = latest.get(sid) or {}
+        db.log_plan_step(
+            plan_id=task_id,
+            step_id=sid,
+            agent=row.get("agent", ""),
+            action=row.get("action", ""),
+            status="skipped",
+            dependencies=row.get("dependencies") or [],
+            params=row.get("params") or {},
+            result={"note": "Skipped by user confirmation"},
+        )
+
+    if req.mark_complete:
+        db.update_plan_status(task_id, "completed")
+        return {"message": "Gap fill skipped. Task marked completed.", "skipped": skip_ids}
+
+    return {"message": "Gap fill confirmed.", "skipped": skip_ids, "run": list(run_ids)}
 
 @router.get("/{task_id}")
 async def get_task_status(task_id: str):

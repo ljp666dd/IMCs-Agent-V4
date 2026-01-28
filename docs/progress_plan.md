@@ -256,3 +256,53 @@
 - 2026-01-26: Added meta-controller (evidence-driven planning + follow-ups) and /knowledge/stats; evaluation UI shows evidence stats.
 - 2026-01-26: Added P2 tools (DOS backfill + synthetic activity generator) and P2 test checklist.
 - 2026-01-27: Enforced element restriction across theory API, ML training, evidence stats, and import tools (TheoryDataConfig.elements only).
+
+
+## 6. 2026-01-27 Update: Literature-Driven HOR Pipeline
+
+Added a one-command pipeline:
+**online literature harvest -> seed CSV -> metrics + LSV generation -> import -> LSV analysis**
+
+Command:
+```powershell
+python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
+```
+
+Outputs:
+- `data/experimental/literature_hor_seed.csv`
+- `data/experimental/literature_activity_metrics.csv`
+- `data/experimental/literature_rde_lsv/`
+
+
+## 7. 2026-01-27 Update: DOS Automation Pipeline
+
+Added automation script for DOS coverage and orbital DOS outputs.
+
+```powershell
+python src/tools/auto_dos_pipeline.py --limit 200 --batch-size 20 --merge-pdos --update-db
+```
+
+Outputs:
+- `data/theory/orbital_pdos.json`
+- `data/theory/orbital_dos_curves/`
+- `data/theory/orbital_dos_plots/`
+- `docs/dos_coverage_report.json`
+
+
+## 8. 2026-01-27 Update: DOS Curve Prediction
+
+Added PCA-based DOS curve prediction (structure -> DOS curve).
+
+```powershell
+python src/tools/train_dos_curve_model.py --channel total --n-components 20
+python src/tools/predict_dos_curves.py --only-missing --update-db --plot
+```
+
+
+## 9. 2026-01-27 Update: Multi-Channel DOS Curve Pipeline
+
+Added auto pipeline to train/predict total + s/p/d DOS curves.
+
+```powershell
+python src/tools/auto_dos_curve_pipeline.py --channels total,s,p,d --n-components 20 --only-missing --plot --update-db
+```

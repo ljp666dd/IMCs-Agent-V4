@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS plan_steps (
     step_id TEXT NOT NULL,
     agent TEXT NOT NULL,
     action TEXT NOT NULL,
+    params TEXT,                         -- JSON params for step
     dependencies TEXT,                   -- JSON list of step_ids
     status TEXT NOT NULL,
     result TEXT,                         -- JSON

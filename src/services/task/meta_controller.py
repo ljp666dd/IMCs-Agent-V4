@@ -196,3 +196,143 @@ class MetaController:
             filtered.append(spec)
 
         return filtered
+
+    def _detect_hor(self, user_request: str) -> bool:
+        request_lower = (user_request or "").lower()
+        return "hor" in request_lower or "hydrogen oxidation" in request_lower
+
+    def _required_evidence(self, task_type: TaskType, user_request: str) -> Tuple[List[str], List[str]]:
+        """Return required evidence sources and material fields for the task."""
+        request_lower = (user_request or "").lower()
+        wants_hor = self._detect_hor(user_request)
+
+        required_sources = set()
+        required_fields = set()
+
+        # Default expectations by task type
+        if task_type in (TaskType.CATALYST_DISCOVERY, TaskType.LITERATURE_REVIEW):
+            required_sources.add("literature")
+        if task_type in (TaskType.CATALYST_DISCOVERY, TaskType.PROPERTY_PREDICTION):
+            required_sources.add("ml_prediction")
+            required_fields.add("formation_energy")
+        if task_type == TaskType.PERFORMANCE_ANALYSIS:
+            required_sources.add("activity_metric")
+            required_sources.add("experiment")
+
+        # Query hints
+        if "literature" in request_lower or "paper" in request_lower or "knowledge" in request_lower:
+            required_sources.add("literature")
+        if "adsorption" in request_lower:
+            required_sources.add("adsorption_energy")
+        if "dos" in request_lower:
+            required_fields.add("dos_data")
+
+        # HOR-specific evidence
+        if wants_hor:
+            required_sources.update(["activity_metric", "adsorption_energy"])
+            required_fields.add("dos_data")
+
+        return sorted(required_sources), sorted(required_fields)
+
+    def analyze_evidence_gap(
+        self,
+        material_ids: List[str],
+        task_type: TaskType,
+        user_request: str,
+    ) -> Dict[str, Any]:
+        """Analyze evidence gaps for candidate materials."""
+        if not material_ids:
+            return {"summary": {}, "materials": {}, "recommended_steps": []}
+
+        required_sources, required_fields = self._required_evidence(task_type, user_request)
+        evidence_counts = self.db.get_evidence_counts(material_ids)
+        feature_flags = self.db.get_material_feature_flags(material_ids)
+
+        summary: Dict[str, int] = {k: 0 for k in (required_sources + required_fields)}
+        materials: Dict[str, Any] = {}
+
+        for mid in material_ids:
+            counts = evidence_counts.get(mid, {})
+            flags = feature_flags.get(mid, {})
+            missing = []
+
+            for src in required_sources:
+                if counts.get(src, 0) <= 0:
+                    missing.append(src)
+            for field in required_fields:
+                if not flags.get(field, False):
+                    missing.append(field)
+
+            for miss in missing:
+                summary[miss] = summary.get(miss, 0) + 1
+
+            materials[mid] = {
+                "missing": missing,
+                "counts": counts,
+                "flags": flags,
+            }
+
+        summary["materials_total"] = len(material_ids)
+        recommended_steps = self._recommend_gap_steps(summary, user_request)
+
+        return {
+            "required_sources": required_sources,
+            "required_fields": required_fields,
+            "summary": summary,
+            "materials": materials,
+            "recommended_steps": recommended_steps,
+        }
+
+    def _recommend_gap_steps(self, summary: Dict[str, int], user_request: str) -> List[Dict[str, Any]]:
+        """Convert gap summary into recommended agent actions."""
+        steps: List[Dict[str, Any]] = []
+        wants_hor = self._detect_hor(user_request)
+
+        if summary.get("literature", 0) > 0:
+            steps.append({
+                "agent": "literature",
+                "action": "search",
+                "params": {"query": user_request, "limit": 10},
+                "reason": "Missing literature evidence for candidate materials.",
+            })
+            if wants_hor:
+                steps.append({
+                    "agent": "literature",
+                    "action": "harvest_hor_seed",
+                    "params": {"query": user_request, "limit": 12, "max_pdfs": 5, "min_elements": 2, "persist": True},
+                    "reason": "HOR-specific metrics missing; harvest seed evidence.",
+                })
+
+        data_types = []
+        if summary.get("formation_energy", 0) > 0:
+            data_types.append("formation_energy")
+        if summary.get("dos_data", 0) > 0:
+            data_types.append("dos")
+        if summary.get("adsorption_energy", 0) > 0:
+            data_types.append("adsorption")
+        if data_types:
+            data_types = ["cif"] + sorted(set(data_types))
+            steps.append({
+                "agent": "theory",
+                "action": "download",
+                "params": {"data_types": data_types, "limit": 50},
+                "reason": "Missing theory/DOS/adsorption evidence.",
+            })
+
+        if summary.get("activity_metric", 0) > 0:
+            steps.append({
+                "agent": "experiment",
+                "action": "process",
+                "params": {},
+                "reason": "Missing activity metrics; process local experiment data.",
+            })
+
+        if summary.get("ml_prediction", 0) > 0:
+            steps.append({
+                "agent": "ml",
+                "action": "train",
+                "params": {"include_deep_learning": True},
+                "reason": "Missing ML predictions for candidate materials.",
+            })
+
+        return steps

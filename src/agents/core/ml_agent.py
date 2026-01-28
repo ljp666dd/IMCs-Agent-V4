@@ -146,7 +146,14 @@ class MLAgent:
         # For now, we focus on saving the Model result.
         
     @log_exception(logger)
-    def load_from_db(self, target_col: str = "formation_energy"):
+    def _is_dos_target(self, target_col: str) -> bool:
+        if not target_col:
+            return False
+        key = target_col.replace("dos_", "")
+        return key in self.DOS_FEATURE_KEYS
+
+    @log_exception(logger)
+    def load_from_db(self, target_col: str = "formation_energy", include_dos_features: bool = False):
         """Load training data directly from Database."""
         logger.info(f"Loading training data from DB (target={target_col})...")
         try:
@@ -155,7 +162,7 @@ class MLAgent:
         except Exception:
             allowed = None
         rows = self.db.fetch_training_set(target_col, allowed_elements=allowed)
-        
+
         if not rows:
             logger.warning("No data found in DB for training.")
             return
@@ -163,43 +170,58 @@ class MLAgent:
         X_list = []
         y_list = []
         id_list = []
-        
-        # 从数据库读取 CIF 并提取结构特征(当前特征主要来自结构/几何)
+        dos_target = self._is_dos_target(target_col)
+        if dos_target:
+            include_dos_features = False
+            logger.info("DOS target selected; using structure-only features as input.")
+
+        # ?????? CIF ???????
         for row in rows:
             cif_path = row.get("cif_path")
             target = row.get(target_col)
             dos_data = row.get("dos_data")
-            
+
+            if dos_target:
+                if dos_data:
+                    try:
+                        if isinstance(dos_data, str):
+                            dos_data = json.loads(dos_data)
+                        target = dos_data.get(target_col.replace("dos_", ""))
+                    except Exception:
+                        target = None
+                else:
+                    target = None
+
             if cif_path and os.path.exists(cif_path) and target is not None:
-                # Extract features
                 feats = self.featurizer.extract(cif_path)
                 if feats is not None:
-                    # 追加 DOS 描述符(如存在), 否则填 0
-                    dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
-                    if dos_data:
-                        try:
-                            if isinstance(dos_data, str):
-                                dos_data = json.loads(dos_data)
-                            dos_vec = [float(dos_data.get(k, 0.0)) for k in self.DOS_FEATURE_KEYS]
-                        except Exception:
-                            dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
-                    feats = np.concatenate([feats, np.array(dos_vec, dtype=np.float32)])
+                    if include_dos_features:
+                        dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                        if dos_data:
+                            try:
+                                if isinstance(dos_data, str):
+                                    dos_data = json.loads(dos_data)
+                                dos_vec = [float(dos_data.get(k, 0.0)) for k in self.DOS_FEATURE_KEYS]
+                            except Exception:
+                                dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                        feats = np.concatenate([feats, np.array(dos_vec, dtype=np.float32)])
                     X_list.append(feats)
                     y_list.append(target)
                     id_list.append(row.get("material_id"))
-        
+
         if X_list:
             X = np.array(X_list)
             y = np.array(y_list)
-            feature_names = self.featurizer.feature_names + [f"dos_{k}" for k in self.DOS_FEATURE_KEYS]
-            
-            # Populate DataManager manually
+            feature_names = self.featurizer.feature_names
+            if include_dos_features:
+                feature_names = feature_names + [f"dos_{k}" for k in self.DOS_FEATURE_KEYS]
+
             self.data_manager.X = X
             self.data_manager.y = y
             self.data_manager.feature_names = feature_names
             self.data_manager.material_ids = np.array(id_list) if id_list else None
             self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
-            logger.info(f"Loaded {len(X)} samples from DB.")
+            logger.info(f"Loaded {len(X)} samples from DB (features={len(feature_names)}).")
         else:
             logger.warning("Failed to extract features for any DB records.")
 

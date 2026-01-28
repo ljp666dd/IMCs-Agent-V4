@@ -221,7 +221,8 @@ class DatabaseService:
 
     def log_plan_step(self, plan_id: str, step_id: str, agent: str, action: str,
                       status: str, result: Dict = None, error: str = None,
-                      dependencies: Optional[List[str]] = None):
+                      dependencies: Optional[List[str]] = None,
+                      params: Optional[Dict] = None):
         """Log a step execution (Insert or Update)."""
         # We use INSERT OR REPLACE if ID is step_id? No, step_id is text string 'step_1'.
         # We should use INSERT for history log, but for current state capturing 'latest' is fine.
@@ -231,10 +232,11 @@ class DatabaseService:
         # 采用追加式日志, 便于追踪每次状态变化
         
         query = """
-        INSERT INTO plan_steps (plan_id, step_id, agent, action, dependencies, status, result, error)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO plan_steps (plan_id, step_id, agent, action, params, dependencies, status, result, error)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         deps_json = json.dumps(dependencies or []) if dependencies is not None else None
+        params_json = json.dumps(params) if params is not None else None
         result_json = None
         if result is not None:
             try:
@@ -244,7 +246,7 @@ class DatabaseService:
         
         with self._get_conn() as conn:
             cursor = conn.cursor()
-            cursor.execute(query, (plan_id, step_id, agent, action, deps_json, status, result_json, error))
+            cursor.execute(query, (plan_id, step_id, agent, action, params_json, deps_json, status, result_json, error))
 
     def get_plan(self, plan_id: str) -> Optional[Dict]:
         """Get a plan by id."""
@@ -268,6 +270,11 @@ class DatabaseService:
                 if data.get("result"):
                     try:
                         data["result"] = json.loads(data["result"])
+                    except Exception:
+                        pass
+                if data.get("params"):
+                    try:
+                        data["params"] = json.loads(data["params"])
                     except Exception:
                         pass
                 if data.get("dependencies"):
@@ -496,6 +503,59 @@ class DatabaseService:
             cursor.execute("SELECT * FROM evidence WHERE material_id = ? ORDER BY created_at DESC", (material_id,))
             rows = cursor.fetchall()
             return [dict(row) for row in rows]
+
+    def get_evidence_counts(self, material_ids: List[str]) -> Dict[str, Dict[str, int]]:
+        """Get evidence counts by source_type for each material_id."""
+        if not material_ids:
+            return {}
+        placeholders = ",".join(["?"] * len(material_ids))
+        counts: Dict[str, Dict[str, int]] = {mid: {} for mid in material_ids}
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                f"""
+                SELECT material_id, source_type, COUNT(*) AS cnt
+                FROM evidence
+                WHERE material_id IN ({placeholders})
+                GROUP BY material_id, source_type
+                """,
+                material_ids,
+            )
+            for row in cursor.fetchall():
+                mid = row["material_id"]
+                stype = row["source_type"] or "unknown"
+                counts.setdefault(mid, {})[stype] = row["cnt"] or 0
+        return counts
+
+    def get_material_feature_flags(self, material_ids: List[str]) -> Dict[str, Dict[str, bool]]:
+        """Return material-level feature flags for evidence gap analysis."""
+        if not material_ids:
+            return {}
+        placeholders = ",".join(["?"] * len(material_ids))
+        flags: Dict[str, Dict[str, bool]] = {
+            mid: {"formation_energy": False, "dos_data": False} for mid in material_ids
+        }
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                f"""
+                SELECT material_id, formation_energy, dos_data
+                FROM materials
+                WHERE material_id IN ({placeholders})
+                """,
+                material_ids,
+            )
+            for row in cursor.fetchall():
+                mid = row["material_id"]
+                if not mid:
+                    continue
+                flags[mid] = {
+                    "formation_energy": row["formation_energy"] is not None,
+                    "dos_data": row["dos_data"] is not None,
+                }
+        return flags
 
     # ========== Dataset Snapshots (Reproducibility) ==========
 

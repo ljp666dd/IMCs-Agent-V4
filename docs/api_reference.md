@@ -167,3 +167,17 @@ Header：`Authorization: Bearer <token>`
 ## 8. 更新记录
 - 2026-01-25：补充进度与计划文档链接（非 API 变更）
 - 2026-01-25: 无 API 变更，仅记录中文任务触发规则
+
+
+## 11. Literature-Driven Pipeline (CLI)
+This pipeline is CLI-based (not API) and runs:
+**online literature harvest -> seed CSV -> metrics + LSV generation -> import -> LSV analysis**
+
+```powershell
+python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
+```
+
+Outputs:
+- `data/experimental/literature_hor_seed.csv`
+- `data/experimental/literature_activity_metrics.csv`
+- `data/experimental/literature_rde_lsv/`

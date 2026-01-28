@@ -259,6 +259,12 @@ def api_get_task_status(task_id: str):
     res.raise_for_status()
     return res.json()
 
+def api_confirm_gap_fill(task_id: str, run_step_ids: List[str] = None, mark_complete: bool = False):
+    payload = {"run_step_ids": run_step_ids or [], "mark_complete": mark_complete}
+    res = requests.post(f"{API_BASE_URL}/tasks/{task_id}/confirm_gap", json=payload, timeout=20)
+    res.raise_for_status()
+    return res.json()
+
 @st.cache_data(ttl=60)
 def api_list_materials():
     res = requests.get(f"{API_BASE_URL}/theory/materials", timeout=20)
@@ -356,6 +362,23 @@ def render_knowledge_pack(pack: dict):
     if stats:
         st.markdown("#### Evidence Stats")
         st.json(stats)
+
+    gap = pack.get("evidence_gap") or {}
+    if gap:
+        st.markdown("#### Evidence Gaps")
+        summary = gap.get("summary") or {}
+        if summary:
+            try:
+                st.dataframe(pd.DataFrame([summary]), use_container_width=True)
+            except Exception:
+                st.json(summary)
+        steps = gap.get("recommended_steps") or []
+        if steps:
+            st.markdown("#### Recommended Follow-up Steps")
+            try:
+                st.dataframe(pd.DataFrame(steps), use_container_width=True)
+            except Exception:
+                st.json(steps)
 
     report = pack.get("reasoning_report") or []
     if report:
@@ -571,7 +594,101 @@ def render_evidence_chain(material_id: str):
     mermaid = build_evidence_mermaid(material_id, data.get("formula", ""), evidence)
     st.code(mermaid, language="mermaid")
 
-    # Knowledge RAG (graph-filtered retrieval)
+    # DOS Curve Predictions
+    st.markdown("### DOS Curve Predictions")
+    try:
+        dos_meta = data.get("dos_data")
+        if isinstance(dos_meta, str):
+            try:
+                dos_meta = json.loads(dos_meta)
+            except Exception:
+                dos_meta = None
+        channel_options = ["total", "s", "p", "d"]
+        default_channel = "total"
+        if isinstance(dos_meta, dict):
+            ch = dos_meta.get("dos_curve_pred_channel")
+            if ch in channel_options:
+                default_channel = ch
+        channel = st.selectbox("DOS channel", channel_options, index=channel_options.index(default_channel), key=f"dos_ch_{material_id}")
+        pred_curve = None
+        pred_plot = None
+        real_curve = None
+        real_plot = None
+        if isinstance(dos_meta, dict):
+            if dos_meta.get("dos_curve_pred_channel") == channel:
+                pred_curve = dos_meta.get("dos_curve_pred_path")
+                pred_plot = dos_meta.get("dos_plot_pred_path")
+            real_curve = dos_meta.get("dos_curve_path")
+            real_plot = dos_meta.get("dos_plot_path")
+        if not pred_curve:
+            pred_curve = os.path.join(ROOT_DIR, "data", "theory", "dos_curve_predictions", channel, f"{material_id}_{channel}_pred.csv")
+        if not pred_plot:
+            pred_plot = os.path.join(ROOT_DIR, "data", "theory", "dos_curve_pred_plots", channel, f"{material_id}_{channel}_pred.png")
+        if not real_curve:
+            real_curve = os.path.join(ROOT_DIR, "data", "theory", "orbital_dos_curves", f"{material_id}_dos_curve.csv")
+        if not real_plot:
+            real_plot = os.path.join(ROOT_DIR, "data", "theory", "orbital_dos_plots", f"{material_id}_dos.png")
+        # Load model R2 report
+        report_path = os.path.join(ROOT_DIR, "data", "ml_agent", "dos_curve_report_all.json")
+        rep = None
+        if os.path.exists(report_path):
+            try:
+                with open(report_path, "r") as f:
+                    report_all = json.load(f)
+                rep = report_all.get(channel) if isinstance(report_all, dict) else None
+            except Exception:
+                rep = None
+        if rep is None:
+            alt_report = os.path.join(ROOT_DIR, "data", "ml_agent", f"dos_curve_report_{channel}.json")
+            if os.path.exists(alt_report):
+                try:
+                    with open(alt_report, "r") as f:
+                        rep = json.load(f)
+                except Exception:
+                    rep = None
+        if rep:
+            st.caption(f"Model R2 (components): {rep.get('component_r2')} | R2 (curve): {rep.get('curve_r2')}")
+        # Render comparison
+        df_pred = None
+        df_real = None
+        if pred_curve and os.path.exists(pred_curve):
+            try:
+                df_pred = pd.read_csv(pred_curve)
+            except Exception:
+                df_pred = None
+        if real_curve and os.path.exists(real_curve):
+            try:
+                df_real = pd.read_csv(real_curve)
+            except Exception:
+                df_real = None
+        if df_pred is not None or df_real is not None:
+            compare = None
+            if df_real is not None and "energy" in df_real.columns:
+                real_col = "total_dos" if channel == "total" else f"{channel}_dos"
+                if real_col in df_real.columns:
+                    compare = df_real[["energy", real_col]].rename(columns={real_col: "real"})
+            if df_pred is not None and "energy" in df_pred.columns:
+                pred_col = "dos" if "dos" in df_pred.columns else df_pred.columns[-1]
+                dfp = df_pred[["energy", pred_col]].rename(columns={pred_col: "pred"})
+                if compare is None:
+                    compare = dfp
+                else:
+                    compare = compare.merge(dfp, on="energy", how="outer")
+            if compare is not None:
+                compare = compare.sort_values("energy")
+                st.caption("DOS curve comparison")
+                st.line_chart(compare.set_index("energy"))
+        if pred_plot and os.path.exists(pred_plot):
+            st.caption(f"Predicted DOS plot ({channel})")
+            st.image(pred_plot, use_container_width=True)
+        if real_plot and os.path.exists(real_plot):
+            st.caption("Reference DOS plot")
+            st.image(real_plot, use_container_width=True)
+        if not (pred_curve and os.path.exists(pred_curve)) and not (real_curve and os.path.exists(real_curve)):
+            st.info("No DOS curves available for this material.")
+    except Exception as e:
+        st.info(f"DOS curve preview failed: {e}")
+
     st.markdown("### Knowledge RAG")
     rag_query = st.text_input("Query knowledge sources", key=f"rag_query_{material_id}")
     if rag_query:
@@ -1184,7 +1301,52 @@ def render_chat():
             render_task_graph(st.session_state.task_status.get("steps", []))
             current_status = st.session_state.task_status.get("status", "unknown")
             st.caption(f"Current status: {current_status}")
-            if current_status in ["completed", "failed", "blocked"]:
+            if current_status == "awaiting_confirmation":
+                st.info("Evidence gap fill is ready. Confirm to continue.")
+                pending_steps = [
+                    s for s in st.session_state.task_status.get("steps", [])
+                    if s.get("status") in ("pending", "running")
+                ]
+                if pending_steps:
+                    step_rows = []
+                    for s in pending_steps:
+                        step_rows.append({
+                            "step_id": s.get("step_id"),
+                            "agent": s.get("agent"),
+                            "action": s.get("action"),
+                            "params": s.get("params"),
+                            "status": s.get("status"),
+                        })
+                    st.dataframe(pd.DataFrame(step_rows), use_container_width=True)
+                    default_ids = [s.get("step_id") for s in pending_steps if s.get("step_id")]
+                    selected_ids = st.multiselect(
+                        "Select gap steps to run",
+                        default_ids,
+                        default=default_ids,
+                        key="gap_step_select",
+                    )
+                else:
+                    selected_ids = []
+
+                col_gap_a, col_gap_b = st.columns([1, 1])
+                with col_gap_a:
+                    if st.button("Continue selected gap steps", key="continue_gap_fill"):
+                        try:
+                            api_confirm_gap_fill(st.session_state.active_task_id, run_step_ids=selected_ids)
+                            api_execute_task(st.session_state.active_task_id)
+                            st.session_state.task_polling = True
+                            st.success("Gap fill execution started.")
+                        except Exception as e:
+                            st.error(f"Failed to continue: {e}")
+                with col_gap_b:
+                    if st.button("Skip gap fill and finish", key="skip_gap_fill"):
+                        try:
+                            api_confirm_gap_fill(st.session_state.active_task_id, run_step_ids=[], mark_complete=True)
+                            st.session_state.task_polling = False
+                            st.success("Gap fill skipped. Task marked completed.")
+                        except Exception as e:
+                            st.error(f"Failed to skip: {e}")
+            if current_status in ["completed", "failed", "blocked", "awaiting_confirmation"]:
                 st.session_state.task_polling = False
             elif st.session_state.task_polling:
                 time.sleep(3)
@@ -1646,61 +1808,73 @@ def render_ml_training():
                     
                     if data_source_type.startswith("理论"):
                         # === Theoretical Data Loading ===
-                        if target == "形成能 (Formation Energy)":
+                        if target == "??? (Formation Energy)":
                             target_col = "formation_energy"
                         else:
                             target_col = target
-                        
-                        # Determine data file
-                        if target_col == "formation_energy":
-                            extended_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_extended.json")
-                            base_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_full.json")
-                            
-                            if os.path.exists(extended_file):
-                                data_file = extended_file
-                                st.caption("✅ 使用扩展特征数据集 (42维)")
-                            else:
-                                data_file = base_file
-                                st.caption("⚠️ 使用基础特征数据集 (20维)")
-                        else:
-                            extended_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_data_extended.json")
-                            base_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_descriptors_full.json")
-                            
-                            if os.path.exists(extended_dos):
-                                data_file = extended_dos
-                                st.caption(f"✅ 使用扩展 DOS 数据集 - 目标: {target_col}")
-                            else:
-                                data_file = base_dos
-                                st.caption("⚠️ 使用基础 DOS 数据集")
-                        
-                        if not os.path.exists(data_file):
-                            st.error(f"数据文件不存在: {data_file}")
-                            ml_agent = None
-                        else:
-                            with st.spinner("加载理论数据中..."):
+                        dos_targets = {
+                            "d_band_center", "d_band_width", "d_band_filling",
+                            "DOS_EF", "DOS_window", "unoccupied_d_states",
+                            "epsilon_d_minus_EF", "valence_DOS_slope",
+                            "num_DOS_peaks", "first_peak_position", "total_states"
+                        }
+                        use_db_for_dos = target_col in dos_targets
+                        if use_db_for_dos:
+                            with st.spinner("Loading DOS target from DB..."):
                                 try:
-                                    ml_agent.load_data(data_path=data_file, target_col=target_col)
+                                    ml_agent.load_from_db(target_col=target_col, include_dos_features=False)
                                     ml_agent.config.test_size = test_size
-                                    st.success(f"加载数据: {len(ml_agent.X)} 样本, {ml_agent.X.shape[1]} 特征")
+                                    st.success(f"Loaded DB data: {len(ml_agent.X)} samples, {ml_agent.X.shape[1]} features (DOS target)")
                                 except Exception as e:
-                                    st.error(f"加载数据失败: {e}")
+                                    st.error(f"DB loading failed: {e}")
                                     ml_agent = None
+                        else:
+                            # Determine data file
+                            if target_col == "formation_energy":
+                                extended_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_extended.json")
+                                base_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_full.json")
+                                if os.path.exists(extended_file):
+                                    data_file = extended_file
+                                    st.caption("?????????(42?)")
+                                else:
+                                    data_file = base_file
+                                    st.caption("?????????(20?)")
+                            else:
+                                extended_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_data_extended.json")
+                                base_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_descriptors_full.json")
+                                if os.path.exists(extended_dos):
+                                    data_file = extended_dos
+                                    st.caption(f"???? DOS ??? - ??: {target_col}")
+                                else:
+                                    data_file = base_dos
+                                    st.caption("???? DOS ???")
+                            if not os.path.exists(data_file):
+                                st.error(f"???????: {data_file}")
+                                ml_agent = None
+                            else:
+                                with st.spinner("???????..."):
+                                    try:
+                                        ml_agent.load_data(data_path=data_file, target_col=target_col)
+                                        ml_agent.config.test_size = test_size
+                                        st.success(f"????: {len(ml_agent.X)} ??, {ml_agent.X.shape[1]} ??")
+                                    except Exception as e:
+                                        st.error(f"??????: {e}")
+                                        ml_agent = None
                     else:
                         # === Experimental Data Loading ===
                         if exp_file_path and os.path.exists(exp_file_path):
-                            with st.spinner("加载实验数据..."):
+                            with st.spinner("??????..."):
                                 try:
-                                    feats = feature_cols if 'feature_cols' in locals() else None
+                                    feats = feature_cols if "feature_cols" in locals() else None
                                     ml_agent.load_generic_csv(exp_file_path, target, feats)
                                     ml_agent.config.test_size = test_size
-                                    st.success(f"加载实验数据: {len(ml_agent.X)} 样本, {ml_agent.X.shape[1]} 特征选定")
+                                    st.success(f"??????: {len(ml_agent.X)} ??, {ml_agent.X.shape[1]} ????")
                                 except Exception as e:
-                                    st.error(f"加载实验数据失败: {e}")
+                                    st.error(f"????????: {e}")
                                     ml_agent = None
                         else:
-                            st.error("未找到实验数据文件，请先上传并确保文件有效")
+                            st.error("??????????????????????")
                             ml_agent = None
-                        
                     if ml_agent and ml_agent.X is not None:
                         all_results = []
                             

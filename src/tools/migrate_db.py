@@ -68,6 +68,7 @@ def migrate():
             step_id TEXT NOT NULL,
             agent TEXT NOT NULL,
             action TEXT NOT NULL,
+            params TEXT,
             status TEXT NOT NULL,
             result TEXT, -- JSON
             error TEXT,
@@ -191,6 +192,7 @@ def migrate():
     add_column_if_missing("experiments", "user_id INTEGER REFERENCES users(id)")
     add_column_if_missing("models", "user_id INTEGER REFERENCES users(id)")
     add_column_if_missing("plan_steps", "dependencies TEXT")
+    add_column_if_missing("plan_steps", "params TEXT")
 
     conn.commit()
     conn.close()

@@ -151,7 +151,8 @@ class PlanExecutor:
                 agent=step.agent,
                 action=step.action,
                 status="pending",
-                dependencies=step.dependencies
+                dependencies=step.dependencies,
+                params=step.params
             )
 
         if not new_step_ids:
@@ -204,7 +205,8 @@ class PlanExecutor:
                 agent=step.agent,
                 action=step.action,
                 status="pending",
-                dependencies=step.dependencies
+                dependencies=step.dependencies,
+                params=step.params
             )
 
             step_id_map[step.agent] = step.step_id
@@ -230,13 +232,21 @@ class PlanExecutor:
         
         logger.info(f"Executing Plan: {plan.task_id}")
         self._active_plan = plan
-        pending = {s.step_id: s for s in plan.steps}
+        pending = {}
         completed = set()
+        for step in plan.steps:
+            if step.status in ("completed", "skipped"):
+                completed.add(step.step_id)
+            elif step.status in ("failed", "blocked"):
+                continue
+            else:
+                pending[step.step_id] = step
         literature_papers = []
         ml_top_models = []
         ml_predictions = {}
 
         adaptive_rounds = 0
+        awaiting_confirmation = False
         while True:
             while pending:
                 # Find steps whose dependencies are satisfied
@@ -257,7 +267,8 @@ class PlanExecutor:
                             action=step.action,
                             status="blocked",
                             error="Dependencies not met",
-                            dependencies=step.dependencies
+                            dependencies=step.dependencies,
+                            params=step.params
                         )
                     plan.status = "blocked"
                     self.db.update_plan_status(plan.task_id, "blocked")
@@ -280,7 +291,8 @@ class PlanExecutor:
                             agent=step.agent,
                             action=step.action,
                             status="running",
-                            dependencies=step.dependencies
+                            dependencies=step.dependencies,
+                            params=step.params
                         )
 
                         try:
@@ -309,7 +321,8 @@ class PlanExecutor:
                                 action=step.action,
                                 status="completed",
                                 result=result,
-                                dependencies=step.dependencies
+                                dependencies=step.dependencies,
+                                params=step.params
                             )
 
                             completed.add(step.step_id)
@@ -329,7 +342,8 @@ class PlanExecutor:
                                     action=step.action,
                                     status="retrying",
                                     error=str(e),
-                                    dependencies=step.dependencies
+                                    dependencies=step.dependencies,
+                                    params=step.params
                                 )
                                 continue
 
@@ -355,7 +369,8 @@ class PlanExecutor:
                                             status="replanned",
                                             error=str(e),
                                             result={"note": spec.get("note"), "new_steps": new_step_ids},
-                                            dependencies=step.dependencies
+                                            dependencies=step.dependencies,
+                                            params=step.params
                                         )
                                         replanned = True
                                         pending.pop(step.step_id, None)
@@ -377,7 +392,8 @@ class PlanExecutor:
                                 action=step.action,
                                 status="failed",
                                 error=str(e),
-                                dependencies=step.dependencies
+                                dependencies=step.dependencies,
+                                params=step.params
                             )
 
                             # Stop execution on failure
@@ -402,9 +418,6 @@ class PlanExecutor:
                     logger.warning(f"Meta-controller follow-up failed: {e}")
 
             break
-
-        plan.status = "completed"
-        self.db.update_plan_status(plan.task_id, "completed")
 
         # Evidence aggregation (best-effort)
         # 证据链聚合: 将理论/文献/ML 结果挂接到材料实体
@@ -447,6 +460,8 @@ class PlanExecutor:
                 materials = [m for m in materials if m.get("material_id") in candidate_ids]
                 candidate_ids_snapshot = list(candidate_ids)
                 materials_snapshot = materials[:]
+                if candidate_ids_snapshot:
+                    plan.results["candidate_material_ids"] = candidate_ids_snapshot
 
                 def _formula_aliases(formula: str):
                     aliases = set()
@@ -550,6 +565,44 @@ class PlanExecutor:
                                 )
                 except Exception as e:
                     logger.warning(f"Knowledge RAG summary failed: {e}")
+
+                # Evidence gap analysis (post aggregation)
+                try:
+                    if self.meta_controller and materials_snapshot:
+                        mat_ids = [m.get("material_id") for m in materials_snapshot if m.get("material_id")]
+                        gap_report = self.meta_controller.analyze_evidence_gap(
+                            mat_ids,
+                            plan.task_type,
+                            plan.description,
+                        )
+                        if gap_report:
+                            plan.results["evidence_gap"] = gap_report
+                            gap_steps = gap_report.get("recommended_steps") or []
+                            if gap_steps:
+                                for item in gap_steps:
+                                    step_id = self._next_step_id(plan)
+                                    deps = item.get("deps") or []
+                                    step = TaskStep(
+                                        step_id=step_id,
+                                        agent=item.get("agent", ""),
+                                        action=item.get("action", ""),
+                                        params=item.get("params") or {},
+                                        dependencies=deps,
+                                        status="pending",
+                                    )
+                                    plan.steps.append(step)
+                                    self.db.log_plan_step(
+                                        plan_id=plan.task_id,
+                                        step_id=step.step_id,
+                                        agent=step.agent,
+                                        action=step.action,
+                                        status="pending",
+                                        dependencies=step.dependencies,
+                                        params=step.params
+                                    )
+                                awaiting_confirmation = True
+                except Exception as e:
+                    logger.warning(f"Evidence gap analysis failed: {e}")
         except Exception as e:
             logger.warning(f"Evidence aggregation failed: {e}")
 
@@ -606,6 +659,28 @@ class PlanExecutor:
         # Ensure key outputs exist for downstream UI/reporting
         plan.results.setdefault("knowledge_rag", [])
         plan.results.setdefault("reasoning_report", [])
+        try:
+            if plan.results.get("evidence_gap"):
+                out_dir = os.path.join("data", "tasks")
+                out_path = os.path.join(out_dir, f"knowledge_{plan.task_id}.json")
+                if os.path.exists(out_path):
+                    with open(out_path, "r", encoding="utf-8") as f:
+                        pack = json.load(f)
+                    pack["evidence_gap"] = plan.results.get("evidence_gap")
+                    if plan.results.get("candidate_material_ids"):
+                        pack["candidate_material_ids"] = plan.results.get("candidate_material_ids")
+                    with open(out_path, "w", encoding="utf-8") as f:
+                        json.dump(pack, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            logger.warning(f"Failed to update knowledge pack with evidence gap: {e}")
+        if awaiting_confirmation:
+            plan.status = "awaiting_confirmation"
+            self.db.update_plan_status(plan.task_id, "awaiting_confirmation")
+            self._active_plan = None
+            return plan.results
+
+        plan.status = "completed"
+        self.db.update_plan_status(plan.task_id, "completed")
         self._active_plan = None
         return plan.results
 
@@ -755,6 +830,8 @@ class PlanExecutor:
                         "evidence_stats": self.db.get_evidence_stats(allowed_elements=allowed),
                         "knowledge_rag": (plan.results.get("knowledge_rag") if plan else []),
                         "reasoning_report": (plan.results.get("reasoning_report") if plan else []),
+                        "evidence_gap": (plan.results.get("evidence_gap") if plan else None),
+                        "candidate_material_ids": (plan.results.get("candidate_material_ids") if plan else []),
                     }
                     out_dir = os.path.join("data", "tasks")
                     os.makedirs(out_dir, exist_ok=True)

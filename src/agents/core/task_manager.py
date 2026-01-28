@@ -87,7 +87,8 @@ class TaskManagerAgent:
                     agent=step.agent,
                     action=step.action,
                     status="pending",
-                    dependencies=step.dependencies
+                    dependencies=step.dependencies,
+                    params=step.params
                 )
         except Exception as e:
             logger.warning(f"Failed to persist plan {plan.task_id}: {e}")

@@ -111,3 +111,66 @@ streamlit run src/interface/app.py
 - See `docs/mars_benchmark.md` for details
 - Suggested focus: plan output + replan policy + case logs + evaluation
 - 2026-01-25: Added idea upgrade doc `docs/idea_upgrade.md`
+
+
+## 11. Literature-Driven HOR Pipeline (One Command)
+
+One command for: **online literature harvest -> seed CSV -> metrics + LSV generation -> import -> LSV analysis**
+
+```powershell
+python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
+```
+
+Outputs:
+- `data/experimental/literature_hor_seed.csv`
+- `data/experimental/literature_activity_metrics.csv`
+- `data/experimental/literature_rde_lsv/`
+
+
+## 12. DOS Automation Pipeline
+
+One command to fill missing DOS, render orbital curves/plots, and report coverage:
+
+```powershell
+python src/tools/auto_dos_pipeline.py --limit 200 --batch-size 20 --merge-pdos --update-db
+```
+
+Outputs:
+- `data/theory/orbital_pdos.json`
+- `data/theory/orbital_dos_curves/`
+- `data/theory/orbital_dos_plots/`
+- `docs/dos_coverage_report.json`
+
+
+## 13. DOS Curve Prediction (Structure -> DOS Curve)
+
+Train curve model (PCA + Ridge):
+```powershell
+python src/tools/train_dos_curve_model.py --channel total --n-components 20
+```
+
+Predict curves (optional plots):
+```powershell
+python src/tools/predict_dos_curves.py --only-missing --update-db --plot
+```
+
+Outputs:
+- `data/ml_agent/dos_curve_model.pkl`
+- `data/ml_agent/dos_curve_report.json`
+- `data/theory/dos_curve_predictions/`
+- `data/theory/dos_curve_pred_plots/`
+
+
+## 14. DOS Curve Multi-Channel Pipeline
+
+Train and predict for multiple channels (total/s/p/d):
+
+```powershell
+python src/tools/auto_dos_curve_pipeline.py --channels total,s,p,d --n-components 20 --only-missing --plot --update-db
+```
+
+Outputs:
+- `data/ml_agent/dos_curve_model_total.pkl` (and s/p/d)
+- `data/ml_agent/dos_curve_report_all.json`
+- `data/theory/dos_curve_predictions/<channel>/`
+- `data/theory/dos_curve_pred_plots/<channel>/`

@@ -160,7 +160,13 @@ class TheoryDataAgent:
         return count
 
     @log_exception(logger)
-    def download_orbital_dos(self, material_ids: List[str] = None, energy_range: tuple = (-15, 10)) -> int:
+    def download_orbital_dos(
+        self,
+        material_ids: List[str] = None,
+        energy_range: tuple = (-15, 10),
+        output_path: Optional[str] = None,
+        merge_existing: bool = False,
+    ) -> int:
         """
         Download Orbital DOS data.
         
@@ -185,7 +191,17 @@ class TheoryDataAgent:
                 self.db.update_material_dos(str(mat_id), descriptors)
                 updated += 1
             
-        output_path = os.path.join(self.config.output_dir, "orbital_pdos.json")
+        if output_path is None:
+            output_path = os.path.join(self.config.output_dir, "orbital_pdos.json")
+        if merge_existing and os.path.exists(output_path):
+            try:
+                with open(output_path, "r") as f:
+                    existing = json.load(f)
+            except Exception:
+                existing = {}
+            if isinstance(existing, dict):
+                existing.update(results)
+                results = existing
         with open(output_path, 'w') as f:
             json.dump(results, f, indent=2)
             

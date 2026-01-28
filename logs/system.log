@@ -3062,3 +3062,4 @@ TypeError: 'NoneType' object is not subscriptable
 [2026-01-27 14:04:59] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
 [2026-01-27 14:05:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
 [2026-01-27 14:05:29] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-27 19:33:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
