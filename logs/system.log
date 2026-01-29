@@ -3063,3 +3063,183 @@ TypeError: 'NoneType' object is not subscriptable
 [2026-01-27 14:05:29] [INFO] [src.services.db.database] Database initialized at data/imcs.db
 [2026-01-27 14:05:29] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
 [2026-01-27 19:33:07] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:47:56] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:50:47] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:50:47] [INFO] [src.services.task.executor] Executing Plan: verify_rank_pack
+[2026-01-29 00:50:47] [INFO] [src.services.task.executor] Step step_1: [ml] train
+[2026-01-29 00:50:47] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-01-29 00:50:55] [INFO] [src.services.task.executor] Step step_3: [literature] search
+[2026-01-29 00:50:55] [INFO] [src.services.task.executor] Step step_4: [literature] harvest_hor_seed
+[2026-01-29 00:50:55] [INFO] [src.services.task.executor] Step step_6: [theory] download
+[2026-01-29 00:50:55] [ERROR] [src.services.task.executor] Step step_6 failed (attempt 1): 'FakeTheory' object has no attribute 'download_structures'
+[2026-01-29 00:51:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:51:31] [INFO] [src.services.task.executor] Executing Plan: verify_rank_pack_no_gap
+[2026-01-29 00:51:31] [INFO] [src.services.task.executor] Step step_1: [ml] train
+[2026-01-29 00:51:31] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-01-29 00:52:22] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:52:22] [INFO] [src.services.task.executor] Executing Plan: verify_rank_pack_no_gap2
+[2026-01-29 00:52:22] [INFO] [src.services.task.executor] Step step_1: [ml] train
+[2026-01-29 00:52:22] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-01-29 00:53:17] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:53:17] [INFO] [src.services.task.executor] Executing Plan: verify_rank_pack_no_gap3
+[2026-01-29 00:53:17] [INFO] [src.services.task.executor] Step step_1: [ml] train
+[2026-01-29 00:53:17] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-01-29 00:54:14] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 00:54:14] [INFO] [src.services.task.executor] Executing Plan: verify_rank_pack_gap
+[2026-01-29 00:54:14] [INFO] [src.services.task.executor] Step step_1: [ml] train
+[2026-01-29 00:54:14] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-01-29 08:05:38] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:05:38] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 08:05:38] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:05:41] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 for API safety.
+[2026-01-29 08:06:02] [INFO] [src.services.theory.mp_client] Found 50 unique materials.
+[2026-01-29 08:35:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:35:31] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 08:35:31] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:37:23] [INFO] [src.services.theory.mp_client] Found 120 unique materials.
+[2026-01-29 08:38:11] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-29 08:38:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:38:11] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-29 08:38:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:38:11] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 08:38:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:38:11] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-29 08:38:11] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-29 08:38:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:38:11] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:38:11] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-29 08:38:11] [INFO] [src.services.task.executor] Executing Plan: e2e_verify_20260129_083811
+[2026-01-29 08:38:11] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-29 08:38:11] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HOR ordered alloy
+[2026-01-29 08:38:12] [INFO] [src.services.literature.search_engine] Found 2 papers on SS.
+[2026-01-29 08:38:12] [INFO] [src.services.literature.search_engine] Searching arXiv: HOR ordered alloy
+[2026-01-29 08:38:15] [INFO] [src.services.literature.search_engine] Found 2 papers on arXiv.
+[2026-01-29 08:38:15] [INFO] [src.services.task.executor] Step step_3: [theory] download
+[2026-01-29 08:38:15] [INFO] [src.agents.core.theory_agent] Found 45 local materials. Skipping API search.
+[2026-01-29 08:38:15] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:38:17] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-01-29 08:38:26] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-29 08:38:42] [INFO] [src.services.task.executor] Step step_2: [literature] extract_knowledge
+[2026-01-29 08:38:42] [INFO] [src.services.task.executor] Step step_4: [ml] train
+[2026-01-29 08:38:42] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-29 08:38:42] [WARNING] [src.agents.core.ml_agent] Failed to extract features for any DB records.
+[2026-01-29 08:38:42] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: This RandomForestRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: This GradientBoostingRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: This ExtraTreesRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: This AdaBoostRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train Ridge: This Ridge estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: This BayesianRidge estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: This ElasticNet estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train SVR: This SVR estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train KNN: This KNeighborsRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: Not supported type for data.<class 'NoneType'>
+[2026-01-29 08:38:42] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: This LGBMRegressor estimator requires y to be passed, but the target y is None.
+[2026-01-29 08:38:42] [INFO] [src.services.task.executor] Step step_5: [task_manager] recommend
+[2026-01-29 08:38:42] [INFO] [src.services.task.executor] Step step_6: [task_manager] knowledge_pack
+[2026-01-29 08:43:44] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:43:44] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 08:43:44] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:45:36] [INFO] [src.services.theory.mp_client] Found 120 unique materials.
+[2026-01-29 08:46:16] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-29 08:46:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:46:16] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-29 08:46:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:46:16] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 08:46:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:46:16] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-29 08:46:16] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-29 08:46:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:46:16] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 08:46:16] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-29 08:46:16] [INFO] [src.services.task.executor] Executing Plan: e2e_verify_20260129_084616
+[2026-01-29 08:46:16] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-01-29 08:46:16] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HOR ordered alloy
+[2026-01-29 08:46:17] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-01-29 08:46:17] [INFO] [src.services.literature.search_engine] Searching arXiv: HOR ordered alloy
+[2026-01-29 08:46:19] [INFO] [src.services.literature.search_engine] Found 2 papers on arXiv.
+[2026-01-29 08:46:19] [INFO] [src.services.task.executor] Step step_3: [theory] download
+[2026-01-29 08:46:19] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:46:22] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-01-29 08:46:42] [INFO] [src.services.theory.mp_client] Found 20 unique materials.
+[2026-01-29 08:46:43] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 08:46:43] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-01-29 08:46:51] [INFO] [src.services.theory.mp_client] Found 7006 unique materials.
+[2026-01-29 08:47:06] [INFO] [src.services.task.executor] Step step_2: [literature] extract_knowledge
+[2026-01-29 08:47:06] [INFO] [src.services.task.executor] Step step_4: [ml] train
+[2026-01-29 08:47:06] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-01-29 08:47:06] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=36, Test=9
+[2026-01-29 08:47:06] [INFO] [src.agents.core.ml_agent] Loaded 45 samples from DB (features=42).
+[2026-01-29 08:47:06] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-01-29 08:47:06] [INFO] [src.agents.core.ml_agent] Selected 4 features: ['std_electronegativity', 'min_electronegativity', 'range_electronegativity', 'std_valence_electrons']
+[2026-01-29 08:47:06] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-01-29 08:47:06] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=0.7790
+[2026-01-29 08:47:06] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=0.6920
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=0.8328
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=0.8613
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished Ridge: R2=0.8157
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.8163
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=0.8456
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished SVR: R2=0.7657
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished KNN: R2=0.8663
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=0.8318
+[2026-01-29 08:47:07] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.2277
+[2026-01-29 08:47:07] [INFO] [src.services.task.executor] Step step_5: [task_manager] recommend
+[2026-01-29 08:47:07] [INFO] [src.services.task.executor] Step step_6: [task_manager] knowledge_pack
+[2026-01-29 13:15:31] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.agents.core.task_manager] Initializing Sub-Agents...
+[2026-01-29 13:49:54] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-01-29 13:49:54] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-01-29 13:49:54] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-01-29 13:49:54] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-01-29 13:49:54] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.services.db.database] Database initialized at data/imcs.db
+[2026-01-29 13:49:54] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v3.1).
+[2026-01-29 13:49:54] [INFO] [src.services.task.executor] Executing Plan: p1_eval_20260129_134954
+[2026-01-29 13:49:54] [INFO] [src.services.task.executor] Step step_1: [theory] download
+[2026-01-29 13:49:54] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-01-29 13:49:57] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-01-29 13:50:01] [WARNING] [src.services.theory.mp_client] Failed search for Pt: [Errno 22] Invalid argument
+[2026-01-29 13:50:02] [WARNING] [src.services.theory.mp_client] Failed search for Pd: [Errno 22] Invalid argument
+[2026-01-29 13:50:05] [WARNING] [src.services.theory.mp_client] Failed search for Ni: [Errno 22] Invalid argument
+[2026-01-29 13:50:08] [WARNING] [src.services.theory.mp_client] Failed search for Co: [Errno 22] Invalid argument
+[2026-01-29 13:50:11] [WARNING] [src.services.theory.mp_client] Failed search for Fe: [Errno 22] Invalid argument
+[2026-01-29 13:50:11] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-01-29 13:50:11] [ERROR] [src.services.theory.mp_client] Exception in download_cifs: [Errno 22] Invalid argument
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\services\theory\mp_client.py", line 94, in download_cifs
+    for doc in tqdm(docs, desc="Saving CIFs"):
+               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+[2026-01-29 13:50:11] [ERROR] [src.agents.core.theory_agent] Exception in download_structures: [Errno 22] Invalid argument
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\theory_agent.py", line 120, in download_structures
+    count = self.mp.download_cifs(docs, cif_dir)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 49, in wrapper
+    raise e
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\services\theory\mp_client.py", line 94, in download_cifs
+    for doc in tqdm(docs, desc="Saving CIFs"):
+               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+[2026-01-29 13:50:11] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): [Errno 22] Invalid argument

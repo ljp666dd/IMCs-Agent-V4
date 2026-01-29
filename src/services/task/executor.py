@@ -25,6 +25,7 @@ class PlanExecutor:
             self.meta_controller = MetaController(self.db)
         except Exception:
             self.meta_controller = None
+        self.replan_strategies = self._load_replan_strategies()
         self.max_adaptive_rounds = 1
         self._active_plan: Optional[TaskPlan] = None
     
@@ -50,10 +51,63 @@ class PlanExecutor:
             return query.strip()
         return " ".join(tokens[:8]).strip()
 
+    def _repo_root(self) -> str:
+        return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+    def _load_replan_strategies(self) -> Dict[str, Any]:
+        """Load replan/fallback strategies from configs/replan_strategies.json."""
+        try:
+            path = os.path.join(self._repo_root(), "configs", "replan_strategies.json")
+            if not os.path.exists(path):
+                return {}
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception:
+            return {}
+
+    def _format_params(self, params: Any, query: str) -> Any:
+        if isinstance(params, dict):
+            return {k: self._format_params(v, query) for k, v in params.items()}
+        if isinstance(params, list):
+            return [self._format_params(v, query) for v in params]
+        if isinstance(params, str):
+            return params.replace("{query}", query or "")
+        return params
+
+    def _replan_from_strategy(self, step: TaskStep) -> Optional[Dict[str, Any]]:
+        if not self.replan_strategies:
+            return None
+        group = self.replan_strategies.get("default") or {}
+        key = f"{step.agent}.{step.action}"
+        spec = group.get(key)
+        if not isinstance(spec, dict):
+            return None
+        try:
+            query = None
+            if isinstance(step.params, dict):
+                query = step.params.get("query")
+            if not query and self._active_plan:
+                query = self._active_plan.description
+            spec = json.loads(json.dumps(spec))
+            spec["steps"] = [
+                {
+                    **item,
+                    "params": self._format_params(item.get("params") or {}, query),
+                }
+                for item in (spec.get("steps") or [])
+            ]
+            return spec
+        except Exception:
+            return spec
+
     def _build_replan_spec(self, step: TaskStep) -> Optional[Dict[str, Any]]:
         """Return a minimal fallback plan when a step fails."""
         agent = step.agent
         action = step.action
+        strategy_spec = self._replan_from_strategy(step)
+        if strategy_spec:
+            return strategy_spec
 
         if agent == "literature" and action == "search":
             query = (step.params or {}).get("query", "")
@@ -213,6 +267,64 @@ class PlanExecutor:
 
         return new_step_ids
 
+    def _append_activity_ml_step(self, plan: TaskPlan, pending: Dict[str, TaskStep],
+                                 depends_on: str, metric_name: str = "exchange_current_density") -> Optional[str]:
+        """Append an ML step to train on activity metrics if not already present."""
+        for step in plan.steps:
+            if step.agent == "ml" and step.action in ("train", "train_all"):
+                params = step.params or {}
+                target_col = params.get("target_col") if isinstance(params, dict) else None
+                if isinstance(target_col, str) and target_col.startswith("activity_metric:"):
+                    return None
+
+        step_id = self._next_step_id(plan)
+        step = TaskStep(
+            step_id=step_id,
+            agent="ml",
+            action="train",
+            params={"include_deep_learning": True, "target_col": f"activity_metric:{metric_name}"},
+            dependencies=[depends_on],
+            max_replans=0,
+        )
+        plan.steps.append(step)
+        pending[step.step_id] = step
+        self.db.log_plan_step(
+            plan_id=plan.task_id,
+            step_id=step.step_id,
+            agent=step.agent,
+            action=step.action,
+            status="pending",
+            dependencies=step.dependencies,
+            params=step.params,
+        )
+        return step.step_id
+
+    def _merge_knowledge_pack_results(self, plan: TaskPlan) -> None:
+        """Merge persisted knowledge pack fields into plan.results if present."""
+        if not plan or not plan.task_id:
+            return
+        out_path = os.path.join("data", "tasks", f"knowledge_{plan.task_id}.json")
+        if not os.path.exists(out_path):
+            return
+        try:
+            with open(out_path, "r", encoding="utf-8") as f:
+                pack = json.load(f)
+        except Exception:
+            return
+        if not isinstance(pack, dict):
+            return
+        for key in (
+            "evidence_gap",
+            "evidence_stats_before_gap",
+            "candidate_material_ids",
+            "ranking_before_gap",
+            "ranking_after_gap",
+            "ranking_current",
+            "ranking_metric",
+        ):
+            if key in pack and key not in plan.results:
+                plan.results[key] = pack[key]
+
     @log_exception(logger)
     def execute_plan(self, plan: TaskPlan) -> Dict[str, Any]:
         """Execute all steps in the plan (DAG aware + Persisted)."""
@@ -232,6 +344,7 @@ class PlanExecutor:
         
         logger.info(f"Executing Plan: {plan.task_id}")
         self._active_plan = plan
+        self._merge_knowledge_pack_results(plan)
         pending = {}
         completed = set()
         for step in plan.steps:
@@ -244,6 +357,7 @@ class PlanExecutor:
         literature_papers = []
         ml_top_models = []
         ml_predictions = {}
+        ml_target = None
 
         adaptive_rounds = 0
         awaiting_confirmation = False
@@ -312,6 +426,8 @@ class PlanExecutor:
                                     ml_top_models = result.get("top_3", [])
                                 if isinstance(result, dict) and "predictions" in result:
                                     ml_predictions = result.get("predictions", {}) or {}
+                                if isinstance(step.params, dict) and step.params.get("target_col"):
+                                    ml_target = step.params.get("target_col")
 
                             # 3. Log Success
                             self.db.log_plan_step(
@@ -327,6 +443,18 @@ class PlanExecutor:
 
                             completed.add(step.step_id)
                             pending.pop(step.step_id, None)
+
+                            # Auto-append ML training after experiment data processed
+                            try:
+                                if step.agent == "experiment" and step.action == "process":
+                                    if isinstance(result, dict) and result.get("processed", 0) > 0:
+                                        self._append_activity_ml_step(
+                                            plan,
+                                            pending,
+                                            depends_on=step.step_id,
+                                        )
+                            except Exception as e:
+                                logger.warning(f"Auto ML append failed: {e}")
                             break
 
                         except Exception as e:
@@ -424,6 +552,9 @@ class PlanExecutor:
         rag_results = []
         candidate_ids_snapshot = []
         materials_snapshot = []
+        before_stats = None
+        ranking_current = None
+        ranking_metric = None
         try:
             theory_agent = self.agents.get("theory")
             if theory_agent:
@@ -444,6 +575,7 @@ class PlanExecutor:
                 # Candidate filter (prefer ML predictions top-N)
                 candidate_ids = set()
                 top_n = 10
+                sorted_preds = None
                 if ml_predictions:
                     try:
                         sorted_preds = sorted(
@@ -462,6 +594,17 @@ class PlanExecutor:
                 materials_snapshot = materials[:]
                 if candidate_ids_snapshot:
                     plan.results["candidate_material_ids"] = candidate_ids_snapshot
+                if ml_predictions and not sorted_preds:
+                    sorted_preds = list(ml_predictions.items())
+                if sorted_preds:
+                    ranking_current = []
+                    for idx, (mid, score) in enumerate(sorted_preds[:top_n], start=1):
+                        ranking_current.append({
+                            "rank": idx,
+                            "material_id": mid,
+                            "score": score,
+                        })
+                    ranking_metric = ml_target or "formation_energy"
 
                 def _formula_aliases(formula: str):
                     aliases = set()
@@ -577,6 +720,13 @@ class PlanExecutor:
                         )
                         if gap_report:
                             plan.results["evidence_gap"] = gap_report
+                            try:
+                                from src.agents.core.theory_agent import TheoryDataConfig
+                                allowed = TheoryDataConfig().elements
+                            except Exception:
+                                allowed = None
+                            before_stats = self.db.get_evidence_stats(allowed_elements=allowed)
+                            plan.results["evidence_stats_before_gap"] = before_stats
                             gap_steps = gap_report.get("recommended_steps") or []
                             if gap_steps:
                                 for item in gap_steps:
@@ -608,6 +758,13 @@ class PlanExecutor:
 
         if rag_results:
             plan.results["knowledge_rag"] = rag_results
+        if ranking_current:
+            plan.results["ranking_current"] = ranking_current
+            plan.results["ranking_metric"] = ranking_metric
+            if awaiting_confirmation and not plan.results.get("ranking_before_gap"):
+                plan.results["ranking_before_gap"] = ranking_current
+            if not awaiting_confirmation and plan.results.get("ranking_before_gap"):
+                plan.results["ranking_after_gap"] = ranking_current
 
         # Dataset snapshot + reasoning report (best-effort)
         try:
@@ -656,23 +813,78 @@ class PlanExecutor:
         except Exception as e:
             logger.warning(f"Reasoning report failed: {e}")
 
+        # Evaluation metrics (P1)
+        try:
+            from src.services.task.evaluator import PlanEvaluator
+            evaluator = PlanEvaluator(self.db)
+            eval_metrics = evaluator.evaluate(plan)
+            if eval_metrics:
+                plan.results["evaluation_metrics"] = eval_metrics
+        except Exception as e:
+            logger.warning(f"Evaluation metrics failed: {e}")
+
         # Ensure key outputs exist for downstream UI/reporting
         plan.results.setdefault("knowledge_rag", [])
         plan.results.setdefault("reasoning_report", [])
         try:
-            if plan.results.get("evidence_gap"):
+            if (
+                plan.results.get("evidence_gap")
+                or plan.results.get("evidence_stats_before_gap")
+                or plan.results.get("ranking_current")
+                or plan.results.get("ranking_before_gap")
+                or plan.results.get("ranking_after_gap")
+                or plan.results.get("ranking_metric")
+                or plan.results.get("candidate_material_ids")
+                or plan.results.get("evaluation_metrics")
+            ):
                 out_dir = os.path.join("data", "tasks")
                 out_path = os.path.join(out_dir, f"knowledge_{plan.task_id}.json")
                 if os.path.exists(out_path):
                     with open(out_path, "r", encoding="utf-8") as f:
                         pack = json.load(f)
                     pack["evidence_gap"] = plan.results.get("evidence_gap")
+                    if plan.results.get("evidence_stats_before_gap"):
+                        pack["evidence_stats_before_gap"] = plan.results.get("evidence_stats_before_gap")
+                    if plan.results.get("evidence_stats_after_gap"):
+                        pack["evidence_stats_after_gap"] = plan.results.get("evidence_stats_after_gap")
+                    if plan.results.get("evidence_stats_delta"):
+                        pack["evidence_stats_delta"] = plan.results.get("evidence_stats_delta")
                     if plan.results.get("candidate_material_ids"):
                         pack["candidate_material_ids"] = plan.results.get("candidate_material_ids")
+                    if plan.results.get("ranking_before_gap"):
+                        pack["ranking_before_gap"] = plan.results.get("ranking_before_gap")
+                    if plan.results.get("ranking_after_gap"):
+                        pack["ranking_after_gap"] = plan.results.get("ranking_after_gap")
+                    if plan.results.get("ranking_current"):
+                        pack["ranking_current"] = plan.results.get("ranking_current")
+                    if plan.results.get("ranking_metric"):
+                        pack["ranking_metric"] = plan.results.get("ranking_metric")
+                    if plan.results.get("evaluation_metrics"):
+                        pack["evaluation_metrics"] = plan.results.get("evaluation_metrics")
                     with open(out_path, "w", encoding="utf-8") as f:
                         json.dump(pack, f, ensure_ascii=False, indent=2)
         except Exception as e:
             logger.warning(f"Failed to update knowledge pack with evidence gap: {e}")
+        # After gap fill, compute stats delta if available
+        try:
+            if not awaiting_confirmation and plan.results.get("evidence_stats_before_gap"):
+                try:
+                    from src.agents.core.theory_agent import TheoryDataConfig
+                    allowed = TheoryDataConfig().elements
+                except Exception:
+                    allowed = None
+                after_stats = self.db.get_evidence_stats(allowed_elements=allowed)
+                plan.results["evidence_stats_after_gap"] = after_stats
+                delta = {}
+                before = plan.results.get("evidence_stats_before_gap") or {}
+                for key, before_val in before.items():
+                    after_val = after_stats.get(key) if isinstance(after_stats, dict) else None
+                    if isinstance(before_val, (int, float)) and isinstance(after_val, (int, float)):
+                        delta[key] = after_val - before_val
+                plan.results["evidence_stats_delta"] = delta
+        except Exception as e:
+            logger.warning(f"Evidence stats delta failed: {e}")
+
         if awaiting_confirmation:
             plan.status = "awaiting_confirmation"
             self.db.update_plan_status(plan.task_id, "awaiting_confirmation")
@@ -739,11 +951,25 @@ class PlanExecutor:
         
         elif agent_name == "experiment":
              if action == "process":
-                 return {"message": "Scanning for experiment data..."}
+                 data_dir = params.get("data_dir") if isinstance(params, dict) else None
+                 reference_potential = params.get("reference_potential", 0.2) if isinstance(params, dict) else 0.2
+                 loading_mg_cm2 = params.get("loading_mg_cm2", 0.25) if isinstance(params, dict) else 0.25
+                 precious_fraction = params.get("precious_fraction", 0.20) if isinstance(params, dict) else 0.20
+                 return target_agent.process_rde_directory(
+                     data_dir=data_dir or "data/experimental/rde_lsv",
+                     reference_potential=reference_potential,
+                     loading_mg_cm2=loading_mg_cm2,
+                     precious_fraction=precious_fraction,
+                 )
                  
         elif agent_name == "ml":
             # AUTO-LOAD DATA from DB before training
-            target_agent.load_from_db() 
+            target_col = params.get("target_col") if isinstance(params, dict) else None
+            if isinstance(target_col, str) and target_col.startswith("activity_metric:"):
+                metric = target_col.split(":", 1)[1] or "exchange_current_density"
+                target_agent.load_activity_metrics_from_db(metric)
+            else:
+                target_agent.load_from_db(target_col=target_col or "formation_energy")
             
             if action == "train":
                 results = target_agent.train_traditional_models()
@@ -832,6 +1058,11 @@ class PlanExecutor:
                         "reasoning_report": (plan.results.get("reasoning_report") if plan else []),
                         "evidence_gap": (plan.results.get("evidence_gap") if plan else None),
                         "candidate_material_ids": (plan.results.get("candidate_material_ids") if plan else []),
+                        "ranking_before_gap": (plan.results.get("ranking_before_gap") if plan else []),
+                        "ranking_after_gap": (plan.results.get("ranking_after_gap") if plan else []),
+                        "ranking_current": (plan.results.get("ranking_current") if plan else []),
+                        "ranking_metric": (plan.results.get("ranking_metric") if plan else None),
+                        "evaluation_metrics": (plan.results.get("evaluation_metrics") if plan else None),
                     }
                     out_dir = os.path.join("data", "tasks")
                     os.makedirs(out_dir, exist_ok=True)

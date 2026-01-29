@@ -133,7 +133,10 @@ class TaskManagerAgent:
             self.draft_plan_context = {}
 
         # 1. Start Planning
-        PLAN_KEYWORDS = ["create plan", "find", "search", "train", "analyze", "discover"]
+        PLAN_KEYWORDS = [
+            "create plan", "find", "search", "train", "analyze", "discover",
+            "创建", "任务", "计划", "搜索", "训练", "分析", "发现", "筛选"
+        ]
         is_start_command = any(k in msg_lower for k in PLAN_KEYWORDS) and len(message.split()) > 2
         should_start = task_type != TaskType.GENERAL
 

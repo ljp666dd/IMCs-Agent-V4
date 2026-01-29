@@ -238,6 +238,10 @@ def init_session_state():
         st.session_state.selected_material = None
     if 'last_task_id' not in st.session_state:
         st.session_state.last_task_id = None
+    if 'auto_resume_last_task' not in st.session_state:
+        st.session_state.auto_resume_last_task = False
+    if 'last_auto_resumed_task_id' not in st.session_state:
+        st.session_state.last_auto_resumed_task_id = None
 
 
 # ========== API Helpers (Task Graph) ==========
@@ -259,8 +263,14 @@ def api_get_task_status(task_id: str):
     res.raise_for_status()
     return res.json()
 
-def api_confirm_gap_fill(task_id: str, run_step_ids: List[str] = None, mark_complete: bool = False):
-    payload = {"run_step_ids": run_step_ids or [], "mark_complete": mark_complete}
+def api_confirm_gap_fill(task_id: str, run_step_ids: List[str] = None,
+                         params_overrides: Dict[str, Any] = None,
+                         mark_complete: bool = False):
+    payload = {
+        "run_step_ids": run_step_ids or [],
+        "params_overrides": params_overrides or {},
+        "mark_complete": mark_complete,
+    }
     res = requests.post(f"{API_BASE_URL}/tasks/{task_id}/confirm_gap", json=payload, timeout=20)
     res.raise_for_status()
     return res.json()
@@ -363,6 +373,32 @@ def render_knowledge_pack(pack: dict):
         st.markdown("#### Evidence Stats")
         st.json(stats)
 
+    before_stats = pack.get("evidence_stats_before_gap") or {}
+    after_stats = pack.get("evidence_stats_after_gap") or {}
+    delta_stats = pack.get("evidence_stats_delta") or {}
+    if before_stats or after_stats:
+        st.markdown("#### Evidence Coverage Delta")
+        rows = []
+        keys = set(before_stats.keys()) | set(after_stats.keys()) | set(delta_stats.keys())
+        for key in sorted(keys):
+            before_val = before_stats.get(key)
+            after_val = after_stats.get(key)
+            delta_val = delta_stats.get(key)
+            percent = None
+            try:
+                if isinstance(before_val, (int, float)) and isinstance(delta_val, (int, float)) and before_val != 0:
+                    percent = round((delta_val / before_val) * 100.0, 2)
+            except Exception:
+                percent = None
+            rows.append({
+                "metric": key,
+                "before": before_val,
+                "after": after_val,
+                "delta": delta_val,
+                "delta_%": percent,
+            })
+        st.dataframe(pd.DataFrame(rows), use_container_width=True)
+
     gap = pack.get("evidence_gap") or {}
     if gap:
         st.markdown("#### Evidence Gaps")
@@ -380,6 +416,57 @@ def render_knowledge_pack(pack: dict):
             except Exception:
                 st.json(steps)
 
+    ranking_before = pack.get("ranking_before_gap") or []
+    ranking_after = pack.get("ranking_after_gap") or []
+    ranking_current = pack.get("ranking_current") or []
+    ranking_metric = pack.get("ranking_metric") or ""
+    if ranking_before or ranking_after or ranking_current:
+        st.markdown("#### Candidate Ranking")
+        if ranking_metric:
+            st.caption(f"Metric: {ranking_metric}")
+        if ranking_before:
+            st.markdown("Before gap fill")
+            try:
+                st.dataframe(pd.DataFrame(ranking_before), use_container_width=True)
+            except Exception:
+                st.json(ranking_before)
+        if ranking_after:
+            st.markdown("After gap fill")
+            try:
+                st.dataframe(pd.DataFrame(ranking_after), use_container_width=True)
+            except Exception:
+                st.json(ranking_after)
+        if not ranking_before and not ranking_after and ranking_current:
+            try:
+                st.dataframe(pd.DataFrame(ranking_current), use_container_width=True)
+            except Exception:
+                st.json(ranking_current)
+        if ranking_before and ranking_after:
+            before_map = {r.get("material_id"): r for r in ranking_before if r.get("material_id")}
+            after_map = {r.get("material_id"): r for r in ranking_after if r.get("material_id")}
+            rows = []
+            for mid in sorted(set(before_map.keys()) | set(after_map.keys())):
+                b = before_map.get(mid, {})
+                a = after_map.get(mid, {})
+                rb = b.get("rank")
+                ra = a.get("rank")
+                delta_rank = None
+                if isinstance(rb, int) and isinstance(ra, int):
+                    delta_rank = rb - ra
+                rows.append({
+                    "material_id": mid,
+                    "rank_before": rb,
+                    "score_before": b.get("score"),
+                    "rank_after": ra,
+                    "score_after": a.get("score"),
+                    "rank_delta": delta_rank,
+                })
+            st.markdown("Ranking delta (positive = improved)")
+            try:
+                st.dataframe(pd.DataFrame(rows), use_container_width=True)
+            except Exception:
+                st.json(rows)
+
     report = pack.get("reasoning_report") or []
     if report:
         st.markdown("#### Reasoning Report (Top Materials)")
@@ -395,6 +482,14 @@ def render_knowledge_pack(pack: dict):
             st.dataframe(pd.DataFrame(rag), use_container_width=True)
         except Exception:
             st.json(rag)
+
+    eval_metrics = pack.get("evaluation_metrics") or {}
+    if eval_metrics:
+        st.markdown("#### Evaluation Metrics")
+        try:
+            st.json(eval_metrics)
+        except Exception:
+            st.write(eval_metrics)
 
 def render_task_graph(steps):
     if not steps:
@@ -423,6 +518,8 @@ def render_task_graph(steps):
             status_class = "tg-status tg-status-fail"
         elif status == "running":
             status_class = "tg-status tg-status-run"
+        elif status == "skipped":
+            status_class = "tg-status tg-status-ok"
         elif status == "blocked":
             status_class = "tg-status tg-status-block"
         elif status == "replanned":
@@ -1057,6 +1154,22 @@ def render_chat():
     if st.session_state.chat_session_id and st.session_state.last_loaded_session_id != st.session_state.chat_session_id:
         load_chat_messages(db, st.session_state.chat_session_id)
 
+    # Auto-resume last task if enabled
+    if (st.session_state.get("auto_resume_last_task")
+            and st.session_state.last_task_id
+            and not st.session_state.active_plan
+            and st.session_state.last_auto_resumed_task_id != st.session_state.last_task_id):
+        try:
+            status = api_get_task_status(st.session_state.last_task_id)
+            st.session_state.active_task_id = st.session_state.last_task_id
+            st.session_state.active_plan = status
+            st.session_state.task_status = status
+            st.session_state.task_polling = False
+            st.session_state.last_auto_resumed_task_id = st.session_state.last_task_id
+        except Exception as e:
+            st.warning(f"Auto-resume failed: {e}")
+            st.session_state.last_auto_resumed_task_id = st.session_state.last_task_id
+
     st.markdown(f"### {ui_text('\u4f1a\u8bdd\u7ba1\u7406')}")
     session_labels = []
     label_to_id = {}
@@ -1086,6 +1199,7 @@ def render_chat():
                 new_id = db.create_chat_session(title)
                 st.session_state.chat_session_id = new_id
                 st.session_state.last_loaded_session_id = None
+                st.session_state.last_auto_resumed_task_id = None
                 st.session_state.active_plan = None
                 st.session_state.active_task_id = None
                 st.session_state.task_status = None
@@ -1096,6 +1210,7 @@ def render_chat():
         if selected_id and selected_id != st.session_state.chat_session_id:
             st.session_state.chat_session_id = selected_id
             st.session_state.last_loaded_session_id = None
+            st.session_state.last_auto_resumed_task_id = None
             st.session_state.active_plan = None
             st.session_state.active_task_id = None
             st.session_state.task_status = None
@@ -1118,6 +1233,7 @@ def render_chat():
             st.rerun()
 
     with st.expander(ui_text("会话操作")):
+        st.checkbox(ui_text("????????"), key="auto_resume_last_task")
         if st.session_state.last_task_id:
             if st.button(ui_text("加载历史任务"), key="chat_load_task"):
                 try:
@@ -1303,20 +1419,54 @@ def render_chat():
             st.caption(f"Current status: {current_status}")
             if current_status == "awaiting_confirmation":
                 st.info("Evidence gap fill is ready. Confirm to continue.")
+                pack_preview = load_knowledge_pack(st.session_state.active_task_id)
+                rec_steps = []
+                if pack_preview and pack_preview.get("evidence_gap"):
+                    rec_steps = pack_preview["evidence_gap"].get("recommended_steps") or []
+
+                def _find_rec(step_dict: Dict[str, Any]):
+                    for rec in rec_steps:
+                        if rec.get("agent") == step_dict.get("agent") and rec.get("action") == step_dict.get("action"):
+                            return rec
+                    return None
                 pending_steps = [
                     s for s in st.session_state.task_status.get("steps", [])
                     if s.get("status") in ("pending", "running")
                 ]
+                params_overrides = {}
+                has_param_error = False
                 if pending_steps:
                     step_rows = []
                     for s in pending_steps:
+                        sid = s.get("step_id")
+                        rec = _find_rec(s) if rec_steps else None
+                        default_params = s.get("params") or (rec.get("params") if isinstance(rec, dict) else {}) or {}
+                        try:
+                            default_text = json.dumps(default_params, ensure_ascii=False, indent=2)
+                        except Exception:
+                            default_text = "{}"
                         step_rows.append({
                             "step_id": s.get("step_id"),
                             "agent": s.get("agent"),
                             "action": s.get("action"),
-                            "params": s.get("params"),
+                            "params": default_params,
+                            "reason": rec.get("reason") if isinstance(rec, dict) else None,
                             "status": s.get("status"),
                         })
+                        with st.expander(f"Edit params: {sid} ({s.get('agent')}:{s.get('action')})"):
+                            text_val = st.text_area(
+                                "params (JSON)",
+                                value=default_text,
+                                key=f"gap_params_{sid}",
+                                height=120,
+                            )
+                            try:
+                                parsed = json.loads(text_val) if text_val.strip() else {}
+                                if parsed != default_params:
+                                    params_overrides[sid] = parsed
+                            except Exception:
+                                has_param_error = True
+                                st.error("Invalid JSON. Please fix before continuing.")
                     st.dataframe(pd.DataFrame(step_rows), use_container_width=True)
                     default_ids = [s.get("step_id") for s in pending_steps if s.get("step_id")]
                     selected_ids = st.multiselect(
@@ -1330,9 +1480,13 @@ def render_chat():
 
                 col_gap_a, col_gap_b = st.columns([1, 1])
                 with col_gap_a:
-                    if st.button("Continue selected gap steps", key="continue_gap_fill"):
+                    if st.button("Continue selected gap steps", key="continue_gap_fill", disabled=has_param_error):
                         try:
-                            api_confirm_gap_fill(st.session_state.active_task_id, run_step_ids=selected_ids)
+                            api_confirm_gap_fill(
+                                st.session_state.active_task_id,
+                                run_step_ids=selected_ids,
+                                params_overrides=params_overrides,
+                            )
                             api_execute_task(st.session_state.active_task_id)
                             st.session_state.task_polling = True
                             st.success("Gap fill execution started.")

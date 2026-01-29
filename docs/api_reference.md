@@ -181,3 +181,53 @@ Outputs:
 - `data/experimental/literature_hor_seed.csv`
 - `data/experimental/literature_activity_metrics.csv`
 - `data/experimental/literature_rde_lsv/`
+
+---
+
+## 5. Robot/Middleware (Preparation)
+
+### 5.1 Submit Task
+**POST** `/robot/submit_task`
+```json
+{
+  "task_type": "test",
+  "payload": {"material": {"formula": "PtRu"}},
+  "external_id": "middleware-001"
+}
+```
+
+### 5.2 Task Status
+**GET** `/robot/task_status/{task_id}`
+
+### 5.3 Result Callback (optional auto-iterate)
+**POST** `/robot/result_callback`
+```json
+{
+  "task_id": 1,
+  "status": "completed",
+  "auto_iterate": true,
+  "metric_name": "exchange_current_density",
+  "result": {
+    "metrics": {"exchange_current_density": 0.32, "mass_activity": 1.1},
+    "material": {"formula": "PtRu"}
+  }
+}
+```
+
+### 5.4 List Tasks
+**GET** `/robot/tasks`
+
+---
+
+## 6. Tasks Gap Confirmation (Param Override)
+
+### 6.1 Confirm Gap Fill
+**POST** `/tasks/{task_id}/confirm_gap`
+```json
+{
+  "run_step_ids": ["step_8", "step_9"],
+  "params_overrides": {
+    "step_8": {"query": "HOR ordered alloy catalyst", "limit": 10}
+  }
+}
+```

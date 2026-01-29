@@ -133,6 +133,7 @@ async def execute_task(task_id: str, background_tasks: BackgroundTasks):
 class GapConfirmRequest(BaseModel):
     run_step_ids: List[str] = []
     mark_complete: bool = False
+    params_overrides: Optional[Dict[str, Any]] = None
 
 
 @router.post("/{task_id}/confirm_gap")
@@ -148,8 +149,9 @@ async def confirm_gap_fill(task_id: str, req: GapConfirmRequest):
         latest[s["step_id"]] = s
 
     pending_ids = [sid for sid, row in latest.items() if (row.get("status") in ("pending", "running"))]
-    run_ids = set(req.run_step_ids or [])
+    run_ids = set(req.run_step_ids or pending_ids)
     skip_ids = [sid for sid in pending_ids if sid not in run_ids]
+    params_overrides = req.params_overrides or {}
 
     for sid in skip_ids:
         row = latest.get(sid) or {}
@@ -162,6 +164,20 @@ async def confirm_gap_fill(task_id: str, req: GapConfirmRequest):
             dependencies=row.get("dependencies") or [],
             params=row.get("params") or {},
             result={"note": "Skipped by user confirmation"},
+        )
+
+    for sid in run_ids:
+        row = latest.get(sid) or {}
+        params = params_overrides.get(sid, row.get("params") or {})
+        db.log_plan_step(
+            plan_id=task_id,
+            step_id=sid,
+            agent=row.get("agent", ""),
+            action=row.get("action", ""),
+            status="pending",
+            dependencies=row.get("dependencies") or [],
+            params=params,
+            result={"note": "Confirmed by user"},
         )
 
     if req.mark_complete:

@@ -48,9 +48,17 @@ class MPClient:
                 # User Prompt: "Find HER catalysts" -> Planner gave 30 elements.
                 # We should limit this to top candidates to avoid timeout/spam.
                 
-                search_targets = elements if len(elements) <= 3 else elements[:5] # Limit to top 5 candidates for demo speed
-                if len(elements) > 5:
-                    logger.warning(f"Truncating element list from {len(elements)} to {len(search_targets)} for API safety.")
+                max_elements = int(os.getenv("MP_MAX_ELEMENTS", "5") or "5")
+                search_all = str(os.getenv("MP_SEARCH_ALL_ELEMENTS", "0")).lower() in ("1", "true", "yes")
+                if search_all or len(elements) <= 3:
+                    search_targets = elements
+                else:
+                    search_targets = elements[:max_elements]
+                if len(elements) > len(search_targets):
+                    logger.warning(
+                        f"Truncating element list from {len(elements)} to {len(search_targets)} "
+                        f"(MP_MAX_ELEMENTS={max_elements})."
+                    )
                 
                 for el in search_targets:
                     try:

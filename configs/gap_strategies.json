@@ -1,0 +1,118 @@
+{
+  "default": {
+    "literature": [
+      {
+        "agent": "literature",
+        "action": "search",
+        "params": {
+          "query": "{query}",
+          "limit": 10
+        },
+        "reason": "Missing literature evidence for candidate materials."
+      }
+    ],
+    "formation_energy": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "formation_energy"
+          ],
+          "limit": 50
+        },
+        "reason": "Missing formation energy evidence."
+      }
+    ],
+    "dos_data": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "dos"
+          ],
+          "limit": 50
+        },
+        "reason": "Missing DOS evidence."
+      }
+    ],
+    "adsorption_energy": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "adsorption"
+          ],
+          "limit": 50
+        },
+        "reason": "Missing adsorption energies."
+      }
+    ],
+    "activity_metric": [
+      {
+        "agent": "experiment",
+        "action": "process",
+        "params": {
+          "data_dir": "data/experimental/rde_lsv",
+          "reference_potential": 0.2,
+          "loading_mg_cm2": 0.25,
+          "precious_fraction": 0.2
+        },
+        "reason": "Missing activity metrics; process local experiment data."
+      }
+    ],
+    "ml_prediction": [
+      {
+        "agent": "ml",
+        "action": "train",
+        "params": {
+          "include_deep_learning": true
+        },
+        "reason": "Missing ML predictions for candidate materials."
+      }
+    ]
+  },
+  "hor": {
+    "literature": [
+      {
+        "agent": "literature",
+        "action": "search",
+        "params": {
+          "query": "{query}",
+          "limit": 10
+        },
+        "reason": "HOR: missing literature evidence."
+      },
+      {
+        "agent": "literature",
+        "action": "harvest_hor_seed",
+        "params": {
+          "query": "{query}",
+          "limit": 12,
+          "max_pdfs": 5,
+          "min_elements": 2,
+          "persist": true
+        },
+        "reason": "HOR: harvest seed evidence with activity metrics."
+      }
+    ],
+    "activity_metric": [
+      {
+        "agent": "experiment",
+        "action": "process",
+        "params": {
+          "data_dir": "data/experimental/rde_lsv",
+          "reference_potential": 0.2,
+          "loading_mg_cm2": 0.25,
+          "precious_fraction": 0.2
+        },
+        "reason": "HOR: missing activity metrics from experiments."
+      }
+    ]
+  }
+}

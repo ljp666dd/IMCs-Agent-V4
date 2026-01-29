@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 from src.core.logger import get_logger, log_exception
 from src.services.task.types import TaskPlan, TaskType
 import re
@@ -30,6 +31,13 @@ def _detect_language(text: str) -> str:
         return "zh"
     return "en"
 
+def _extract_element_symbols(text: str) -> List[str]:
+    """Extract element-like symbols from text (best-effort)."""
+    if not text:
+        return []
+    # Match element symbols by capital letter + optional lowercase.
+    return re.findall(r"[A-Z][a-z]?", text)
+
 logger = get_logger(__name__)
 
 class TaskPlanner:
@@ -48,6 +56,13 @@ class TaskPlanner:
     def analyze_request(self, user_request: str) -> TaskType:
         """Analyze user request to determine task type."""
         request_lower = user_request.lower()
+        try:
+            from src.agents.core.theory_agent import TheoryDataConfig
+            allowed_elements = set(TheoryDataConfig().elements)
+        except Exception:
+            allowed_elements = set()
+        element_hits = [el for el in _extract_element_symbols(user_request) if el in allowed_elements]
+        has_material_hint = ("mp-" in request_lower) or (len(set(element_hits)) >= 2)
         force_en = any(kw in request_lower for kw in [
             "discover", "find", "screen", "candidate", "recommend", "design", "search", "explore",
             "predict", "train", "model", "machine learning", "ml",
@@ -77,6 +92,8 @@ class TaskPlanner:
                 return TaskType.PERFORMANCE_ANALYSIS
             if any(kw in request_lower for kw in en_lit):
                 return TaskType.LITERATURE_REVIEW
+            if has_material_hint:
+                return TaskType.CATALYST_DISCOVERY
         elif lang == "zh":
             if (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
                 return TaskType.CATALYST_DISCOVERY
@@ -86,6 +103,8 @@ class TaskPlanner:
                 return TaskType.PERFORMANCE_ANALYSIS
             elif any(kw in user_request for kw in cn_lit):
                 return TaskType.LITERATURE_REVIEW
+            elif has_material_hint:
+                return TaskType.CATALYST_DISCOVERY
         else:
             if any(kw in request_lower for kw in en_discovery) or (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
                 return TaskType.CATALYST_DISCOVERY
@@ -95,6 +114,8 @@ class TaskPlanner:
                 return TaskType.PERFORMANCE_ANALYSIS
             if any(kw in request_lower for kw in en_lit) or any(kw in user_request for kw in cn_lit):
                 return TaskType.LITERATURE_REVIEW
+            if has_material_hint:
+                return TaskType.CATALYST_DISCOVERY
         return TaskType.GENERAL
 
     @log_exception(logger)

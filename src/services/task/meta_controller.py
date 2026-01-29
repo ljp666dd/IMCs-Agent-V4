@@ -1,4 +1,6 @@
 from typing import Dict, Any, List, Tuple
+import os
+import json
 
 from src.services.db.database import DatabaseService
 from src.services.task.types import TaskType
@@ -20,6 +22,55 @@ class MetaController:
             "model_min": 1,
             "dos_min": 10,
         }
+        self.gap_strategies = self._load_gap_strategies()
+
+    def _load_gap_strategies(self) -> Dict[str, Any]:
+        """Load gap strategy templates from configs/gap_strategies.json."""
+        try:
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+            path = os.path.join(base_dir, "configs", "gap_strategies.json")
+            if not os.path.exists(path):
+                return {}
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception:
+            return {}
+
+    def _format_params(self, params: Any, user_request: str) -> Any:
+        if isinstance(params, dict):
+            return {k: self._format_params(v, user_request) for k, v in params.items()}
+        if isinstance(params, list):
+            return [self._format_params(v, user_request) for v in params]
+        if isinstance(params, str):
+            return params.replace("{query}", user_request or "")
+        return params
+
+    def _strategy_steps(self, summary: Dict[str, int], user_request: str, wants_hor: bool) -> Tuple[List[Dict[str, Any]], set]:
+        steps: List[Dict[str, Any]] = []
+        covered = set()
+        if not self.gap_strategies:
+            return steps, covered
+        strategy = None
+        if wants_hor and isinstance(self.gap_strategies.get("hor"), dict):
+            strategy = self.gap_strategies.get("hor")
+        if strategy is None:
+            strategy = self.gap_strategies.get("default")
+        if not isinstance(strategy, dict):
+            return steps, covered
+        for key, items in strategy.items():
+            if summary.get(key, 0) <= 0:
+                continue
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                step = dict(item)
+                step["params"] = self._format_params(step.get("params") or {}, user_request)
+                steps.append(step)
+            covered.add(key)
+        return steps, covered
 
     def get_stats(self) -> Dict[str, Any]:
         try:
@@ -201,6 +252,20 @@ class MetaController:
         request_lower = (user_request or "").lower()
         return "hor" in request_lower or "hydrogen oxidation" in request_lower
 
+    def _infer_activity_metric(self, user_request: str) -> str:
+        request_lower = (user_request or "").lower()
+        if "mass activity" in request_lower or "ma" in request_lower:
+            return "mass_activity"
+        if "jk" in request_lower or "kinetic" in request_lower:
+            return "Jk_ref"
+        if "tafel" in request_lower:
+            return "tafel_slope"
+        if "overpotential" in request_lower:
+            return "overpotential_10mA"
+        if "j0" in request_lower or "exchange" in request_lower:
+            return "exchange_current_density"
+        return "exchange_current_density"
+
     def _required_evidence(self, task_type: TaskType, user_request: str) -> Tuple[List[str], List[str]]:
         """Return required evidence sources and material fields for the task."""
         request_lower = (user_request or "").lower()
@@ -287,8 +352,13 @@ class MetaController:
         """Convert gap summary into recommended agent actions."""
         steps: List[Dict[str, Any]] = []
         wants_hor = self._detect_hor(user_request)
+        stats = self.get_stats()
+        activity_count = stats.get("activity_materials", 0) or 0
+        strategy_steps, covered = self._strategy_steps(summary, user_request, wants_hor)
+        if strategy_steps:
+            steps.extend(strategy_steps)
 
-        if summary.get("literature", 0) > 0:
+        if summary.get("literature", 0) > 0 and "literature" not in covered:
             steps.append({
                 "agent": "literature",
                 "action": "search",
@@ -304,11 +374,11 @@ class MetaController:
                 })
 
         data_types = []
-        if summary.get("formation_energy", 0) > 0:
+        if summary.get("formation_energy", 0) > 0 and "formation_energy" not in covered:
             data_types.append("formation_energy")
-        if summary.get("dos_data", 0) > 0:
+        if summary.get("dos_data", 0) > 0 and "dos_data" not in covered:
             data_types.append("dos")
-        if summary.get("adsorption_energy", 0) > 0:
+        if summary.get("adsorption_energy", 0) > 0 and "adsorption_energy" not in covered:
             data_types.append("adsorption")
         if data_types:
             data_types = ["cif"] + sorted(set(data_types))
@@ -319,20 +389,37 @@ class MetaController:
                 "reason": "Missing theory/DOS/adsorption evidence.",
             })
 
-        if summary.get("activity_metric", 0) > 0:
+        if summary.get("activity_metric", 0) > 0 and "activity_metric" not in covered:
             steps.append({
                 "agent": "experiment",
                 "action": "process",
-                "params": {},
+                "params": {
+                    "data_dir": "data/experimental/rde_lsv",
+                    "reference_potential": 0.2,
+                    "loading_mg_cm2": 0.25,
+                    "precious_fraction": 0.20,
+                },
                 "reason": "Missing activity metrics; process local experiment data.",
             })
 
-        if summary.get("ml_prediction", 0) > 0:
+        if summary.get("ml_prediction", 0) > 0 and "ml_prediction" not in covered:
+            metric_name = self._infer_activity_metric(user_request)
+            target_col = f"activity_metric:{metric_name}" if activity_count >= 5 else None
             steps.append({
                 "agent": "ml",
                 "action": "train",
-                "params": {"include_deep_learning": True},
+                "params": {"include_deep_learning": True, "target_col": target_col},
                 "reason": "Missing ML predictions for candidate materials.",
             })
+
+        # Ensure ML target_col filled if strategy produced ml step without target
+        if activity_count >= 5:
+            metric_name = self._infer_activity_metric(user_request)
+            for step in steps:
+                if step.get("agent") == "ml" and step.get("action") == "train":
+                    params = step.get("params") or {}
+                    if params.get("target_col") in (None, "", "auto"):
+                        params["target_col"] = f"activity_metric:{metric_name}"
+                        step["params"] = params
 
         return steps

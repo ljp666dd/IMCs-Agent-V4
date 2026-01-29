@@ -93,6 +93,9 @@ class TheoryDataAgent:
         # (This mimics the broad search intension)
         target_elements = set(self.config.elements)
         for m in local_mats:
+            cif_path = m.get("cif_path")
+            if not cif_path or not os.path.exists(cif_path):
+                continue
             # Heuristic check: does formula string contain element symbol?
             # Ideally use pymatgen Composition, but string check is fast proxy for now.
             # We trust the DB contains valid formulas.
@@ -122,7 +125,7 @@ class TheoryDataAgent:
             self.db.save_material(
                 material_id=str(doc.material_id),
                 formula=str(doc.formula_pretty),
-                energy=float(doc.formation_energy_per_atom) if doc.formation_energy_per_atom else None,
+                energy=float(doc.formation_energy_per_atom) if doc.formation_energy_per_atom is not None else None,
                 cif_path=cif_path
             )
             

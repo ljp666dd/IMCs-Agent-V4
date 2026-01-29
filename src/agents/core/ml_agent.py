@@ -79,6 +79,7 @@ class MLAgent:
         # State
         self.results: List[ModelResult] = []
         self.best_model: Optional[ModelResult] = None
+        self.current_target: Optional[str] = None
         
         logger.info("MLAgent initialized with services and database.")
 
@@ -128,6 +129,7 @@ class MLAgent:
             
         self.data_manager.load_theory_data(data_path, target_col)
         self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
+        self.current_target = target_col
         
     @log_exception(logger)
     def load_generic_csv(self, file_path: str, target_col: str, feature_cols: List[str] = None):
@@ -141,6 +143,7 @@ class MLAgent:
         """
         self.data_manager.load_experimental_data(file_path, target_col, feature_cols)
         self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
+        self.current_target = target_col
         
         # Ideally we link this training session to an Experiment ID.
         # For now, we focus on saving the Model result.
@@ -166,6 +169,7 @@ class MLAgent:
         if not rows:
             logger.warning("No data found in DB for training.")
             return
+        self.current_target = target_col
 
         X_list = []
         y_list = []
@@ -225,6 +229,46 @@ class MLAgent:
         else:
             logger.warning("Failed to extract features for any DB records.")
 
+    @log_exception(logger)
+    def load_activity_metrics_from_db(self, metric_name: str = "exchange_current_density"):
+        """Load experimental activity metrics from DB using structure features."""
+        logger.info(f"Loading activity metrics from DB (metric={metric_name})...")
+        try:
+            from src.agents.core.theory_agent import TheoryDataConfig
+            allowed = TheoryDataConfig().elements
+        except Exception:
+            allowed = None
+        rows = self.db.fetch_activity_training_set(metric_name, allowed_elements=allowed)
+        if not rows:
+            logger.warning("No activity metrics found for training.")
+            return
+
+        X_list = []
+        y_list = []
+        id_list = []
+        for row in rows:
+            cif_path = row.get("cif_path")
+            target = row.get("target")
+            if cif_path and os.path.exists(cif_path) and target is not None:
+                feats = self.featurizer.extract(cif_path)
+                if feats is not None:
+                    X_list.append(feats)
+                    y_list.append(target)
+                    id_list.append(row.get("material_id"))
+
+        if X_list:
+            X = np.array(X_list)
+            y = np.array(y_list)
+            self.data_manager.X = X
+            self.data_manager.y = y
+            self.data_manager.feature_names = self.featurizer.feature_names
+            self.data_manager.material_ids = np.array(id_list) if id_list else None
+            self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
+            self.current_target = f"activity_metric:{metric_name}"
+            logger.info(f"Loaded {len(X)} activity samples for {metric_name}.")
+        else:
+            logger.warning("Failed to extract features for any activity records.")
+
     # ========== Training ==========
     
     def _save_models_to_db(self, results: List[ModelResult]):
@@ -253,7 +297,7 @@ class MLAgent:
                 self.db.save_model(
                     name=res.name,
                     model_type=res.model_type.value,
-                    target="target_variable",
+                    target=self.current_target or "target_variable",
                     metrics=metrics,
                     filepath=filepath,
                     # M4: Registry Metadata
@@ -343,6 +387,15 @@ class MLAgent:
         self.results.extend(results)
         self._save_models_to_db(results) # v3.3 DB
         return results
+
+    @log_exception(logger)
+    def train_activity_models(self, metric_name: str = "exchange_current_density") -> List[ModelResult]:
+        """Train ML models on activity metrics (from DB)."""
+        self.load_activity_metrics_from_db(metric_name)
+        if self.X_train is None or self.y_train is None:
+            logger.warning("No activity data loaded for training.")
+            return []
+        return self.train_traditional_models()
         
     @log_exception(logger)
     def train_deep_learning_models(self, epochs: int = 300) -> List[ModelResult]:

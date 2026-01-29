@@ -125,6 +125,73 @@ class ExperimentDataAgent:
         """
         return self.scanner.scan_directory(folder_path)
 
+    @log_exception(logger)
+    def process_rde_directory(
+        self,
+        data_dir: str = "data/experimental/rde_lsv",
+        reference_potential: float = 0.2,
+        loading_mg_cm2: float = 0.25,
+        precious_fraction: float = 0.20,
+    ) -> Dict[str, Any]:
+        """Process RDE LSV series in a directory and store metrics."""
+        if not os.path.exists(data_dir):
+            logger.warning(f"RDE directory not found: {data_dir}")
+            return {"processed": 0, "directory": data_dir}
+
+        manifest_path = os.path.join(data_dir, "manifest.json")
+        conditions = None
+        if os.path.exists(manifest_path):
+            try:
+                with open(manifest_path, "r", encoding="utf-8") as f:
+                    manifest = json.load(f)
+                conditions = manifest.get("conditions")
+            except Exception:
+                conditions = None
+
+        files = [
+            os.path.join(data_dir, f)
+            for f in os.listdir(data_dir)
+            if f.lower().endswith(".csv")
+        ]
+        if not files:
+            return {"processed": 0, "directory": data_dir}
+
+        # Group by formula prefix
+        groups: Dict[str, List[str]] = {}
+        for path in files:
+            name = os.path.basename(path)
+            formula = name.split("_")[0].split("-")[0]
+            if not formula:
+                continue
+            groups.setdefault(formula, []).append(path)
+
+        processed = 0
+        summaries = []
+        for formula, paths in groups.items():
+            if len(paths) < 2:
+                continue
+            result = self.analyze_rde_series(
+                paths,
+                sample_id=formula,
+                reference_potential=reference_potential,
+                loading_mg_cm2=loading_mg_cm2,
+                precious_fraction=precious_fraction,
+                conditions=conditions,
+            )
+            processed += 1
+            summaries.append({
+                "sample_id": formula,
+                "j0": result.exchange_current_density,
+                "ma": result.mass_activity,
+                "tafel": result.tafel_slope,
+            })
+
+        return {
+            "processed": processed,
+            "directory": data_dir,
+            "summaries": summaries,
+        }
+
     # ========== Data Loading ==========
     
     @log_exception(logger)

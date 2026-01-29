@@ -161,6 +161,17 @@ def migrate():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(snapshot_id) REFERENCES dataset_snapshots(id)
         );"""
+        ,
+        """CREATE TABLE IF NOT EXISTS robot_tasks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            task_type TEXT NOT NULL,
+            payload TEXT,
+            status TEXT NOT NULL DEFAULT 'queued',
+            result TEXT,
+            external_id TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );"""
     ]
     
     for sql in tables:

@@ -1,0 +1,29 @@
+{
+  "metrics": {
+    "Jk_ref": {
+      "label": "Jk",
+      "unit": "A/cm2",
+      "description": "Kinetic current density at reference potential"
+    },
+    "exchange_current_density": {
+      "label": "J0",
+      "unit": "A/cm2",
+      "description": "Exchange current density"
+    },
+    "mass_activity": {
+      "label": "MA",
+      "unit": "A/mg",
+      "description": "Mass activity"
+    },
+    "overpotential_10mA": {
+      "label": "Overpotential",
+      "unit": "mV",
+      "description": "Overpotential at 10 mA/cm2"
+    },
+    "tafel_slope": {
+      "label": "Tafel slope",
+      "unit": "mV/dec",
+      "description": "Tafel slope"
+    }
+  }
+}

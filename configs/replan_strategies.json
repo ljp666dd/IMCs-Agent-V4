@@ -1,0 +1,76 @@
+{
+  "default": {
+    "literature.search": {
+      "note": "fallback: simplified literature query",
+      "steps": [
+        {
+          "agent": "literature",
+          "action": "search",
+          "params": {
+            "query": "{query} catalyst",
+            "limit": 5
+          },
+          "deps": []
+        }
+      ]
+    },
+    "theory.download": {
+      "note": "fallback: reduced theory download scope",
+      "steps": [
+        {
+          "agent": "theory",
+          "action": "download",
+          "params": {
+            "data_types": [
+              "cif",
+              "formation_energy"
+            ],
+            "limit": 20
+          },
+          "deps": []
+        }
+      ]
+    },
+    "experiment.process": {
+      "note": "fallback: use literature to identify missing experiments",
+      "steps": [
+        {
+          "agent": "literature",
+          "action": "search",
+          "params": {
+            "query": "{query} RDE experiment",
+            "limit": 5
+          },
+          "deps": []
+        }
+      ]
+    },
+    "ml.train": {
+      "note": "fallback: refresh theory data then retrain",
+      "steps": [
+        {
+          "agent": "theory",
+          "action": "download",
+          "params": {
+            "data_types": [
+              "cif",
+              "formation_energy"
+            ],
+            "limit": 50
+          },
+          "deps": []
+        },
+        {
+          "agent": "ml",
+          "action": "train",
+          "params": {
+            "include_deep_learning": false
+          },
+          "deps": [
+            "$prev"
+          ]
+        }
+      ]
+    }
+  }
+}

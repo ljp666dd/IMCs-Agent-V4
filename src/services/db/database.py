@@ -292,8 +292,12 @@ class DatabaseService:
                       energy: float = None, cif_path: str = None) -> int:
         """Save theoretical material data."""
         query = """
-        INSERT OR REPLACE INTO materials (material_id, formula, formation_energy, cif_path) 
+        INSERT INTO materials (material_id, formula, formation_energy, cif_path)
         VALUES (?, ?, ?, ?)
+        ON CONFLICT(material_id) DO UPDATE SET
+            formula = COALESCE(excluded.formula, materials.formula),
+            formation_energy = COALESCE(excluded.formation_energy, materials.formation_energy),
+            cif_path = COALESCE(excluded.cif_path, materials.cif_path)
         """
         with self._get_conn() as conn:
             cursor = conn.cursor()
@@ -645,6 +649,41 @@ class DatabaseService:
             records = [dict(row) for row in rows]
             return self._filter_material_records(records, allowed_elements)
 
+    def fetch_activity_training_set(self, metric_name: str,
+                                    allowed_elements: Optional[List[str]] = None) -> List[Dict]:
+        """Fetch activity metrics joined with materials for ML training."""
+        if not metric_name:
+            return []
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT m.material_id, m.formula, m.cif_path, m.dos_data,
+                       a.metric_value, a.created_at
+                FROM activity_metrics a
+                JOIN materials m ON a.material_id = m.material_id
+                WHERE a.metric_name = ? AND a.metric_value IS NOT NULL
+                ORDER BY a.created_at DESC
+                """,
+                (metric_name,),
+            )
+            rows = cursor.fetchall()
+            if not rows:
+                return []
+            # Keep only latest per material_id
+            seen = set()
+            records = []
+            for row in rows:
+                mid = row["material_id"]
+                if not mid or mid in seen:
+                    continue
+                rec = dict(row)
+                rec["target"] = rec.pop("metric_value")
+                records.append(rec)
+                seen.add(mid)
+            return self._filter_material_records(records, allowed_elements)
+
     # ========== Adsorption Energies (Catalysis-Hub) ==========
 
     def save_adsorption_energy(self, material_id: Optional[str], surface_composition: str,
@@ -805,3 +844,108 @@ class DatabaseService:
             cursor.execute("SELECT * FROM models ORDER BY created_at DESC")
             rows = cursor.fetchall()
             return [dict(row) for row in rows]
+
+    # ========== Robot/Middleware Tasks ==========
+
+    def create_robot_task(self, task_type: str, payload: Dict = None, external_id: Optional[str] = None) -> int:
+        """Create a robot/middleware task."""
+        payload_json = json.dumps(payload) if payload else None
+        query = """
+        INSERT INTO robot_tasks (task_type, payload, status, external_id)
+        VALUES (?, ?, 'queued', ?)
+        """
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (task_type, payload_json, external_id))
+            return cursor.lastrowid
+
+    def update_robot_task(self, task_id: int, status: Optional[str] = None,
+                          result: Dict = None, external_id: Optional[str] = None) -> None:
+        """Update a robot task status/result."""
+        updates = []
+        params: List[Any] = []
+        if status is not None:
+            updates.append("status = ?")
+            params.append(status)
+        if result is not None:
+            updates.append("result = ?")
+            params.append(json.dumps(result))
+        if external_id is not None:
+            updates.append("external_id = ?")
+            params.append(external_id)
+        if not updates:
+            return
+        updates.append("updated_at = CURRENT_TIMESTAMP")
+        params.append(task_id)
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"UPDATE robot_tasks SET {', '.join(updates)} WHERE id = ?", params)
+
+    def get_robot_task(self, task_id: int) -> Optional[Dict]:
+        """Get a robot task by id."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM robot_tasks WHERE id = ?", (task_id,))
+            row = cursor.fetchone()
+            if not row:
+                return None
+            data = dict(row)
+            if data.get("payload"):
+                try:
+                    data["payload"] = json.loads(data["payload"])
+                except Exception:
+                    pass
+            if data.get("result"):
+                try:
+                    data["result"] = json.loads(data["result"])
+                except Exception:
+                    pass
+            return data
+
+    def get_robot_task_by_external(self, external_id: str) -> Optional[Dict]:
+        """Get a robot task by external_id."""
+        if not external_id:
+            return None
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM robot_tasks WHERE external_id = ?", (external_id,))
+            row = cursor.fetchone()
+            if not row:
+                return None
+            data = dict(row)
+            if data.get("payload"):
+                try:
+                    data["payload"] = json.loads(data["payload"])
+                except Exception:
+                    pass
+            if data.get("result"):
+                try:
+                    data["result"] = json.loads(data["result"])
+                except Exception:
+                    pass
+            return data
+
+    def list_robot_tasks(self, limit: int = 50) -> List[Dict]:
+        """List recent robot tasks."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM robot_tasks ORDER BY created_at DESC LIMIT ?", (limit,))
+            rows = cursor.fetchall()
+            items = []
+            for row in rows:
+                data = dict(row)
+                if data.get("payload"):
+                    try:
+                        data["payload"] = json.loads(data["payload"])
+                    except Exception:
+                        pass
+                if data.get("result"):
+                    try:
+                        data["result"] = json.loads(data["result"])
+                    except Exception:
+                        pass
+                items.append(data)
+            return items

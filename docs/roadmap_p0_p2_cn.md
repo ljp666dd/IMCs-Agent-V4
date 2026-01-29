@@ -1,0 +1,114 @@
+﻿<!-- ASCII padding for tooling compatibility: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -->
+# IMCs 路线图（P0 / P1 / P2）
+
+日期：2026-01-29
+
+本文件为“任务拆解 + 里程碑 + 验证清单”的统一入口，按阶段推进。
+
+---
+
+## P0：稳定性与可用性（当前阶段）
+
+### 目标
+- 保证端到端可跑通
+- 确保任务图、证据链、排序与 Knowledge Pack 稳定输出
+- 减少重启后的状态丢失
+
+### 任务拆解
+1) **一键 E2E 验证脚本**
+   - 生成快速验证任务（文献 → 理论 → ML → 排名 → Knowledge Pack）
+   - 输出验证报告（JSON / Markdown）
+2) **输入语言稳定化**
+   - 英文/中文输入都能稳定触发任务图
+   - 关键关键词路由稳定
+3) **任务恢复增强**
+   - 任务/步骤/证据包重启后可恢复
+   - Evidence gap 可继续补齐
+
+### 里程碑
+- M0.1：E2E 脚本 + 报告可用（支持快速验证）
+- M0.2：英文输入可稳定创建任务图
+- M0.3：任务恢复链路可用（重启后可继续补齐）
+
+### 验证清单
+- [ ] 运行 E2E 脚本，生成知识包与排序输出
+- [ ] 英文查询可生成任务图并执行
+- [ ] 任务中断后重启，能继续补齐证据链
+
+---
+
+## P1：智能化升级
+
+### 目标
+- 提升多智能体决策能力
+- 可解释证据链与评估指标落地
+
+### 任务拆解
+1) **评估套件**
+   - Top-K 召回、证据覆盖率、RAG 质量
+2) **证据补齐策略库**
+   - 文献/理论/实验/ML 的补齐策略模板
+3) **HOR 领域知识模板**
+   - 统一输出指标：Jk / J0 / MA / Tafel / 过电位
+
+### 里程碑
+- M1.1：评估指标可生成并落盘
+- M1.2：补齐策略自动推荐
+- M1.3：HOR 指标模板可复用
+
+### 验证清单
+- [ ] 任务完成后输出评估指标
+- [ ] Evidence gap 自动建议策略
+- [ ] HOR 指标字段规范化
+
+---
+
+## P2：闭环实验智能
+
+### 目标
+- 形成“实验数据 → ML → 推荐 → 实验”的闭环
+- 支持接入 middleware / robot 平台
+
+### 任务拆解
+1) **实验平台接口协议**
+   - 定义任务提交/反馈协议
+2) **实验驱动迭代**
+   - 实验数据自动入库、重训、推荐
+3) **策略自进化**
+   - 动态调整多智能体调用策略
+
+### 里程碑
+- M2.1：robot API 对接完成
+- M2.2：实验 → ML → 推荐闭环跑通
+- M2.3：策略自适应生效
+
+### 验证清单
+- [ ] robot 回调可触发 ML 重训
+- [ ] 实验数据驱动候选更新
+- [ ] 策略规则可自我调整
+
+---
+
+## 备注
+- 每个阶段完成后生成 `阶段验证报告` 与 `测试清单`
+- E2E 验证记录写入 `data/tasks/`
+
+
+## ????
+
+- P0.1?E2E ??????????`src/tools/run_e2e_verify.py`?
+- P0.2??????????????TaskPlanner + Chat ????????
+- P0.3?????????????UI ???????????
+- P1?????/????/HOR ?????????????????????
+
+---
+
+
+### P1 ????
+
+- P1-1?????????? evaluation_metrics ?? + UI ??
+- P1-2??????????? `configs/gap_strategies.json`
+- P1-3?HOR ????????? `configs/hor_metric_schema.json`
+- P1-4????????????? `configs/replan_strategies.json`
+
+

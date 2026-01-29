@@ -196,6 +196,18 @@ CREATE TABLE IF NOT EXISTS dataset_snapshot_items (
     FOREIGN KEY(snapshot_id) REFERENCES dataset_snapshots(id)
 );
 
+-- 3.15 Robot/Middleware Tasks (Integration Preparation)
+CREATE TABLE IF NOT EXISTS robot_tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_type TEXT NOT NULL,
+    payload TEXT,                        -- JSON
+    status TEXT NOT NULL DEFAULT 'queued',
+    result TEXT,                         -- JSON
+    external_id TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 4. Chat Sessions (v4.0 History)
 CREATE TABLE IF NOT EXISTS chat_sessions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
