@@ -299,6 +299,198 @@ class PlanExecutor:
         )
         return step.step_id
 
+    def _execute_gap_steps(
+        self,
+        plan: TaskPlan,
+        gap_steps: List[Dict[str, Any]],
+        ml_predictions: Dict[str, Any],
+        literature_papers: List[Any],
+        ml_target: Optional[str],
+    ) -> Dict[str, Any]:
+        """Execute evidence gap steps sequentially (best-effort)."""
+        success = True
+        for item in gap_steps:
+            step_id = self._next_step_id(plan)
+            step = TaskStep(
+                step_id=step_id,
+                agent=item.get("agent", ""),
+                action=item.get("action", ""),
+                params=item.get("params") or {},
+                dependencies=item.get("deps") or [],
+                status="pending",
+            )
+            plan.steps.append(step)
+            self.db.log_plan_step(
+                plan_id=plan.task_id,
+                step_id=step.step_id,
+                agent=step.agent,
+                action=step.action,
+                status="pending",
+                dependencies=step.dependencies,
+                params=step.params,
+            )
+
+            try:
+                self.db.log_plan_step(
+                    plan_id=plan.task_id,
+                    step_id=step.step_id,
+                    agent=step.agent,
+                    action=step.action,
+                    status="running",
+                    dependencies=step.dependencies,
+                    params=step.params,
+                )
+                result = self._execute_step(step)
+                step.result = result
+                step.status = "completed"
+                plan.results[step.step_id] = result
+
+                if step.agent == "literature" and isinstance(result, list):
+                    if result and hasattr(result[0], "title"):
+                        literature_papers = result
+                if step.agent == "ml":
+                    if isinstance(result, dict) and "predictions" in result:
+                        ml_predictions = result.get("predictions", {}) or {}
+                    if isinstance(step.params, dict) and step.params.get("target_col"):
+                        ml_target = step.params.get("target_col")
+
+                self.db.log_plan_step(
+                    plan_id=plan.task_id,
+                    step_id=step.step_id,
+                    agent=step.agent,
+                    action=step.action,
+                    status="completed",
+                    result=result,
+                    dependencies=step.dependencies,
+                    params=step.params,
+                )
+            except Exception as exc:
+                step.status = "failed"
+                self.db.log_plan_step(
+                    plan_id=plan.task_id,
+                    step_id=step.step_id,
+                    agent=step.agent,
+                    action=step.action,
+                    status="failed",
+                    error=str(exc),
+                    dependencies=step.dependencies,
+                    params=step.params,
+                )
+                success = False
+                break
+
+        return {
+            "success": success,
+            "ml_predictions": ml_predictions,
+            "literature_papers": literature_papers,
+            "ml_target": ml_target,
+        }
+
+    def _recompute_evidence_post_gap(
+        self,
+        plan: TaskPlan,
+        ml_predictions: Dict[str, Any],
+        ml_target: Optional[str],
+    ) -> Dict[str, Any]:
+        """Recompute ranking + knowledge RAG after gap auto-fill."""
+        rag_results: List[Dict[str, Any]] = []
+        candidate_ids_snapshot: List[str] = []
+        materials_snapshot: List[Dict[str, Any]] = []
+        ranking_current = None
+        ranking_metric = None
+
+        try:
+            theory_agent = self.agents.get("theory")
+            if not theory_agent:
+                return {}
+            plan_record = self.db.get_plan(plan.task_id)
+            created_at = plan_record.get("created_at") if plan_record else None
+            if created_at:
+                try:
+                    from src.agents.core.theory_agent import TheoryDataConfig
+                    allowed = TheoryDataConfig().elements
+                except Exception:
+                    allowed = None
+                materials = self.db.list_materials_since(created_at, limit=50, allowed_elements=allowed)
+            else:
+                materials = theory_agent.list_stored_materials(limit=20)
+            if not materials:
+                materials = theory_agent.list_stored_materials(limit=20)
+
+            candidate_ids = set()
+            top_n = 10
+            sorted_preds = None
+            if ml_predictions:
+                try:
+                    sorted_preds = sorted(
+                        ml_predictions.items(),
+                        key=lambda kv: kv[1],
+                        reverse=True
+                    )
+                    candidate_ids = {mid for mid, _ in sorted_preds[:top_n]}
+                except Exception:
+                    candidate_ids = set(ml_predictions.keys())
+            else:
+                candidate_ids = {m.get("material_id") for m in materials if m.get("material_id")}
+
+            materials = [m for m in materials if m.get("material_id") in candidate_ids]
+            candidate_ids_snapshot = list(candidate_ids)
+            materials_snapshot = materials[:]
+
+            if ml_predictions and not sorted_preds:
+                sorted_preds = list(ml_predictions.items())
+            if sorted_preds:
+                ranking_current = []
+                for idx, (mid, score) in enumerate(sorted_preds[:top_n], start=1):
+                    ranking_current.append({
+                        "rank": idx,
+                        "material_id": mid,
+                        "score": score,
+                    })
+                ranking_metric = ml_target or "formation_energy"
+
+            try:
+                from src.services.knowledge import KnowledgeRAG, KnowledgeService
+                rag = KnowledgeRAG(self.db.db_path)
+                ks = KnowledgeService(self.db.db_path)
+                for mat in materials[:5]:
+                    mid = mat.get("material_id")
+                    if not mid:
+                        continue
+                    rag_out = rag.query(
+                        query_text=f"HOR activity evidence for {mid}",
+                        top_k=3,
+                        source_type="literature"
+                    )
+                    if rag_out:
+                        rag_results.append({
+                            "material_id": mid,
+                            "results": rag_out
+                        })
+                        for item in rag_out:
+                            source_id = item.get("source_id")
+                            if not source_id:
+                                continue
+                            ks.upsert_material_evidence(
+                                material_id=mid,
+                                source_type=item.get("source_type") or "literature",
+                                source_id=source_id,
+                                score=item.get("score"),
+                                metadata=item
+                            )
+            except Exception as e:
+                logger.warning(f"Post-gap RAG failed: {e}")
+        except Exception as e:
+            logger.warning(f"Post-gap evidence recompute failed: {e}")
+
+        return {
+            "rag_results": rag_results,
+            "candidate_ids_snapshot": candidate_ids_snapshot,
+            "materials_snapshot": materials_snapshot,
+            "ranking_current": ranking_current,
+            "ranking_metric": ranking_metric,
+        }
+
     def _merge_knowledge_pack_results(self, plan: TaskPlan) -> None:
         """Merge persisted knowledge pack fields into plan.results if present."""
         if not plan or not plan.task_id:
@@ -361,6 +553,34 @@ class PlanExecutor:
 
         adaptive_rounds = 0
         awaiting_confirmation = False
+        env_path = os.path.join(self._repo_root(), ".env")
+        try:
+            from dotenv import load_dotenv
+            load_dotenv(env_path, override=False)
+        except Exception:
+            pass
+
+        def _read_env_file(key: str) -> Optional[str]:
+            try:
+                if not os.path.exists(env_path):
+                    return None
+                with open(env_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line or line.startswith("#"):
+                            continue
+                        if line.startswith(key + "="):
+                            return line.split("=", 1)[1]
+            except Exception:
+                return None
+            return None
+
+        auto_fill_val = os.getenv("IMCS_EVIDENCE_AUTO_FILL") or _read_env_file("IMCS_EVIDENCE_AUTO_FILL") or "0"
+        gap_rounds_val = os.getenv("IMCS_EVIDENCE_GAP_ROUNDS") or _read_env_file("IMCS_EVIDENCE_GAP_ROUNDS") or "1"
+        auto_fill = str(auto_fill_val).lower() in ("1", "true", "yes")
+        max_gap_rounds = int(gap_rounds_val or "1")
+        gap_rounds = 0
+        logger.info(f"Evidence auto-fill: {auto_fill} (rounds={max_gap_rounds})")
         while True:
             while pending:
                 # Find steps whose dependencies are satisfied
@@ -726,31 +946,65 @@ class PlanExecutor:
                             except Exception:
                                 allowed = None
                             before_stats = self.db.get_evidence_stats(allowed_elements=allowed)
-                            plan.results["evidence_stats_before_gap"] = before_stats
+                            if not plan.results.get("evidence_stats_before_gap"):
+                                plan.results["evidence_stats_before_gap"] = before_stats
                             gap_steps = gap_report.get("recommended_steps") or []
                             if gap_steps:
-                                for item in gap_steps:
-                                    step_id = self._next_step_id(plan)
-                                    deps = item.get("deps") or []
-                                    step = TaskStep(
-                                        step_id=step_id,
-                                        agent=item.get("agent", ""),
-                                        action=item.get("action", ""),
-                                        params=item.get("params") or {},
-                                        dependencies=deps,
-                                        status="pending",
+                                if auto_fill and gap_rounds < max_gap_rounds:
+                                    if ranking_current and not plan.results.get("ranking_before_gap"):
+                                        plan.results["ranking_before_gap"] = ranking_current
+                                    gap_rounds += 1
+                                    fill_result = self._execute_gap_steps(
+                                        plan,
+                                        gap_steps,
+                                        ml_predictions=ml_predictions,
+                                        literature_papers=literature_papers,
+                                        ml_target=ml_target,
                                     )
-                                    plan.steps.append(step)
-                                    self.db.log_plan_step(
-                                        plan_id=plan.task_id,
-                                        step_id=step.step_id,
-                                        agent=step.agent,
-                                        action=step.action,
-                                        status="pending",
-                                        dependencies=step.dependencies,
-                                        params=step.params
-                                    )
-                                awaiting_confirmation = True
+                                    ml_predictions = fill_result.get("ml_predictions", ml_predictions)
+                                    literature_papers = fill_result.get("literature_papers", literature_papers)
+                                    ml_target = fill_result.get("ml_target", ml_target)
+                                    if fill_result.get("success", False):
+                                        recomputed = self._recompute_evidence_post_gap(
+                                            plan,
+                                            ml_predictions=ml_predictions,
+                                            ml_target=ml_target,
+                                        ) or {}
+                                        if recomputed.get("rag_results"):
+                                            rag_results = recomputed.get("rag_results", rag_results)
+                                        if recomputed.get("candidate_ids_snapshot"):
+                                            candidate_ids_snapshot = recomputed.get("candidate_ids_snapshot", candidate_ids_snapshot)
+                                            plan.results["candidate_material_ids"] = candidate_ids_snapshot
+                                        if recomputed.get("materials_snapshot"):
+                                            materials_snapshot = recomputed.get("materials_snapshot", materials_snapshot)
+                                        if recomputed.get("ranking_current"):
+                                            ranking_current = recomputed.get("ranking_current", ranking_current)
+                                            ranking_metric = recomputed.get("ranking_metric", ranking_metric)
+                                    else:
+                                        awaiting_confirmation = True
+                                else:
+                                    for item in gap_steps:
+                                        step_id = self._next_step_id(plan)
+                                        deps = item.get("deps") or []
+                                        step = TaskStep(
+                                            step_id=step_id,
+                                            agent=item.get("agent", ""),
+                                            action=item.get("action", ""),
+                                            params=item.get("params") or {},
+                                            dependencies=deps,
+                                            status="pending",
+                                        )
+                                        plan.steps.append(step)
+                                        self.db.log_plan_step(
+                                            plan_id=plan.task_id,
+                                            step_id=step.step_id,
+                                            agent=step.agent,
+                                            action=step.action,
+                                            status="pending",
+                                            dependencies=step.dependencies,
+                                            params=step.params
+                                        )
+                                    awaiting_confirmation = True
                 except Exception as e:
                     logger.warning(f"Evidence gap analysis failed: {e}")
         except Exception as e:
@@ -865,6 +1119,15 @@ class PlanExecutor:
                         json.dump(pack, f, ensure_ascii=False, indent=2)
         except Exception as e:
             logger.warning(f"Failed to update knowledge pack with evidence gap: {e}")
+        # Re-evaluate pending state based on step statuses (post-confirmation runs)
+        try:
+            if any(step.status in ("pending", "running") for step in plan.steps):
+                awaiting_confirmation = True
+            else:
+                awaiting_confirmation = False
+        except Exception:
+            pass
+
         # After gap fill, compute stats delta if available
         try:
             if not awaiting_confirmation and plan.results.get("evidence_stats_before_gap"):
@@ -884,6 +1147,31 @@ class PlanExecutor:
                 plan.results["evidence_stats_delta"] = delta
         except Exception as e:
             logger.warning(f"Evidence stats delta failed: {e}")
+
+        # Update knowledge pack with after-gap stats if available
+        try:
+            if plan.results.get("evidence_stats_after_gap") or plan.results.get("evidence_stats_delta"):
+                out_dir = os.path.join("data", "tasks")
+                out_path = os.path.join(out_dir, f"knowledge_{plan.task_id}.json")
+                if os.path.exists(out_path):
+                    with open(out_path, "r", encoding="utf-8") as f:
+                        pack = json.load(f)
+                    if plan.results.get("evidence_stats_after_gap"):
+                        pack["evidence_stats_after_gap"] = plan.results.get("evidence_stats_after_gap")
+                    if plan.results.get("evidence_stats_delta"):
+                        pack["evidence_stats_delta"] = plan.results.get("evidence_stats_delta")
+                    with open(out_path, "w", encoding="utf-8") as f:
+                        json.dump(pack, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            logger.warning(f"Failed to update knowledge pack after gap stats: {e}")
+
+        # Strategy feedback (P2) - run after stats delta is available
+        try:
+            from src.services.task.strategy_tracker import StrategyTracker
+            tracker = StrategyTracker()
+            tracker.update_from_plan(plan)
+        except Exception as e:
+            logger.warning(f"Strategy tracker failed: {e}")
 
         if awaiting_confirmation:
             plan.status = "awaiting_confirmation"
@@ -942,11 +1230,18 @@ class PlanExecutor:
                     target_agent.download_formation_energy()
                 if "dos" in data_types:
                     mats = target_agent.list_stored_materials(limit=20)
-                    mat_ids = [m.get("material_id") for m in mats if m.get("material_id")]
+                    mat_ids = [
+                        m.get("material_id")
+                        for m in mats
+                        if m.get("material_id") and str(m.get("material_id")).startswith("mp-")
+                    ]
                     if mat_ids:
                         target_agent.download_orbital_dos(material_ids=mat_ids)
                 if "adsorption" in data_types:
-                    target_agent.download_adsorption_energies(adsorbates=["H*", "OH*"], limit=limit)
+                    try:
+                        target_agent.download_adsorption_energies(adsorbates=["H*", "OH*"], limit=limit)
+                    except TypeError:
+                        target_agent.download_adsorption_energies()
                 return {"message": "Downloaded theory data to DB", "data_types": data_types}
         
         elif agent_name == "experiment":

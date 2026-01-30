@@ -9,6 +9,8 @@ sys.path.append(BASE_DIR)
 from src.agents.core.experiment_agent import ExperimentDataAgent
 from src.agents.core.ml_agent import MLAgent, MLAgentConfig
 
+from src.services.db.database import DatabaseService
+
 
 def main():
     parser = argparse.ArgumentParser(description="Iterate with experiment data -> retrain ML -> update evidence.")
@@ -33,11 +35,35 @@ def main():
     results = ml_agent.train_traditional_models() if ml_agent.X_train is not None else []
     preds = ml_agent.predict_best()
 
+    db = DatabaseService()
+    ranked = []
+    if preds:
+        try:
+            ranked = sorted(preds.items(), key=lambda kv: kv[1], reverse=True)[:10]
+        except Exception:
+            ranked = list(preds.items())[:10]
+        for mid, score in preds.items():
+            try:
+                db.save_evidence(
+                    material_id=str(mid),
+                    source_type="ml_prediction",
+                    source_id=f"auto_iter_{args.metric}",
+                    score=0.6,
+                    metadata={
+                        "prediction": float(score),
+                        "metric": args.metric,
+                        "origin": "auto_iterate_experiment",
+                    },
+                )
+            except Exception:
+                continue
+
     report = {
         "experiment": exp_summary,
         "metric": args.metric,
         "trained_models": [r.name for r in results],
         "predictions": preds,
+        "ranking_top_n": [{"material_id": mid, "score": score} for mid, score in ranked],
     }
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)

@@ -17,7 +17,14 @@ class DatabaseService:
         self._init_db()
         
     def _get_conn(self):
-        return sqlite3.connect(self.db_path)
+        conn = sqlite3.connect(self.db_path, timeout=30, check_same_thread=False)
+        try:
+            conn.execute("PRAGMA journal_mode=WAL;")
+            conn.execute("PRAGMA synchronous=NORMAL;")
+            conn.execute("PRAGMA busy_timeout=5000;")
+        except Exception:
+            pass
+        return conn
 
     def _filter_material_records(self, records: List[Dict], allowed_elements: Optional[List[str]] = None) -> List[Dict]:
         """Filter material records by allowed elements (formula subset)."""
@@ -699,6 +706,7 @@ class DatabaseService:
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
         meta_json = json.dumps(metadata) if metadata else None
+        record_id = None
         with self._get_conn() as conn:
             cursor = conn.cursor()
             cursor.execute(query, (
@@ -712,28 +720,27 @@ class DatabaseService:
                 meta_json
             ))
             record_id = cursor.lastrowid
+        # Link as evidence when material_id is known (new connection to avoid locks)
+        if material_id:
+            try:
+                self.save_evidence(
+                    material_id=material_id,
+                    source_type="adsorption_energy",
+                    source_id=str(record_id),
+                    score=0.8,
+                    metadata={
+                        "surface_composition": surface_composition,
+                        "facet": facet,
+                        "adsorbate": adsorbate,
+                        "reaction_energy": reaction_energy,
+                        "activation_energy": activation_energy,
+                        "source": source,
+                    }
+                )
+            except Exception as e:
+                logger.warning(f"Failed to link adsorption evidence: {e}")
 
-            # Link as evidence when material_id is known
-            if material_id:
-                try:
-                    self.save_evidence(
-                        material_id=material_id,
-                        source_type="adsorption_energy",
-                        source_id=str(record_id),
-                        score=0.8,
-                        metadata={
-                            "surface_composition": surface_composition,
-                            "facet": facet,
-                            "adsorbate": adsorbate,
-                            "reaction_energy": reaction_energy,
-                            "activation_energy": activation_energy,
-                            "source": source,
-                        }
-                    )
-                except Exception as e:
-                    logger.warning(f"Failed to link adsorption evidence: {e}")
-
-            return record_id
+        return record_id
 
     def list_adsorption_energies(self, material_id: str) -> List[Dict]:
         """List adsorption energy records for a material."""

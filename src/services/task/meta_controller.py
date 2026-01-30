@@ -37,6 +37,35 @@ class MetaController:
         except Exception:
             return {}
 
+    def _load_strategy_weights(self) -> Dict[str, float]:
+        """Load strategy weight signals from data/strategy/strategy_stats.json."""
+        try:
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+            path = os.path.join(base_dir, "data", "strategy", "strategy_stats.json")
+            if not os.path.exists(path):
+                return {}
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            evidence = data.get("evidence_types", {}) if isinstance(data, dict) else {}
+            weights: Dict[str, float] = {}
+            if isinstance(evidence, dict):
+                for key, info in evidence.items():
+                    if not isinstance(info, dict):
+                        continue
+                    score = info.get("score")
+                    if score is None:
+                        attempts = info.get("attempts", 0) or 0
+                        gains = info.get("gains", 0) or 0
+                        score = (gains / attempts) if attempts else None
+                    if score is not None:
+                        try:
+                            weights[key] = float(score)
+                        except Exception:
+                            continue
+            return weights
+        except Exception:
+            return {}
+
     def _format_params(self, params: Any, user_request: str) -> Any:
         if isinstance(params, dict):
             return {k: self._format_params(v, user_request) for k, v in params.items()}
@@ -58,7 +87,16 @@ class MetaController:
             strategy = self.gap_strategies.get("default")
         if not isinstance(strategy, dict):
             return steps, covered
-        for key, items in strategy.items():
+        key_order = list(strategy.keys())
+        weights = self._load_strategy_weights()
+        if weights:
+            order_index = {k: idx for idx, k in enumerate(key_order)}
+            key_order = sorted(
+                key_order,
+                key=lambda k: (-weights.get(k, 0.0), order_index.get(k, 0)),
+            )
+        for key in key_order:
+            items = strategy.get(key)
             if summary.get(key, 0) <= 0:
                 continue
             if not isinstance(items, list):

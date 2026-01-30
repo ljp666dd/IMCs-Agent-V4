@@ -1,8 +1,8 @@
 from typing import List, Dict, Optional, Any, Union
 import os
 import json
+import time
 import numpy as np
-from tqdm import tqdm
 from src.core.logger import get_logger, log_exception
 
 logger = get_logger(__name__)
@@ -28,6 +28,9 @@ class MPClient:
     def search_materials(self, elements: List[str], fields: List[str] = None, limit: int = None, is_stable: bool = True):
         """Search materials by elements."""
         if not HAS_MP_API:
+            return []
+        if not self.api_key:
+            logger.warning("MP API key missing. Skipping MP search.")
             return []
             
         if fields is None:
@@ -60,19 +63,41 @@ class MPClient:
                         f"(MP_MAX_ELEMENTS={max_elements})."
                     )
                 
+                failure_count = 0
+                max_failures = int(os.getenv("MP_MAX_FAILURES", "3") or "3")
+                max_retries = int(os.getenv("MP_MAX_RETRIES", "2") or "2")
+                sleep_s = float(os.getenv("MP_QUERY_SLEEP", "0.2") or "0.2")
+                backoff_base = float(os.getenv("MP_BACKOFF_BASE", "1.5") or "1.5")
+
                 for el in search_targets:
-                    try:
-                        docs = mpr.materials.summary.search(
-                            elements=[el], # Must contain this element
-                            is_stable=is_stable,
-                            fields=fields
-                        )
-                        for d in docs:
-                            if str(d.material_id) not in seen_ids:
-                                all_docs.append(d)
-                                seen_ids.add(str(d.material_id))
-                    except Exception as loop_e:
-                         logger.warning(f"Failed search for {el}: {loop_e}")
+                    success = False
+                    for attempt in range(max_retries + 1):
+                        try:
+                            docs = mpr.materials.summary.search(
+                                elements=[el],  # Must contain this element
+                                is_stable=is_stable,
+                                fields=fields,
+                                chunk_size=1
+                            )
+                            for d in docs:
+                                if str(d.material_id) not in seen_ids:
+                                    all_docs.append(d)
+                                    seen_ids.add(str(d.material_id))
+                            success = True
+                            break
+                        except Exception as loop_e:
+                            logger.warning(f"Failed search for {el} (attempt {attempt + 1}): {loop_e}")
+                            if attempt < max_retries:
+                                time.sleep(backoff_base ** attempt)
+                    if not success:
+                        failure_count += 1
+                        if failure_count >= max_failures:
+                            logger.warning("Aborting MP search after repeated failures.")
+                            break
+                    if limit and len(all_docs) >= limit:
+                        break
+                    if sleep_s > 0:
+                        time.sleep(sleep_s)
                 
             if limit and len(all_docs) > limit:
                 all_docs = all_docs[:limit]
@@ -87,11 +112,13 @@ class MPClient:
     @log_exception(logger)
     def download_cifs(self, docs: List[Any], output_dir: str) -> int:
         """Save CIF files from search results."""
+        if not docs:
+            return 0
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
             
         count = 0
-        for doc in tqdm(docs, desc="Saving CIFs"):
+        for doc in docs:
             try:
                 struct = doc.structure
                 if struct:
@@ -116,11 +143,13 @@ class MPClient:
         """
         if not HAS_MP_API:
             return {}
+        if not material_ids:
+            return {}
             
         results = {}
         try:
             with MPRester(self.api_key) as mpr:
-                for mat_id in tqdm(material_ids, desc="Fetching DOS"):
+                for mat_id in material_ids:
                     try:
                         dos = mpr.get_dos_by_material_id(mat_id)
                         if dos is None: continue

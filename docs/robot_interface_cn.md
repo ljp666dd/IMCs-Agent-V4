@@ -122,3 +122,52 @@ http://localhost:8000
 1) 将 metrics 写入 activity_metrics
 2) 自动训练基于该指标的 ML 模型（准备级）
 
+---
+
+## 6. 自动入库实验数据（可选）
+
+在 `POST /robot/result_callback` 中加入 `auto_ingest=true`，并提供实验文件路径：
+
+```json
+{
+  "task_id": 12,
+  "status": "completed",
+  "auto_ingest": true,
+  "result": {
+    "artifacts": [
+      "data/experimental/rde_lsv/PtRu_LSV_400rpm.csv",
+      "data/experimental/rde_lsv/PtRu_LSV_900rpm.csv"
+    ],
+    "conditions": {
+      "electrolyte": "0.1M KOH",
+      "temperature_K": 298
+    }
+  }
+}
+```
+
+可选参数（顶层 `ingest_params`）：
+```json
+{
+  "ingest_params": {
+    "data_dir": "data/experimental/rde_lsv",
+    "reference_potential": 0.2,
+    "loading_mg_cm2": 0.25,
+    "precious_fraction": 0.20,
+    "method": "lsv"
+  }
+}
+```
+
+系统会自动解析并写入：
+- experiments
+- activity_metrics
+- evidence
+
+
+### ????????????
+
+- `record_predictions`??????????? ML ??????? true?
+- `top_n`???? N ?????????????? 10?
+
+

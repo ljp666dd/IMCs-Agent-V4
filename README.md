@@ -43,7 +43,7 @@ Outputs:
 
 1.  **Environment File**:
     The system reads from `.env` in the root directory.
-    We have automatically created a default one for you.
+    A sample file is provided in `.env.example`.
 
 2.  **Keys**:
     Edit `.env` to set your real keys:
@@ -51,6 +51,22 @@ Outputs:
     MP_API_KEY=your_materials_project_api_key
     IMCS_SECRET_KEY=your_production_secret_key
     IMCS_API_URL=http://localhost:8000
+    ```
+
+3.  **MP Query Tuning (Optional)**:
+    ```ini
+    MP_MAX_ELEMENTS=5
+    MP_SEARCH_ALL_ELEMENTS=0
+    MP_MAX_FAILURES=3
+    MP_MAX_RETRIES=2
+    MP_QUERY_SLEEP=0.2
+    MP_BACKOFF_BASE=1.5
+    ```
+
+4.  **Evidence Auto-Fill (P2, Optional)**:
+    ```ini
+    IMCS_EVIDENCE_AUTO_FILL=1
+    IMCS_EVIDENCE_GAP_ROUNDS=1
     ```
 
 ---
@@ -100,3 +116,16 @@ pip install -r requirements.txt
 ```powershell
 python -m pytest tests/
 ```
+
+## MP Alloy Query (2-5 elements)
+
+Query Materials Project for 2-5 element alloys using `TheoryDataConfig.elements`:
+
+```powershell
+python src/tools/mp_query_alloys.py --k-min 2 --k-max 5 --max-combos 200 --per-combo-limit 50 --sleep 0.2
+```
+
+Notes:
+- `--max-combos 0` means no limit (can be very large).
+- `--stable-only` filters to stable materials.
+- `--store-db` will write minimal records into `data/imcs.db`.

@@ -337,10 +337,9 @@ class TheoryDataAgent:
         """Query Catalysis-Hub for adsorption energies."""
         return self.ext_db.query_catalysis_hub(adsorbate=adsorbate, limit=limit)
 
-    def download_adsorption_energies(self, save: bool = True) -> List[Dict]:
-        """Download adsorption energies."""
+    def download_adsorption_energies_raw(self, save: bool = True) -> List[Dict]:
+        """Legacy stub: raw adsorption energy download (not linked to DB)."""
         results = self.query_catalysis_hub(reaction="HER", limit=100)
-        
         # Future: Save to DB
         return results
 

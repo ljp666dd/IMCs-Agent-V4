@@ -113,6 +113,59 @@
         },
         "reason": "HOR: missing activity metrics from experiments."
       }
+    ],
+    "formation_energy": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "formation_energy"
+          ],
+          "limit": 50
+        },
+        "reason": "HOR: missing formation energy."
+      }
+    ],
+    "dos_data": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "dos"
+          ],
+          "limit": 50
+        },
+        "reason": "HOR: missing DOS evidence."
+      }
+    ],
+    "adsorption_energy": [
+      {
+        "agent": "theory",
+        "action": "download",
+        "params": {
+          "data_types": [
+            "cif",
+            "adsorption"
+          ],
+          "limit": 50
+        },
+        "reason": "HOR: missing adsorption energies."
+      }
+    ],
+    "ml_prediction": [
+      {
+        "agent": "ml",
+        "action": "train",
+        "params": {
+          "include_deep_learning": true,
+          "target_col": "auto"
+        },
+        "reason": "HOR: missing ML predictions."
+      }
     ]
   }
 }

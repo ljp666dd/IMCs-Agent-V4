@@ -28,16 +28,31 @@ class UnifiedTrainer:
         """Train standard ML models (sklearn/xgboost)."""
         results = []
         logger.info(f"Training {len(models)} traditional models...")
+
+        n_samples = len(y_train) if y_train is not None else 0
         
         for name, model in models.items():
             try:
+                if n_samples < 2 and name in ("LightGBM",):
+                    logger.warning(f"Skipping {name}: requires >=2 samples.")
+                    continue
+                if name == "KNN":
+                    try:
+                        n_neighbors = min(getattr(model, "n_neighbors", 5), max(1, n_samples))
+                        model.set_params(n_neighbors=n_neighbors)
+                    except Exception:
+                        pass
                 model.fit(X_train, y_train)
                 
                 y_pred_train = model.predict(X_train)
                 y_pred_test = model.predict(X_test)
-                
-                r2_train = r2_score(y_train, y_pred_train)
-                r2_test = r2_score(y_test, y_pred_test)
+
+                r2_train = float("nan")
+                r2_test = float("nan")
+                if len(y_train) >= 2:
+                    r2_train = r2_score(y_train, y_pred_train)
+                if len(y_test) >= 2:
+                    r2_test = r2_score(y_test, y_pred_test)
                 mae_test = mean_absolute_error(y_test, y_pred_test)
                 rmse_test = np.sqrt(mean_squared_error(y_test, y_pred_test))
                 
@@ -93,8 +108,12 @@ class UnifiedTrainer:
                     y_pred_train = model(X_train_t).cpu().numpy().flatten()
                     y_pred_test = model(X_test_t).cpu().numpy().flatten()
                 
-                r2_train = r2_score(y_train, y_pred_train)
-                r2_test = r2_score(y_test, y_pred_test)
+                r2_train = float("nan")
+                r2_test = float("nan")
+                if len(y_train) >= 2:
+                    r2_train = r2_score(y_train, y_pred_train)
+                if len(y_test) >= 2:
+                    r2_test = r2_score(y_test, y_pred_test)
                 mae_test = mean_absolute_error(y_test, y_pred_test)
                 rmse_test = np.sqrt(mean_squared_error(y_test, y_pred_test))
                 

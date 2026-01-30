@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
+import math
 from src.services.task.planner import TaskPlanner
 from src.services.task.executor import PlanExecutor
 from src.services.task.types import TaskPlan, TaskType, TaskStep
@@ -89,6 +90,18 @@ def _restore_plan_from_db(task_id: str) -> Optional[TaskPlan]:
         if step.result is not None:
             plan.results[step_id] = step.result
     return plan
+
+def _sanitize_json(data: Any) -> Any:
+    """Replace NaN/inf with None for JSON serialization."""
+    if isinstance(data, float):
+        if math.isnan(data) or math.isinf(data):
+            return None
+        return data
+    if isinstance(data, list):
+        return [_sanitize_json(v) for v in data]
+    if isinstance(data, dict):
+        return {k: _sanitize_json(v) for k, v in data.items()}
+    return data
 
 @router.post("/create", response_model=TaskResponse)
 async def create_task(req: TaskRequest):
@@ -203,8 +216,8 @@ async def get_task_status(task_id: str):
         return {
             "task_id": task_id,
             "status": plan.get("status"),
-            "steps": list(latest.values()),
-            "results": results
+            "steps": _sanitize_json(list(latest.values())),
+            "results": _sanitize_json(results)
         }
 
     if agent_instance.current_plan and agent_instance.current_plan.task_id == task_id:
@@ -258,7 +271,7 @@ async def get_task_report(task_id: str):
         report["evidence_chain"] = evidence_chain
     else:
         report["evidence_chain"] = []
-    return report
+    return _sanitize_json(report)
 
 
 @router.get("/snapshots/{snapshot_id}")

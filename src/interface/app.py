@@ -359,6 +359,28 @@ def load_knowledge_pack(task_id: str):
     except Exception:
         return None
 
+def load_strategy_stats():
+    path = os.path.join(ROOT_DIR, "data", "strategy", "strategy_stats.json")
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+def load_strategy_feedback(task_id: str):
+    if not task_id:
+        return None
+    path = os.path.join(ROOT_DIR, "data", "strategy", "feedback", f"feedback_{task_id}.json")
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
 def render_knowledge_pack(pack: dict):
     if not pack:
         return
@@ -415,6 +437,34 @@ def render_knowledge_pack(pack: dict):
                 st.dataframe(pd.DataFrame(steps), use_container_width=True)
             except Exception:
                 st.json(steps)
+
+    strategy_stats = load_strategy_stats() or {}
+    strategy_feedback = load_strategy_feedback(pack.get("task_id") or "")
+    if strategy_stats or strategy_feedback:
+        st.markdown("#### Strategy Feedback")
+        if strategy_feedback:
+            st.caption("Latest feedback for this task")
+            try:
+                st.json(strategy_feedback)
+            except Exception:
+                pass
+        evidence_types = strategy_stats.get("evidence_types") or {}
+        if evidence_types:
+            rows = []
+            for key, info in evidence_types.items():
+                if not isinstance(info, dict):
+                    continue
+                rows.append({
+                    "evidence_type": key,
+                    "attempts": info.get("attempts"),
+                    "gains": info.get("gains"),
+                    "score": info.get("score"),
+                })
+            if rows:
+                df = pd.DataFrame(rows).sort_values(by="score", ascending=False)
+                st.dataframe(df, use_container_width=True)
+        else:
+            st.caption("No strategy stats found yet.")
 
     ranking_before = pack.get("ranking_before_gap") or []
     ranking_after = pack.get("ranking_after_gap") or []
@@ -486,6 +536,29 @@ def render_knowledge_pack(pack: dict):
     eval_metrics = pack.get("evaluation_metrics") or {}
     if eval_metrics:
         st.markdown("#### Evaluation Metrics")
+        top_cols = st.columns(3)
+        top_cols[0].metric("Plan Status", eval_metrics.get("plan_status") or "-")
+        top_cols[1].metric("Candidate Count", eval_metrics.get("candidate_count") or 0)
+        top_cols[2].metric("Model Count", eval_metrics.get("model_count") or 0)
+        if eval_metrics.get("best_model_r2") is not None:
+            st.metric("Best Model R2", eval_metrics.get("best_model_r2"))
+
+        hit_cols = st.columns(2)
+        hit_cols[0].metric("Ranking Evidence Hit Rate", eval_metrics.get("ranking_evidence_hit_rate") or 0)
+        hit_cols[1].metric("Ranking Activity Hit Rate", eval_metrics.get("ranking_activity_hit_rate") or 0)
+
+        coverage = eval_metrics.get("evidence_coverage_by_key") or {}
+        if coverage:
+            st.markdown("Coverage by evidence key")
+            try:
+                cov_df = pd.DataFrame(
+                    [{"evidence_key": k, "coverage": v} for k, v in coverage.items()]
+                )
+                st.dataframe(cov_df, use_container_width=True)
+                st.bar_chart(cov_df.set_index("evidence_key")["coverage"])
+            except Exception:
+                st.json(coverage)
+
         try:
             st.json(eval_metrics)
         except Exception:
@@ -995,6 +1068,7 @@ def render_sidebar():
             ("ml", "ML 训练", "ML Training"),
             ("lit", "文献库", "Literature"),
             ("api", "API 状态", "API Status"),
+            ("strategy", "????", "Strategy Feedback"),
             ("settings", "设置", "Settings"),
         ]
         labels = [p[1] if st.session_state.ui_lang == "zh" else p[2] for p in pages]
@@ -2428,6 +2502,41 @@ def render_evaluation():
 
 # ========== API Status Page ==========
 
+
+def render_strategy_feedback():
+    st.markdown("## Strategy Feedback")
+    stats = load_strategy_stats()
+    if not stats:
+        st.info("No strategy stats found yet.")
+        return
+    evidence = stats.get("evidence_types") or {}
+    rows = []
+    for key, info in evidence.items():
+        if not isinstance(info, dict):
+            continue
+        rows.append({
+            "evidence_type": key,
+            "attempts": info.get("attempts"),
+            "gains": info.get("gains"),
+            "score": info.get("score"),
+        })
+    if rows:
+        df = pd.DataFrame(rows).sort_values(by="score", ascending=False)
+        st.dataframe(df, use_container_width=True)
+
+    feedback_dir = os.path.join(ROOT_DIR, "data", "strategy", "feedback")
+    if os.path.exists(feedback_dir):
+        files = sorted([f for f in os.listdir(feedback_dir) if f.endswith(".json")], reverse=True)
+        if files:
+            selected = st.selectbox("Feedback files", files)
+            path = os.path.join(feedback_dir, selected)
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    payload = json.load(f)
+                st.json(payload)
+            except Exception:
+                st.warning("Failed to load feedback file.")
+
 def render_api_status():
     """Render API status page."""
     st.markdown("## 🔌 API 连接状态")
@@ -2591,6 +2700,8 @@ def main():
         render_literature()
     elif page == "api":
         render_api_status()
+    elif page == "strategy":
+        render_strategy_feedback()
     elif page == "settings":
         render_settings()
 

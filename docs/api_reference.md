@@ -231,3 +231,38 @@ Outputs:
   }
 }
 ```
+
+### Robot Callback (Enhanced)
+
+`POST /robot/result_callback`
+
+Request (new optional fields):
+- `record_predictions`: bool (default true)
+- `top_n`: int (default 10)
+- `auto_ingest`: bool (default false)
+- `ingest_params`: object (optional)
+
+Example:
+```json
+{
+  "task_id": 1,
+  "status": "completed",
+  "auto_ingest": true,
+  "ingest_params": {
+    "data_dir": "data/experimental/rde_lsv",
+    "reference_potential": 0.2,
+    "loading_mg_cm2": 0.25,
+    "precious_fraction": 0.20,
+    "method": "lsv"
+  },
+  "result": {
+    "artifacts": [
+      "data/experimental/rde_lsv/PtRu_LSV_400rpm.csv",
+      "data/experimental/rde_lsv/PtRu_LSV_900rpm.csv"
+    ]
+  }
+}
+```
+
+Response unchanged.
+

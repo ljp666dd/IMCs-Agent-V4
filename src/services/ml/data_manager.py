@@ -130,6 +130,16 @@ class DataManager:
         if self.X is None or self.y is None:
             raise ValueError("Data not loaded. Call load_* first.")
 
+        n_samples = len(self.X)
+        if n_samples < 2:
+            # Too few samples for train_test_split; fall back to train-only usage.
+            self.X_train = self.scaler.fit_transform(self.X)
+            self.X_test = self.X_train
+            self.y_train = self.y
+            self.y_test = self.y
+            logger.warning("Only one sample available; skipping train/test split.")
+            return
+
         # Split on raw features
         X_train_raw, X_test_raw, self.y_train, self.y_test = train_test_split(
             self.X, self.y, test_size=test_size, random_state=random_state
