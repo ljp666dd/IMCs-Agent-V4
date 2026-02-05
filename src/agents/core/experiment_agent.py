@@ -243,6 +243,34 @@ class ExperimentDataAgent:
         if not pot_col or not curr_col:
             logger.warning(f"Could not identify columns for LSV: {df.columns}")
             return LSVResult(sample_id=sample_id)
+        
+        V = df[pot_col].values
+        J = df[curr_col].values
+        
+        try:
+            # Overpotential at 10 mA/cm2
+            idx_10 = np.argmin(np.abs(J - 10.0))
+            eta_10 = float(V[idx_10]) if abs(J[idx_10] - 10) <= 5 else None
+            
+            # Onset Potential (0.1 mA/cm2 threshold)
+            idx_onset = np.argmin(np.abs(J - 0.1))
+            onset = float(V[idx_onset])
+            
+            result = LSVResult(
+                sample_id=sample_id,
+                overpotential_10mA=eta_10,
+                current_density_max=float(np.max(J)),
+                onset_potential=onset,
+                data={
+                    "voltage": V.tolist(),
+                    "current": J.tolist()
+                }
+            )
+            return result
+            
+        except Exception as e:
+            logger.error(f"LSV Analysis failed: {e}")
+            return LSVResult(sample_id=sample_id)
 
     def _extract_potential_current(self, df: pd.DataFrame) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
         columns = {c.lower(): c for c in df.columns}
@@ -439,35 +467,7 @@ class ExperimentDataAgent:
             )
 
         return result
-            
-        V = df[pot_col].values
-        J = df[curr_col].values
-        
-        try:
-            # Overpotential at 10 mA/cm2
-            # Logic: Find voltage where |current - 10| is minimal
-            idx_10 = np.argmin(np.abs(J - 10.0))
-            eta_10 = float(V[idx_10]) if abs(J[idx_10] - 10) <= 5 else None
-            
-            # Onset Potential (0.1 mA/cm2 threshold)
-            idx_onset = np.argmin(np.abs(J - 0.1))
-            onset = float(V[idx_onset])
-            
-            result = LSVResult(
-                sample_id=sample_id,
-                overpotential_10mA=eta_10,
-                current_density_max=float(np.max(J)),
-                onset_potential=onset,
-                data={
-                    "voltage": V.tolist(),
-                    "current": J.tolist()
-                }
-            )
-            return result
-            
-        except Exception as e:
-            logger.error(f"LSV Analysis failed: {e}")
-            return LSVResult(sample_id=sample_id)
+
 
     @log_exception(logger)
     def process_request(self, file_path: str, method: str) -> Any:

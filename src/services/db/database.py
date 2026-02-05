@@ -3,6 +3,7 @@ import os
 import json
 from typing import List, Dict, Any, Optional
 from src.core.logger import get_logger, log_exception
+from src.config.config import config
 
 logger = get_logger(__name__)
 
@@ -12,8 +13,8 @@ class DatabaseService:
     Manages Materials, Experiments, and Models.
     """
     
-    def __init__(self, db_path: str = "data/imcs.db"):
-        self.db_path = db_path
+    def __init__(self, db_path: Optional[str] = None):
+        self.db_path = db_path or config.DB_PATH
         self._init_db()
         
     def _get_conn(self):
@@ -25,6 +26,33 @@ class DatabaseService:
         except Exception:
             pass
         return conn
+
+    def _repo_root(self) -> str:
+        return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+    def _resolve_cif_path(self, cif_path: str) -> Optional[str]:
+        if not cif_path:
+            return None
+        path = cif_path
+        if not os.path.isabs(path):
+            path = os.path.abspath(os.path.join(self._repo_root(), path))
+        data_root = os.path.abspath(os.path.join(self._repo_root(), config.DATA_DIR))
+        try:
+            if os.path.commonpath([path, data_root]) != data_root:
+                return None
+        except Exception:
+            return None
+        return path if os.path.exists(path) else None
+
+    def _read_cif_content(self, cif_path: Optional[str]) -> Optional[str]:
+        safe_path = self._resolve_cif_path(cif_path or "")
+        if not safe_path:
+            return None
+        try:
+            with open(safe_path, "r", encoding="utf-8") as f:
+                return f.read()
+        except Exception:
+            return None
 
     def _filter_material_records(self, records: List[Dict], allowed_elements: Optional[List[str]] = None) -> List[Dict]:
         """Filter material records by allowed elements (formula subset)."""
@@ -347,12 +375,7 @@ class DatabaseService:
             
             data = dict(row)
             # Read CIF content if path exists
-            cif_path = data.get("cif_path")
-            if cif_path and os.path.exists(cif_path):
-                with open(cif_path, "r") as f:
-                    data["cif_content"] = f.read()
-            else:
-                data["cif_content"] = None
+            data["cif_content"] = self._read_cif_content(data.get("cif_path"))
                 
             return data
 
@@ -367,12 +390,15 @@ class DatabaseService:
                 return None
             data = dict(row)
             if include_cif:
-                cif_path = data.get("cif_path")
-                if cif_path and os.path.exists(cif_path):
-                    with open(cif_path, "r") as f:
-                        data["cif_content"] = f.read()
-                else:
-                    data["cif_content"] = None
+                data["cif_content"] = self._read_cif_content(data.get("cif_path"))
+            
+            # Auto-parse DOS data
+            if data.get("dos_data") and isinstance(data["dos_data"], str):
+                try:
+                    data["dos_data"] = json.loads(data["dos_data"])
+                except Exception:
+                    pass
+
             data["evidence"] = self.get_evidence_for_material(material_id)
             # 附加吸附能记录(若存在)
             data["adsorption_energies"] = self.list_adsorption_energies(material_id)
@@ -389,7 +415,7 @@ class DatabaseService:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
 
-            if not allowed_ids:
+            if allowed_ids is None:
                 cursor.execute("SELECT COUNT(*) AS total FROM materials")
                 stats["total_materials"] = cursor.fetchone()["total"] or 0
 
@@ -649,11 +675,37 @@ class DatabaseService:
         with self._get_conn() as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            # Fetch only rows where target is not null
-            query = f"SELECT material_id, formula, cif_path, dos_data, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
-            cursor.execute(query)
-            rows = cursor.fetchall()
-            records = [dict(row) for row in rows]
+            
+            # Check if target_col exists in table
+            cursor.execute("PRAGMA table_info(materials)")
+            columns = [row["name"] for row in cursor.fetchall()]
+            
+            if target_col in columns:
+                query = f"SELECT material_id, formula, cif_path, dos_data, {target_col} FROM materials WHERE {target_col} IS NOT NULL"
+                cursor.execute(query)
+                rows = cursor.fetchall()
+            else:
+                # Fallback: Fetch dos_data and extract in Python
+                query = "SELECT material_id, formula, cif_path, dos_data FROM materials WHERE dos_data IS NOT NULL"
+                cursor.execute(query)
+                rows = cursor.fetchall()
+                
+            records = []
+            for row in rows:
+                rec = dict(row)
+                if target_col not in rec:
+                     # Try extract from dos_data
+                     try:
+                         dos = json.loads(rec.get("dos_data", "{}"))
+                         val = dos.get(target_col)
+                         if val is not None:
+                             rec[target_col] = val
+                         else:
+                             continue # Skip if target not found
+                     except Exception:
+                         continue
+                records.append(rec)
+                
             return self._filter_material_records(records, allowed_elements)
 
     def fetch_activity_training_set(self, metric_name: str,

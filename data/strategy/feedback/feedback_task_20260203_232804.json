@@ -1,0 +1,16 @@
+{
+  "task_id": "task_20260203_232804",
+  "summary": {
+    "materials_total": 20
+  },
+  "delta": {
+    "literature": 0,
+    "ml_prediction": 0,
+    "experiment": 0,
+    "activity_metric": 0,
+    "adsorption_energy": 0,
+    "formation_energy": 0,
+    "dos_data": 0
+  },
+  "updated_at": "2026-02-03T15:44:07Z"
+}

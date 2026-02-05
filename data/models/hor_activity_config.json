@@ -1,0 +1,1 @@
+{"feature_columns": ["formation_energy", "avg_d_electrons", "avg_electronegativity", "avg_atomic_radius"], "model_type": "GradientBoostingRegressor", "target": "hor_activity_score"}

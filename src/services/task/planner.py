@@ -78,13 +78,16 @@ class TaskPlanner:
         en_perf = ["analyze", "analysis", "performance", "activity", "overpotential", "experiment", "kinetics", "lsv", "cv", "stability", "polarization", "adsorption"]
         en_lit = ["literature", "paper", "review", "survey", "knowledge", "rag"]
         en_context = ["catalyst", "alloy", "material", "hor", "her"]
-        cn_discovery = ["发现", "筛选", "候选", "寻找", "搜索"]
+        cn_discovery = ["发现", "筛选", "候选", "寻找", "搜索", "推荐", "设计"]
         cn_context = ["合金", "催化", "材料", "HOR", "HER", "有序"]
         cn_ml = ["预测", "训练", "模型", "机器学习"]
         cn_perf = ["分析", "性能", "测试", "实验", "表征"]
         cn_lit = ["文献", "论文", "综述", "调研", "知识"]
         if lang == "en":
+            # Check English discovery keywords OR Chinese discovery + context (for mixed queries like "推荐HOR催化剂")
             if any(kw in request_lower for kw in en_discovery):
+                return TaskType.CATALYST_DISCOVERY
+            if (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
                 return TaskType.CATALYST_DISCOVERY
             if any(kw in request_lower for kw in en_ml):
                 return TaskType.PROPERTY_PREDICTION

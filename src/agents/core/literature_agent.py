@@ -6,6 +6,8 @@ Refactored (v3.1) to use Service-Oriented Architecture.
 import os
 import sys
 import warnings
+import re
+import json
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 
@@ -51,6 +53,145 @@ class LiteratureAgent:
         
         self.papers: List[PaperInfo] = []
         logger.info("LiteratureAgent initialized with services.")
+
+    def _extract_target_elements(self, query: str, allowed: set) -> List[str]:
+        if not query:
+            return []
+        focus_patterns = [
+            r"(?:focus on|focus|筛选|聚焦|重点)\s*([A-Z][a-z]?(?:[-/ ,]+[A-Z][a-z]?){1,2})",
+            r"([A-Z][a-z]?(?:[-/][A-Z][a-z]?){1,2})",
+        ]
+        focus_elements = set()
+        for pat in focus_patterns:
+            for match in re.findall(pat, query):
+                focus_elements.update(re.findall(r"[A-Z][a-z]?", match))
+        if focus_elements:
+            return sorted({el for el in focus_elements if el in allowed})
+        tokens = re.findall(r"[A-Z][a-z]?", query)
+        elements = [t for t in tokens if t in allowed]
+        return sorted(set(elements))
+
+    def _build_hor_query(self, query: str, target_elements: List[str], prefer_metrics: bool = False) -> str:
+        base = query or ""
+        q = base
+        lower = q.lower()
+        if "hor" not in lower and "hydrogen oxidation" not in lower:
+            q = f"HOR hydrogen oxidation {q}"
+            lower = q.lower()
+        if "electrocatalyst" not in lower:
+            q = f"{q} electrocatalyst"
+            lower = q.lower()
+        if "alloy" not in lower and "intermetallic" not in lower:
+            q = f"{q} alloy"
+            lower = q.lower()
+        if prefer_metrics and "exchange current density" not in lower and "overpotential" not in lower:
+            q = f"{q} exchange current density overpotential j0"
+        if target_elements:
+            q = f"{q} {' '.join(target_elements[:4])}"
+        return q
+
+    def _wants_metrics(self, query: str) -> bool:
+        lower = (query or "").lower()
+        return any(
+            k in lower
+            for k in ("j0", "exchange current density", "overpotential", "tafel", "mass activity")
+        ) or any(
+            k in (query or "")
+            for k in ("指标", "过电位", "交换电流", "活性")
+        )
+
+    def _paper_matches(
+        self,
+        paper: PaperInfo,
+        target_elements: List[str],
+        min_elements: int = 2,
+        require_hor: bool = True,
+    ) -> bool:
+        title = paper.title or ""
+        abstract = paper.abstract or ""
+        text = f"{title} {abstract}".strip()
+        lower = text.lower()
+        if require_hor and not (
+            re.search(r"\bHOR\b", text, flags=re.IGNORECASE)
+            or "hydrogen oxidation" in lower
+        ):
+            return False
+        if target_elements:
+            formulas = extract_formulas(text, allowed_elements=set(target_elements), min_elements=min_elements)
+            if formulas:
+                return True
+            hits = 0
+            for el in target_elements:
+                if re.search(rf"(?<![A-Za-z0-9]){re.escape(el)}(?![a-z])", text):
+                    hits += 1
+            return hits >= min_elements
+        return True
+
+    def _filter_papers(
+        self,
+        papers: List[PaperInfo],
+        target_elements: List[str],
+        min_elements: int = 2,
+        require_hor: bool = True,
+        allow_fallback: bool = True,
+    ) -> List[PaperInfo]:
+        if not papers:
+            return []
+        filtered = [
+            p for p in papers
+            if self._paper_matches(p, target_elements, min_elements=min_elements, require_hor=require_hor)
+        ]
+        if filtered:
+            return filtered
+        if allow_fallback:
+            logger.warning("Literature filter removed all results; returning unfiltered list.")
+            return papers
+        logger.warning("Literature filter removed all results; returning empty list.")
+        return []
+
+    def _search_local_pdfs(
+        self,
+        target_elements: List[str],
+        min_elements: int = 2,
+        require_hor: bool = True,
+        limit: int = 10,
+    ) -> List[PaperInfo]:
+        pdfs = self.list_local_pdfs()
+        if not pdfs:
+            return []
+        keywords = [
+            "hor",
+            "hydrogen",
+            "oxidation",
+            "intermetallic",
+            "alloy",
+            "electrocatalyst",
+            "fuel cell",
+        ]
+        candidates = []
+        for path in pdfs:
+            name = os.path.basename(path)
+            name_lower = name.lower()
+            if any(k in name_lower for k in keywords):
+                candidates.append(path)
+                continue
+            for el in target_elements:
+                if el in name:
+                    candidates.append(path)
+                    break
+        if not candidates:
+            candidates = pdfs
+        max_scan = max(limit * 2, 10)
+        matches: List[PaperInfo] = []
+        for path in candidates[:max_scan]:
+            if len(matches) >= limit:
+                break
+            paper = self.parser.parse_pdf(path)
+            if not paper:
+                continue
+            if self._paper_matches(paper, target_elements, min_elements=min_elements, require_hor=require_hor):
+                matches.append(paper)
+        return matches
 
     # ========== Local Library ==========
     
@@ -104,7 +245,31 @@ class LiteratureAgent:
     def search_all_sources(self, query: str, limit: int = None) -> List[PaperInfo]:
         """Search all available sources."""
         limit = limit or self.config.max_results
-        results = self.search_engine.search_all(query, limit)
+        from src.agents.core.theory_agent import TheoryDataConfig
+        allowed = set(TheoryDataConfig().elements)
+        target_elements = self._extract_target_elements(query, allowed)
+        prefer_metrics = self._wants_metrics(query)
+        local_hits = self._search_local_pdfs(
+            target_elements,
+            min_elements=2,
+            require_hor=True,
+            limit=min(5, limit),
+        )
+        if local_hits:
+            self.papers.extend(local_hits)
+            return local_hits
+        focused_query = self._build_hor_query(query, target_elements, prefer_metrics=prefer_metrics)
+        results = self.search_engine.search_all(focused_query, limit)
+        results = self._filter_papers(results, target_elements, min_elements=2, require_hor=True, allow_fallback=False)
+        if not results:
+            fallback_query = f'\"hydrogen oxidation\" OR HOR electrocatalyst alloy {" ".join(target_elements[:4])}'
+            results = self.search_engine.search_all(fallback_query, limit)
+            results = self._filter_papers(results, target_elements, min_elements=2, require_hor=True, allow_fallback=False)
+        if not results:
+            # Final fallback: HOR-only evidence, tagged later as generic.
+            generic_query = "HOR hydrogen oxidation electrocatalyst alloy"
+            results = self.search_engine.search_all(generic_query, limit)
+            results = self._filter_papers(results, [], min_elements=1, require_hor=True, allow_fallback=False)
         self.papers.extend(results)
         return results
 
@@ -149,12 +314,19 @@ class LiteratureAgent:
             from src.services.db.database import DatabaseService
             db = DatabaseService()
 
-        papers = self.search_all_sources(query, limit)
+        target_elements = self._extract_target_elements(query, allowed)
+        prefer_metrics = self._wants_metrics(query)
+        focused_query = self._build_hor_query(query, target_elements, prefer_metrics=prefer_metrics)
+        papers = self.search_all_sources(focused_query, limit)
+        if papers and target_elements:
+            papers = self._filter_papers(papers, target_elements, min_elements=min_elements, require_hor=True, allow_fallback=False)
         seed_rows: List[Dict[str, str]] = []
         pdf_downloads = 0
 
         for paper in papers:
             text_blob = paper.abstract or ""
+            if getattr(paper, "full_text", None):
+                text_blob = f"{paper.full_text}\n\n{text_blob}"
             if paper.pdf_url and pdf_downloads < max_pdfs:
                 path = self._download_pdf(paper.pdf_url, paper.doi or paper.title or "paper")
                 if path:
@@ -163,11 +335,15 @@ class LiteratureAgent:
                         text_blob = f"{parsed.full_text}\\n\\n{text_blob}"
                     pdf_downloads += 1
 
-            formulas = extract_formulas(text_blob, allowed_elements=allowed, min_elements=min_elements)
+            allowed_for_formula = set(target_elements) if target_elements else allowed
+            formulas = extract_formulas(text_blob, allowed_elements=allowed_for_formula, min_elements=min_elements)
+            if not formulas and not target_elements:
+                formulas = extract_formulas(text_blob, allowed_elements=allowed, min_elements=min_elements)
             if not formulas:
                 continue
 
             metrics = extract_hor_metrics(text_blob)
+            metrics_missing = prefer_metrics and not metrics
             for formula in formulas:
                 label = formula
                 row = {
@@ -185,7 +361,7 @@ class LiteratureAgent:
                     "source_url": paper.url or "",
                     "source_year": paper.year or "",
                     "source_abstract": (paper.abstract or "")[:2000],
-                    "conditions_json": "",
+                    "conditions_json": json.dumps({"metrics_missing": bool(metrics_missing)}) if metrics_missing else "",
                 }
                 if metrics.get("specific_activity"):
                     row["specific_activity_50mV_mA_cm2"] = metrics["specific_activity"]["value"]
@@ -195,6 +371,8 @@ class LiteratureAgent:
                     val = metrics["exchange_current_density"]["value"]
                     row["j0_specific_min_mA_cm2"] = val
                     row["j0_specific_max_mA_cm2"] = val
+                if metrics.get("overpotential"):
+                    row["conditions_json"] = str(metrics["overpotential"])
                 seed_rows.append(row)
 
                 if persist and db:

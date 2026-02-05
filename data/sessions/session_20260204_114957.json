@@ -1,0 +1,1421 @@
+{
+  "session_id": "session_20260204_114957",
+  "created_at": "2026-02-04T11:49:57.202080",
+  "rounds": [
+    {
+      "round_number": 1,
+      "timestamp": "2026-02-04T11:51:56.775850",
+      "query": "推荐HOR有序合金催化剂",
+      "result": {
+        "success": true,
+        "candidates": [
+          {
+            "material_id": "lit:TaNbMo",
+            "formula": "TaNbMo",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:NiPt",
+            "formula": "NiPt",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtCo0",
+            "formula": "PtCo0",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtCoAu",
+            "formula": "PtCoAu",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtCoFe",
+            "formula": "PtCoFe",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtCu3",
+            "formula": "PtCu3",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Pt3In",
+            "formula": "Pt3In",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Pt3Cr",
+            "formula": "Pt3Cr",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Ir3V",
+            "formula": "Ir3V",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:MoNi4",
+            "formula": "MoNi4",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:GeV",
+            "formula": "GeV",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Pt3Co",
+            "formula": "Pt3Co",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Pt1Co1",
+            "formula": "Pt1Co1",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:IrIn",
+            "formula": "IrIn",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:CuCo",
+            "formula": "CuCo",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PdMo",
+            "formula": "PdMo",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtSn",
+            "formula": "PtSn",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:Pt3Sn",
+            "formula": "Pt3Sn",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:RuGe",
+            "formula": "RuGe",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          },
+          {
+            "material_id": "lit:PtPdFe",
+            "formula": "PtPdFe",
+            "scores": {
+              "theory": 0.24
+            },
+            "sources": [
+              "theory"
+            ],
+            "properties": {
+              "formation_energy": null,
+              "source": "theory",
+              "dos_data": false
+            },
+            "final_score": 0.33999999999999997
+          }
+        ],
+        "reasoning": "基于 4 个智能体的协同分析，推荐 74 个候选材料",
+        "execution_order": [
+          "experiment",
+          "theory",
+          "literature",
+          "ml"
+        ],
+        "iteration": 3,
+        "contributions": {
+          "experiment": {
+            "agent_name": "experiment",
+            "contribution_type": "metrics",
+            "success": true,
+            "candidates": [],
+            "predictions": {},
+            "properties": {},
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.9,
+            "reasoning": "已处理 59 个实验数据文件",
+            "sources": [
+              "Local Experiment Files"
+            ]
+          },
+          "theory": {
+            "agent_name": "theory",
+            "contribution_type": "candidates",
+            "success": true,
+            "candidates": [
+              {
+                "material_id": "lit:TaNbMo",
+                "formula": "TaNbMo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:NiPt",
+                "formula": "NiPt",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCo0",
+                "formula": "PtCo0",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCoAu",
+                "formula": "PtCoAu",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCoFe",
+                "formula": "PtCoFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCu3",
+                "formula": "PtCu3",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Pt3In",
+                "formula": "Pt3In",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Pt3Cr",
+                "formula": "Pt3Cr",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Ir3V",
+                "formula": "Ir3V",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:MoNi4",
+                "formula": "MoNi4",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:GeV",
+                "formula": "GeV",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Pt3Co",
+                "formula": "Pt3Co",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Pt1Co1",
+                "formula": "Pt1Co1",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:IrIn",
+                "formula": "IrIn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CuCo",
+                "formula": "CuCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PdMo",
+                "formula": "PdMo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtSn",
+                "formula": "PtSn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Pt3Sn",
+                "formula": "Pt3Sn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:RuGe",
+                "formula": "RuGe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtPdFe",
+                "formula": "PtPdFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:FeCoCuNi",
+                "formula": "FeCoCuNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PdGa",
+                "formula": "PdGa",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtZnFeCoNiCr",
+                "formula": "PtZnFeCoNiCr",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCoNiPtPtZn",
+                "formula": "PtCoNiPtPtZn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CrPtPtPtPtPt",
+                "formula": "CrPtPtPtPtPt",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:FePt",
+                "formula": "FePt",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtFeCoNiCuZn",
+                "formula": "PtFeCoNiCuZn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CoPt",
+                "formula": "CoPt",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtZn",
+                "formula": "PtZn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:NiFe",
+                "formula": "NiFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CrMnFeCo",
+                "formula": "CrMnFeCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CrFeCoNi",
+                "formula": "CrFeCoNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:MnFeNiZn",
+                "formula": "MnFeNiZn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:FeCo",
+                "formula": "FeCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CrCo",
+                "formula": "CrCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PdFe",
+                "formula": "PdFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtZnCo",
+                "formula": "PtZnCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:RuFe",
+                "formula": "RuFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtMn",
+                "formula": "PtMn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtNi",
+                "formula": "PtNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtFe",
+                "formula": "PtFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCu",
+                "formula": "PtCu",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtNi3",
+                "formula": "PtNi3",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:VNbMoTaW",
+                "formula": "VNbMoTaW",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:FeCoCrMnNi",
+                "formula": "FeCoCrMnNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrFeNi",
+                "formula": "AlCoCrFeNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:TiZrHfNbTa",
+                "formula": "TiZrHfNbTa",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CuZn",
+                "formula": "CuZn",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:NiAl",
+                "formula": "NiAl",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:FeAl",
+                "formula": "FeAl",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CoCrCuFeNi",
+                "formula": "CoCrCuFeNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrFeNi25",
+                "formula": "AlCoCrFeNi25",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrCuFeNi24",
+                "formula": "AlCoCrCuFeNi24",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrFeNiMo",
+                "formula": "AlCoCrFeNiMo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrFeNiTi",
+                "formula": "AlCoCrFeNiTi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCrFeCoNi",
+                "formula": "AlCrFeCoNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCoCrCuFeNi",
+                "formula": "AlCoCrCuFeNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CoCrFeMnNi",
+                "formula": "CoCrFeMnNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CoCrCuFeNiAl",
+                "formula": "CoCrCuFeNiAl",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CrMnFeCoNi",
+                "formula": "CrMnFeCoNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CuFe",
+                "formula": "CuFe",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCo",
+                "formula": "AlCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:AlCrFeCoNiCu",
+                "formula": "AlCrFeCoNiCu",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:Al28Co20Cr11Fe15Ni26",
+                "formula": "Al28Co20Cr11Fe15Ni26",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CuPd",
+                "formula": "CuPd",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:CuCd",
+                "formula": "CuCd",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtCo",
+                "formula": "PtCo",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "lit:PtRuFeCoNi",
+                "formula": "PtRuFeCoNi",
+                "formation_energy": null,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-1194083",
+                "formula": "Hf4Fe4Ge7",
+                "formation_energy": -0.49078825233333206,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-16486",
+                "formula": "Ce(Al2Fe)4",
+                "formation_energy": -0.412553496153843,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-3701",
+                "formula": "Sc(Al2Fe)4",
+                "formation_energy": -0.42552436346153805,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-4656",
+                "formula": "Y(Al2Fe)4",
+                "formation_energy": -0.42928144307693106,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-977054",
+                "formula": "La(Al2Fe)4",
+                "formation_energy": -0.391193529615384,
+                "source": "theory"
+              },
+              {
+                "material_id": "mp-1217935",
+                "formula": "TaFe4W",
+                "formation_energy": -0.10904160288889,
+                "source": "theory"
+              }
+            ],
+            "predictions": {},
+            "properties": {
+              "lit:TaNbMo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:NiPt": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCo0": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCoAu": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCoFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCu3": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Pt3In": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Pt3Cr": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Ir3V": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:MoNi4": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:GeV": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Pt3Co": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Pt1Co1": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:IrIn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CuCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PdMo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtSn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Pt3Sn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:RuGe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtPdFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:FeCoCuNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PdGa": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtZnFeCoNiCr": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCoNiPtPtZn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CrPtPtPtPtPt": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:FePt": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtFeCoNiCuZn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CoPt": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtZn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:NiFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CrMnFeCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CrFeCoNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:MnFeNiZn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:FeCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CrCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PdFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtZnCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:RuFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtMn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCu": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtNi3": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:VNbMoTaW": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:FeCoCrMnNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrFeNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:TiZrHfNbTa": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CuZn": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:NiAl": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:FeAl": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CoCrCuFeNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrFeNi25": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrCuFeNi24": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrFeNiMo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrFeNiTi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCrFeCoNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCoCrCuFeNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CoCrFeMnNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CoCrCuFeNiAl": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CrMnFeCoNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CuFe": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:AlCrFeCoNiCu": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:Al28Co20Cr11Fe15Ni26": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CuPd": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:CuCd": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtCo": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "lit:PtRuFeCoNi": {
+                "formation_energy": null,
+                "dos_data": false
+              },
+              "mp-1194083": {
+                "formation_energy": -0.49078825233333206,
+                "dos_data": false
+              },
+              "mp-16486": {
+                "formation_energy": -0.412553496153843,
+                "dos_data": false
+              },
+              "mp-3701": {
+                "formation_energy": -0.42552436346153805,
+                "dos_data": false
+              },
+              "mp-4656": {
+                "formation_energy": -0.42928144307693106,
+                "dos_data": false
+              },
+              "mp-977054": {
+                "formation_energy": -0.391193529615384,
+                "dos_data": false
+              },
+              "mp-1217935": {
+                "formation_energy": -0.10904160288889,
+                "dos_data": false
+              }
+            },
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.8,
+            "reasoning": "从数据库获取 74 个材料的理论数据",
+            "sources": [
+              "Materials Project",
+              "Local Database"
+            ]
+          },
+          "literature": {
+            "agent_name": "literature",
+            "contribution_type": "insights",
+            "success": false,
+            "candidates": [],
+            "predictions": {},
+            "properties": {},
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.0,
+            "reasoning": "'PaperInfo' object has no attribute 'get'",
+            "sources": []
+          },
+          "ml": {
+            "agent_name": "ml",
+            "contribution_type": "predictions",
+            "success": true,
+            "candidates": [],
+            "predictions": {},
+            "properties": {},
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.7,
+            "reasoning": "为 0 个材料生成预测",
+            "sources": [
+              "Trained ML Models"
+            ]
+          }
+        }
+      },
+      "feedback": [
+        {
+          "material_id": "lit:TaNbMo",
+          "experiment_type": "LSV",
+          "metrics": {
+            "overpotential": 0.035,
+            "mass_activity": 3.2
+          },
+          "status": "validated",
+          "notes": "优秀的HOR性能",
+          "timestamp": "2026-02-04T11:51:56.778661"
+        },
+        {
+          "material_id": "lit:NiPt",
+          "experiment_type": "LSV",
+          "metrics": {
+            "overpotential": 0.15,
+            "mass_activity": 0.5
+          },
+          "status": "rejected",
+          "notes": "HOR性能不佳",
+          "timestamp": "2026-02-04T11:51:56.781209"
+        }
+      ]
+    }
+  ],
+  "candidates": {
+    "lit:TaNbMo": {
+      "status": "validated",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": [
+        {
+          "material_id": "lit:TaNbMo",
+          "experiment_type": "LSV",
+          "metrics": {
+            "overpotential": 0.035,
+            "mass_activity": 3.2
+          },
+          "status": "validated",
+          "notes": "优秀的HOR性能",
+          "timestamp": "2026-02-04T11:51:56.778661"
+        }
+      ]
+    },
+    "lit:NiPt": {
+      "status": "rejected",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": [
+        {
+          "material_id": "lit:NiPt",
+          "experiment_type": "LSV",
+          "metrics": {
+            "overpotential": 0.15,
+            "mass_activity": 0.5
+          },
+          "status": "rejected",
+          "notes": "HOR性能不佳",
+          "timestamp": "2026-02-04T11:51:56.781209"
+        }
+      ]
+    },
+    "lit:PtCo0": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PtCoAu": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PtCoFe": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PtCu3": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Pt3In": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Pt3Cr": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Ir3V": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:MoNi4": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:GeV": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Pt3Co": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Pt1Co1": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:IrIn": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:CuCo": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PdMo": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PtSn": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:Pt3Sn": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:RuGe": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    },
+    "lit:PtPdFe": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.33999999999999997
+        }
+      ],
+      "feedback": []
+    }
+  }
+}

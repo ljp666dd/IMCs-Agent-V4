@@ -1,6 +1,7 @@
 """
 Theory Data Agent (TheoryDataAgent)
-Refactored (v3.3) to use Service-Oriented Architecture and SQLite Database.
+Refactored (v3.4) to use Service-Oriented Architecture and SQLite Database.
+Added Visuals and Comparative Analysis capabilities.
 """
 
 import os
@@ -367,3 +368,153 @@ class TheoryDataAgent:
             "formation_energy": 0, # Legacy count
             "orbital_dos": 0
         }
+
+    # ========== Visuals & Analysis (v3.4 Upgrade) ==========
+
+    def _read_dos_file(self, dos_path: str) -> Optional[Dict]:
+        """Read DOS data from .json.gz file."""
+        import gzip
+        try:
+            if not os.path.exists(dos_path):
+                return None
+            with gzip.open(dos_path, 'rt', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Failed to read DOS file {dos_path}: {e}")
+            return None
+
+    @log_exception(logger)
+    def plot_dos(self, material_id: str, output_path: str = None) -> Optional[str]:
+        """
+        Generate a PDOS plot for a material.
+        
+        Args:
+            material_id: Material ID (e.g., 'mp-126')
+            output_path: Optional custom output path.
+            
+        Returns:
+            str: Path to the generated image file, or None if failed.
+        """
+        # 1. Get DOS Data
+        details = self.get_material_details(material_id)
+        if not details:
+            return None
+            
+        dos_path = details.get("dos_file_path")
+        if not dos_path and isinstance(details.get("dos_data"), dict):
+             dos_path = details["dos_data"].get("dos_file_path")
+             
+        if not dos_path:
+            logger.warning(f"No DOS file path found for {material_id}")
+            return None
+            
+        dos_data = self._read_dos_file(dos_path)
+        if not dos_data:
+            return None
+            
+        # 2. Plotting
+        try:
+            import matplotlib.pyplot as plt
+            
+            energies = np.array(dos_data.get('energies', []))
+            # Fix: Keys are 'total' and 'd_band', not 'total_dos'
+            total_dos = np.array(dos_data.get('total', dos_data.get('total_dos', [])))
+            
+            # Extract simple d-center for annotation if available
+            d_center = details.get("dos_data", {}).get("d_band_center")
+            
+            plt.figure(figsize=(8, 4))
+            if len(total_dos) > 0:
+                plt.plot(energies, total_dos, color='black', label='Total DOS', linewidth=1)
+                
+                # Plot d-band if available
+                d_dos = np.array(dos_data.get('d_band', []))
+                if len(d_dos) > 0:
+                     plt.plot(energies, d_dos, color='blue', alpha=0.6, label='d-band', linewidth=1)
+                     # Shade d-band occupied
+                     mask_occ = (energies <= 0)
+                     plt.fill_between(energies[mask_occ], d_dos[mask_occ], color='blue', alpha=0.1)
+
+                # Shade total occupied
+                mask_occ = (energies <= 0)
+                plt.fill_between(energies[mask_occ], total_dos[mask_occ], color='silver', alpha=0.3)
+            
+            # Mark d-band center
+            if d_center:
+                plt.axvline(d_center, color='red', linestyle='--', label=f'd-center ({d_center:.2f} eV)')
+                
+            plt.axvline(0, color='green', linestyle=':', label='Fermi Level')
+            
+            plt.xlabel("Energy (eV - Ef)")
+            plt.ylabel("Density of States")
+            plt.title(f"Electronic Structure: {details.get('formula')} ({material_id})")
+            plt.legend()
+            plt.xlim(-10, 5)
+            plt.grid(True, alpha=0.3)
+            
+            # Save
+            if not output_path:
+                output_dir = os.path.join(self.config.output_dir, "plots")
+                os.makedirs(output_dir, exist_ok=True)
+                output_path = os.path.join(output_dir, f"{material_id}_dos.png")
+                
+            plt.savefig(output_path, dpi=100, bbox_inches='tight')
+            plt.close()
+            
+            return os.path.abspath(output_path)
+            
+        except ImportError:
+            logger.warning("Matplotlib not installed. Cannot plot DOS.")
+            return None
+        except Exception as e:
+            logger.error(f"Plotting error: {e}")
+            return None
+
+    @log_exception(logger)
+    def compare_materials(self, material_ids: List[str]) -> str:
+        """
+        Generate a comparison table for multiple materials.
+        
+        Args:
+            material_ids: List of material IDs.
+            
+        Returns:
+            str: Markdown formatted table.
+        """
+        if not material_ids:
+            return "No material IDs provided."
+            
+        rows = []
+        headers = ["Property", "Metric"] + material_ids
+        
+        # Collect Data
+        data_map = {}
+        for mid in material_ids:
+            data_map[mid] = self.get_material_details(mid) or {}
+            
+        # Define metrics with safe accessors
+        metrics = [
+            ("Formula", lambda d: d.get("formula", "N/A")),
+            ("Space Group", lambda d: f"{d.get('space_group', '-')} ({d.get('space_group_number', '-')})"),
+            ("Formation E (eV/atom)", lambda d: f"{d.get('formation_energy'):.3f}" if isinstance(d.get('formation_energy'), (int, float)) else "N/A"),
+            ("d-band Center (eV)", lambda d: f"{d.get('dos_data', {}).get('d_band_center'):.3f}" if isinstance(d.get('dos_data', {}).get('d_band_center'), (int, float)) else "N/A"),
+            ("d-band Width (eV)", lambda d: f"{d.get('dos_data', {}).get('d_band_width'):.3f}" if isinstance(d.get('dos_data', {}).get('d_band_width'), (int, float)) else "N/A"),
+            ("H* Adsorption (eV)", lambda d: f"{d.get('adsorption', {}).get('H', 'N/A')}")
+        ]
+        
+        # Build Table
+        lines = []
+        lines.append(f"| {' | '.join(headers)} |")
+        lines.append(f"| {' | '.join(['---'] * len(headers))} |")
+        
+        for name, extractor in metrics:
+            row = [name, ""]
+            for mid in material_ids:
+                try:
+                    val = extractor(data_map[mid])
+                except Exception:
+                    val = "Err"
+                row.append(str(val))
+            lines.append(f"| {' | '.join(row)} |")
+            
+        return "\\n".join(lines)

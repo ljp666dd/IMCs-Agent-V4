@@ -41,6 +41,10 @@ class PlanExecutor:
                     continue
         return f"step_{max_idx + 1}"
 
+    def _raise_for_error_result(self, result: Any) -> None:
+        if isinstance(result, dict) and result.get("error"):
+            raise RuntimeError(result.get("error"))
+
     def _simplify_query(self, query: str) -> str:
         """Best-effort query simplification for fallback searches."""
         if not query:
@@ -341,6 +345,7 @@ class PlanExecutor:
                     params=step.params,
                 )
                 result = self._execute_step(step)
+                self._raise_for_error_result(result)
                 step.result = result
                 step.status = "completed"
                 plan.results[step.step_id] = result
@@ -631,6 +636,7 @@ class PlanExecutor:
 
                         try:
                             result = self._execute_step(step)
+                            self._raise_for_error_result(result)
                             step.result = result
                             step.status = "completed"
                             plan.results[step.step_id] = result

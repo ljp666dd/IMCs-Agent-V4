@@ -120,6 +120,15 @@ class MetaController:
 
     def decide(self, task_type: TaskType, user_request: str, stats: Dict[str, Any]) -> Dict[str, bool]:
         request_lower = (user_request or "").lower()
+        request_raw = user_request or ""
+        zh_lit_keywords = ["文献", "论文", "综述", "指标", "证据", "引用"]
+        zh_theory_keywords = ["理论", "形成能", "吸附", "能量", "dos", "态密度", "计算"]
+        wants_literature = ("paper" in request_lower or "literature" in request_lower or "rag" in request_lower) or any(
+            kw in request_raw for kw in zh_lit_keywords
+        )
+        wants_theory = ("theory" in request_lower or "download" in request_lower or "adsorption" in request_lower) or any(
+            kw in request_raw for kw in zh_theory_keywords
+        )
         evidence = stats.get("evidence_by_source", {}) or {}
 
         total_materials = stats.get("total_materials", 0) or 0
@@ -129,8 +138,8 @@ class MetaController:
         model_count = stats.get("model_count", 0) or 0
         dos_count = stats.get("dos_count", 0) or 0
 
-        need_literature = literature_cov < self.thresholds["literature_min"] or "paper" in request_lower or "literature" in request_lower
-        need_theory = total_materials < self.thresholds["materials_min"] or "download" in request_lower or "theory" in request_lower
+        need_literature = literature_cov < self.thresholds["literature_min"] or wants_literature
+        need_theory = total_materials < self.thresholds["materials_min"] or wants_theory
         need_dos = dos_count < self.thresholds["dos_min"]
         need_adsorption = adsorption_cov < self.thresholds["adsorption_min"] or "adsorption" in request_lower
         need_activity = activity_cov < self.thresholds["activity_min"]
@@ -141,10 +150,18 @@ class MetaController:
             need_theory = False
             need_ml = False
         if task_type == TaskType.PROPERTY_PREDICTION:
-            need_literature = False
+            if not wants_literature:
+                need_literature = False
         if task_type == TaskType.PERFORMANCE_ANALYSIS:
-            need_theory = False
+            if not wants_theory:
+                need_theory = False
 
+        # Resource availability flags (for intelligent degradation)
+        experiment_evidence = evidence.get("experiment", 0) or 0
+        has_experiment_data = (stats.get("activity_rows", 0) > 0) or (experiment_evidence > 0)
+        has_theory_data = total_materials > 0
+        has_ml_model = model_count > 0
+        
         return {
             "need_literature": need_literature,
             "need_theory": need_theory,
@@ -152,6 +169,10 @@ class MetaController:
             "need_adsorption": need_adsorption,
             "need_activity": need_activity,
             "need_ml": need_ml,
+            # Resource availability for intelligent planning
+            "has_experiment_data": has_experiment_data,
+            "has_theory_data": has_theory_data,
+            "has_ml_model": has_ml_model,
         }
 
     def _build_step_specs(self, task_type: TaskType, user_request: str, decisions: Dict[str, bool]) -> List[Dict[str, Any]]:
@@ -212,12 +233,28 @@ class MetaController:
             })
 
         if task_type == TaskType.PERFORMANCE_ANALYSIS:
-            specs.append({
-                "agent": "experiment",
-                "action": "process",
-                "params": {},
-                "deps": [],
-            })
+            # Intelligent degradation: only add experiment step if data is available
+            if decisions.get("has_experiment_data"):
+                specs.append({
+                    "agent": "experiment",
+                    "action": "process",
+                    "params": {},
+                    "deps": [],
+                })
+            else:
+                # No experiment data: add ML step for theory-based prediction
+                # This enables "first round" recommendation without experiments
+                if decisions.get("need_ml") and not any(s.get("agent") == "ml" for s in specs):
+                    deps = []
+                    for spec in specs:
+                        if spec["agent"] == "theory":
+                            deps.append("$theory")
+                    specs.append({
+                        "agent": "ml",
+                        "action": "train",
+                        "params": {"include_deep_learning": True},
+                        "deps": deps,
+                    })
 
         if task_type in (TaskType.CATALYST_DISCOVERY, TaskType.PERFORMANCE_ANALYSIS):
             deps = []
@@ -307,6 +344,7 @@ class MetaController:
     def _required_evidence(self, task_type: TaskType, user_request: str) -> Tuple[List[str], List[str]]:
         """Return required evidence sources and material fields for the task."""
         request_lower = (user_request or "").lower()
+        request_raw = user_request or ""
         wants_hor = self._detect_hor(user_request)
 
         required_sources = set()
@@ -323,11 +361,13 @@ class MetaController:
             required_sources.add("experiment")
 
         # Query hints
-        if "literature" in request_lower or "paper" in request_lower or "knowledge" in request_lower:
+        if "literature" in request_lower or "paper" in request_lower or "knowledge" in request_lower or any(
+            kw in request_raw for kw in ("文献", "论文", "综述", "证据", "引用")
+        ):
             required_sources.add("literature")
-        if "adsorption" in request_lower:
+        if "adsorption" in request_lower or "吸附" in request_raw:
             required_sources.add("adsorption_energy")
-        if "dos" in request_lower:
+        if "dos" in request_lower or "态密度" in request_raw:
             required_fields.add("dos_data")
 
         # HOR-specific evidence
