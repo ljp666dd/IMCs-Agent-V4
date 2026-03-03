@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import json
+import hashlib
 from typing import List, Dict, Any, Optional
 from src.core.logger import get_logger, log_exception
 from src.config.config import config
@@ -23,6 +24,7 @@ class DatabaseService:
             conn.execute("PRAGMA journal_mode=WAL;")
             conn.execute("PRAGMA synchronous=NORMAL;")
             conn.execute("PRAGMA busy_timeout=5000;")
+            conn.execute("PRAGMA foreign_keys=ON;")
         except Exception:
             pass
         return conn
@@ -74,6 +76,9 @@ class DatabaseService:
                 continue
             if elements.issubset(allowed):
                 filtered.append(rec)
+        if not filtered and records:
+            logger.warning("No materials matched allowed elements; returning unfiltered records.")
+            return records
         return filtered
 
     def _allowed_material_ids(self, allowed_elements: Optional[List[str]] = None) -> Optional[set]:
@@ -254,6 +259,59 @@ class DatabaseService:
             cursor = conn.cursor()
             cursor.execute("UPDATE plans SET status = ? WHERE id = ?", (status, plan_id))
 
+    def update_plan_step_status(
+        self,
+        plan_id: str,
+        step_id: str,
+        status: str,
+        result: Dict = None,
+        error: str = None,
+    ) -> None:
+        """Append a plan step status update (preserve history)."""
+        agent = "unknown"
+        action = "update"
+        params = None
+        dependencies = None
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT agent, action, params, dependencies
+                FROM plan_steps
+                WHERE plan_id = ? AND step_id = ?
+                ORDER BY created_at DESC
+                LIMIT 1
+                """,
+                (plan_id, step_id),
+            )
+            row = cursor.fetchone()
+            if row:
+                agent = row["agent"] or agent
+                action = row["action"] or action
+                if row["params"]:
+                    try:
+                        params = json.loads(row["params"])
+                    except Exception:
+                        params = None
+                if row["dependencies"]:
+                    try:
+                        dependencies = json.loads(row["dependencies"])
+                    except Exception:
+                        dependencies = None
+
+        self.log_plan_step(
+            plan_id=plan_id,
+            step_id=step_id,
+            agent=agent,
+            action=action,
+            status=status,
+            result=result,
+            error=error,
+            dependencies=dependencies,
+            params=params,
+        )
+
     def log_plan_step(self, plan_id: str, step_id: str, agent: str, action: str,
                       status: str, result: Dict = None, error: str = None,
                       dependencies: Optional[List[str]] = None,
@@ -292,6 +350,47 @@ class DatabaseService:
             row = cursor.fetchone()
             return dict(row) if row else None
 
+    def list_plans(
+        self,
+        limit: int = 50,
+        status: Optional[str] = None,
+        task_type: Optional[str] = None,
+    ) -> List[Dict]:
+        """List plans ordered by created_at desc."""
+        where: List[str] = []
+        params: List[Any] = []
+        if status:
+            where.append("status = ?")
+            params.append(status)
+        if task_type:
+            where.append("task_type = ?")
+            params.append(task_type)
+        query = "SELECT * FROM plans"
+        if where:
+            query += " WHERE " + " AND ".join(where)
+        query += " ORDER BY created_at DESC LIMIT ?"
+        params.append(int(limit or 50))
+
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(query, tuple(params))
+            rows = cursor.fetchall()
+            return [dict(r) for r in rows]
+
+    def get_plan_last_step_created_at(self, plan_id: str) -> Optional[str]:
+        """Return the last plan_steps created_at for a plan (best-effort)."""
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT MAX(created_at) AS last_ts FROM plan_steps WHERE plan_id = ?",
+                (plan_id,),
+            )
+            row = cursor.fetchone()
+            if not row:
+                return None
+            return row[0]
+
     def list_plan_steps(self, plan_id: str) -> List[Dict]:
         """List plan steps for a given plan id (ordered)."""
         with self._get_conn() as conn:
@@ -320,6 +419,63 @@ class DatabaseService:
                 steps.append(data)
             return steps
 
+    def list_latest_plan_steps(self, plan_id: str) -> List[Dict]:
+        """List the latest row per step_id for a given plan id.
+
+        plan_steps is append-only, so callers often need the "current state"
+        per step_id. This avoids re-implementing reduce-to-latest logic across
+        API/UI code paths.
+        """
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT ps.*
+                FROM plan_steps ps
+                JOIN (
+                    SELECT step_id, MAX(id) AS max_id
+                    FROM plan_steps
+                    WHERE plan_id = ?
+                    GROUP BY step_id
+                ) latest
+                ON ps.step_id = latest.step_id AND ps.id = latest.max_id
+                WHERE ps.plan_id = ?
+                """,
+                (plan_id, plan_id),
+            )
+            rows = cursor.fetchall()
+            steps = []
+            for row in rows:
+                data = dict(row)
+                if data.get("result"):
+                    try:
+                        data["result"] = json.loads(data["result"])
+                    except Exception:
+                        pass
+                if data.get("params"):
+                    try:
+                        data["params"] = json.loads(data["params"])
+                    except Exception:
+                        pass
+                if data.get("dependencies"):
+                    try:
+                        data["dependencies"] = json.loads(data["dependencies"])
+                    except Exception:
+                        pass
+                steps.append(data)
+
+            def _step_rank(step_id: str) -> int:
+                if isinstance(step_id, str) and step_id.startswith("step_"):
+                    try:
+                        return int(step_id.split("_", 1)[1])
+                    except Exception:
+                        return 10**9
+                return 10**9
+
+            steps.sort(key=lambda s: _step_rank(s.get("step_id")))
+            return steps
+
     # ========== Materials ==========
     
     @log_exception(logger)
@@ -338,13 +494,64 @@ class DatabaseService:
             cursor = conn.cursor()
             cursor.execute(query, (material_id, formula, energy, cif_path))
             return cursor.lastrowid
+
+    def _normalize_material_id(self, material_id: Optional[str]) -> Optional[str]:
+        mid = (str(material_id) if material_id is not None else "").strip()
+        return mid or None
+
+    def _guess_stub_formula(self, material_id: str, formula: Optional[str] = None) -> str:
+        if formula is not None:
+            val = str(formula).strip()
+            if val:
+                return val
+
+        mid = (str(material_id) if material_id is not None else "").strip()
+        if not mid:
+            return "UNKNOWN"
+        if mid.startswith("fake:"):
+            rest = mid.split("fake:", 1)[1].strip()
+            return rest or "UNKNOWN"
+        if mid.startswith("mp-"):
+            return "UNKNOWN"
+        for ch in (":", "/", "\\", " ", "-"):
+            if ch in mid:
+                return "UNKNOWN"
+        return mid
+
+    def ensure_material_stub(self, material_id: str, formula: Optional[str] = None) -> Optional[str]:
+        """
+        Ensure a materials row exists for the given material_id without overwriting
+        any existing formula/fields.
+
+        This is used to prevent FK errors when external systems (robot/importers)
+        report metrics for material_ids that are not yet present in the local DB.
+        """
+        mid = self._normalize_material_id(material_id)
+        if not mid:
+            return None
+        stub_formula = self._guess_stub_formula(mid, formula=formula)
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                INSERT INTO materials (material_id, formula, formation_energy, cif_path)
+                VALUES (?, ?, NULL, NULL)
+                ON CONFLICT(material_id) DO NOTHING
+                """,
+                (mid, stub_formula),
+            )
+        return mid
             
-    def list_materials(self, limit: int = 100, allowed_elements: Optional[List[str]] = None) -> List[Dict]:
+    def list_materials(self, limit: int = 100, allowed_elements: Optional[List[str]] = None, require_cif: bool = False) -> List[Dict]:
         """List stored materials."""
         with self._get_conn() as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM materials ORDER BY created_at DESC LIMIT ?", (limit,))
+            query = "SELECT * FROM materials"
+            if require_cif:
+                query += " WHERE cif_path IS NOT NULL"
+            query += " ORDER BY created_at DESC LIMIT ?"
+            cursor.execute(query, (limit,))
             rows = cursor.fetchall()
             records = [dict(row) for row in rows]
             return self._filter_material_records(records, allowed_elements)
@@ -361,6 +568,39 @@ class DatabaseService:
             rows = cursor.fetchall()
             records = [dict(row) for row in rows]
             return self._filter_material_records(records, allowed_elements)
+
+    def list_materials_by_ids(
+        self,
+        material_ids: List[str],
+        allowed_elements: Optional[List[str]] = None,
+    ) -> List[Dict]:
+        """List material records by material_ids (preserve input order)."""
+        if not material_ids:
+            return []
+
+        ordered: List[str] = []
+        seen = set()
+        for mid in material_ids:
+            mid = (str(mid) if mid is not None else "").strip()
+            if not mid or mid in seen:
+                continue
+            seen.add(mid)
+            ordered.append(mid)
+
+        if not ordered:
+            return []
+
+        placeholders = ",".join(["?"] * len(ordered))
+        query = f"SELECT * FROM materials WHERE material_id IN ({placeholders})"
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(query, tuple(ordered))
+            rows = cursor.fetchall()
+            records = [dict(row) for row in rows]
+            records = self._filter_material_records(records, allowed_elements)
+            by_id = {r.get("material_id"): r for r in records if r.get("material_id")}
+            return [by_id[mid] for mid in ordered if mid in by_id]
             
     def get_material_by_id(self, material_id: str) -> Optional[Dict]:
         """Get material details including CIF content."""
@@ -487,6 +727,87 @@ class DatabaseService:
 
             cursor.execute("SELECT COUNT(*) AS total FROM models")
             stats["model_count"] = cursor.fetchone()["total"] or 0
+
+        return stats
+
+    def get_data_integrity_stats(self) -> Dict[str, Any]:
+        """
+        Lightweight data integrity / orphan-row checks.
+
+        Rationale:
+        - In SQLite, foreign key enforcement is connection-scoped and must be
+          explicitly enabled. We also want visibility into any legacy orphan
+          rows that were inserted before enforcement was turned on.
+        """
+        stats: Dict[str, Any] = {}
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            try:
+                cursor.execute("PRAGMA foreign_keys;")
+                row = cursor.fetchone()
+                stats["foreign_keys_enabled"] = bool(row and int(row[0]) == 1)
+            except Exception:
+                stats["foreign_keys_enabled"] = None
+
+            # Evidence (material_id is NOT NULL)
+            cursor.execute(
+                """
+                SELECT COUNT(*)
+                FROM evidence e
+                LEFT JOIN materials m ON e.material_id = m.material_id
+                WHERE m.material_id IS NULL
+                """
+            )
+            stats["evidence_orphan_rows"] = int(cursor.fetchone()[0] or 0)
+            cursor.execute(
+                """
+                SELECT COUNT(DISTINCT e.material_id)
+                FROM evidence e
+                LEFT JOIN materials m ON e.material_id = m.material_id
+                WHERE m.material_id IS NULL
+                """
+            )
+            stats["evidence_orphan_material_ids"] = int(cursor.fetchone()[0] or 0)
+
+            # Activity metrics (material_id is nullable)
+            cursor.execute(
+                """
+                SELECT COUNT(*)
+                FROM activity_metrics a
+                LEFT JOIN materials m ON a.material_id = m.material_id
+                WHERE a.material_id IS NOT NULL AND m.material_id IS NULL
+                """
+            )
+            stats["activity_metric_orphan_rows"] = int(cursor.fetchone()[0] or 0)
+            cursor.execute(
+                """
+                SELECT COUNT(DISTINCT a.material_id)
+                FROM activity_metrics a
+                LEFT JOIN materials m ON a.material_id = m.material_id
+                WHERE a.material_id IS NOT NULL AND m.material_id IS NULL
+                """
+            )
+            stats["activity_metric_orphan_material_ids"] = int(cursor.fetchone()[0] or 0)
+
+            # Adsorption energies (material_id is nullable)
+            cursor.execute(
+                """
+                SELECT COUNT(*)
+                FROM adsorption_energies ae
+                LEFT JOIN materials m ON ae.material_id = m.material_id
+                WHERE ae.material_id IS NOT NULL AND m.material_id IS NULL
+                """
+            )
+            stats["adsorption_orphan_rows"] = int(cursor.fetchone()[0] or 0)
+            cursor.execute(
+                """
+                SELECT COUNT(DISTINCT ae.material_id)
+                FROM adsorption_energies ae
+                LEFT JOIN materials m ON ae.material_id = m.material_id
+                WHERE ae.material_id IS NOT NULL AND m.material_id IS NULL
+                """
+            )
+            stats["adsorption_orphan_material_ids"] = int(cursor.fetchone()[0] or 0)
 
         return stats
 
@@ -752,6 +1073,13 @@ class DatabaseService:
                                source: str = "Catalysis-Hub",
                                metadata: Dict = None) -> int:
         """Save adsorption energy record (proxy for activity)."""
+        material_id = self._normalize_material_id(material_id)
+        if material_id:
+            # Ensure FK target exists (do not override existing formula).
+            try:
+                self.ensure_material_stub(material_id)
+            except Exception:
+                pass
         query = """
         INSERT INTO adsorption_energies
         (material_id, surface_composition, facet, adsorbate, reaction_energy, activation_energy, source, metadata)
@@ -814,6 +1142,14 @@ class DatabaseService:
                              conditions: Dict = None, source: str = "experiment",
                              source_id: Optional[str] = None, metadata: Dict = None) -> int:
         """Save activity metric record and link as evidence when possible."""
+        material_id = self._normalize_material_id(material_id)
+        if material_id:
+            # Ensure FK target exists (do not override existing formula).
+            try:
+                self.ensure_material_stub(material_id, formula=(metadata or {}).get("formula") if isinstance(metadata, dict) else None)
+            except Exception:
+                # If we can't ensure, fall back to NULL to avoid rejecting the metric row.
+                material_id = None
         query = """
         INSERT INTO activity_metrics
         (material_id, metric_name, metric_value, unit, conditions, source, source_id, metadata)
@@ -1004,6 +1340,148 @@ class DatabaseService:
                 if data.get("result"):
                     try:
                         data["result"] = json.loads(data["result"])
+                    except Exception:
+                        pass
+                items.append(data)
+            return items
+
+    # ========== Robot Task Events (Idempotent callbacks) ==========
+
+    def _stable_json(self, obj: Any) -> str:
+        try:
+            return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        except Exception:
+            return json.dumps({"repr": repr(obj)}, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+    def hash_payload(self, obj: Any) -> str:
+        text = self._stable_json(obj)
+        return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+    def get_robot_task_event_by_callback_id(self, task_id: int, callback_id: str) -> Optional[Dict]:
+        if not callback_id:
+            return None
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                SELECT *
+                FROM robot_task_events
+                WHERE task_id = ? AND callback_id = ?
+                ORDER BY created_at DESC
+                LIMIT 1
+                """,
+                (task_id, callback_id),
+            )
+            row = cursor.fetchone()
+            if not row:
+                return None
+            data = dict(row)
+            if data.get("payload"):
+                try:
+                    data["payload"] = json.loads(data["payload"])
+                except Exception:
+                    pass
+            return data
+
+    def log_robot_task_event_idempotent(
+        self,
+        task_id: int,
+        status: str,
+        payload: Optional[Dict[str, Any]] = None,
+        external_id: Optional[str] = None,
+        callback_id: Optional[str] = None,
+        payload_hash: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Log a robot callback event with idempotency (by callback_id or payload_hash)."""
+        payload_hash = payload_hash or self.hash_payload(payload or {})
+        payload_json = self._stable_json(payload or {})
+
+        if callback_id:
+            existing = self.get_robot_task_event_by_callback_id(task_id, callback_id)
+            if existing:
+                if existing.get("payload_hash") != payload_hash:
+                    return {
+                        "inserted": False,
+                        "event_id": existing.get("id"),
+                        "duplicate": False,
+                        "conflict": True,
+                    }
+                return {
+                    "inserted": False,
+                    "event_id": existing.get("id"),
+                    "duplicate": True,
+                    "conflict": False,
+                }
+
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                INSERT OR IGNORE INTO robot_task_events
+                (task_id, external_id, callback_id, status, payload_hash, payload)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (task_id, external_id, callback_id, status, payload_hash, payload_json),
+            )
+            inserted = cursor.rowcount == 1
+
+            event_id = None
+            if callback_id:
+                cursor.execute(
+                    "SELECT id, payload_hash FROM robot_task_events WHERE task_id = ? AND callback_id = ? LIMIT 1",
+                    (task_id, callback_id),
+                )
+                row = cursor.fetchone()
+                if row:
+                    event_id = row[0]
+                    existing_hash = row[1]
+                    if existing_hash != payload_hash:
+                        return {"inserted": False, "event_id": event_id, "duplicate": False, "conflict": True}
+                    return {"inserted": inserted, "event_id": event_id, "duplicate": not inserted, "conflict": False}
+
+            cursor.execute(
+                "SELECT id FROM robot_task_events WHERE task_id = ? AND payload_hash = ? LIMIT 1",
+                (task_id, payload_hash),
+            )
+            row = cursor.fetchone()
+            event_id = row[0] if row else None
+            return {"inserted": inserted, "event_id": event_id, "duplicate": not inserted, "conflict": False}
+
+    def list_robot_task_events(self, task_id: int, limit: int = 50, status: Optional[str] = None) -> List[Dict]:
+        """List robot task events (newest first)."""
+        with self._get_conn() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            if status:
+                cursor.execute(
+                    """
+                    SELECT *
+                    FROM robot_task_events
+                    WHERE task_id = ? AND status = ?
+                    ORDER BY created_at DESC
+                    LIMIT ?
+                    """,
+                    (task_id, status, int(limit or 50)),
+                )
+            else:
+                cursor.execute(
+                    """
+                    SELECT *
+                    FROM robot_task_events
+                    WHERE task_id = ?
+                    ORDER BY created_at DESC
+                    LIMIT ?
+                    """,
+                    (task_id, int(limit or 50)),
+                )
+            rows = cursor.fetchall()
+            items: List[Dict[str, Any]] = []
+            for row in rows:
+                data = dict(row)
+                if data.get("payload"):
+                    try:
+                        data["payload"] = json.loads(data["payload"])
                     except Exception:
                         pass
                 items.append(data)

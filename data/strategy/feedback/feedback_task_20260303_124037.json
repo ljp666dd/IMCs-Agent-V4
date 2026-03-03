@@ -1,0 +1,22 @@
+{
+  "task_id": "task_20260303_124037",
+  "summary": {
+    "activity_metric": 4,
+    "adsorption_energy": 4,
+    "literature": 4,
+    "ml_prediction": 4,
+    "dos_data": 4,
+    "formation_energy": 4,
+    "materials_total": 4
+  },
+  "delta": {
+    "literature": 1,
+    "ml_prediction": 0,
+    "experiment": 0,
+    "activity_metric": 0,
+    "adsorption_energy": 0,
+    "formation_energy": 0,
+    "dos_data": 0
+  },
+  "updated_at": "2026-03-03T05:00:21Z"
+}

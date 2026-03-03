@@ -208,6 +208,21 @@ CREATE TABLE IF NOT EXISTS robot_tasks (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 3.15.1 Robot Task Events (Idempotent callbacks / audit trail)
+CREATE TABLE IF NOT EXISTS robot_task_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_id INTEGER NOT NULL,
+    external_id TEXT,
+    callback_id TEXT,
+    status TEXT NOT NULL,
+    payload_hash TEXT NOT NULL,
+    payload TEXT,                        -- JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(task_id) REFERENCES robot_tasks(id),
+    UNIQUE(task_id, callback_id),
+    UNIQUE(task_id, payload_hash)
+);
+
 -- 4. Chat Sessions (v4.0 History)
 CREATE TABLE IF NOT EXISTS chat_sessions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

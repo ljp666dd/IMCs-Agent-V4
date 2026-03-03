@@ -1,0 +1,1480 @@
+{
+  "session_id": "task_20260302_111908",
+  "created_at": "2026-03-02T11:19:08.501432",
+  "rounds": [
+    {
+      "round_number": 1,
+      "timestamp": "2026-03-02T11:29:26.249825",
+      "query": "recommend HOR ordered alloy catalysts",
+      "result": {
+        "success": true,
+        "candidates": [
+          {
+            "material_id": "mp-11693",
+            "formula": "TePt",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-11693",
+                  "formula": "TePt",
+                  "predicted_activity": -0.10197056829929352,
+                  "uncertainty": 0.035904649054973564,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.10197056829929352,
+              "uncertainty": 0.035904649054973564,
+              "ml_score": -0.10197056829929352
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-117",
+            "formula": "Sn",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-117",
+                  "formula": "Sn",
+                  "predicted_activity": -0.1454397439956665,
+                  "uncertainty": 0.034193728080982914,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1454397439956665,
+              "uncertainty": 0.034193728080982914,
+              "ml_score": -0.1454397439956665
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-30",
+            "formula": "Cu",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-30",
+                  "formula": "Cu",
+                  "predicted_activity": -0.16216115653514862,
+                  "uncertainty": 0.03504033709843754,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.16216115653514862,
+              "uncertainty": 0.03504033709843754,
+              "ml_score": -0.16216115653514862
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-32",
+            "formula": "Ge",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-32",
+                  "formula": "Ge",
+                  "predicted_activity": -0.16637523472309113,
+                  "uncertainty": 0.028033325480877898,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.16637523472309113,
+              "uncertainty": 0.028033325480877898,
+              "ml_score": -0.16637523472309113
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-74",
+            "formula": "Rh",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-74",
+                  "formula": "Rh",
+                  "predicted_activity": -0.1736779808998108,
+                  "uncertainty": 0.029739500560561617,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1736779808998108,
+              "uncertainty": 0.029739500560561617,
+              "ml_score": -0.1736779808998108
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-22154",
+            "formula": "In2Au",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-22154",
+                  "formula": "In2Au",
+                  "predicted_activity": -0.1742044985294342,
+                  "uncertainty": 0.03849975215836772,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1742044985294342,
+              "uncertainty": 0.03849975215836772,
+              "ml_score": -0.1742044985294342
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-81",
+            "formula": "Au",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-81",
+                  "formula": "Au",
+                  "predicted_activity": -0.17581352591514587,
+                  "uncertainty": 0.04029711910460597,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.17581352591514587,
+              "uncertainty": 0.04029711910460597,
+              "ml_score": -0.17581352591514587
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-571160",
+            "formula": "Tl2Pt",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-571160",
+                  "formula": "Tl2Pt",
+                  "predicted_activity": -0.1764431595802307,
+                  "uncertainty": 0.06369467646702269,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1764431595802307,
+              "uncertainty": 0.06369467646702269,
+              "ml_score": -0.1764431595802307
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-30371",
+            "formula": "Cd5Au3",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-30371",
+                  "formula": "Cd5Au3",
+                  "predicted_activity": -0.17724548280239105,
+                  "uncertainty": 0.058088477268163685,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.17724548280239105,
+              "uncertainty": 0.058088477268163685,
+              "ml_score": -0.17724548280239105
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-134",
+            "formula": "Al",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-134",
+                  "formula": "Al",
+                  "predicted_activity": -0.1774955689907074,
+                  "uncertainty": 0.027286788773232224,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1774955689907074,
+              "uncertainty": 0.027286788773232224,
+              "ml_score": -0.1774955689907074
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-28",
+            "formula": "Ce",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-28",
+                  "formula": "Ce",
+                  "predicted_activity": -0.1783117949962616,
+                  "uncertainty": 0.030628955905861708,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1783117949962616,
+              "uncertainty": 0.030628955905861708,
+              "ml_score": -0.1783117949962616
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-101",
+            "formula": "Ir",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-101",
+                  "formula": "Ir",
+                  "predicted_activity": -0.1790604293346405,
+                  "uncertainty": 0.055911363445715366,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1790604293346405,
+              "uncertainty": 0.055911363445715366,
+              "ml_score": -0.1790604293346405
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-1072087",
+            "formula": "LaAu2",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-1072087",
+                  "formula": "LaAu2",
+                  "predicted_activity": -0.193516805768013,
+                  "uncertainty": 0.03763673822420624,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.193516805768013,
+              "uncertainty": 0.03763673822420624,
+              "ml_score": -0.193516805768013
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-2776",
+            "formula": "Ga2Au",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-2776",
+                  "formula": "Ga2Au",
+                  "predicted_activity": -0.1990928053855896,
+                  "uncertainty": 0.043938773029076617,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.1990928053855896,
+              "uncertainty": 0.043938773029076617,
+              "ml_score": -0.1990928053855896
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-1072399",
+            "formula": "Be5Pt",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-1072399",
+                  "formula": "Be5Pt",
+                  "predicted_activity": -0.21459953486919403,
+                  "uncertainty": 0.04099809464743084,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.21459953486919403,
+              "uncertainty": 0.04099809464743084,
+              "ml_score": -0.21459953486919403
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-2647",
+            "formula": "Al2Au",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-2647",
+                  "formula": "Al2Au",
+                  "predicted_activity": -0.21861815452575684,
+                  "uncertainty": 0.0411891965709975,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.21861815452575684,
+              "uncertainty": 0.0411891965709975,
+              "ml_score": -0.21861815452575684
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-1025468",
+            "formula": "CeAu",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-1025468",
+                  "formula": "CeAu",
+                  "predicted_activity": -0.22089849412441254,
+                  "uncertainty": 0.05180710941328801,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.22089849412441254,
+              "uncertainty": 0.05180710941328801,
+              "ml_score": -0.22089849412441254
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-21296",
+            "formula": "PtPb4",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-21296",
+                  "formula": "PtPb4",
+                  "predicted_activity": -0.2250932902097702,
+                  "uncertainty": 0.05228809623996985,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.2250932902097702,
+              "uncertainty": 0.05228809623996985,
+              "ml_score": -0.2250932902097702
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-1103395",
+            "formula": "La2Au",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-1103395",
+                  "formula": "La2Au",
+                  "predicted_activity": -0.22607065737247467,
+                  "uncertainty": 0.06540566118318351,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.22607065737247467,
+              "uncertainty": 0.06540566118318351,
+              "ml_score": -0.22607065737247467
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          },
+          {
+            "material_id": "mp-28268",
+            "formula": "PtI3",
+            "sources": [
+              "ml",
+              "ml_pred"
+            ],
+            "source_data": {
+              "ml": {
+                "confidence": 0.9,
+                "data": {
+                  "material_id": "mp-28268",
+                  "formula": "PtI3",
+                  "predicted_activity": -0.23145660758018494,
+                  "uncertainty": 0.06606660374576488,
+                  "source": "ml"
+                }
+              }
+            },
+            "properties": {
+              "predicted_activity": -0.23145660758018494,
+              "uncertainty": 0.06606660374576488,
+              "ml_score": -0.23145660758018494
+            },
+            "source_scores": {
+              "ml": 0.2475609756097561,
+              "ml_pred": 0.2475609756097561
+            },
+            "property_bonus": 0.0,
+            "multi_source_bonus": 0.05,
+            "final_score": 0.5451219512195122
+          }
+        ],
+        "reasoning": "[Director 深度剖析]\n[MOCK] 这是一份模拟的专家推荐报告。基于多智能体协同分析和物理感知模型的深度评分，系统最终筛选出了这批候选 HOR 有序合金催化材料，它们普遍表现出极佳的形成能、完美的 SABATIER 预测活性以及可接受范围内的置信度，建议优先考虑。\n\n[融合报告]\n# HOR催化剂推荐报告\n\n## 第 1 名: mp-11693\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.102\n\n## 第 2 名: mp-117\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.145\n\n## 第 3 名: mp-30\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.162\n\n## 第 4 名: mp-32\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.166\n\n## 第 5 名: mp-74\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.174\n\n## 第 6 名: mp-22154\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.174\n\n## 第 7 名: mp-81\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.176\n\n## 第 8 名: mp-571160\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.176\n\n## 第 9 名: mp-30371\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.177\n\n## 第 10 名: mp-134\n- 综合得分: 0.545\n- 置信度: 中置信度 (0.55): 有一定证据支持，基于 1 个来源、1 个理由\n- 推荐理由:\n  - ml_prediction: ML预测得分 -0.177\n\n\n[冲突检测]\n检测到 55 项冲突: 55 项轻微(孤证)。",
+        "execution_order": [
+          "experiment",
+          "ml",
+          "theory",
+          "literature"
+        ],
+        "iteration": 1,
+        "contributions": {
+          "experiment": {
+            "agent_name": "experiment",
+            "contribution_type": "metrics",
+            "success": true,
+            "candidates": [
+              {
+                "material_id": "Co",
+                "formula": "Co",
+                "source": "experiment",
+                "exchange_current_density": 8.194166364769965,
+                "mass_activity": 606.9771636883411,
+                "tafel_slope": 0.21103072396697972
+              },
+              {
+                "material_id": "Fe",
+                "formula": "Fe",
+                "source": "experiment",
+                "exchange_current_density": 0.003990627674117144,
+                "mass_activity": 272816.434866765,
+                "tafel_slope": 0.037077346334825914
+              },
+              {
+                "material_id": "Ni",
+                "formula": "Ni",
+                "source": "experiment",
+                "exchange_current_density": 0.2543209739493308,
+                "mass_activity": 1328.4478041011357,
+                "tafel_slope": 0.10972666860304676
+              },
+              {
+                "material_id": "Pd",
+                "formula": "Pd",
+                "source": "experiment",
+                "exchange_current_density": 0.054836603658992476,
+                "mass_activity": 2245.4734641834048,
+                "tafel_slope": 0.07248111406186662
+              },
+              {
+                "material_id": "Pt",
+                "formula": "Pt",
+                "source": "experiment",
+                "exchange_current_density": 1.0029387526749518,
+                "mass_activity": 86.22483231388867,
+                "tafel_slope": 0.16767454642946678
+              }
+            ],
+            "predictions": {},
+            "properties": {},
+            "insights": [],
+            "metrics": {
+              "Co": {
+                "exchange_current_density": 8.194166364769965,
+                "mass_activity": 606.9771636883411,
+                "tafel_slope": 0.21103072396697972
+              },
+              "Fe": {
+                "exchange_current_density": 0.003990627674117144,
+                "mass_activity": 272816.434866765,
+                "tafel_slope": 0.037077346334825914
+              },
+              "Ni": {
+                "exchange_current_density": 0.2543209739493308,
+                "mass_activity": 1328.4478041011357,
+                "tafel_slope": 0.10972666860304676
+              },
+              "Pd": {
+                "exchange_current_density": 0.054836603658992476,
+                "mass_activity": 2245.4734641834048,
+                "tafel_slope": 0.07248111406186662
+              },
+              "Pt": {
+                "exchange_current_density": 1.0029387526749518,
+                "mass_activity": 86.22483231388867,
+                "tafel_slope": 0.16767454642946678
+              }
+            },
+            "knowledge": {},
+            "confidence": 0.9,
+            "reasoning": "从 data/experimental 中解析了 5 条实验数据",
+            "sources": [
+              "Local Experiment Files"
+            ]
+          },
+          "ml": {
+            "agent_name": "ml",
+            "contribution_type": "predictions",
+            "success": true,
+            "candidates": [
+              {
+                "material_id": "mp-11693",
+                "formula": "TePt",
+                "predicted_activity": -0.10197056829929352,
+                "uncertainty": 0.035904649054973564,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-117",
+                "formula": "Sn",
+                "predicted_activity": -0.1454397439956665,
+                "uncertainty": 0.034193728080982914,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-30",
+                "formula": "Cu",
+                "predicted_activity": -0.16216115653514862,
+                "uncertainty": 0.03504033709843754,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-32",
+                "formula": "Ge",
+                "predicted_activity": -0.16637523472309113,
+                "uncertainty": 0.028033325480877898,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-74",
+                "formula": "Rh",
+                "predicted_activity": -0.1736779808998108,
+                "uncertainty": 0.029739500560561617,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-22154",
+                "formula": "In2Au",
+                "predicted_activity": -0.1742044985294342,
+                "uncertainty": 0.03849975215836772,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-81",
+                "formula": "Au",
+                "predicted_activity": -0.17581352591514587,
+                "uncertainty": 0.04029711910460597,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-571160",
+                "formula": "Tl2Pt",
+                "predicted_activity": -0.1764431595802307,
+                "uncertainty": 0.06369467646702269,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-30371",
+                "formula": "Cd5Au3",
+                "predicted_activity": -0.17724548280239105,
+                "uncertainty": 0.058088477268163685,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-134",
+                "formula": "Al",
+                "predicted_activity": -0.1774955689907074,
+                "uncertainty": 0.027286788773232224,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-28",
+                "formula": "Ce",
+                "predicted_activity": -0.1783117949962616,
+                "uncertainty": 0.030628955905861708,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-101",
+                "formula": "Ir",
+                "predicted_activity": -0.1790604293346405,
+                "uncertainty": 0.055911363445715366,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1072087",
+                "formula": "LaAu2",
+                "predicted_activity": -0.193516805768013,
+                "uncertainty": 0.03763673822420624,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-2776",
+                "formula": "Ga2Au",
+                "predicted_activity": -0.1990928053855896,
+                "uncertainty": 0.043938773029076617,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1072399",
+                "formula": "Be5Pt",
+                "predicted_activity": -0.21459953486919403,
+                "uncertainty": 0.04099809464743084,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-2647",
+                "formula": "Al2Au",
+                "predicted_activity": -0.21861815452575684,
+                "uncertainty": 0.0411891965709975,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1025468",
+                "formula": "CeAu",
+                "predicted_activity": -0.22089849412441254,
+                "uncertainty": 0.05180710941328801,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-21296",
+                "formula": "PtPb4",
+                "predicted_activity": -0.2250932902097702,
+                "uncertainty": 0.05228809623996985,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1103395",
+                "formula": "La2Au",
+                "predicted_activity": -0.22607065737247467,
+                "uncertainty": 0.06540566118318351,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-28268",
+                "formula": "PtI3",
+                "predicted_activity": -0.23145660758018494,
+                "uncertainty": 0.06606660374576488,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-28319",
+                "formula": "PtI2",
+                "predicted_activity": -0.23730111122131348,
+                "uncertainty": 0.07429162682743858,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-569794",
+                "formula": "Ta",
+                "predicted_activity": -0.23800842463970184,
+                "uncertainty": 0.07025046015925976,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1194495",
+                "formula": "Ta2Au",
+                "predicted_activity": -0.24452371895313263,
+                "uncertainty": 0.05837405957479181,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-569249",
+                "formula": "Ta3Au",
+                "predicted_activity": -0.24510006606578827,
+                "uncertainty": 0.05155890899209823,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-562",
+                "formula": "Sb2Pt",
+                "predicted_activity": -0.24902381002902985,
+                "uncertainty": 0.05312584219839828,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-2513",
+                "formula": "As2Pt",
+                "predicted_activity": -0.2491554170846939,
+                "uncertainty": 0.05586143014749458,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-569558",
+                "formula": "AlAu2",
+                "predicted_activity": -0.250594824552536,
+                "uncertainty": 0.05892473977244978,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1007755",
+                "formula": "HfAu",
+                "predicted_activity": -0.25250130891799927,
+                "uncertainty": 0.0496430105830416,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-730",
+                "formula": "P2Pt",
+                "predicted_activity": -0.2531103491783142,
+                "uncertainty": 0.05933208121360442,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-16886",
+                "formula": "CdAu",
+                "predicted_activity": -0.25439587235450745,
+                "uncertainty": 0.05700588024985122,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-979911",
+                "formula": "Y2Au",
+                "predicted_activity": -0.25648605823516846,
+                "uncertainty": 0.053886668741649435,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-11263",
+                "formula": "Zr3Au",
+                "predicted_activity": -0.2566695213317871,
+                "uncertainty": 0.05515697486165224,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1786",
+                "formula": "Ti3Au",
+                "predicted_activity": -0.2639254033565521,
+                "uncertainty": 0.05216709042199999,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-30424",
+                "formula": "Zn3Au",
+                "predicted_activity": -0.2643621861934662,
+                "uncertainty": 0.07208413116878606,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-30370",
+                "formula": "Cd3Au",
+                "predicted_activity": -0.26570403575897217,
+                "uncertainty": 0.07347663682376389,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-30379",
+                "formula": "GaAu",
+                "predicted_activity": -0.2663137912750244,
+                "uncertainty": 0.039825189460832223,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1183137",
+                "formula": "Ag3Au",
+                "predicted_activity": -0.2687249779701233,
+                "uncertainty": 0.05420860146950757,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-865144",
+                "formula": "CdAu3",
+                "predicted_activity": -0.2689052224159241,
+                "uncertainty": 0.050206027788000485,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-839",
+                "formula": "V3Au",
+                "predicted_activity": -0.2689150869846344,
+                "uncertainty": 0.05969338921840466,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-90",
+                "formula": "Cr",
+                "predicted_activity": -0.2703981101512909,
+                "uncertainty": 0.04153445603576961,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-669566",
+                "formula": "ZnAu3",
+                "predicted_activity": -0.27141299843788147,
+                "uncertainty": 0.07265554495598028,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-26",
+                "formula": "La",
+                "predicted_activity": -0.27294182777404785,
+                "uncertainty": 0.04770325232073859,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-13548",
+                "formula": "Cs2Pt",
+                "predicted_activity": -0.27472448348999023,
+                "uncertainty": 0.060650240319183084,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-865572",
+                "formula": "CeAu3",
+                "predicted_activity": -0.275442898273468,
+                "uncertainty": 0.05330505620722664,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-522",
+                "formula": "CuAu",
+                "predicted_activity": -0.2754765748977661,
+                "uncertainty": 0.05992665658754443,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-67",
+                "formula": "Sc",
+                "predicted_activity": -0.27773287892341614,
+                "uncertainty": 0.052636250178742336,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-867281",
+                "formula": "Tc3Pt",
+                "predicted_activity": -0.2786189317703247,
+                "uncertainty": 0.05767672602778123,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-142",
+                "formula": "Ga",
+                "predicted_activity": -0.2792488634586334,
+                "uncertainty": 0.05265704751044878,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-998972",
+                "formula": "TiAu",
+                "predicted_activity": -0.2793058156967163,
+                "uncertainty": 0.051460230317919096,
+                "source": "ml"
+              },
+              {
+                "material_id": "mp-1066254",
+                "formula": "YAu",
+                "predicted_activity": -0.280269593000412,
+                "uncertainty": 0.041778240862988834,
+                "source": "ml"
+              }
+            ],
+            "predictions": {
+              "mp-21296": -0.2250932902097702,
+              "mp-288": -0.28337833285331726,
+              "mp-28319": -0.23730111122131348,
+              "mp-13208": -0.32832109928131104,
+              "mp-571160": -0.1764431595802307,
+              "mp-23165": -0.47018682956695557,
+              "mp-31134": -0.4854181408882141,
+              "mp-28268": -0.23145660758018494,
+              "mp-1115": -0.30529698729515076,
+              "mp-399": -0.2937766909599304,
+              "mp-762": -0.30567097663879395,
+              "mp-11693": -0.10197056829929352,
+              "mp-23290": -0.3241215646266937,
+              "mp-18707": -0.3305257558822632,
+              "mp-11807": -0.3347306251525879,
+              "mp-1066078": -0.2979700565338135,
+              "mp-1066274": -0.30203884840011597,
+              "mp-13548": -0.27472448348999023,
+              "mp-2170": -0.3157007396221161,
+              "mp-31498": -0.28535351157188416,
+              "mp-867281": -0.2786189317703247,
+              "mp-12651": -0.2888948619365692,
+              "mp-562": -0.24902381002902985,
+              "mp-2513": -0.2491554170846939,
+              "mp-1072399": -0.21459953486919403,
+              "mp-730": -0.2531103491783142,
+              "mp-81": -0.17581352591514587,
+              "mp-8566": -0.28692981600761414,
+              "mp-101": -0.1790604293346405,
+              "mp-74": -0.1736779808998108,
+              "mp-33": -0.28684940934181213,
+              "mp-49": -0.30930620431900024,
+              "mp-30": -0.16216115653514862,
+              "mp-35": -0.3042699694633484,
+              "mp-90": -0.2703981101512909,
+              "mp-146": -0.33635005354881287,
+              "mp-72": -0.2937464714050293,
+              "mp-79": -0.28250932693481445,
+              "mp-67": -0.27773287892341614,
+              "mp-129": -0.30317527055740356,
+              "mp-91": -0.3356146514415741,
+              "mp-75": -0.31638944149017334,
+              "mp-569794": -0.23800842463970184,
+              "mp-131": -0.291655570268631,
+              "mp-103": -0.30276569724082947,
+              "mp-1186901": -0.28901436924934387,
+              "mp-112": -0.29799968004226685,
+              "mp-94": -0.2953401803970337,
+              "mp-85": -0.3146231174468994,
+              "mp-117": -0.1454397439956665,
+              "mp-142": -0.2792488634586334,
+              "mp-32": -0.16637523472309113,
+              "mp-134": -0.1774955689907074,
+              "mp-26": -0.27294182777404785,
+              "mp-28": -0.1783117949962616,
+              "mp-1399": -0.2807920277118683,
+              "mp-522": -0.2754765748977661,
+              "mp-1007755": -0.25250130891799927,
+              "mp-998972": -0.2793058156967163,
+              "mp-1194495": -0.24452371895313263,
+              "mp-2348": -0.31537431478500366,
+              "mp-30383": -0.2938228249549866,
+              "mp-16886": -0.25439587235450745,
+              "mp-30370": -0.26570403575897217,
+              "mp-1775": -0.2956162989139557,
+              "mp-11256": -0.2982724606990814,
+              "mp-1183137": -0.2687249779701233,
+              "mp-12674": -0.302735835313797,
+              "mp-1684": -0.2806268036365509,
+              "mp-2258": -0.2807852327823639,
+              "mp-11263": -0.2566695213317871,
+              "mp-1786": -0.2639254033565521,
+              "mp-30424": -0.2643621861934662,
+              "mp-569249": -0.24510006606578827,
+              "mp-839": -0.2689150869846344,
+              "mp-22154": -0.1742044985294342,
+              "mp-2776": -0.1990928053855896,
+              "mp-2647": -0.21861815452575684,
+              "mp-1025468": -0.22089849412441254,
+              "mp-1103395": -0.22607065737247467,
+              "mp-30379": -0.2663137912750244,
+              "mp-979911": -0.25648605823516846,
+              "mp-1002136": -0.28831031918525696,
+              "mp-1066254": -0.280269593000412,
+              "mp-1018123": -0.3166259229183197,
+              "mp-1018103": -0.3147261440753937,
+              "mp-1018113": -0.3157995939254761,
+              "mp-1018148": -0.3226431608200073,
+              "mp-1018153": -0.3090977966785431,
+              "mp-11252": -0.3256235420703888,
+              "mp-2123": -0.28226524591445923,
+              "mp-1606": -0.31693845987319946,
+              "mp-569558": -0.250594824552536,
+              "mp-1077442": -0.31615006923675537,
+              "mp-1072087": -0.193516805768013,
+              "mp-30371": -0.17724548280239105,
+              "mp-669566": -0.27141299843788147,
+              "mp-1017579": -0.28987106680870056,
+              "mp-865144": -0.2689052224159241,
+              "mp-865572": -0.275442898273468
+            },
+            "properties": {},
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.9,
+            "reasoning": "使用物理感知 HOR_Physics_DNN 为 100 个材料完成预测与不确定度量化",
+            "sources": [
+              "HOR_Physics_DNN"
+            ]
+          },
+          "theory": {
+            "agent_name": "theory",
+            "contribution_type": "candidates",
+            "success": true,
+            "candidates": [],
+            "predictions": {},
+            "properties": {},
+            "insights": [],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.8,
+            "reasoning": "从数据库获取 0 个材料的理论数据",
+            "sources": [
+              "Materials Project",
+              "Local Database"
+            ]
+          },
+          "literature": {
+            "agent_name": "literature",
+            "contribution_type": "insights",
+            "success": true,
+            "candidates": [],
+            "predictions": {},
+            "properties": {},
+            "insights": [
+              {
+                "title": "This is the Pre-Published Version.",
+                "source": "arXiv/SemanticScholar",
+                "relevance": 0.5
+              }
+            ],
+            "metrics": {},
+            "knowledge": {},
+            "confidence": 0.7,
+            "reasoning": "找到 1 篇相关文献",
+            "sources": [
+              "Semantic Scholar",
+              "Local PDFs"
+            ]
+          }
+        }
+      },
+      "feedback": []
+    }
+  ],
+  "candidates": {
+    "mp-11693": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-117": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-30": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-32": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-74": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-22154": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-81": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-571160": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-30371": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-134": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-28": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-101": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-1072087": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-2776": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-1072399": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-2647": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-1025468": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-21296": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-1103395": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    },
+    "mp-28268": {
+      "status": "pending",
+      "first_seen_round": 1,
+      "scores": [
+        {
+          "round": 1,
+          "score": 0.5451219512195122
+        }
+      ],
+      "feedback": []
+    }
+  }
+}

@@ -3,9 +3,9 @@ from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 import math
 from src.services.task.planner import TaskPlanner
-from src.services.task.executor import PlanExecutor
 from src.services.task.types import TaskPlan, TaskType, TaskStep
 from src.services.db.database import DatabaseService
+from src.services.task.executor_factory import new_plan_executor
 
 # Initialize Services
 # In a real app, use Dependency Injection (Depends)
@@ -39,10 +39,8 @@ def _restore_plan_from_db(task_id: str) -> Optional[TaskPlan]:
     plan_row = db.get_plan(task_id)
     if not plan_row:
         return None
-    steps = db.list_plan_steps(task_id)
-    latest = {}
-    for s in steps:
-        latest[s["step_id"]] = s
+    steps = db.list_latest_plan_steps(task_id)
+    latest = {s["step_id"]: s for s in steps if s.get("step_id")}
 
     try:
         task_type = TaskType(plan_row.get("task_type"))
@@ -127,24 +125,83 @@ async def chat(req: ChatRequest):
 @router.post("/execute/{task_id}")
 async def execute_task(task_id: str, background_tasks: BackgroundTasks):
     """Execute a task (Async)."""
-    # If not in memory, attempt to restore from DB for resume/confirmation.
-    if not agent_instance.current_plan or agent_instance.current_plan.task_id != task_id:
-        restored = _restore_plan_from_db(task_id)
-        if not restored:
+    # Always restore from DB (source of truth)
+    plan = _restore_plan_from_db(task_id)
+    if not plan:
+        # Fallback to in-memory plan if DB restore failed
+        if agent_instance.current_plan and agent_instance.current_plan.task_id == task_id:
+            plan = agent_instance.current_plan
+        else:
             raise HTTPException(status_code=404, detail="Task not found in memory or DB")
-        agent_instance.current_plan = restored
 
-    plan = agent_instance.current_plan
     if plan.status in ("completed", "failed", "blocked"):
         return {"message": f"Task already {plan.status}", "task_id": task_id}
+    if plan.status in ("executing", "running"):
+        return {"message": "Task already executing", "task_id": task_id}
     
-    # Run in background
-    background_tasks.add_task(agent_instance.execute_plan, agent_instance.current_plan)
+    executor = new_plan_executor()
+    background_tasks.add_task(executor.execute_plan, plan)
     return {"message": "Task execution started", "task_id": task_id}
+
+class FeedbackItem(BaseModel):
+    material_id: str
+    experiment_type: str = "electrochemical"
+    metrics: Dict[str, float]
+    status: str = "validated"
+    notes: str = ""
+
+class IterateRequest(BaseModel):
+    experiment_results: List[FeedbackItem]
+
+@router.post("/{task_id}/iterate")
+async def iterate_task(task_id: str, req: IterateRequest, background_tasks: BackgroundTasks):
+    """Submit experimental feedback and iterate."""
+    from src.agents.session import IterativeSession, CandidateStatus
+    from src.core.logger import get_logger
+    logger = get_logger(__name__)
+    
+    try:
+        session = IterativeSession.load(task_id)
+    except FileNotFoundError:
+        session = IterativeSession(session_id=task_id)
+
+    db.update_plan_status(task_id, "running")
+    
+    def _do_iterate():
+        try:
+            for item in req.experiment_results:
+                try:
+                    status_enum = CandidateStatus(item.status)
+                except ValueError:
+                    status_enum = CandidateStatus.PENDING
+                
+                session.add_experiment_feedback(
+                    material_id=item.material_id,
+                    experiment_type=item.experiment_type,
+                    metrics=item.metrics,
+                    status=status_enum,
+                    notes=item.notes
+                )
+            
+            query = session.rounds[-1].query if session.rounds else "Find HOR catalysts"
+            logger.info(f"Iterating task {task_id} with query: {query}")
+            result = session.start_recommendation(query)
+            
+            plan_status = "completed" if result.success else "failed"
+            db.update_plan_status(task_id, plan_status)
+            
+            step_id = f"step_iter_{session.current_round}"
+            db.log_plan_step(task_id, step_id, agent="task_manager", action="iteration", status="completed", result={"final_recommendation": dict(result.to_dict())})
+        except Exception as e:
+            logger.error(f"Iterate failed: {e}")
+            db.update_plan_status(task_id, "failed")
+
+    background_tasks.add_task(_do_iterate)
+    return {"message": "Iteration started", "task_id": task_id}
 
 
 class GapConfirmRequest(BaseModel):
-    run_step_ids: List[str] = []
+    run_step_ids: Optional[List[str]] = None
     mark_complete: bool = False
     params_overrides: Optional[Dict[str, Any]] = None
 
@@ -156,13 +213,16 @@ async def confirm_gap_fill(task_id: str, req: GapConfirmRequest):
     if not plan:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    steps = db.list_plan_steps(task_id)
-    latest = {}
-    for s in steps:
-        latest[s["step_id"]] = s
+    steps = db.list_latest_plan_steps(task_id)
+    latest = {s["step_id"]: s for s in steps if s.get("step_id")}
 
     pending_ids = [sid for sid, row in latest.items() if (row.get("status") in ("pending", "running"))]
-    run_ids = set(req.run_step_ids or pending_ids)
+    pending_set = set(pending_ids)
+    if req.mark_complete:
+        run_ids = set()
+    else:
+        run_ids = set(pending_ids) if req.run_step_ids is None else set(req.run_step_ids)
+        run_ids = run_ids & pending_set
     skip_ids = [sid for sid in pending_ids if sid not in run_ids]
     params_overrides = req.params_overrides or {}
 
@@ -179,7 +239,7 @@ async def confirm_gap_fill(task_id: str, req: GapConfirmRequest):
             result={"note": "Skipped by user confirmation"},
         )
 
-    for sid in run_ids:
+    for sid in sorted(run_ids):
         row = latest.get(sid) or {}
         params = params_overrides.get(sid, row.get("params") or {})
         db.log_plan_step(
@@ -204,11 +264,8 @@ async def get_task_status(task_id: str):
     """Get task status."""
     plan = db.get_plan(task_id)
     if plan:
-        steps = db.list_plan_steps(task_id)
-        # Reduce to latest status per step_id
-        latest = {}
-        for s in steps:
-            latest[s["step_id"]] = s
+        steps = db.list_latest_plan_steps(task_id)
+        latest = {s["step_id"]: s for s in steps if s.get("step_id")}
         results = {
             step_id: (data.get("result") if data.get("result") is not None else None)
             for step_id, data in latest.items()
@@ -236,7 +293,7 @@ async def get_task_report(task_id: str):
     if not plan:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    steps = db.list_plan_steps(task_id)
+    steps = db.list_latest_plan_steps(task_id)
     latest = {}
     for s in steps:
         latest[s["step_id"]] = s

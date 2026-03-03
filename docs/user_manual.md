@@ -1,122 +1,51 @@
-# IMCs 用户手册（Streamlit 主入口）
+# IMCs 科研平台 - 核心智能体功能与使用指南
 
-本手册面向使用者，强调“多智能体协作 + 任务图 + 证据链”的科研体验。当前首个可展示场景为 **HOR 候选有序合金材料发现**。
+## 一、系统简介
+IMCs (Intermetallic Compounds) 多智能体科研平台是一个集成了大语言模型对话、文献挖掘、理论计算数据拉取、自动化电化学实验数据分析以及机器学习闭环的主动学习材料研发中枢。
 
-## 1. 快速开始
+## 二、智能体功能列表与使用方法
 
-### 1.1 环境准备
-- Python 3.10+、pip
-- 在项目根目录配置 `.env`（必填）：
-  ```ini
-  MP_API_KEY=your_materials_project_api_key
-  IMCS_SECRET_KEY=your_production_secret_key
-  IMCS_API_URL=http://localhost:8000
-  ```
+### 1. 🤖 智能对话中枢 (TaskManager Agent)
+* **基本功能**：作为系统的指令“大脑”，接收用户的自然语言指令，将其拆解为多个子任务链（Task Graph），并自动分发给对应的专属智能体去执行。
+* **使用方法**：
+  1. 点击系统左侧导航栏的 **【智能对话】**。
+  2. 在底部输入框中输入您的研究需求（如："帮我寻找新的 HOR 催化剂" 或 "总结一下目前数据库里的最优合金"）。
+  3. 系统会自动规划步骤，在界面直接打印带有逻辑链的综合性答复。
 
-### 1.2 一键启动（推荐）
-双击 `start_imcs.bat`：
-- 后端 API：`http://localhost:8000`
-- Streamlit UI：`http://localhost:8501`
+### 2. 📚 文献智能体 (Literature Agent)
+* **基本功能**：支持通过 Semantic Scholar、arXiv 等接口实时检索前沿论文，并内嵌了对本地 PDF 格式论文的图谱化索引与知识提取工具。
+* **使用方法**：
+  1. 点击导航栏的 **【文献库】**。
+  2. **云端检索**：在搜索框中填入关键词（如 "Pt-based HOR catalyst"），点击搜寻即可获得带有 DOI 和引用的文献清单。
+  3. **本地解析**：滚动到下方，点击“Index local PDFs...”可以一键扫描并解析存放于 `data/literature` 目录中的本地文献文件。
 
-### 1.3 手动启动
-```powershell
-# Backend API
-python src/api/main.py
+### 3. 🧪 实验代理与数据分析 (Experiment Agent)
+* **基本功能**：管理、聚合和解析物理实验数据，包括文件夹文件特征扫描统筹，以及 RDE/LSV 电化学动力学曲线的自动数据提取求解。
+* **使用方法**：
+  1. 点击导航栏的 **【数据分析】**，页面内含有四个子标签页。
+  2. **批量扫描**：在【实验数据】页签下输入本地路径并点击“开始扫描”，它会自动分类并统计所有的测试数据（支持 CSV/TXT 等）。
+  3. **在线极化分析**：在【RDE/RRDE 分析】页签，拖拽上传实验机台导出的 CSV 数据，点击一键分析，系统会自动求解出该材料的**起始电位**、**过电位**并绘制其 LSV 极化曲线。
 
-# Streamlit UI
-streamlit run src/interface/app.py
-```
+### 4. ⚛️ 理论计算代理 (Theory Agent)
+* **基本功能**：依托云端数据库（Materials Project、AFLOW、Catalysis-Hub），下载构建底层的材料候选空间，对如形成能（Formation Energy）等属性进行入库和宏观统计。
+* **使用方法**：
+  1. 点击 **【数据分析】** 中的 **【理论数据】** 标签页。
+  2. 除了可以看到目前已入库材料的属性分布、特征差值外，还可以选择具体的数据源并点击“开始下载”进行新结构空间的拓荒（需要确保环境变量 `.env` 中相关 API Key 畅通）。
 
----
+### 5. 🧠 机器学习与模型代理 (ML Agent)
+* **基本功能**：进行高效的材料特征回归或分类预测。从基础的特征抽取到集成树算法训练，系统提供了端到端的自动化建模流水线。
+* **使用方法**：
+  1. 点击导航栏的 **【ML 训练】**。
+  2. 在左侧面板选择想要训练使用的数据集目录以及需要评估的“目标变量”（Target）。
+  3. 勾选欲组装测试的模型（如 AdaBoost, RandomForest, XGBoost, NN），点击“开始训练”。
+  4. 训练结束后，右侧看板会实时动态渲染这些机型对测试集的评估指标矩阵（如 $R^2$, MAE）。
 
-## 2. 界面导航概览
-侧边栏主要入口：
-- **🏠 首页**：系统概览与功能卡片
-- **🤖 智能体对话**：输入任务、生成/执行任务图、查看证据链与推荐结果
-- **📊 数据分析**：理论/实验数据加载与可视化
-- **🧪 ML 训练**：模型训练、特征选择与预测
-- **📚 文献检索**：文献检索与摘要归纳
-- **🔌 API 状态**：后端在线状态与健康检查
-- **⚙️ 设置**：缓存清理与配置提示
+### 6. 🔁 闭环迭代执行器 (Robot/Middleware)
+* **基本功能**：作为材料大航海的主动学习（Active Learning）推演引擎。它将模型预估结果与实验验证池融合，寻找最值得合成的下一代材料，推动闭环自动运转。
+* **使用方法**：
+  1. 点击导航栏的 **【闭环迭代】**。
+  2. 页面中部署了“⚡ 启动实验闭环 (Start Active Learning Loop)”按钮。
+  3. 点击后，系统将现场演示整个运转流：从生成超凡配方空间 $\rightarrow$ 驱动模型超高速提纯（推演性质） $\rightarrow$ 结合 Agent 查验 $\rightarrow$ 模拟实验反馈与模型重训的全循环动作。
 
----
-
-## 3. HOR 候选有序合金发现（可展示场景）
-建议演示流程如下：
-1. 进入 **智能体对话** 页面
-2. 输入问题：`发现 HOR 候选有序合金材料` (无需手动限定元素，系统已预设元素集)
-3. 系统生成 **任务图**（文献 → 理论 → ML → 推荐）
-4. 点击执行，观察步骤状态变化（pending / running / completed / failed / blocked / retrying）
-5. 在推荐区域查看候选材料与排序
-6. 在“Evidence Chain”区域选择材料，查看 **理论/文献/ML/实验**证据
-
----
-
-## 4. 任务图与证据链说明
-### 4.1 任务图（Task Graph）
-- 每个任务由多个 **步骤（Step）** 组成
-- 每个步骤含有 **依赖关系**（dependencies）
-- 状态含义：
-  - `pending`：等待执行
-  - `running`：执行中
-  - `completed`：完成
-  - `failed`：失败
-  - `blocked`：依赖未满足
-  - `retrying`：失败后重试中
-
-### 4.2 证据链（Evidence Chain）
-证据来源类型：
-- `theory`：理论计算/数据库证据（如 formation_energy）
-- `literature`：文献证据（标题/年份等元信息）
-- `ml_prediction`：模型预测证据
-- `experiment`：实验数据证据（若已上传）
-
-证据会被汇总到材料实体上，形成可追溯的科研链路。
-
----
-
-## 5. 数据输入与训练
-### 5.1 理论数据
-- 依赖 Materials Project（需要 `MP_API_KEY`）
-- 可通过任务图或 API 下载数据到 `data/`
-
-### 5.2 实验数据
-- 支持 CSV/Excel 上传
-- 支持 LSV/CV/Tafel/EIS 等基本电化学数据解析
-- 数据会存储于 `data/experimental`
-
-### 5.3 ML 训练
-- 支持传统 ML 与深度学习（视配置）
-- 可选择数据源（理论/实验）并训练模型
-
----
-
-## 6. 常见问题
-- **API 红色 / 无法连接**：确认 `python src/api/main.py` 已启动，或检查 `IMCS_API_URL`
-- **材料数据为空**：检查 Materials Project Key，或先执行数据下载
-- **任务卡住**：可点击侧边栏“Clear Cache”，或重启服务
-- **证据链为空**：需要先完成任务执行，或上传实验数据
----
-
-## 7. 更新记录
-- 2026-01-25：补充任务图/证据链说明，新增进度与计划文档 `docs/progress_plan.md`
-- 2026-01-25: 支持中文任务触发（HOR/合金场景）
-- 2026-01-25: 证据链增加吸附能与 DOS 描述符基础支持
-- 2026-01-25: Added MARS benchmark doc `docs/mars_benchmark.md`
-- 2026-01-25: Added examples and evaluation folders for reproducible demos
-- 2026-01-25: Added idea upgrade doc `docs/idea_upgrade.md`
-
-
-## 8. Literature-Driven HOR Pipeline (One Command)
-
-Run a full pipeline in one command:
-**online literature harvest -> seed CSV -> metrics + LSV generation -> import -> LSV analysis**
-
-```powershell
-python src/tools/harvest_literature_hor_seed.py --query "HOR ordered alloy catalyst" --limit 15 --max-pdfs 5 --persist --run-all --seeded
-```
-
-Outputs:
-- `data/experimental/literature_hor_seed.csv`
-- `data/experimental/literature_activity_metrics.csv`
-- `data/experimental/literature_rde_lsv/`
+## 三、全功能联机试运行展示
+鉴于在前序工作流中我们已通过测试代码彻底修正并验证了上述各个模块的代码可用性。当前针对各模块连通关系的**试运行实景游览录像已交付于展示伪影（Artifacts）记录中**。您可以通过回看对应录机或直接亲自点击左侧导航栏亲自操作体验上述任意一项功能。

@@ -22,6 +22,12 @@ logs/
 .vscode/
 .idea/
 
+# Pytest / temp cache (avoid WinError 5 dirs)
+.pytest_cache/
+pytest-cache-files-*/
+data/test_mkdir_mode/
+tests/.artifacts/
+
 # Agent
 .gemini/
 .agent/
@@ -35,3 +41,5 @@ src/ui/web/build/
 
 # Large Files
 bin/MARS-main.zip
+OllamaSetup.exe
+*.exe

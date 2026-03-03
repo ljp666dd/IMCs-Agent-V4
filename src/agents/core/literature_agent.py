@@ -104,7 +104,7 @@ class LiteratureAgent:
         self,
         paper: PaperInfo,
         target_elements: List[str],
-        min_elements: int = 2,
+        min_elements: int = 1,
         require_hor: bool = True,
     ) -> bool:
         title = paper.title or ""
@@ -114,6 +114,9 @@ class LiteratureAgent:
         if require_hor and not (
             re.search(r"\bHOR\b", text, flags=re.IGNORECASE)
             or "hydrogen oxidation" in lower
+            or "hydrogen evolution" in lower
+            or "electrocatalyst" in lower
+            or "alloy catalyst" in lower
         ):
             return False
         if target_elements:
@@ -243,7 +246,7 @@ class LiteratureAgent:
     
     @log_exception(logger)
     def search_all_sources(self, query: str, limit: int = None) -> List[PaperInfo]:
-        """Search all available sources."""
+        """Search all available sources with progressive filter relaxation."""
         limit = limit or self.config.max_results
         from src.agents.core.theory_agent import TheoryDataConfig
         allowed = set(TheoryDataConfig().elements)
@@ -251,25 +254,31 @@ class LiteratureAgent:
         prefer_metrics = self._wants_metrics(query)
         local_hits = self._search_local_pdfs(
             target_elements,
-            min_elements=2,
+            min_elements=1,
             require_hor=True,
             limit=min(5, limit),
         )
         if local_hits:
             self.papers.extend(local_hits)
             return local_hits
+
+        # Stage 1: Strict filter (HOR + element match)
         focused_query = self._build_hor_query(query, target_elements, prefer_metrics=prefer_metrics)
         results = self.search_engine.search_all(focused_query, limit)
         results = self._filter_papers(results, target_elements, min_elements=2, require_hor=True, allow_fallback=False)
+
+        # Stage 2: Relaxed element match (min_elements=1)
         if not results:
-            fallback_query = f'\"hydrogen oxidation\" OR HOR electrocatalyst alloy {" ".join(target_elements[:4])}'
+            fallback_query = f'"hydrogen oxidation" OR HOR electrocatalyst alloy {" ".join(target_elements[:4])}'
             results = self.search_engine.search_all(fallback_query, limit)
-            results = self._filter_papers(results, target_elements, min_elements=2, require_hor=True, allow_fallback=False)
+            results = self._filter_papers(results, target_elements, min_elements=1, require_hor=False, allow_fallback=False)
+
+        # Stage 3: Generic HOR search, always return whatever we find
         if not results:
-            # Final fallback: HOR-only evidence, tagged later as generic.
             generic_query = "HOR hydrogen oxidation electrocatalyst alloy"
             results = self.search_engine.search_all(generic_query, limit)
-            results = self._filter_papers(results, [], min_elements=1, require_hor=True, allow_fallback=False)
+            results = self._filter_papers(results, [], min_elements=0, require_hor=False, allow_fallback=True)
+
         self.papers.extend(results)
         return results
 

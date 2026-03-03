@@ -172,6 +172,20 @@ def migrate():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );"""
+        ,
+        """CREATE TABLE IF NOT EXISTS robot_task_events (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            task_id INTEGER NOT NULL,
+            external_id TEXT,
+            callback_id TEXT,
+            status TEXT NOT NULL,
+            payload_hash TEXT NOT NULL,
+            payload TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(task_id) REFERENCES robot_tasks(id),
+            UNIQUE(task_id, callback_id),
+            UNIQUE(task_id, payload_hash)
+        );"""
     ]
     
     for sql in tables:

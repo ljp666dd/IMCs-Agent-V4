@@ -62,9 +62,9 @@ class ModelExplainer:
                      # Need to move to same device as model
                      device = next(model.parameters()).device
                      bg_tensor = bg_tensor.to(device)
-                     
-                     embed_bg = bg_tensor # DeepExplainer handles it
-                     explainer = shap.DeepExplainer(model, embed_bg)
+                     embed_bg = bg_tensor
+                     # Use GradientExplainer to bypass DeepExplainer strict sum tolerance
+                     explainer = shap.GradientExplainer(model, embed_bg)
             
             if explainer:
                 # Calculate SHAP values
@@ -72,14 +72,12 @@ class ModelExplainer:
                 # Usually explain properties of specific instance or feature importance.
                 # Here we return the explainer object or summary.
                 
-                # Simplified: Return explainer for now, or feature importance summary
                 if hasattr(explainer, "shap_values"):
-                    # Tree
-                    shap_values = explainer.shap_values(X_train[:100]) # explain 100 samples
-                else:
-                    # Kernel / Deep - expensive
-                    # Skip actual calculation for Service startup unless requested
-                    shap_values = None
+                    if model_type == "Deep Learning":
+                        import torch
+                        shap_values = explainer.shap_values(torch.FloatTensor(X_train[:100]).to(next(model.parameters()).device))
+                    else:
+                        shap_values = explainer.shap_values(X_train[:100])
                 
                 return {
                     "explainer": explainer,

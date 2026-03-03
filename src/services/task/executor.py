@@ -1,9 +1,11 @@
 import json
+import math
 import os
 from typing import Dict, Any, Optional, List
 from src.core.logger import get_logger, log_exception
 from src.services.task.types import TaskPlan, TaskStep
 from src.services.db.database import DatabaseService
+from src.services.task.failure_policy import FailurePolicyEngine
 
 logger = get_logger(__name__)
 
@@ -13,19 +15,20 @@ class PlanExecutor:
     Includes persistence to SQLite (v4.0).
     """
     
-    def __init__(self, agents: Dict[str, Any]):
+    def __init__(self, agents: Dict[str, Any], db: Optional[DatabaseService] = None):
         """
         Args:
             agents: Dictionary mapping agent names to agent instances.
         """
         self.agents = agents
-        self.db = DatabaseService()
+        self.db = db or DatabaseService()
         try:
             from src.services.task.meta_controller import MetaController
             self.meta_controller = MetaController(self.db)
         except Exception:
             self.meta_controller = None
         self.replan_strategies = self._load_replan_strategies()
+        self.failure_policy = FailurePolicyEngine()
         self.max_adaptive_rounds = 1
         self._active_plan: Optional[TaskPlan] = None
     
@@ -70,13 +73,16 @@ class PlanExecutor:
         except Exception:
             return {}
 
-    def _format_params(self, params: Any, query: str) -> Any:
+    def _format_params(self, params: Any, template_vars: Dict[str, str]) -> Any:
         if isinstance(params, dict):
-            return {k: self._format_params(v, query) for k, v in params.items()}
+            return {k: self._format_params(v, template_vars) for k, v in params.items()}
         if isinstance(params, list):
-            return [self._format_params(v, query) for v in params]
+            return [self._format_params(v, template_vars) for v in params]
         if isinstance(params, str):
-            return params.replace("{query}", query or "")
+            out = params
+            for k, v in (template_vars or {}).items():
+                out = out.replace("{" + str(k) + "}", str(v or ""))
+            return out
         return params
 
     def _replan_from_strategy(self, step: TaskStep) -> Optional[Dict[str, Any]]:
@@ -93,11 +99,15 @@ class PlanExecutor:
                 query = step.params.get("query")
             if not query and self._active_plan:
                 query = self._active_plan.description
+            template_vars = {
+                "query": query or "",
+                "query_simplified": self._simplify_query(query or ""),
+            }
             spec = json.loads(json.dumps(spec))
             spec["steps"] = [
                 {
                     **item,
-                    "params": self._format_params(item.get("params") or {}, query),
+                    "params": self._format_params(item.get("params") or {}, template_vars),
                 }
                 for item in (spec.get("steps") or [])
             ]
@@ -271,6 +281,24 @@ class PlanExecutor:
 
         return new_step_ids
 
+    def _resolve_gap_deps(self, plan: TaskPlan, deps: List[Any]) -> List[str]:
+        """Resolve '$agent' placeholders in gap-step dependencies."""
+        if not deps:
+            return []
+        step_id_map: Dict[str, str] = {}
+        for step in plan.steps:
+            if step.agent and step.step_id:
+                step_id_map[step.agent] = step.step_id
+        resolved: List[str] = []
+        for dep in deps:
+            if isinstance(dep, str) and dep.startswith("$"):
+                key = dep[1:]
+                if key in step_id_map:
+                    resolved.append(step_id_map[key])
+            else:
+                resolved.append(dep)
+        return resolved
+
     def _append_activity_ml_step(self, plan: TaskPlan, pending: Dict[str, TaskStep],
                                  depends_on: str, metric_name: str = "exchange_current_density") -> Optional[str]:
         """Append an ML step to train on activity metrics if not already present."""
@@ -410,12 +438,12 @@ class PlanExecutor:
                 return {}
             plan_record = self.db.get_plan(plan.task_id)
             created_at = plan_record.get("created_at") if plan_record else None
+            try:
+                from src.agents.core.theory_agent import TheoryDataConfig
+                allowed = TheoryDataConfig().elements
+            except Exception:
+                allowed = None
             if created_at:
-                try:
-                    from src.agents.core.theory_agent import TheoryDataConfig
-                    allowed = TheoryDataConfig().elements
-                except Exception:
-                    allowed = None
                 materials = self.db.list_materials_since(created_at, limit=50, allowed_elements=allowed)
             else:
                 materials = theory_agent.list_stored_materials(limit=20)
@@ -428,18 +456,26 @@ class PlanExecutor:
             if ml_predictions:
                 try:
                     sorted_preds = sorted(
-                        ml_predictions.items(),
+                        [(mid, score) for mid, score in ml_predictions.items() if mid],
                         key=lambda kv: kv[1],
                         reverse=True
                     )
-                    candidate_ids = {mid for mid, _ in sorted_preds[:top_n]}
+                    candidate_ids_ordered = [mid for mid, _ in sorted_preds[:top_n] if mid]
+                    candidate_ids = set(candidate_ids_ordered)
                 except Exception:
-                    candidate_ids = set(ml_predictions.keys())
+                    candidate_ids_ordered = [mid for mid in ml_predictions.keys() if mid][:top_n]
+                    candidate_ids = set(candidate_ids_ordered)
             else:
+                candidate_ids_ordered = []
                 candidate_ids = {m.get("material_id") for m in materials if m.get("material_id")}
 
-            materials = [m for m in materials if m.get("material_id") in candidate_ids]
-            candidate_ids_snapshot = list(candidate_ids)
+            candidate_ids_snapshot = candidate_ids_ordered or list(candidate_ids)
+            if candidate_ids_snapshot:
+                loaded = self.db.list_materials_by_ids(candidate_ids_snapshot, allowed_elements=allowed)
+                materials = loaded if loaded else [m for m in materials if m.get("material_id") in candidate_ids]
+            else:
+                materials = [m for m in materials if m.get("material_id") in candidate_ids]
+            candidate_ids_snapshot = candidate_ids_snapshot or []
             materials_snapshot = materials[:]
 
             if ml_predictions and not sorted_preds:
@@ -701,10 +737,57 @@ class PlanExecutor:
                                 )
                                 continue
 
+                            decision = None
+                            try:
+                                if self.failure_policy:
+                                    decision = self.failure_policy.decide(step, e)
+                            except Exception as policy_err:
+                                logger.warning(f"Failure policy decide failed: {policy_err}")
+                                decision = None
+
+                            if decision and decision.action == "skip":
+                                step.status = "skipped"
+                                payload = {
+                                    "note": decision.note or "Skipped by failure policy",
+                                    "failure_policy": decision.to_dict(),
+                                }
+                                self.db.log_plan_step(
+                                    plan_id=plan.task_id,
+                                    step_id=step.step_id,
+                                    agent=step.agent,
+                                    action=step.action,
+                                    status="skipped",
+                                    error=str(e),
+                                    result=payload,
+                                    dependencies=step.dependencies,
+                                    params=step.params,
+                                )
+                                try:
+                                    plan.results.setdefault("warnings", []).append(
+                                        {
+                                            "step_id": step.step_id,
+                                            "agent": step.agent,
+                                            "action": step.action,
+                                            "category": decision.category,
+                                            "note": decision.note,
+                                            "error": str(e),
+                                        }
+                                    )
+                                except Exception:
+                                    pass
+                                completed.add(step.step_id)
+                                pending.pop(step.step_id, None)
+                                break
+
                             # Replan on failure (best-effort)
                             replanned = False
-                            if step.replan_attempts < step.max_replans:
-                                spec = self._build_replan_spec(step)
+                            replan_budget = getattr(step, "max_replans", 0) or 0
+                            if decision and decision.action == "replan":
+                                policy_budget = decision.max_replans or 1
+                                replan_budget = max(replan_budget, policy_budget)
+
+                            if step.replan_attempts < replan_budget:
+                                spec = decision.spec if (decision and isinstance(decision.spec, dict)) else self._build_replan_spec(step)
                                 if spec:
                                     try:
                                         self.db.update_plan_status(plan.task_id, "replanning")
@@ -722,7 +805,11 @@ class PlanExecutor:
                                             action=step.action,
                                             status="replanned",
                                             error=str(e),
-                                            result={"note": spec.get("note"), "new_steps": new_step_ids},
+                                            result={
+                                                "note": spec.get("note") or (decision.note if decision else None),
+                                                "new_steps": new_step_ids,
+                                                "failure_policy": decision.to_dict() if decision else None,
+                                            },
                                             dependencies=step.dependencies,
                                             params=step.params
                                         )
@@ -746,6 +833,7 @@ class PlanExecutor:
                                 action=step.action,
                                 status="failed",
                                 error=str(e),
+                                result={"failure_policy": decision.to_dict()} if decision else None,
                                 dependencies=step.dependencies,
                                 params=step.params
                             )
@@ -786,12 +874,12 @@ class PlanExecutor:
             if theory_agent:
                 plan_record = self.db.get_plan(plan.task_id)
                 created_at = plan_record.get("created_at") if plan_record else None
+                try:
+                    from src.agents.core.theory_agent import TheoryDataConfig
+                    allowed = TheoryDataConfig().elements
+                except Exception:
+                    allowed = None
                 if created_at:
-                    try:
-                        from src.agents.core.theory_agent import TheoryDataConfig
-                        allowed = TheoryDataConfig().elements
-                    except Exception:
-                        allowed = None
                     materials = self.db.list_materials_since(created_at, limit=50, allowed_elements=allowed)
                 else:
                     materials = theory_agent.list_stored_materials(limit=20)
@@ -799,27 +887,32 @@ class PlanExecutor:
                     materials = theory_agent.list_stored_materials(limit=20)
 
                 # Candidate filter (prefer ML predictions top-N)
-                candidate_ids = set()
                 top_n = 10
                 sorted_preds = None
                 if ml_predictions:
                     try:
                         sorted_preds = sorted(
-                            ml_predictions.items(),
+                            [(mid, score) for mid, score in ml_predictions.items() if mid],
                             key=lambda kv: kv[1],
                             reverse=True
                         )
-                        candidate_ids = {mid for mid, _ in sorted_preds[:top_n]}
+                        candidate_ids_ordered = [mid for mid, _ in sorted_preds[:top_n] if mid]
+                        candidate_ids = set(candidate_ids_ordered)
                     except Exception:
-                        candidate_ids = set(ml_predictions.keys())
+                        candidate_ids_ordered = [mid for mid in ml_predictions.keys() if mid][:top_n]
+                        candidate_ids = set(candidate_ids_ordered)
                 else:
+                    candidate_ids_ordered = []
                     candidate_ids = {m.get("material_id") for m in materials if m.get("material_id")}
 
-                materials = [m for m in materials if m.get("material_id") in candidate_ids]
-                candidate_ids_snapshot = list(candidate_ids)
-                materials_snapshot = materials[:]
+                candidate_ids_snapshot = candidate_ids_ordered or list(candidate_ids)
                 if candidate_ids_snapshot:
+                    loaded = self.db.list_materials_by_ids(candidate_ids_snapshot, allowed_elements=allowed)
+                    materials = loaded if loaded else [m for m in materials if m.get("material_id") in candidate_ids]
                     plan.results["candidate_material_ids"] = candidate_ids_snapshot
+                else:
+                    materials = [m for m in materials if m.get("material_id") in candidate_ids]
+                materials_snapshot = materials[:]
                 if ml_predictions and not sorted_preds:
                     sorted_preds = list(ml_predictions.items())
                 if sorted_preds:
@@ -991,7 +1084,7 @@ class PlanExecutor:
                                 else:
                                     for item in gap_steps:
                                         step_id = self._next_step_id(plan)
-                                        deps = item.get("deps") or []
+                                        deps = self._resolve_gap_deps(plan, item.get("deps") or [])
                                         step = TaskStep(
                                             step_id=step_id,
                                             agent=item.get("agent", ""),
@@ -1264,6 +1357,24 @@ class PlanExecutor:
                  )
                  
         elif agent_name == "ml":
+            if action == "seed_predictions":
+                preds: Dict[str, float] = {}
+                if isinstance(params, dict):
+                    raw = params.get("predictions") or {}
+                    if isinstance(raw, dict):
+                        for mid, score in raw.items():
+                            mid_str = (str(mid) if mid is not None else "").strip()
+                            if not mid_str:
+                                continue
+                            try:
+                                val = float(score)
+                            except Exception:
+                                continue
+                            if not math.isfinite(val):
+                                continue
+                            preds[mid_str] = val
+                return {"models": [], "predictions": preds}
+
             # AUTO-LOAD DATA from DB before training
             target_col = params.get("target_col") if isinstance(params, dict) else None
             if isinstance(target_col, str) and target_col.startswith("activity_metric:"):

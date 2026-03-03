@@ -36,7 +36,8 @@ class TheoryAgentProtocolMixin:
         theory_keywords = [
             "理论", "形成能", "吸附", "能量", "dos", "态密度", "计算", 
             "结构", "晶体", "材料", "合金", "元素",
-            "formation", "energy", "structure", "download", "theory"
+            "formation", "energy", "structure", "download", "theory",
+            "alloy", "catalyst", "material", "hor", "her"
         ]
         is_relevant = any(kw in query_lower or kw in query for kw in theory_keywords)
         
@@ -105,7 +106,7 @@ class TheoryAgentProtocolMixin:
             
             for m in materials:
                 mat_id = m.get("material_id")
-                if not mat_id:
+                if not mat_id or not m.get("cif_path"):
                     continue
                     
                 candidates.append({
@@ -207,33 +208,35 @@ class MLAgentProtocolMixin:
             )
     
     def contribute(self, context: QueryContext) -> AgentContribution:
-        """贡献ML预测"""
+        """贡献ML预测 (支持物理感知DNN和不确定性)"""
         try:
-            from src.ml.hor_predictor import get_predictor
-            predictor = get_predictor()
-            
-            if not predictor.is_available():
-                return AgentContribution(
-                    agent_name=self.agent_name,
-                    contribution_type=ContributionType.PREDICTIONS,
-                    success=False,
-                    reasoning="HOR 预测模型不可用"
-                )
+            import os
+            import joblib
+            import torch
+            import numpy as np
             
             predictions = {}
             candidates = []
             
-            # 获取候选材料（从 theory 贡献）
             theory_contrib = context.contributions.get("theory") if context else None
-            if theory_contrib and theory_contrib.candidates:
-                materials = theory_contrib.candidates
-            else:
-                materials = []
+            materials = theory_contrib.candidates if theory_contrib and theory_contrib.candidates else []
             
-            # 批量预测
-            if materials:
-                results = predictor.predict_batch(materials)
+            if not materials:
+                logger.info("MLAgent: No upstream candidates provided, fetching directly from local database...")
+                mats = self.db.list_materials(limit=5000, require_cif=True)
+                materials = [m for m in mats if m.get("cif_path")][:100]
+                logger.info(f"MLAgent: fallback fetched {len(materials)} materials from db")
                 
+            if not materials:
+                return AgentContribution(self.agent_name, ContributionType.PREDICTIONS, False, reasoning="无候选材料数据可供预测")
+                
+            model_path = os.path.join("data", "ml_agent", "models", "HOR_Physics_DNN.pkl")
+            if not os.path.exists(model_path):
+                from src.ml.hor_predictor import get_predictor
+                predictor = get_predictor()
+                if not predictor.is_available():
+                    return AgentContribution(self.agent_name, ContributionType.PREDICTIONS, False, reasoning="预测模型不存在")
+                results = predictor.predict_batch(materials)
                 for r in results:
                     mat_id = r['material_id']
                     predictions[mat_id] = r['predicted_activity']
@@ -244,16 +247,65 @@ class MLAgentProtocolMixin:
                         "uncertainty": r['uncertainty'],
                         "source": "ml"
                     })
+                return AgentContribution(self.agent_name, ContributionType.PREDICTIONS, True, candidates=candidates[:50], predictions=predictions, confidence=0.85, reasoning=f"为 {len(predictions)} 个材料预测 HOR 活性", sources=["HOR Activity Prediction Model (GBR)"])
+
+            dnn_model = joblib.load(model_path)
+            device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            dnn_model = dnn_model.to(device)
+            dnn_model.eval()
             
+            scaler_x = dnn_model.scaler_x
+            scaler_y = dnn_model.scaler_y
+            
+            valid_count = 0
+            for mat in materials:
+                mat_id = mat.get("material_id")
+                row = self.db.get_material_by_id(mat_id)
+                if not row or not row.get("cif_path") or not os.path.exists(row["cif_path"]):
+                    continue
+                    
+                feats = self.featurizer.extract(row["cif_path"])
+                if feats is None: 
+                    logger.warning(f"Featurization failed for {row['cif_path']}")
+                    continue
+                
+                dos_data = row.get("dos_data")
+                dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                if dos_data:
+                    try:
+                        import json
+                        if isinstance(dos_data, str): dos_data = json.loads(dos_data)
+                        dos_vec = [float(dos_data.get(k, 0.0)) for k in self.DOS_FEATURE_KEYS]
+                    except: pass
+                    
+                feats = np.concatenate([feats, np.array(dos_vec, dtype=np.float32)])
+                X_t = torch.FloatTensor(scaler_x.transform([feats])).to(device)
+                
+                with torch.no_grad():
+                    mean_pred, std_pred = dnn_model.predict_with_uncertainty(X_t, num_samples=30)
+                    y_inv = scaler_y.inverse_transform(mean_pred.cpu().numpy().reshape(-1, 1)).flatten()[0]
+                    std_inv = std_pred.cpu().numpy().flatten()[0] * scaler_y.scale_[0] 
+                
+                predictions[mat_id] = float(y_inv)
+                candidates.append({
+                    "material_id": mat_id,
+                    "formula": mat.get("formula"),
+                    "predicted_activity": float(y_inv),
+                    "uncertainty": float(std_inv),
+                    "source": "ml"
+                })
+                valid_count += 1
+                
+            candidates.sort(key=lambda x: x["predicted_activity"], reverse=True)
             return AgentContribution(
                 agent_name=self.agent_name,
                 contribution_type=ContributionType.PREDICTIONS,
                 success=True,
                 candidates=candidates[:50],
                 predictions=predictions,
-                confidence=0.85,
-                reasoning=f"为 {len(predictions)} 个材料预测 HOR 活性",
-                sources=["HOR Activity Prediction Model (GBR, R²=0.97)"]
+                confidence=0.90,
+                reasoning=f"使用物理感知 HOR_Physics_DNN 为 {valid_count} 个材料完成预测与不确定度量化",
+                sources=["HOR_Physics_DNN"]
             )
         except Exception as e:
             logger.error(f"ML contribution failed: {e}")
@@ -273,7 +325,40 @@ class MLAgentProtocolMixin:
         experiment_data = feedback.get("experiment_results", [])
         if experiment_data:
             logger.info(f"Received {len(experiment_data)} experiment feedback for model update")
-            # 触发模型重训练逻辑...
+            
+            from src.services.db.database import DatabaseService
+            db = DatabaseService()
+            metric_used = "exchange_current_density"
+            
+            for d in experiment_data:
+                mat_id = d.get("material_id")
+                metrics = d.get("metrics", {})
+                for metric_name, value in metrics.items():
+                    db.save_activity_metric(
+                        material_id=mat_id,
+                        metric_name=metric_name,
+                        metric_value=float(value),
+                        source="ui_feedback",
+                        metadata={"notes": d.get("notes", ""), "status": d.get("status", "")}
+                    )
+                    # 尝试找出有代表性的 metric_name
+                    if metric_name in ["exchange_current_density", "overpotential_10mA", "mass_activity"]:
+                        metric_used = metric_name
+                        
+            # 触发模型重训练逻辑
+            try:
+                from src.agents.core.ml_agent import MLAgent, MLAgentConfig
+                ml_agent = MLAgent(MLAgentConfig(output_dir="data/ml_agent"))
+                logger.info(f"Retraining HOR activity models on updated data (metric={metric_used})...")
+                # 加载新数据并训练
+                ml_agent.train_activity_models(metric_name=metric_used)
+                logger.info("Retraining finished successfully.")
+                
+                # 重置预测器缓存，保证新一轮预测使用新模型
+                import src.ml.hor_predictor as hor_predictor
+                hor_predictor._predictor = None
+            except Exception as e:
+                logger.error(f"Model retraining failed: {e}")
         
         return self.contribute(context)
 
@@ -350,28 +435,90 @@ class ExperimentAgentProtocolMixin:
             )
     
     def contribute(self, context: QueryContext) -> AgentContribution:
-        """贡献实验数据"""
-        status = self.get_resource_status()
-        
-        if status.data_count == 0:
+        """贡献实验数据 — 扫描目录并调用真正的分析方法"""
+        import os
+        data_dir = getattr(self, 'config', None)
+        data_dir = getattr(data_dir, 'output_dir', 'data/experimental') if data_dir else 'data/experimental'
+
+        candidates = []
+        metrics = {}
+
+        try:
+            # 1. 尝试处理 RDE 子目录（多转速 Koutecky-Levich 分析）
+            rde_dir = os.path.join(data_dir, "rde_lsv")
+            if os.path.isdir(rde_dir):
+                try:
+                    rde_result = self.process_rde_directory(data_dir=rde_dir)
+                    for s in rde_result.get("summaries", []):
+                        mat_id = s.get("sample_id", "unknown")
+                        cand = {
+                            "material_id": mat_id,
+                            "formula": mat_id,
+                            "source": "experiment",
+                        }
+                        if s.get("j0") is not None:
+                            cand["exchange_current_density"] = s["j0"]
+                            metrics.setdefault(mat_id, {})["exchange_current_density"] = s["j0"]
+                        if s.get("ma") is not None:
+                            cand["mass_activity"] = s["ma"]
+                            metrics.setdefault(mat_id, {})["mass_activity"] = s["ma"]
+                        if s.get("tafel") is not None:
+                            cand["tafel_slope"] = s["tafel"]
+                            metrics.setdefault(mat_id, {})["tafel_slope"] = s["tafel"]
+                        candidates.append(cand)
+                except Exception as e:
+                    logger.warning(f"RDE processing failed: {e}")
+
+            # 2. 扫描顶层目录中的单文件 LSV/CSV
+            if os.path.isdir(data_dir):
+                for fname in os.listdir(data_dir):
+                    fpath = os.path.join(data_dir, fname)
+                    if not os.path.isfile(fpath):
+                        continue
+                    if not fname.lower().endswith(('.csv', '.xlsx', '.txt', '.mpt')):
+                        continue
+                    try:
+                        df = self.load_csv(fpath)
+                        dtype = self.detect_data_type(df)
+                        if str(dtype).upper() in ("LSV", "DATATYPE.LSV"):
+                            sample_id = os.path.splitext(fname)[0]
+                            result = self.analyze_lsv(df, sample_id=sample_id)
+                            mat_id = sample_id.split('_')[0].split('-')[0]
+                            cand = {
+                                "material_id": mat_id,
+                                "formula": mat_id,
+                                "source": "experiment",
+                            }
+                            if result.overpotential_10mA is not None:
+                                cand["overpotential_10mA"] = result.overpotential_10mA
+                                metrics.setdefault(mat_id, {})["overpotential_10mA"] = result.overpotential_10mA
+                            if result.onset_potential is not None:
+                                cand["onset_potential"] = result.onset_potential
+                                metrics.setdefault(mat_id, {})["onset_potential"] = result.onset_potential
+                            if result.exchange_current_density is not None:
+                                cand["exchange_current_density"] = result.exchange_current_density
+                                metrics.setdefault(mat_id, {})["exchange_current_density"] = result.exchange_current_density
+                            candidates.append(cand)
+                    except Exception as e:
+                        logger.debug(f"Skipping {fname}: {e}")
+
+        except Exception as e:
+            logger.error(f"Experiment contribution scan failed: {e}")
             return AgentContribution(
                 agent_name=self.agent_name,
                 contribution_type=ContributionType.METRICS,
                 success=False,
-                reasoning="暂无实验数据"
+                reasoning=str(e)
             )
-        
-        # 扫描并处理实验数据
-        metrics = {}
-        # 实际实现需要调用 scan_directory 和 analyze 方法
-        
+
         return AgentContribution(
             agent_name=self.agent_name,
             contribution_type=ContributionType.METRICS,
             success=True,
+            candidates=candidates,
             metrics=metrics,
-            confidence=0.9,
-            reasoning=f"已处理 {status.data_count} 个实验数据文件",
+            confidence=0.9 if candidates else 0.3,
+            reasoning=f"从 {data_dir} 中解析了 {len(candidates)} 条实验数据",
             sources=["Local Experiment Files"]
         )
 
@@ -456,9 +603,9 @@ class LiteratureAgentProtocolMixin:
                 results = self.search_all_sources(query, limit=10)
                 for r in results:
                     insights.append({
-                        "title": r.get("title"),
-                        "source": r.get("source"),
-                        "relevance": r.get("score", 0.5)
+                        "title": getattr(r, "title", str(r)),
+                        "source": getattr(r, "source", "arXiv/SemanticScholar"),
+                        "relevance": getattr(r, "score", 0.5)
                     })
             
             return AgentContribution(

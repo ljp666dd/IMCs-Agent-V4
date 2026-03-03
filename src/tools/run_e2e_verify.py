@@ -4,8 +4,8 @@ import os
 from datetime import datetime
 from typing import List
 
-from src.agents.core.task_manager import TaskManagerAgent
 from src.services.task.types import TaskPlan, TaskStep, TaskType
+from src.services.task.executor_factory import new_plan_executor
 
 
 def build_steps(query: str, theory_limit: int, include_literature: bool, include_ml: bool) -> List[TaskStep]:
@@ -69,8 +69,8 @@ def main():
     parser.add_argument("--report-dir", default=os.path.join("data", "tasks"), help="Report output directory")
     args = parser.parse_args()
 
-    agent = TaskManagerAgent()
-    agent.executor.max_adaptive_rounds = 0
+    executor = new_plan_executor()
+    executor.max_adaptive_rounds = 0
 
     task_id = f"e2e_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     plan = TaskPlan(
@@ -85,7 +85,7 @@ def main():
         ),
     )
 
-    results = agent.executor.execute_plan(plan)
+    results = executor.execute_plan(plan)
 
     os.makedirs(args.report_dir, exist_ok=True)
     report_path = os.path.join(args.report_dir, f"e2e_report_{task_id}.json")

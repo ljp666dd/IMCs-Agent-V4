@@ -1,0 +1,149 @@
+{
+  "version": "1.0",
+  "default": {
+    "categories": {
+      "permission": {
+        "action": "fail",
+        "note": "Permission error: manual intervention required."
+      },
+      "auth": {
+        "action": "skip",
+        "note": "Auth/key error: skipping optional step."
+      },
+      "rate_limit": {
+        "action": "replan",
+        "note": "Rate limit: try fallback plan once.",
+        "max_replans": 1
+      },
+      "network": {
+        "action": "replan",
+        "note": "Network error: try fallback plan once.",
+        "max_replans": 1
+      },
+      "timeout": {
+        "action": "replan",
+        "note": "Timeout: try fallback plan once.",
+        "max_replans": 1
+      },
+      "missing_data": {
+        "action": "skip",
+        "note": "Missing/insufficient data: skipping optional step."
+      },
+      "not_found": {
+        "action": "skip",
+        "note": "Not found: skipping optional step."
+      }
+    },
+    "fallback": {
+      "action": "fail",
+      "note": "Unhandled failure."
+    }
+  },
+  "policies": {
+    "literature.search": {
+      "categories": {
+        "auth": {
+          "action": "skip",
+          "note": "Literature backend unavailable; continue without literature."
+        },
+        "timeout": {
+          "action": "replan",
+          "note": "Literature search timeout; simplify query and lower scope.",
+          "max_replans": 1
+        },
+        "network": {
+          "action": "replan",
+          "note": "Literature search network error; simplify query and lower scope.",
+          "max_replans": 1
+        },
+        "rate_limit": {
+          "action": "replan",
+          "note": "Literature rate limited; retry with simplified query.",
+          "max_replans": 1
+        }
+      },
+      "fallback": {
+        "action": "skip",
+        "note": "Literature is optional; skipped after failure."
+      }
+    },
+    "literature.extract_knowledge": {
+      "fallback": {
+        "action": "skip",
+        "note": "Knowledge extraction is optional; skipped after failure."
+      }
+    },
+    "theory.download": {
+      "categories": {
+        "auth": {
+          "action": "skip",
+          "note": "Materials Project key missing/invalid; use cached DB materials only."
+        },
+        "timeout": {
+          "action": "replan",
+          "note": "Theory download timeout; reduce data_types/limit.",
+          "max_replans": 1
+        },
+        "network": {
+          "action": "replan",
+          "note": "Theory download network error; reduce data_types/limit.",
+          "max_replans": 1
+        }
+      },
+      "fallback": {
+        "action": "replan",
+        "note": "Try reduced theory download once.",
+        "max_replans": 1
+      }
+    },
+    "experiment.process": {
+      "categories": {
+        "not_found": {
+          "action": "skip",
+          "note": "Experiment directory not found; skip experiment processing."
+        },
+        "missing_data": {
+          "action": "skip",
+          "note": "No experiment files found; skip experiment processing."
+        }
+      },
+      "fallback": {
+        "action": "skip",
+        "note": "Experiment is optional; skipped after failure."
+      }
+    },
+    "ml.train": {
+      "categories": {
+        "missing_data": {
+          "action": "skip",
+          "note": "Not enough training data; skip ML training."
+        }
+      },
+      "fallback": {
+        "action": "replan",
+        "note": "Refresh theory data then retrain once.",
+        "max_replans": 1
+      }
+    },
+    "ml.train_all": {
+      "categories": {
+        "missing_data": {
+          "action": "skip",
+          "note": "Not enough training data; skip ML training."
+        }
+      },
+      "fallback": {
+        "action": "replan",
+        "note": "Refresh theory data then retrain once.",
+        "max_replans": 1
+      }
+    },
+    "task_manager.knowledge_pack": {
+      "fallback": {
+        "action": "skip",
+        "note": "Knowledge pack is optional; skipped after failure."
+      }
+    }
+  }
+}
+

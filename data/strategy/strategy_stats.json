@@ -1,30 +1,35 @@
 {
   "evidence_types": {
     "activity_metric": {
-      "attempts": 21,
+      "attempts": 22,
       "gains": 0,
       "score": 0.0
     },
     "adsorption_energy": {
-      "attempts": 21,
+      "attempts": 22,
       "gains": 0,
       "score": 0.0
     },
     "ml_prediction": {
-      "attempts": 21,
+      "attempts": 22,
       "gains": 0,
       "score": 0.0
     },
     "dos_data": {
-      "attempts": 21,
+      "attempts": 22,
       "gains": 0,
       "score": 0.0
     },
     "formation_energy": {
-      "attempts": 21,
+      "attempts": 22,
       "gains": 0,
       "score": 0.0
+    },
+    "literature": {
+      "attempts": 1,
+      "gains": 1,
+      "score": 1.0
     }
   },
-  "updated_at": "2026-02-03T15:44:07Z"
+  "updated_at": "2026-03-03T05:00:21Z"
 }

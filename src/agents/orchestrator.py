@@ -14,6 +14,7 @@ Version: 1.0
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 import time
+import numpy as np
 
 from src.agents.protocol import (
     AgentProtocol, AgentCapability, ResourceStatus,
@@ -23,6 +24,10 @@ from src.agents.protocol_impl import (
     TheoryAgentProtocolMixin, MLAgentProtocolMixin,
     ExperimentAgentProtocolMixin, LiteratureAgentProtocolMixin
 )
+from src.agents.query_parser import QueryParser
+from src.agents.fusion import AdvancedFusionEngine, create_fusion_report
+from src.agents.conflict_detector import ConflictDetector
+from src.agents.decision_logger import DecisionLogger
 from src.core.logger import get_logger
 
 logger = get_logger(__name__)
@@ -37,6 +42,10 @@ class RecommendationResult:
     contributions: Dict[str, AgentContribution] = field(default_factory=dict)
     execution_order: List[str] = field(default_factory=list)
     iteration: int = 1
+    explanations: List[Any] = field(default_factory=list)  # RecommendationExplanation list
+    parsed_intent: Dict[str, Any] = field(default_factory=dict)  # QueryParser output
+    debate_record: Optional[Any] = None           # DebateRecord from ConflictDetector
+    decision_session_id: str = ""                 # DecisionLogger session ID
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -162,7 +171,10 @@ class AgentOrchestrator:
     def __init__(self):
         """初始化协调器"""
         self.agents: Dict[str, Any] = {}
-        self.fusion_engine = FusionEngine()
+        self.fusion_engine = AdvancedFusionEngine()
+        self.query_parser = QueryParser()
+        self.conflict_detector = ConflictDetector()
+        self.decision_logger = DecisionLogger()
         self._init_agents()
     
     def _init_agents(self):
@@ -295,10 +307,19 @@ class AgentOrchestrator:
         logger.info(f"Orchestrating query: {query}")
         start_time = time.time()
         
-        # 创建查询上下文
+        # 开始决策链日志
+        session_id = self.decision_logger.create_session(query)
+        
+        # 解析用户意图
+        parsed_intent = self.query_parser.parse(query)
+        self.decision_logger.log_intent(session_id, parsed_intent)
+        
+        # 创建查询上下文 (填充 target_elements)
         context = QueryContext(
             user_query=query,
-            task_type="catalyst_discovery"
+            task_type="catalyst_discovery",
+            target_elements=parsed_intent.get("target_elements", []),
+            target_properties=list(parsed_intent.get("constraints", {}).keys()),
         )
         
         for iteration in range(1, max_iterations + 1):
@@ -307,6 +328,7 @@ class AgentOrchestrator:
             
             # 1. 收集能力评估
             capabilities = self.collect_capabilities(query, context)
+            self.decision_logger.log_capabilities(session_id, capabilities)
             
             # 2. 决定执行顺序
             execution_order = self.schedule_execution(capabilities)
@@ -316,7 +338,8 @@ class AgentOrchestrator:
                 logger.warning("No agent can contribute")
                 return RecommendationResult(
                     success=False,
-                    reasoning="没有智能体能够处理此查询"
+                    reasoning="没有智能体能够处理此查询",
+                    decision_session_id=session_id,
                 )
             
             # 3. 按顺序执行各智能体
@@ -330,6 +353,7 @@ class AgentOrchestrator:
                 try:
                     contribution = agent.contribute(context)
                     context.add_contribution(contribution)
+                    self.decision_logger.log_contribution(session_id, agent_name, contribution)
                     logger.info(f"[{agent_name}] contributed {len(contribution.candidates)} candidates")
                 except Exception as e:
                     logger.error(f"[{agent_name}] failed: {e}")
@@ -347,21 +371,87 @@ class AgentOrchestrator:
             else:
                 break
         
-        # 5. 融合推荐
-        logger.info("Fusing contributions...")
-        candidates = self.fusion_engine.synthesize(context.contributions)
+        # 4.5 冲突检测
+        debate_record = self.conflict_detector.detect(context.contributions, query)
+        self.decision_logger.log_conflicts(session_id, debate_record)
+        
+        # 5. 融合推荐 (使用 AdvancedFusionEngine)
+        logger.info("Fusing contributions with AdvancedFusionEngine...")
+        candidates, explanations = self.fusion_engine.synthesize(context.contributions)
+        
+        # 生成融合报告
+        fusion_report = create_fusion_report(explanations, top_n=10)
+        self.decision_logger.log_fusion(session_id, candidates, explanations)
         
         elapsed = time.time() - start_time
         logger.info(f"Orchestration completed in {elapsed:.2f}s, {len(candidates)} candidates")
         
-        return RecommendationResult(
+        # === ACTIVE LEARNING PROTOCOL (自适应阈值) ===
+        active_learning_requests = []
+        uncertainties = [
+            c.get("properties", {}).get("uncertainty", 0)
+            for c in candidates[:20]
+            if c.get("properties", {}).get("uncertainty", 0) > 0
+        ]
+        al_threshold = float(np.percentile(uncertainties, 90)) if len(uncertainties) >= 3 else 0.8
+        logger.info(f"Active Learning threshold (P90): {al_threshold:.4f}")
+        
+        for cand in candidates[:10]:
+            props = cand.get("properties", {})
+            score = props.get("predicted_activity", 0)
+            uncertainty = props.get("uncertainty", 0)
+            
+            if score > 0 and uncertainty > al_threshold:
+                cand["active_learning_reason"] = (
+                    f"模型对 {cand.get('formula', '')} 的预测不确定度 ({uncertainty:.4f}) "
+                    f"超过自适应阈值 ({al_threshold:.4f})，需实验验证。"
+                )
+                active_learning_requests.append(cand)
+                
+        from src.services.llm.expert_reasoning import get_expert_reasoning
+        llm_service = get_expert_reasoning()
+        
+        if active_learning_requests:
+            logger.warning(f"Active Learning Triggered! {len(active_learning_requests)} uncertain champions.")
+            self.decision_logger.log_active_learning(session_id, True, active_learning_requests)
+            expert_report = llm_service.generate_report(active_learning_requests, is_active_learning=True)
+            result = RecommendationResult(
+                success=True,
+                candidates=active_learning_requests,
+                reasoning=f"[Active Learning]\n{expert_report}",
+                contributions=context.contributions,
+                execution_order=execution_order,
+                iteration=context.iteration,
+                explanations=explanations,
+                parsed_intent=parsed_intent,
+                debate_record=debate_record,
+                decision_session_id=session_id,
+            )
+            self.decision_logger.log_final(session_id, result)
+            return result
+        
+        self.decision_logger.log_active_learning(session_id, False)
+        expert_report = llm_service.generate_report(candidates[:20], is_active_learning=False)
+        
+        # 构建冲突摘要
+        conflict_summary = ""
+        if debate_record.total_conflicts > 0:
+            conflict_summary = f"\n\n[冲突检测]\n{debate_record.summary}"
+        
+        result = RecommendationResult(
             success=True,
-            candidates=candidates[:20],  # Top 20
-            reasoning=f"基于 {len(context.contributions)} 个智能体的协同分析，推荐 {len(candidates)} 个候选材料",
+            candidates=candidates[:20],
+            reasoning=f"[Director 深度剖析]\n{expert_report}\n\n[融合报告]\n{fusion_report}{conflict_summary}",
             contributions=context.contributions,
             execution_order=execution_order,
-            iteration=context.iteration
+            iteration=context.iteration,
+            explanations=explanations,
+            parsed_intent=parsed_intent,
+            debate_record=debate_record,
+            decision_session_id=session_id,
         )
+        self.decision_logger.log_final(session_id, result)
+        return result
     
     def iterate_with_feedback(
         self, 
@@ -402,7 +492,7 @@ class AgentOrchestrator:
                     logger.warning(f"[{name}] iteration failed: {e}")
         
         # 重新融合
-        candidates = self.fusion_engine.synthesize(context.contributions)
+        candidates, explanations = self.fusion_engine.synthesize(context.contributions)
         
         return RecommendationResult(
             success=True,

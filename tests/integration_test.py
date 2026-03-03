@@ -12,33 +12,16 @@ sys.path.append(os.path.join(BASE_DIR, "src"))
 logging.basicConfig(level=logging.INFO, format='%(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("IntegrationTest")
 
-from agents.core.theory_agent import TheoryDataAgent
-from agents.core.experiment_agent import ExperimentDataAgent, LSVResult
-from agents.core.ml_agent import MLAgent
-from agents.core.task_manager import TaskManagerAgent
-from services.db.database import DatabaseService
+from src.agents.core.theory_agent import TheoryDataAgent
+from src.agents.core.experiment_agent import ExperimentDataAgent, LSVResult
+from src.agents.core.ml_agent import MLAgent
+from src.agents.core.task_manager import TaskManagerAgent
+from src.services.db.database import DatabaseService
 
-def test_database_init():
+def test_database_init(db):
     logger.info("=== Test 1: Database Initialization ===")
-    db_path = "tests/test_imcs.db"
-    if os.path.exists(db_path):
-        os.remove(db_path)
-        
-    # Initialize DB (Using a test path requires patching DatabaseService or Config, 
-    # but simplest is to just let it use default or init a clean one.)
-    # Our DatabaseService currently hardcodes "data/imcs.db" in __init__ default, 
-    # but we can pass it if we update the service or just check the default location.
-    
-    # Let's inspect DatabaseService to see if we can pass db_path.
-    # checking file... assumes we can pass it.
-    try:
-        db = DatabaseService(db_path=db_path)
-        assert os.path.exists(db_path)
-        logger.info("✅ Database initialized successfully.")
-        return db
-    except Exception as e:
-        logger.error(f"❌ Database init failed: {e}")
-        return None
+    assert db is not None
+    logger.info("✅ Database initialized successfully.")
 
 def test_theory_agent(db):
     logger.info("\n=== Test 2: Theory Agent (DB Write) ===")
@@ -153,13 +136,4 @@ def test_task_manager():
         return False
 
 if __name__ == "__main__":
-    print("Starting System Integration Check...\n")
-    
-    db = test_database_init()
-    if db:
-        test_theory_agent(db)
-        test_experiment_agent(db)
-        test_ml_agent(db)
-        test_task_manager()
-    
-    print("\nCheck Completed.")
+    print("This module is intended to be run via pytest.")

@@ -3,21 +3,43 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import sys
 
+from src.core.logger import get_logger
+from src.config.config import config
+
 # Add src to path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
 
+logger = get_logger(__name__)
+APP_VERSION = os.getenv("IMCS_API_VERSION", "4.0")
+
 app = FastAPI(
     title="IMCs Engineering Platform API",
-    version="3.3",
+    version=APP_VERSION,
     description="Backend API for Intelligent Materials Catalyst System"
 )
 
+# Startup warnings for unsafe defaults
+if config.SECRET_KEY == "dev-secret-change-me-in-production":
+    logger.warning("IMCS_SECRET_KEY is using the default value; set a secure key in .env.")
+if config.MP_API_KEY == "abx7GG5NQg5YncfROEP4vvQi8Tc5Ywqp":
+    logger.warning("MP_API_KEY is using the default placeholder; set your real API key in .env.")
+
 # CORS (Allow Frontend)
+cors_env = os.getenv("IMCS_CORS_ORIGINS", "*")
+origins = [o.strip() for o in cors_env.split(",") if o.strip()]
+if not origins:
+    origins = ["*"]
+if origins == ["*"]:
+    logger.warning("IMCS_CORS_ORIGINS is '*'; restrict origins for production.")
+allow_credentials = str(os.getenv("IMCS_CORS_ALLOW_CREDENTIALS", "true")).lower() in ("1", "true", "yes")
+if origins == ["*"] and allow_credentials:
+    logger.warning("CORS allow_credentials=True with wildcard origins is not recommended.")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, replace with frontend URL
-    allow_credentials=True,
+    allow_origins=origins, # In production, replace with frontend URL
+    allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -25,7 +47,7 @@ app.add_middleware(
 # Health Check
 @app.get("/health")
 async def health_check():
-    return {"status": "ok", "version": "3.3"}
+    return {"status": "ok", "version": APP_VERSION}
 
 # Include Routers (Lazy import to avoid circular dep issues during init)
 from src.api.routers import tasks, ml, theory, experiment, knowledge, robot

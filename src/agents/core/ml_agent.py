@@ -11,6 +11,7 @@ from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Tuple, Any
 import warnings
 import json
+import torch
 
 # Import Services
 from src.core.logger import get_logger, log_exception
@@ -249,9 +250,19 @@ class MLAgent:
         for row in rows:
             cif_path = row.get("cif_path")
             target = row.get("target")
+            dos_data = row.get("dos_data")
             if cif_path and os.path.exists(cif_path) and target is not None:
                 feats = self.featurizer.extract(cif_path)
                 if feats is not None:
+                    dos_vec = [0.0] * len(self.DOS_FEATURE_KEYS)
+                    if dos_data:
+                        try:
+                            if isinstance(dos_data, str):
+                                dos_data = json.loads(dos_data)
+                            dos_vec = [float(dos_data.get(k, 0.0)) for k in self.DOS_FEATURE_KEYS]
+                        except Exception:
+                            pass
+                    feats = np.concatenate([feats, np.array(dos_vec, dtype=np.float32)])
                     X_list.append(feats)
                     y_list.append(target)
                     id_list.append(row.get("material_id"))
@@ -261,11 +272,12 @@ class MLAgent:
             y = np.array(y_list)
             self.data_manager.X = X
             self.data_manager.y = y
-            self.data_manager.feature_names = self.featurizer.feature_names
+            feature_names = self.featurizer.feature_names + [f"dos_{k}" for k in self.DOS_FEATURE_KEYS]
+            self.data_manager.feature_names = feature_names
             self.data_manager.material_ids = np.array(id_list) if id_list else None
             self.data_manager.prepare_split(self.config.test_size, self.config.random_state)
             self.current_target = f"activity_metric:{metric_name}"
-            logger.info(f"Loaded {len(X)} activity samples for {metric_name}.")
+            logger.info(f"Loaded {len(X)} activity samples for {metric_name} with DOS features.")
         else:
             logger.warning("Failed to extract features for any activity records.")
 
@@ -395,7 +407,128 @@ class MLAgent:
         if self.X_train is None or self.y_train is None:
             logger.warning("No activity data loaded for training.")
             return []
-        return self.train_traditional_models()
+            
+        # Also train the new physics-informed NN
+        try:
+            dnn_res = self.train_physics_informed_dnn()
+            if dnn_res:
+                self.results.extend(dnn_res)
+        except Exception as e:
+            logger.error(f"Error training Physics-Informed DNN: {e}")
+        
+        trad_res = self.train_traditional_models(auto_select_features=False)
+        final_results = []
+        if 'dnn_res' in locals() and dnn_res:
+            final_results.extend(dnn_res)
+        if trad_res:
+            final_results.extend(trad_res)
+        return final_results
+        
+    @log_exception(logger)
+    def train_physics_informed_dnn(self, epochs: int = 500) -> List[ModelResult]:
+        """Train custom PyTorch physics-informed network with UQ."""
+        results = []
+        if self.X_train is None:
+            return results
+        
+        logger.info("Training physics-informed HOR network with MC Dropout...")
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        
+        # Determine physics indices
+        d_band_idx = -1
+        form_idx = -1
+        for i, name in enumerate(self.feature_names):
+            if name == "dos_d_band_center":
+                d_band_idx = i
+            if name == "formation_energy_per_atom":
+                form_idx = i
+                
+        if d_band_idx == -1:
+            logger.warning("Missing d_band_center in features, fallback index.")
+            d_band_idx = 0
+            # form_idx removed as it is not in default features
+                
+        from src.models.hor_physics_model import HORPhysicsInformedNet, HORPhysicsLoss
+        input_dim = self.X_train.shape[1]
+        
+        # Scale X manually for NN? 
+        # Actually our DataManager should already scale X_train
+        # Let's verify, if not, use StandardScaler locally or assume raw.
+        # It's better to scale. (Trainer uses raw X_train? The scikit-learn models handle scaling in Pipeline or not. DataManager doesn't scale by default.)
+        
+        from sklearn.preprocessing import StandardScaler
+        scaler_x = StandardScaler()
+        scaler_y = StandardScaler()
+        
+        X_train_s = scaler_x.fit_transform(self.X_train)
+        X_test_s = scaler_x.transform(self.X_test)
+        
+        # Reshape for scaler
+        y_train_s = scaler_y.fit_transform(self.y_train.reshape(-1, 1))
+        y_test_s = scaler_y.transform(self.y_test.reshape(-1, 1))
+        
+        X_t = torch.FloatTensor(X_train_s).to(device)
+        y_t = torch.FloatTensor(y_train_s).to(device)
+        X_test_t = torch.FloatTensor(X_test_s).to(device)
+        y_test_t = torch.FloatTensor(y_test_s).to(device)
+        
+        model = HORPhysicsInformedNet(input_dim=input_dim, hidden_dim=64, dropout_rate=0.2).to(device)
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
+        # Assuming normalized data, optimal_d_band should technically be normalized too. 
+        # But wait, we're applying penalty on scaled features. 
+        # Let's pass the raw optimal d-band properly scaled.
+        # optimal d-band center is ~ -2.0 eV. 
+        # We can extract the mean/std for d_band from the scaler and transform -2.0.
+        try:
+            db_mean = scaler_x.mean_[d_band_idx]
+            db_std = scaler_x.scale_[d_band_idx]
+            opt_d_scaled = (-2.0 - db_mean) / (db_std + 1e-8)
+        except:
+            opt_d_scaled = -2.0 # Fallback
+            
+        criterion = HORPhysicsLoss(d_band_idx, form_idx, optimal_d_band=opt_d_scaled, physics_weight=0.5)
+        
+        model.train()
+        for epoch in range(epochs):
+            optimizer.zero_grad()
+            outputs = model(X_t)
+            loss = criterion(outputs, y_t, X_t)
+            loss.backward()
+            optimizer.step()
+            
+        model.eval()
+        with torch.no_grad():
+            mean_pred, std_pred = model.predict_with_uncertainty(X_test_t, num_samples=30)
+            
+            # Inverse transform
+            y_pred_inv = scaler_y.inverse_transform(mean_pred.cpu().numpy().reshape(-1, 1)).flatten()
+            
+            r2_test = float("nan")
+            if len(self.y_test) >= 2:
+                from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+                r2_test = r2_score(self.y_test, y_pred_inv)
+                mae_test = mean_absolute_error(self.y_test, y_pred_inv)
+                rmse_test = np.sqrt(mean_squared_error(self.y_test, y_pred_inv))
+                
+        # Save model wrapper with predict_with_uncertainty capabilities?
+        # For now, append to results
+        result = ModelResult(
+            name="HOR_Physics_DNN",
+            model_type=ModelType.DEEP_LEARNING,
+            r2_train=float("nan"), # We did not evaluate the train inverse
+            r2_test=r2_test if 'r2_test' in locals() else float("nan"),
+            mae_test=mae_test if 'mae_test' in locals() else float("nan"),
+            rmse_test=rmse_test if 'rmse_test' in locals() else float("nan"),
+            model=model
+        )
+        
+        # We need to save the scaler to the model object so predict works later
+        model.scaler_x = scaler_x
+        model.scaler_y = scaler_y
+        
+        self._save_models_to_db([result])
+        logger.info(f"Finished HOR_Physics_DNN: R2={r2_test:.4f}")
+        return [result]
         
     @log_exception(logger)
     def train_deep_learning_models(self, epochs: int = 300) -> List[ModelResult]:

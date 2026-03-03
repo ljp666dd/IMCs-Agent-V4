@@ -7,8 +7,8 @@
           "agent": "literature",
           "action": "search",
           "params": {
-            "query": "{query} catalyst",
-            "limit": 5
+            "query": "{query_simplified} catalyst",
+            "limit": 3
           },
           "deps": []
         }
@@ -38,7 +38,7 @@
           "agent": "literature",
           "action": "search",
           "params": {
-            "query": "{query} RDE experiment",
+            "query": "{query_simplified} RDE experiment",
             "limit": 5
           },
           "deps": []

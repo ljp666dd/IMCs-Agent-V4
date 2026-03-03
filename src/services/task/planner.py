@@ -1,4 +1,4 @@
-from datetime import datetime
+﻿from datetime import datetime
 from typing import List
 from src.core.logger import get_logger, log_exception
 from src.services.task.types import TaskPlan, TaskType
@@ -38,6 +38,29 @@ def _extract_element_symbols(text: str) -> List[str]:
     # Match element symbols by capital letter + optional lowercase.
     return re.findall(r"[A-Z][a-z]?", text)
 
+def _count_en_hits(text_lower: str, keywords: List[str]) -> int:
+    hits = 0
+    for kw in keywords:
+        if not kw:
+            continue
+        kw_lower = kw.lower()
+        if " " in kw_lower:
+            if kw_lower in text_lower:
+                hits += 1
+            continue
+        if kw_lower.isalpha() and len(kw_lower) <= 3:
+            if re.search(rf"\b{re.escape(kw_lower)}\b", text_lower):
+                hits += 1
+        else:
+            if kw_lower in text_lower:
+                hits += 1
+    return hits
+
+def _count_cn_hits(text: str, keywords: List[str]) -> int:
+    if not text:
+        return 0
+    return sum(1 for kw in keywords if kw and kw in text)
+
 logger = get_logger(__name__)
 
 class TaskPlanner:
@@ -63,64 +86,46 @@ class TaskPlanner:
             allowed_elements = set()
         element_hits = [el for el in _extract_element_symbols(user_request) if el in allowed_elements]
         has_material_hint = ("mp-" in request_lower) or (len(set(element_hits)) >= 2)
-        force_en = any(kw in request_lower for kw in [
-            "discover", "find", "screen", "candidate", "recommend", "design", "search", "explore",
-            "predict", "train", "model", "machine learning", "ml",
-            "analyze", "analysis", "performance", "activity", "overpotential", "experiment", "kinetics", "lsv", "cv", "stability", "polarization", "adsorption",
-            "literature", "paper", "review", "survey", "knowledge", "rag",
-            "catalyst", "alloy", "material", "hor", "her"
-        ])
-        lang = "en" if force_en else _detect_language(user_request)
         
         # ??????????????????; ???????????????(??? HOR/??????)
         en_discovery = ["discover", "find", "screen", "candidate", "recommend", "design", "search", "explore"]
+        strong_en_discovery = ["recommend", "candidate", "screen", "design"]
         en_ml = ["predict", "train", "model", "machine learning", "ml"]
         en_perf = ["analyze", "analysis", "performance", "activity", "overpotential", "experiment", "kinetics", "lsv", "cv", "stability", "polarization", "adsorption"]
         en_lit = ["literature", "paper", "review", "survey", "knowledge", "rag"]
         en_context = ["catalyst", "alloy", "material", "hor", "her"]
         cn_discovery = ["发现", "筛选", "候选", "寻找", "搜索", "推荐", "设计"]
+        strong_cn_discovery = ["筛选", "候选", "推荐", "设计"]
         cn_context = ["合金", "催化", "材料", "HOR", "HER", "有序"]
         cn_ml = ["预测", "训练", "模型", "机器学习"]
         cn_perf = ["分析", "性能", "测试", "实验", "表征"]
         cn_lit = ["文献", "论文", "综述", "调研", "知识"]
-        if lang == "en":
-            # Check English discovery keywords OR Chinese discovery + context (for mixed queries like "推荐HOR催化剂")
-            if any(kw in request_lower for kw in en_discovery):
-                return TaskType.CATALYST_DISCOVERY
-            if (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
-                return TaskType.CATALYST_DISCOVERY
-            if any(kw in request_lower for kw in en_ml):
-                return TaskType.PROPERTY_PREDICTION
-            if any(kw in request_lower for kw in en_perf) or any(kw in request_lower for kw in en_context):
-                return TaskType.PERFORMANCE_ANALYSIS
-            if any(kw in request_lower for kw in en_lit):
-                return TaskType.LITERATURE_REVIEW
-            if has_material_hint:
-                return TaskType.CATALYST_DISCOVERY
-        elif lang == "zh":
-            if (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
-                return TaskType.CATALYST_DISCOVERY
-            elif any(kw in user_request for kw in cn_ml):
-                return TaskType.PROPERTY_PREDICTION
-            elif any(kw in user_request for kw in cn_perf):
-                return TaskType.PERFORMANCE_ANALYSIS
-            elif any(kw in user_request for kw in cn_lit):
-                return TaskType.LITERATURE_REVIEW
-            elif has_material_hint:
-                return TaskType.CATALYST_DISCOVERY
-        else:
-            if any(kw in request_lower for kw in en_discovery) or (any(kw in user_request for kw in cn_discovery) and any(ctx in user_request for ctx in cn_context)):
-                return TaskType.CATALYST_DISCOVERY
-            if any(kw in request_lower for kw in en_ml) or any(kw in user_request for kw in cn_ml):
-                return TaskType.PROPERTY_PREDICTION
-            if any(kw in request_lower for kw in en_perf) or any(kw in user_request for kw in cn_perf):
-                return TaskType.PERFORMANCE_ANALYSIS
-            if any(kw in request_lower for kw in en_lit) or any(kw in user_request for kw in cn_lit):
-                return TaskType.LITERATURE_REVIEW
-            if has_material_hint:
-                return TaskType.CATALYST_DISCOVERY
-        return TaskType.GENERAL
+        discovery_hits = _count_en_hits(request_lower, en_discovery) + _count_cn_hits(user_request, cn_discovery)
+        strong_discovery = (_count_en_hits(request_lower, strong_en_discovery) + _count_cn_hits(user_request, strong_cn_discovery)) > 0
+        ml_hits = _count_en_hits(request_lower, en_ml) + _count_cn_hits(user_request, cn_ml)
+        perf_hits = _count_en_hits(request_lower, en_perf) + _count_cn_hits(user_request, cn_perf)
+        lit_hits = _count_en_hits(request_lower, en_lit) + _count_cn_hits(user_request, cn_lit)
+        context_hits = _count_en_hits(request_lower, en_context) + _count_cn_hits(user_request, cn_context)
 
+        if lit_hits > 0 and lit_hits >= max(ml_hits, perf_hits, discovery_hits):
+            return TaskType.LITERATURE_REVIEW
+        if strong_discovery:
+            return TaskType.CATALYST_DISCOVERY
+        if perf_hits > 0 and perf_hits > discovery_hits and perf_hits >= ml_hits:
+            return TaskType.PERFORMANCE_ANALYSIS
+        if ml_hits > 0 and ml_hits > discovery_hits and ml_hits >= perf_hits:
+            return TaskType.PROPERTY_PREDICTION
+        if discovery_hits > 0:
+            return TaskType.CATALYST_DISCOVERY
+        if perf_hits > 0:
+            return TaskType.PERFORMANCE_ANALYSIS
+        if ml_hits > 0:
+            return TaskType.PROPERTY_PREDICTION
+        if lit_hits > 0:
+            return TaskType.LITERATURE_REVIEW
+        if has_material_hint or context_hits > 0:
+            return TaskType.CATALYST_DISCOVERY
+        return TaskType.GENERAL
     @log_exception(logger)
     def create_plan(self, user_request: str) -> TaskPlan:
         """Create an execution plan based on user request (DAG)."""
@@ -210,6 +215,8 @@ class TaskPlanner:
             
             # 4. Recommendation (Depends on ML results and Lit insights)
             s4 = add_step("task_manager", "recommend", {}, deps=[s1, s3])
+            # 5. Knowledge Pack (post recommendation)
+            add_step("task_manager", "knowledge_pack", {}, deps=[s4])
         
         elif task_type == TaskType.PROPERTY_PREDICTION:
             s1 = add_step("theory", "load_data", {}, max_replans=1)
@@ -222,6 +229,7 @@ class TaskPlanner:
             s2 = add_step("ml", "predict", {}, deps=[s1], max_replans=1) # Predict based on experimental input structures?
             s3 = add_step("literature", "compare", {}, deps=[s1])
             s4 = add_step("task_manager", "recommend", {}, deps=[s2, s3])
+            add_step("task_manager", "knowledge_pack", {}, deps=[s4])
         
         elif task_type == TaskType.LITERATURE_REVIEW:
             s1 = add_step("literature", "search", {"query": user_request}, max_retries=1, max_replans=1)
@@ -234,3 +242,4 @@ class TaskPlanner:
             
         logger.info(f"Created plan {task_id} ([{task_type.value}]) for: {user_request}")
         return plan
+

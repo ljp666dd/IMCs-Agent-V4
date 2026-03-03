@@ -1,0 +1,5 @@
+# Extra ignore rules for tools like ripgrep (in addition to .gitignore)
+.pytest_cache/
+pytest-cache-files-*/
+data/test_mkdir_mode/
+tests/.artifacts/
