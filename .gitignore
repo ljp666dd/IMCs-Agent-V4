@@ -10,13 +10,14 @@ venv/
 .env
 
 # Data Output (User data)
-data/ml_agent/
-data/experimental/
-data/analysis/
-data/theory/
-data/literature/
-data/tasks/
+data/
 logs/
+patch_*.py
+tmp_split_*.py
+test_llm_parser.py
+*.db
+*.db-shm
+*.db-wal
 
 # IDE
 .vscode/

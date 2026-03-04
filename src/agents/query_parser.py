@@ -10,6 +10,7 @@ IMCs Query Parser - 用户意图解析器
 """
 
 import re
+import json
 from typing import Dict, List, Optional, Set
 from src.core.logger import get_logger
 
@@ -51,6 +52,80 @@ CONSTRAINT_VERBS = {
     "prefer": ["优先", "prefer", "偏好", "重点"],
 }
 
+
+from src.services.llm.expert_reasoning import get_expert_reasoning
+
+class LLMQueryParser:
+    """使用 LLM 辅助提取意图的高级解析器"""
+    
+    def __init__(self, fallback_parser):
+        self.fallback_parser = fallback_parser
+        self.llm_service = get_expert_reasoning()
+        
+    def parse(self, query: str) -> dict:
+        """优先使用 LLM 解析意图，解析失败时回退到正则解析"""
+        if not self.llm_service.available:
+            logger.info("LLM not available, using fallback regex parser")
+            return self.fallback_parser.parse(query)
+            
+        prompt = f"""
+你是一个电催化材料领域的意图解析专家。
+请从以下用户输入中提取关键的查询结构约束，并严格以JSON格式输出，不带任何Markdown标记和额外文字。
+
+用户输入: "{query}"
+
+JSON结构及字段说明:
+{{
+    "target_elements": ["Pt", "Ru", ...],  // 提取用户提到的所有的化学元素符号（必须转换为元素符号，如铂->Pt）
+    "target_reaction": "HOR", // HOR / HER / OER / ORR。默认为 HOR
+    "constraints": {{
+        "high_activity": ["高活性"], // 从输入中提取要求高性能的关键词
+        "low_cost": ["便宜", "非贵金属"] // 或其他要求
+    }},
+    "resource_hints": {{
+        "exclude_elements": ["Fe", "Ni"], // 用户要求不含或排除的元素符号
+        "only_elements": ["Pt", "Co"]     // 用户要求只使用的元素符号
+    }}
+}}
+如果某个字段在用户的输入中完全没有体现，则返回空数组或空字典（对 reaction 则默认为 HOR）。
+请直接输出纯JSON字符串。
+"""
+        try:
+            logger.info("Attempting LLM intent parsing...")
+            response = self.llm_service._call_with_timeout(
+                self.llm_service._call_openai_compatible if self.llm_service.backend in ("deepseek", "siliconflow") else self.llm_service._call_gemini, 
+                prompt
+            )
+            
+            if response:
+                # 清理可能的 markdown 格式
+                cleaned = response.strip()
+                if cleaned.startswith("```json"):
+                    cleaned = cleaned[7:]
+                if cleaned.endswith("```"):
+                    cleaned = cleaned[:-3]
+                cleaned = cleaned.strip()
+                
+                parsed_json = json.loads(cleaned)
+                
+                # 做基本的 fallback 合并，避免模型输出缺失核心字段
+                fallback_result = self.fallback_parser.parse(query)
+                
+                if "target_elements" not in parsed_json or not isinstance(parsed_json["target_elements"], list):
+                    parsed_json["target_elements"] = fallback_result["target_elements"]
+                if "target_reaction" not in parsed_json:
+                    parsed_json["target_reaction"] = fallback_result["target_reaction"]
+                if "constraints" not in parsed_json:
+                    parsed_json["constraints"] = fallback_result["constraints"]
+                if "resource_hints" not in parsed_json:
+                    parsed_json["resource_hints"] = fallback_result["resource_hints"]
+                    
+                logger.info(f"LLMQueryParser result: {parsed_json}")
+                return parsed_json
+        except Exception as e:
+            logger.warning(f"LLM parsing failed: {e}. Falling back to regex.")
+            
+        return self.fallback_parser.parse(query)
 
 class QueryParser:
     """从自然语言查询中提取结构化约束"""
@@ -158,7 +233,8 @@ class QueryParser:
 
 
 # Module-level singleton
-_parser = QueryParser()
+_regex_parser = QueryParser()
+_parser = LLMQueryParser(_regex_parser)
 
 
 def parse_query(query: str) -> Dict:

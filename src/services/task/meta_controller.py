@@ -111,12 +111,58 @@ class MetaController:
         return steps, covered
 
     def get_stats(self) -> Dict[str, Any]:
+        return {
+            "strategies_loaded": len(self.gap_strategies),
+            "weights_loaded": len(self.strategy_weights)
+        }
+
+    def strategy_feedback(self, plan_id: str, outcome: str, evidence_yield: int = 0):
+        """
+        基于任务执行结果调整策略权重 (闭环学习 L4->L5)。
+        outcome: 'success', 'failure', 'partial'
+        """
+        import logging
+        logger = logging.getLogger(__name__)
+
+        logger.info(f"Received feedback for plan {plan_id}: outcome={outcome}, yield={evidence_yield}")
+        
+        delta = 0.0
+        if outcome == "success":
+            delta = 0.1 + (0.01 * evidence_yield)
+        elif outcome == "failure":
+            delta = -0.1
+        elif outcome == "partial":
+            delta = 0.05 + (0.005 * evidence_yield)
+            
+        if abs(delta) > 0:
+            updated = False
+            # self.strategy_weights = {"expert_reasoning": 1.0, "literature": 1.5, ...}
+            for strategy in self.strategy_weights:
+                current = self.strategy_weights[strategy]
+                # Clamp between 0.1 and 5.0
+                new_val = max(0.1, min(5.0, current + delta))
+                if abs(new_val - current) > 1e-4:
+                    self.strategy_weights[strategy] = new_val
+                    updated = True
+            
+            if updated:
+                self._save_strategy_weights()
+                logger.info(f"Strategy weights updated globally by {delta:.3f}")
+                
+    def _save_strategy_weights(self):
+        """保存权重数据回磁盘"""
+        import logging
+        logger = logging.getLogger(__name__)
+
+        stats_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 
+                                "config", "strategy_stats.json")
         try:
-            from src.agents.core.theory_agent import TheoryDataConfig
-            allowed = TheoryDataConfig().elements
-        except Exception:
-            allowed = None
-        return self.db.get_evidence_stats(allowed_elements=allowed)
+            os.makedirs(os.path.dirname(stats_file), exist_ok=True)
+            with open(stats_file, 'w', encoding='utf-8') as f:
+                json.dump(self.strategy_weights, f, indent=2)
+            logger.debug("Strategy weights saved.")
+        except Exception as e:
+            logger.warning(f"Failed to save strategy weights: {e}")
 
     def decide(self, task_type: TaskType, user_request: str, stats: Dict[str, Any]) -> Dict[str, bool]:
         request_lower = (user_request or "").lower()

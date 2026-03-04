@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from typing import List, Optional
 from src.core.logger import get_logger, log_exception
 from src.services.literature.types import PaperInfo
+from src.services.common.api_cache import with_cache
 
 logger = get_logger(__name__)
 
@@ -15,6 +16,7 @@ class SearchEngine:
         self.ss_api = semantic_scholar_api
 
     @log_exception(logger)
+    @with_cache(namespace="search_ss", limiter_key="semantic_scholar")
     def search_semantic_scholar(self, query: str, limit: int = 20) -> List[PaperInfo]:
         """Search Semantic Scholar."""
         logger.info(f"Searching Semantic Scholar: {query}")
@@ -60,6 +62,7 @@ class SearchEngine:
         return papers
 
     @log_exception(logger)
+    @with_cache(namespace="search_arxiv")
     def search_arxiv(self, query: str, limit: int = 20) -> List[PaperInfo]:
         """Search arXiv."""
         logger.info(f"Searching arXiv: {query}")

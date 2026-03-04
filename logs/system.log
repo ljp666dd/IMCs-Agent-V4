@@ -24093,3 +24093,897 @@ AttributeError: 'DatabaseService' object has no attribute 'update_plan_step_stat
 [2026-03-03 17:00:33] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
 [2026-03-03 17:03:26] [INFO] [src.services.theory.mp_client] Found 5 unique materials.
 [2026-03-03 18:47:07] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:03] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 11:52:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 11:52:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 11:52:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:14] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:14] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 11:52:40] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 11:52:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 11:52:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 11:52:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 11:52:48] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:48] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [literature] can_contribute=False, confidence=0.00
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 11:52:48] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_7c07724c7f274126b94940ccf81d7090.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_d835f430c9094d8aaca44d78712b8ff7.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_6183787108d14a01a84e99457be3836d.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_15961fcfb5774669bc9d2546ae4d7e8f.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 12:03:51] [INFO] [src.services.task.planner] Created plan task_20260304_120351 ([catalyst_discovery]) for: Find a catalyst for HER (dynamic)
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:03:51] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:03:51] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:06] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:06] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:06] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:06] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:06] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-03-04 12:04:11] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1344, Test=336
+[2026-03-04 12:04:11] [INFO] [src.agents.core.ml_agent] Loaded 1680 samples from DB (features=42).
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 12:04:11] [INFO] [src.services.task.planner] Created plan task_20260304_120411 ([catalyst_discovery]) for: List all available materials in database (dynamic)
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:11] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:11] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 12:04:12] [INFO] [src.services.task.planner] Created plan task_20260304_120411 ([catalyst_discovery]) for: 查询数据库中有哪些材料？ (dynamic)
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Executing Plan: task_20260304_120411
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_1: [task_manager] recommend
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 12:04:12] [INFO] [src.services.task.planner] Created plan task_20260304_120412 ([catalyst_discovery]) for: 推荐适合HOR反应的有序合金催化剂候选材料 (dynamic)
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Executing Plan: task_20260304_120412
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_1: [task_manager] recommend
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_ff008609f91e4b64a082cd75a3d435a7.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\test_eval_suite_20260304_120412_472695.db
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\test_eval_suite_20260304_120412_472695.db
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_20260304_120412_489791.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Executing Plan: task_failure_replan_20260304_120412_497510
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-03-04 12:04:12] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): timeout while searching
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_3: [literature] search
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_skip_20260304_120412_518609.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Executing Plan: task_failure_skip_20260304_120412_525479
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_1: [theory] download
+[2026-03-04 12:04:12] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): 403 forbidden api key
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 12:04:12] [WARNING] [src.services.task.executor] Evidence aggregation failed: '_DummyTheoryAgent' object has no attribute 'list_stored_materials'
+[2026-03-04 12:04:12] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 12:04:12] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.31026438569206843, 'ml': 0.25194401244167963, 'experiment': 0.32115085536547433, 'literature': 0.1166407465007776}
+[2026-03-04 12:04:12] [INFO] [src.agents.fusion] Collected 4 candidates
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:12] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Executing Plan: task_gapflow_20260304_120412
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 12:04:12] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Executing Plan: task_gapflow_20260304_120412
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Step step_4: [experiment] process
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:13] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Executing Plan: task_gapcomplete_20260304_120413
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 12:04:13] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 12:04:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:14] [INFO] [src.services.task.executor] Executing Plan: task_gapoverride_20260304_120414
+[2026-03-04 12:04:14] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 12:04:14] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 12:04:44] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:49] [INFO] [src.services.task.planner] Created plan task_20260304_120415 ([catalyst_discovery]) for: 推荐HOR有序合金催化剂 (dynamic)
+[2026-03-04 12:04:49] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:04:49] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:04:49] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:50] [INFO] [src.services.task.executor] Executing Plan: task_20260304_120415
+[2026-03-04 12:04:50] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 12:04:50] [INFO] [src.services.task.executor] Step step_1: [task_manager] recommend
+[2026-03-04 12:04:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:51] [INFO] [src.services.task.planner] Created plan task_20260304_120450 ([catalyst_discovery]) for: 推荐HOR有序合金催化剂 (dynamic)
+[2026-03-04 12:04:51] [INFO] [src.services.task.planner] Created plan task_20260304_120451 ([performance_analysis]) for: 分析我的LSV实验数据 (dynamic)
+[2026-03-04 12:04:51] [INFO] [src.services.db.database] Database initialized at data\test_seed_predictions_20260304_120451_207074.db
+[2026-03-04 12:04:51] [INFO] [src.services.task.executor] Executing Plan: seed_preds_20260304_120451_207074
+[2026-03-04 12:04:51] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 12:04:51] [INFO] [src.services.task.executor] Step step_1: [ml] seed_predictions
+[2026-03-04 12:04:51] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 12:04:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:51] [INFO] [src.services.db.database] Database initialized at data\test_iter_to_plan_20260304_120451_288142.db
+[2026-03-04 12:04:51] [INFO] [src.services.llm.ollama_service] OllamaService initialized with model: qwen2.5:7b
+[2026-03-04 12:04:51] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 12:04:53] [WARNING] [src.services.llm.ollama_service] Ollama not available: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/tags (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000020E5A686250>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+[2026-03-04 12:04:53] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:53] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:53] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 12:04:53] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:53] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 12:04:53] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:04:53] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 12:04:53] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 12:04:53] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 12:04:53] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] Executing experiment...
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] Executing theory...
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 12:04:53] [INFO] [src.agents.orchestrator] Executing ml...
+[2026-03-04 12:04:53] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 12:04:53] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 12:04:54] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 12:04:54] [INFO] [src.agents.orchestrator] Executing literature...
+[2026-03-04 12:04:57] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:04:57] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 12:05:09] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 12:05:09] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 12:05:09] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 12:05:09] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Orchestration completed in 15.55s, 105 candidates
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0562
+[2026-03-04 12:05:09] [WARNING] [src.services.llm.expert_reasoning] IMCS_ENABLE_CLOUD_LLM disabled; expert reasoning will use mock reports.
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_20260304_120509_426779.db
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_hash_20260304_120509_450690.db
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_conflict_20260304_120509_472520.db
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 12:05:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:09] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 12:05:09] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 12:05:09] [INFO] [src.agents.session] IterativeSession created: session_20260304_120509
+[2026-03-04 12:05:09] [INFO] [src.agents.session] Starting round 1: 推荐HOR有序合金催化剂
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 12:05:09] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Executing experiment...
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Executing theory...
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 12:05:09] [INFO] [src.agents.orchestrator] Executing ml...
+[2026-03-04 12:05:09] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 12:05:09] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 12:05:10] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 12:05:10] [INFO] [src.agents.orchestrator] Executing literature...
+[2026-03-04 12:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 12:05:24] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 12:05:24] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 12:05:24] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 12:05:24] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] Orchestration completed in 15.35s, 105 candidates
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0615
+[2026-03-04 12:05:24] [WARNING] [src.services.llm.expert_reasoning] IMCS_ENABLE_CLOUD_LLM disabled; expert reasoning will use mock reports.
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_120509.json
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Added experiment feedback for mp-11693: validated
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_120509.json
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Added experiment feedback for mp-117: rejected
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_120509.json
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_120509.json
+[2026-03-04 12:05:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:24] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 12:05:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:24] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 12:05:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 12:05:24] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 12:05:24] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 12:05:24] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 12:05:24] [INFO] [src.agents.session] IterativeSession created: session_20260304_120509
+[2026-03-04 12:05:24] [INFO] [src.agents.session] Session loaded from data/sessions\session_20260304_120509.json
+[2026-03-04 12:05:29] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:05:29] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:06:05] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=506 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:05] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=245 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:05] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=455 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:11] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=12 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:11] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=11 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:11] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=7 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:14] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:14] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:14] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:18] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=2 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:18] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=1 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:18] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=5 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:20] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:20] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:20] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:25] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:25] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=10 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:25] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:27] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:27] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:27] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:29] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:29] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:29] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:34] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:34] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:06:34] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:06:34] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:06:34] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:06:35] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:06:35] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:06:35] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:06:35] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:06:35] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:06:37] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:37] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:37] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:40] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:44] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=7 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:44] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=20 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:45] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=19 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:46] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:49] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=2 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:49] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:49] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:51] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:51] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:56] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=12 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:56] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:06:56] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=22 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:00] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=7 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:00] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=6 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:00] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:02] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:02] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:06] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=12 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:06] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=10 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:06] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=18 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=12 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:07:10] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:07:10] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:07:10] [INFO] [src.agents.core.ml_agent] Loading activity metrics from DB (metric=mass_activity)...
+[2026-03-04 12:07:10] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=4, Test=1
+[2026-03-04 12:07:10] [INFO] [src.agents.core.ml_agent] Loaded 5 activity samples for mass_activity with DOS features.
+[2026-03-04 12:07:10] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:10] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:07:10] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:07:11] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['packing_fraction', 'avg_Z', 'max_Z', 'min_Z', 'avg_electronegativity', 'min_electronegativity', 'max_radius', 'lattice_b', 'beta', 'avg_valence_electrons', 'dos_d_band_center', 'dos_d_band_width']
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished Ridge: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.ml.trainer] Finished SVR: R2=nan
+[2026-03-04 12:07:11] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:07:11] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:07:11] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:07:11] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:07:13] [INFO] [src.services.ml.trainer] Finished KNN: R2=nan
+[2026-03-04 12:07:14] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=nan
+[2026-03-04 12:07:14] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=nan
+[2026-03-04 12:07:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=61 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=60 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:27] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=30 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:27] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:39] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=68 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:39] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=71 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:44] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=23 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:44] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=25 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:50] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:07:51] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=28 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:01] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=60 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:01] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=59 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:12] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=67 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:12] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=65 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:21] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=59 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:21] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=56 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=244 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:08:55] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:08:55] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=245 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:08:55] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:08:55] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 12:08:55] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 12:09:06] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=69 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:07] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=72 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:12] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:12] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=57 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=56 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:27] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:27] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=24 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:34] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=33 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:34] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=38 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:44] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=59 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:45] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=59 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:51] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=28 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:09:51] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=28 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:10:05] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=101 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:10:06] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=102 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:10:37] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=214 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:10:37] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:10:37] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:10:37] [INFO] [src.services.theory.external_db] Querying Catalysis-Hub for adsorbate=H*...
+[2026-03-04 12:10:37] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=240 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 12:10:37] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 12:10:37] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 12:10:37] [INFO] [src.services.theory.external_db] Querying Catalysis-Hub for adsorbate=H*...
+[2026-03-04 12:10:38] [INFO] [src.services.theory.external_db] Retrieved 50 entries from CatHub.
+[2026-03-04 12:10:38] [INFO] [src.services.theory.external_db] Retrieved 50 entries from CatHub.
+[2026-03-04 15:11:26] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_20260304_151126_222486.db
+[2026-03-04 15:11:26] [INFO] [src.services.task.executor] Executing Plan: task_failure_replan_20260304_151126_232855
+[2026-03-04 15:11:26] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:11:26] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-03-04 15:11:26] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): timeout while searching
+[2026-03-04 15:11:26] [INFO] [src.services.task.executor] Step step_3: [literature] search
+[2026-03-04 15:11:26] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_skip_20260304_151137_133985.db
+[2026-03-04 15:11:37] [INFO] [src.services.task.executor] Executing Plan: task_failure_skip_20260304_151137_140540
+[2026-03-04 15:11:37] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:11:37] [INFO] [src.services.task.executor] Step step_1: [theory] download
+[2026-03-04 15:11:37] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): 403 forbidden api key
+[2026-03-04 15:11:37] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 15:11:37] [WARNING] [src.services.task.executor] Evidence aggregation failed: '_DummyTheoryAgent' object has no attribute 'list_stored_materials'
+[2026-03-04 15:11:37] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:11:37] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.31026438569206843, 'ml': 0.25194401244167963, 'experiment': 0.32115085536547433, 'literature': 0.1166407465007776}
+[2026-03-04 15:11:37] [INFO] [src.agents.fusion] Collected 4 candidates
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 15:11:37] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:11:37] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 15:11:37] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 15:11:37] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 15:11:37] [INFO] [src.agents.orchestrator] Executing experiment...
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] Executing theory...
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] Executing ml...
+[2026-03-04 15:11:38] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 15:11:38] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 15:11:38] [INFO] [src.agents.orchestrator] Executing literature...
+[2026-03-04 15:11:53] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 15:11:53] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-04 15:11:53] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 15:11:53] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:11:53] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 15:11:53] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 15:11:53] [INFO] [src.agents.orchestrator] Orchestration completed in 16.04s, 105 candidates
+[2026-03-04 15:11:53] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0577
+[2026-03-04 15:12:01] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_c4b99f69b4a3405e8a365dcb0e05eb5e.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_cce7e6c4037543dab83d979063c0fa65.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_e9ef58d04766481ea1a58d11000071b8.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_a5ea51ff5869411db5706a715f25b319.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 15:32:04] [INFO] [src.services.task.planner] Created plan task_20260304_153204 ([catalyst_discovery]) for: Find a catalyst for HER (dynamic)
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:04] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:04] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:19] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:19] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:19] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:19] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:19] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=formation_energy)...
+[2026-03-04 15:32:24] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1344, Test=336
+[2026-03-04 15:32:24] [INFO] [src.agents.core.ml_agent] Loaded 1680 samples from DB (features=42).
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 15:32:24] [INFO] [src.services.task.planner] Created plan task_20260304_153224 ([catalyst_discovery]) for: List all available materials in database (dynamic)
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:24] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-04 15:32:24] [INFO] [src.services.task.planner] Created plan task_20260304_153224 ([catalyst_discovery]) for: 查询数据库中有哪些材料？ (dynamic)
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:24] [INFO] [src.services.task.executor] Executing Plan: task_20260304_153224
+[2026-03-04 15:32:24] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:32:24] [INFO] [src.services.task.executor] Step step_1: [task_manager] recommend
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 15:32:25] [INFO] [src.services.task.planner] Created plan task_20260304_153224 ([catalyst_discovery]) for: 推荐适合HOR反应的有序合金催化剂候选材料 (dynamic)
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at tests\.artifacts\imcs_test_d9968b45b38b4a32b91717711db37b70.db
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\test_eval_suite_20260304_153225_288430.db
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\test_eval_suite_20260304_153225_288430.db
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_20260304_153225_308352.db
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Executing Plan: task_failure_replan_20260304_153225_338964
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-03-04 15:32:25] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): timeout while searching
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_3: [literature] search
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\test_failure_policy_skip_20260304_153225_351397.db
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Executing Plan: task_failure_skip_20260304_153225_358771
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_1: [theory] download
+[2026-03-04 15:32:25] [ERROR] [src.services.task.executor] Step step_1 failed (attempt 1): 403 forbidden api key
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_2: [task_manager] recommend
+[2026-03-04 15:32:25] [WARNING] [src.services.task.executor] Evidence aggregation failed: '_DummyTheoryAgent' object has no attribute 'list_stored_materials'
+[2026-03-04 15:32:25] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:32:25] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.31026438569206843, 'ml': 0.25194401244167963, 'experiment': 0.32115085536547433, 'literature': 0.1166407465007776}
+[2026-03-04 15:32:25] [INFO] [src.agents.fusion] Collected 4 candidates
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:25] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Executing Plan: task_gapflow_20260304_153225
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 15:32:25] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Executing Plan: task_gapflow_20260304_153225
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Step step_4: [experiment] process
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:26] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:26] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Executing Plan: task_gapcomplete_20260304_153226
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 15:32:26] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 15:32:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:27] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:27] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:27] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:27] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:27] [INFO] [src.services.task.executor] Executing Plan: task_gapoverride_20260304_153227
+[2026-03-04 15:32:27] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 15:32:27] [INFO] [src.services.task.executor] Step step_1: [task_manager] knowledge_pack
+[2026-03-04 15:32:41] [INFO] [src.services.task.planner] Created plan task_20260304_153229 ([catalyst_discovery]) for: 推荐HOR有序合金催化剂 (dynamic)
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Executing Plan: task_20260304_153229
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Step step_1: [task_manager] recommend
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:41] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:32:41] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:32:41] [INFO] [src.services.task.planner] Created plan task_20260304_153241 ([catalyst_discovery]) for: 推荐HOR有序合金催化剂 (dynamic)
+[2026-03-04 15:32:41] [INFO] [src.services.task.planner] Created plan task_20260304_153241 ([performance_analysis]) for: 分析我的LSV实验数据 (dynamic)
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\test_seed_predictions_20260304_153241_529276.db
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Executing Plan: seed_preds_20260304_153241_529276
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Evidence auto-fill: False (rounds=1)
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Step step_1: [ml] seed_predictions
+[2026-03-04 15:32:41] [INFO] [src.services.task.executor] Step step_2: [task_manager] knowledge_pack
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:41] [INFO] [src.services.db.database] Database initialized at data\test_iter_to_plan_20260304_153241_613903.db
+[2026-03-04 15:32:41] [INFO] [src.services.llm.ollama_service] OllamaService initialized with model: qwen2.5:7b
+[2026-03-04 15:32:43] [WARNING] [src.services.llm.ollama_service] Ollama not available: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/tags (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000014A5BA8B240>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+[2026-03-04 15:32:43] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:43] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:43] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 15:32:43] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:43] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 15:32:43] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:43] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 15:32:43] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:43] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 15:32:43] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 15:32:43] [INFO] [src.agents.orchestrator] Executing experiment...
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] Executing theory...
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] Executing ml...
+[2026-03-04 15:32:44] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 15:32:44] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 15:32:44] [INFO] [src.agents.orchestrator] Executing literature...
+[2026-03-04 15:32:56] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 15:32:59] [INFO] [src.agents.conflict_detector] ConflictDetector: 57 conflicts, 0 consensus materials
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 15:32:59] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:32:59] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 15:32:59] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Orchestration completed in 15.46s, 105 candidates
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0756
+[2026-03-04 15:32:59] [WARNING] [src.services.llm.expert_reasoning] IMCS_ENABLE_CLOUD_LLM disabled; expert reasoning will use mock reports.
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_20260304_153259_639932.db
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_hash_20260304_153259_661703.db
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\test_robot_callback_conflict_20260304_153259_681109.db
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 15:32:59] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:32:59] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 15:32:59] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 15:32:59] [INFO] [src.agents.session] IterativeSession created: session_20260304_153259
+[2026-03-04 15:32:59] [INFO] [src.agents.session] Starting round 1: 推荐HOR有序合金催化剂
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 15:32:59] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 15:32:59] [INFO] [src.agents.orchestrator] Executing experiment...
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] Executing theory...
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] Executing ml...
+[2026-03-04 15:33:00] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 15:33:00] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 15:33:00] [INFO] [src.agents.orchestrator] Executing literature...
+[2026-03-04 15:33:11] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:33:11] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 15:33:14] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 15:33:14] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:33:14] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 15:33:14] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] Orchestration completed in 15.21s, 105 candidates
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0646
+[2026-03-04 15:33:14] [WARNING] [src.services.llm.expert_reasoning] IMCS_ENABLE_CLOUD_LLM disabled; expert reasoning will use mock reports.
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_153259.json
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Added experiment feedback for mp-11693: validated
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_153259.json
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Added experiment feedback for mp-117: rejected
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_153259.json
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Session saved to data/sessions\session_20260304_153259.json
+[2026-03-04 15:33:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:33:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:33:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 15:33:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:33:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 15:33:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:33:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 15:33:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:33:14] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 15:33:14] [INFO] [src.agents.session] IterativeSession created: session_20260304_153259
+[2026-03-04 15:33:14] [INFO] [src.agents.session] Session loaded from data/sessions\session_20260304_153259.json
+[2026-03-04 15:34:12] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=797 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:12] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=584 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:15] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=10 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:16] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=9 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:21] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=18 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:24] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=4 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:24] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=8 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:28] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=7 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:28] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=3 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:33] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=22 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:33] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=20 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:35] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:35] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:40] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=24 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:40] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=18 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=89 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 15:34:53] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 15:34:53] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cstructure%2Cformula_pretty%2Cformation_energy_per_atom&_skip=89 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 15:34:53] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 15:34:53] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:34:53] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:35:02] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=53 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:02] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=51 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:10] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=43 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:11] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=44 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:18] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=38 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:18] [WARNING] [src.services.theory.mp_client] Failed search for Pt (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pt&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=39 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:22] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=13 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:24] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=20 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:28] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=17 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:28] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=30 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:35] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=29 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:35] [WARNING] [src.services.theory.mp_client] Failed search for Pd (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Pd&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=31 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:41] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=38 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:41] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 1): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=37 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:48] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=28 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:35:48] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 2): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=25 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:36:01] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=90 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:36:01] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 15:36:01] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 15:36:01] [INFO] [src.agents.core.ml_agent] Loading activity metrics from DB (metric=mass_activity)...
+[2026-03-04 15:36:01] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=4, Test=1
+[2026-03-04 15:36:01] [INFO] [src.agents.core.ml_agent] Loaded 5 activity samples for mass_activity with DOS features.
+[2026-03-04 15:36:01] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-04 15:36:01] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['packing_fraction', 'avg_Z', 'max_Z', 'min_Z', 'avg_electronegativity', 'min_electronegativity', 'max_radius', 'lattice_b', 'beta', 'avg_valence_electrons', 'dos_d_band_center', 'dos_d_band_width']
+[2026-03-04 15:36:01] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-04 15:36:01] [WARNING] [src.services.theory.mp_client] Failed search for Ni (attempt 3): HTTPSConnectionPool(host='api.materialsproject.org', port=443): Max retries exceeded with url: /materials/summary/?elements=Ni&is_stable=True&_limit=1&_fields=material_id%2Cformula_pretty%2Cformation_energy_per_atom&_skip=94 (Caused by ResponseError('too many 429 error responses'))
+[2026-03-04 15:36:01] [WARNING] [src.services.theory.mp_client] Aborting MP search after repeated failures.
+[2026-03-04 15:36:01] [INFO] [src.services.theory.mp_client] Found 0 unique materials.
+[2026-03-04 15:36:01] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=nan
+[2026-03-04 15:36:01] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished Ridge: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished SVR: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished KNN: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:36:02] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=nan
+[2026-03-04 15:36:02] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=nan
+[2026-03-04 15:37:11] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:37:11] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.31026438569206843, 'ml': 0.25194401244167963, 'experiment': 0.32115085536547433, 'literature': 0.1166407465007776}
+[2026-03-04 15:37:11] [INFO] [src.agents.fusion] Collected 4 candidates
+[2026-03-04 15:37:11] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:37:19] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:37:19] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 15:37:19] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:37:19] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 15:37:19] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 15:37:19] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 15:37:19] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:37:19] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Orchestrating query: 推荐HOR有序合金催化剂
+[2026-03-04 15:37:19] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Execution order: ['experiment', 'theory', 'ml', 'literature']
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Executing experiment in parallel...
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Executing theory in parallel...
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Executing ml in parallel...
+[2026-03-04 15:37:19] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] Executing literature in parallel...
+[2026-03-04 15:37:19] [INFO] [src.agents.orchestrator] [theory] contributed 0 candidates
+[2026-03-04 15:37:21] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 15:37:30] [INFO] [src.agents.orchestrator] [experiment] contributed 5 candidates
+[2026-03-04 15:37:32] [INFO] [src.agents.orchestrator] [literature] contributed 0 candidates
+[2026-03-04 15:37:32] [INFO] [src.agents.orchestrator] [ml] contributed 50 candidates
+[2026-03-04 15:37:32] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-04 15:37:32] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 15:37:32] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 15:37:32] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 15:37:32] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 15:37:32] [INFO] [src.agents.orchestrator] Orchestration completed in 13.43s, 105 candidates
+[2026-03-04 15:37:32] [INFO] [src.agents.orchestrator] Active Learning threshold (P90): 0.0618
+[2026-03-04 15:37:39] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 15:37:44] [INFO] [src.services.theory.mp_client] Found 50 unique materials.
+[2026-03-04 15:37:44] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-04 15:37:44] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-04 15:39:26] [INFO] [src.services.theory.mp_client] Found 50 unique materials.
+[2026-03-04 15:39:26] [INFO] [src.services.theory.external_db] Querying Catalysis-Hub for adsorbate=H*...
+[2026-03-04 15:39:27] [INFO] [src.services.theory.external_db] Retrieved 50 entries from CatHub.
+[2026-03-04 15:51:00] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 15:51:00] [INFO] [src.agents.query_parser] Attempting LLM intent parsing...
+[2026-03-04 15:51:03] [WARNING] [src.agents.query_parser] LLM parsing failed: name 'json' is not defined. Falling back to regex.
+[2026-03-04 15:51:03] [INFO] [src.agents.query_parser] QueryParser: elements=['Fe', 'Ni', 'Pt', 'Ru', 'Au'], reaction=HOR, constraints=['high_activity', 'low_overpotential']
+[2026-03-04 15:51:41] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 15:51:41] [INFO] [src.agents.query_parser] Attempting LLM intent parsing...
+[2026-03-04 15:51:46] [INFO] [src.agents.query_parser] QueryParser: elements=['Fe', 'Ni', 'Pt', 'Ru', 'Au'], reaction=HOR, constraints=['high_activity', 'low_overpotential']
+[2026-03-04 15:51:46] [INFO] [src.agents.query_parser] LLMQueryParser result: {'target_elements': ['Pt', 'Ru'], 'target_reaction': 'OER', 'constraints': {'high_activity': ['高活性', '低过电位'], 'low_cost': ['成本低一点']}, 'resource_hints': {'exclude_elements': ['Fe', 'Ni'], 'only_elements': []}}

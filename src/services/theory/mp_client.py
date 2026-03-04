@@ -4,6 +4,7 @@ import json
 import time
 import numpy as np
 from src.core.logger import get_logger, log_exception
+from src.services.common.api_cache import with_cache
 
 logger = get_logger(__name__)
 
@@ -25,7 +26,8 @@ class MPClient:
             logger.warning("mp_api not installed. MPClient disabled.")
 
     @log_exception(logger)
-    def search_materials(self, elements: List[str], fields: List[str] = None, limit: int = None, is_stable: bool = True):
+    @with_cache(namespace="mp_search", limiter_key="materials_project")
+    def search_materials(self, elements: List[str], fields: List[str] = None, limit: int = None, is_stable: bool = True) -> List[Any]:
         """Search materials by elements."""
         if not HAS_MP_API:
             return []
@@ -136,6 +138,7 @@ class MPClient:
         return count
 
     @log_exception(logger)
+    @with_cache(namespace="mp_dos", limiter_key="materials_project")
     def get_orbital_dos(self, material_ids: List[str], energy_range: tuple = (-15, 10), n_points: int = 2000) -> Dict[str, Any]:
         """
         Download and process Orbital DOS.

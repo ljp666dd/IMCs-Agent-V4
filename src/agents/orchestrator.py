@@ -14,20 +14,23 @@ Version: 1.0
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 import time
+import concurrent.futures
 import numpy as np
 
 from src.agents.protocol import (
     AgentProtocol, AgentCapability, ResourceStatus,
-    AgentContribution, QueryContext, ContributionType
+    AgentProtocol, ResourceStatus
 )
 from src.agents.protocol_impl import (
     TheoryAgentProtocolMixin, MLAgentProtocolMixin,
     ExperimentAgentProtocolMixin, LiteratureAgentProtocolMixin
 )
-from src.agents.query_parser import QueryParser
-from src.agents.fusion import AdvancedFusionEngine, create_fusion_report
+from src.agents.types import AgentCapability, QueryContext, AgentContribution, ContributionType
+from src.agents.query_parser import QueryParser as LLMQueryParser # Renamed to avoid conflict with new QueryParser
+from src.agents.fusion import FusionEngine, create_fusion_report
 from src.agents.conflict_detector import ConflictDetector
 from src.agents.decision_logger import DecisionLogger
+from src.services.task.meta_controller import MetaController
 from src.core.logger import get_logger
 
 logger = get_logger(__name__)
@@ -171,10 +174,13 @@ class AgentOrchestrator:
     def __init__(self):
         """初始化协调器"""
         self.agents: Dict[str, Any] = {}
-        self.fusion_engine = AdvancedFusionEngine()
-        self.query_parser = QueryParser()
+        self.query_parser = LLMQueryParser(LLMQueryParser())
+        self.fusion_engine = FusionEngine()
         self.conflict_detector = ConflictDetector()
         self.decision_logger = DecisionLogger()
+        self.meta_controller = MetaController()
+        
+        # 初始化默认智能体
         self._init_agents()
     
     def _init_agents(self):
@@ -342,27 +348,39 @@ class AgentOrchestrator:
                     decision_session_id=session_id,
                 )
             
-            # 3. 按顺序执行各智能体
-            for agent_name in execution_order:
+            # 3. 并发执行各智能体 (不再严格依赖串行，而是并发查询)
+            # 注意: 如果有依赖关系(比如 ml 需要 theory 的数据)，则需要更复杂的 DAG 调度
+            # 当前架构中 QueryContext 会传入各 Agent，各 Agent 尝试计算它的可获取候选
+            
+            def _execute_agent(agent_name: str):
                 if agent_name not in self.agents:
-                    continue
+                    return None
                     
                 agent = self.agents[agent_name]
-                logger.info(f"Executing {agent_name}...")
+                logger.info(f"Executing {agent_name} in parallel...")
                 
                 try:
                     contribution = agent.contribute(context)
-                    context.add_contribution(contribution)
-                    self.decision_logger.log_contribution(session_id, agent_name, contribution)
                     logger.info(f"[{agent_name}] contributed {len(contribution.candidates)} candidates")
+                    return (agent_name, contribution)
                 except Exception as e:
                     logger.error(f"[{agent_name}] failed: {e}")
-                    context.add_contribution(AgentContribution(
+                    failed_contrib = AgentContribution(
                         agent_name=agent_name,
                         contribution_type=ContributionType.CANDIDATES,
                         success=False,
                         reasoning=str(e)
-                    ))
+                    )
+                    return (agent_name, failed_contrib)
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=len(execution_order) or 1) as executor:
+                futures = {executor.submit(_execute_agent, name): name for name in execution_order}
+                for future in concurrent.futures.as_completed(futures):
+                    res = future.result()
+                    if res:
+                        agent_name, contribution = res
+                        context.add_contribution(contribution)
+                        self.decision_logger.log_contribution(session_id, agent_name, contribution)
             
             # 4. 检查是否需要重规划
             if iteration < max_iterations and self.should_replan(context, capabilities):
@@ -428,6 +446,13 @@ class AgentOrchestrator:
                 decision_session_id=session_id,
             )
             self.decision_logger.log_final(session_id, result)
+            
+            # strategy feedback integration for active learning
+            try:
+                self.meta_controller.strategy_feedback(session_id, "partial", len(active_learning_requests))
+            except Exception as e:
+                logger.error(f"Strategy feedback failed: {e}")
+                
             return result
         
         self.decision_logger.log_active_learning(session_id, False)
@@ -451,6 +476,15 @@ class AgentOrchestrator:
             decision_session_id=session_id,
         )
         self.decision_logger.log_final(session_id, result)
+        
+        # strategy feedback integration for general success
+        try:
+            val_yield = len(candidates)
+            outcome = "success" if val_yield > 0 else "failure"
+            self.meta_controller.strategy_feedback(session_id, outcome, val_yield)
+        except Exception as e:
+            logger.error(f"Strategy feedback failed: {e}")
+            
         return result
     
     def iterate_with_feedback(

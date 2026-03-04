@@ -1,0 +1,40 @@
+name: IMCs v4.0 CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pytest flake8 pydantic fastapi httpx requests streamlit
+        
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 src tests --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 src tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
+    - name: Run SQLite Tests
+      run: |
+        # Set dummy test config environment variables if needed
+        export DB_PATH="data/imcs_test.db"
+        export ENVIRONMENT="test"
+        pytest tests/ -v
