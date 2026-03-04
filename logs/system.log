@@ -24044,3 +24044,52 @@ AttributeError: 'DatabaseService' object has no attribute 'update_plan_step_stat
 [2026-03-03 13:00:19] [INFO] [src.services.theory.external_db] Querying Catalysis-Hub for adsorbate=H*...
 [2026-03-03 13:00:20] [INFO] [src.services.theory.external_db] Retrieved 50 entries from CatHub.
 [2026-03-03 13:05:08] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-03 14:47:26] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-03-03 14:47:26] [INFO] [src.services.ml.data_manager] Loaded 100 samples, 42 features.
+[2026-03-03 14:47:26] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=80, Test=20
+[2026-03-03 14:47:26] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-03 14:47:26] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['std_Z', 'avg_mass', 'max_electronegativity', 'avg_radius', 'max_radius', 'lattice_b', 'lattice_c', 'gamma', 'avg_lattice', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-03 14:47:26] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-03 14:47:26] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=-0.0759
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=-0.2108
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=-0.1661
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-0.2922
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished Ridge: R2=-0.0632
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.0197
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=-0.0668
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished SVR: R2=-0.6470
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished KNN: R2=-0.3351
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=-0.2988
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.4675
+[2026-03-03 14:47:27] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-03 14:47:28] [INFO] [src.services.ml.trainer] Finished DNN_256_128_64: R2=-0.6190
+[2026-03-03 14:47:28] [INFO] [src.services.ml.trainer] Finished DNN_512_256_128: R2=-0.7712
+[2026-03-03 14:47:28] [INFO] [src.services.ml.trainer] Finished DNN_128_64_32: R2=-0.7663
+[2026-03-03 14:47:57] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-03 14:47:57] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-03 14:49:55] [INFO] [src.services.theory.mp_client] Found 50 unique materials.
+[2026-03-03 14:51:13] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-03-03 14:51:13] [INFO] [src.services.ml.data_manager] Loaded 100 samples, 42 features.
+[2026-03-03 14:51:13] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=80, Test=20
+[2026-03-03 14:51:13] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-03 14:51:13] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['std_Z', 'avg_mass', 'max_electronegativity', 'avg_radius', 'max_radius', 'lattice_b', 'lattice_c', 'gamma', 'avg_lattice', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished RandomForest: R2=-0.0759
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished GradientBoosting: R2=-0.2108
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished ExtraTrees: R2=-0.1661
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished AdaBoost: R2=-0.2922
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished Ridge: R2=-0.0632
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished BayesianRidge: R2=0.0197
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished ElasticNet: R2=-0.0668
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished SVR: R2=-0.6470
+[2026-03-03 14:51:13] [INFO] [src.services.ml.trainer] Finished KNN: R2=-0.3351
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Finished XGBoost: R2=-0.2988
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Finished LightGBM: R2=-0.4675
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Finished DNN_256_128_64: R2=-0.8929
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Finished DNN_512_256_128: R2=-0.7121
+[2026-03-03 14:51:14] [INFO] [src.services.ml.trainer] Finished DNN_128_64_32: R2=-0.2748
+[2026-03-03 17:00:33] [INFO] [src.services.theory.mp_client] Searching MP for 34 elements (stable=True)...
+[2026-03-03 17:00:33] [WARNING] [src.services.theory.mp_client] Truncating element list from 34 to 5 (MP_MAX_ELEMENTS=5).
+[2026-03-03 17:03:26] [INFO] [src.services.theory.mp_client] Found 5 unique materials.
+[2026-03-03 18:47:07] [INFO] [src.services.db.database] Database initialized at data\imcs.db
