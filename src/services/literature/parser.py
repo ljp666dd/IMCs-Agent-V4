@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from src.core.logger import get_logger, log_exception
 from src.services.literature.types import PaperInfo
 
@@ -18,6 +18,12 @@ try:
     HAS_PYPDF2 = True
 except ImportError:
     HAS_PYPDF2 = False
+
+try:
+    import fitz  # PyMuPDF
+    HAS_FITZ = True
+except ImportError:
+    HAS_FITZ = False
 
 class DocParser:
     """
@@ -88,3 +94,74 @@ class DocParser:
             abstract=abstract,
             full_text=text[:50000] # Cap size
         )
+
+    def render_pages_to_images(self, pdf_path: str, page_indices: List[int] = None, dpi: int = 150) -> List[str]:
+        """
+        Render specific PDF pages to temporary image files.
+        Returns a list of absolute paths to the images.
+        """
+        if not HAS_FITZ:
+            logger.warning("fitz (PyMuPDF) not installed. Cannot render images.")
+            return []
+        
+        if not os.path.exists(pdf_path):
+            return []
+            
+        temp_dir = os.path.join("data", "literature", "temp_images")
+        os.makedirs(temp_dir, exist_ok=True)
+        
+        image_paths = []
+        try:
+            doc = fitz.open(pdf_path)
+            if not page_indices:
+                page_indices = [0] # Default to first page
+                
+            for i in page_indices:
+                if i < 0 or i >= len(doc):
+                    continue
+                page = doc.load_page(i)
+                pix = page.get_pixmap(dpi=dpi)
+                
+                base_name = os.path.basename(pdf_path).replace(".pdf", "")
+                img_path = os.path.join(temp_dir, f"{base_name}_p{i}.png")
+                pix.save(img_path)
+                image_paths.append(os.path.abspath(img_path))
+                
+            doc.close()
+        except Exception as e:
+            logger.error(f"Failed to render PDF to images: {e}")
+            
+        return image_paths
+
+    def parse_images_with_vlm(self, image_paths: List[str]) -> Dict[str, Any]:
+        """
+        V6 Phase I: Utilize VisionService to extract tables and curve insights from rendered pages.
+        """
+        results = {"tables": [], "curves": []}
+        try:
+            from src.services.llm.vision_service import get_vision_service
+            vision = get_vision_service()
+            if not vision.available:
+                logger.warning("VisionService not available. Skipping VLM extraction.")
+                return results
+
+            for path in image_paths:
+                # Extract tables
+                tab_res = vision.analyze_page(path, task="extract_tables")
+                if isinstance(tab_res, list): # Some JSON responses return a list of tables directly
+                    results["tables"].extend(tab_res)
+                elif isinstance(tab_res, dict) and "error" not in tab_res:
+                    results["tables"].append(tab_res)
+                    
+                # Analyze curves
+                cur_res = vision.analyze_page(path, task="analyze_curves")
+                if isinstance(cur_res, dict) and "error" not in cur_res:
+                    cur_res["source_image"] = os.path.basename(path)
+                    results["curves"].append(cur_res)
+                    
+        except ImportError:
+            logger.warning("Could not import VisionService.")
+        except Exception as e:
+            logger.error(f"VLM parsing error: {e}")
+            
+        return results

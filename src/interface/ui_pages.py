@@ -1217,7 +1217,7 @@ def render_ml_training():
                         # Robust mapping for UI labels to internal column names
                         TARGET_MAPPING = {
                             "形成能 (Formation Energy)": "formation_energy",
-                            "??? (Formation Energy)": "formation_energy", # Handle potential encoding artifacts
+                            "形成能 (Formation Energy)": "formation_energy", # Handle potential encoding artifacts
                         }
                         
                         target_col = TARGET_MAPPING.get(target, target)
@@ -1247,45 +1247,45 @@ def render_ml_training():
                                 base_file = os.path.join(ROOT_DIR, "data", "theory", "formation_energy_full.json")
                                 if os.path.exists(extended_file):
                                     data_file = extended_file
-                                    st.caption("?????????(42?)")
+                                    st.caption("加载扩展理论数据集 (42维特征)")
                                 else:
                                     data_file = base_file
-                                    st.caption("?????????(20?)")
+                                    st.caption("加载基础理论数据集 (20维特征)")
                             else:
                                 extended_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_data_extended.json")
                                 base_dos = os.path.join(ROOT_DIR, "data", "theory", "dos_descriptors_full.json")
                                 if os.path.exists(extended_dos):
                                     data_file = extended_dos
-                                    st.caption(f"???? DOS ??? - ??: {target_col}")
+                                    st.caption(f"加载扩展 DOS 数据集 - 目标特征: {target_col}")
                                 else:
                                     data_file = base_dos
-                                    st.caption("???? DOS ???")
+                                    st.caption("加载基础 DOS 数据集")
                             if not os.path.exists(data_file):
-                                st.error(f"???????: {data_file}")
+                                st.error(f"找不到数据文件: {data_file}")
                                 ml_agent = None
                             else:
-                                with st.spinner("???????..."):
+                                with st.spinner("正在加载理论数据..."):
                                     try:
                                         ml_agent.load_data(data_path=data_file, target_col=target_col)
                                         ml_agent.config.test_size = test_size
-                                        st.success(f"????: {len(ml_agent.X)} ??, {ml_agent.X.shape[1]} ??")
+                                        st.success(f"数据加载成功: {len(ml_agent.X)} 样本, {ml_agent.X.shape[1]} 维特征")
                                     except Exception as e:
-                                        st.error(f"??????: {e}")
+                                        st.error(f"数据加载失败: {e}")
                                         ml_agent = None
                     else:
                         # === Experimental Data Loading ===
                         if exp_file_path and os.path.exists(exp_file_path):
-                            with st.spinner("??????..."):
+                            with st.spinner("正在加载实验数据..."):
                                 try:
                                     feats = feature_cols if "feature_cols" in locals() else None
                                     ml_agent.load_generic_csv(exp_file_path, target, feats)
                                     ml_agent.config.test_size = test_size
-                                    st.success(f"??????: {len(ml_agent.X)} ??, {ml_agent.X.shape[1]} ????")
+                                    st.success(f"实验数据加载完成: {len(ml_agent.X)} 样本, {ml_agent.X.shape[1]} 维特征")
                                 except Exception as e:
-                                    st.error(f"????????: {e}")
+                                    st.error(f"加载实验数据失败: {e}")
                                     ml_agent = None
                         else:
-                            st.error("??????????????????????")
+                            st.error("请确保填写了正确的实验数据文件路径。")
                             ml_agent = None
                     if ml_agent and ml_agent.X is not None:
                         all_results = []
@@ -1783,7 +1783,48 @@ def render_closed_loop():
                 except Exception as e:
                     status.update(label=f"❌ 闭环迭代中断: {e}", state="error")
                     st.error(f"详细错误: {e}")
-                    
+
+    st.markdown("---")
+
+    # ===== V6: Manual Experiment Feedback =====
+    st.markdown("### 🧪 手动实验反馈 (Human-in-the-Loop)")
+    st.markdown("""
+    在真实实验室完成电化学测试后，在此录入结果。系统将自动校准 AI 模型权重与策略信任度。
+    """)
+
+    fb_col1, fb_col2 = st.columns(2)
+    with fb_col1:
+        fb_mat_id = st.text_input("材料 ID 或化学式", placeholder="e.g. mp-2826 或 PtNi3", key="fb_mat_id")
+        fb_outcome = st.selectbox("实验结论", ["success", "partial", "failure"], key="fb_outcome",
+                                   help="success=活性达标, partial=部分达标, failure=不及预期")
+    with fb_col2:
+        fb_activity = st.slider("实测活性评分 (1=极差, 10=极优)", 1, 10, 5, key="fb_activity")
+        fb_notes = st.text_area("备注 (可选)", placeholder="e.g. Tafel斜率 65 mV/dec, 半波电位 0.85V", height=80, key="fb_notes")
+
+    if st.button("📤 提交反馈至 AI 大脑", type="primary", key="submit_feedback"):
+        if not fb_mat_id:
+            st.warning("请填写材料 ID 或化学式。")
+        else:
+            try:
+                from src.services.task.meta_controller import MetaController
+                from src.services.db.database import DatabaseService
+                import datetime
+
+                mc = MetaController()
+                mc.strategy_feedback(fb_mat_id, fb_outcome, evidence_yield=fb_activity)
+
+                db = DatabaseService()
+                db.save_evidence(
+                    fb_mat_id, "experiment",
+                    f"manual-{datetime.datetime.now().strftime('%Y%m%d%H%M')}",
+                    score=float(fb_activity) / 10.0,
+                    metadata={"outcome": fb_outcome, "notes": fb_notes}
+                )
+                st.success(f"✅ 反馈已录入！AI 策略权重已根据 '{fb_outcome}' 结论自动调整。")
+                st.balloons()
+            except Exception as e:
+                st.error(f"反馈提交失败: {e}")
+
     st.markdown("---")
     st.markdown("### 📜 历史指令流 (Robot Task Events)")
 

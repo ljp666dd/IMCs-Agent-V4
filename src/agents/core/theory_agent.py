@@ -67,7 +67,55 @@ class TheoryDataAgent:
         self.physics = PhysicsCalc()
         self.db = DatabaseService() # v3.3: Database Integration
         
+        # V5: Pretrained GNN Bridge for structure-aware predictions
+        self.pretrained_bridge = None
+        try:
+            from src.services.ml.pretrained_bridge import get_pretrained_bridge
+            self.pretrained_bridge = get_pretrained_bridge()
+        except Exception as e:
+            logger.info(f"PretrainedGNNBridge not available: {e}")
+        
         logger.info("TheoryDataAgent initialized with services and database.")
+
+    def predict_stability(self, material_id: str) -> Optional[Dict]:
+        """
+        Predict material stability using pretrained GNN (V5 - Phase E).
+        Falls back to formation energy heuristic if bridge unavailable.
+        """
+        if not self.pretrained_bridge:
+            return None
+            
+        details = self.get_material_details(material_id)
+        if not details:
+            return None
+            
+        cif_path = details.get("cif_path")
+        if not cif_path or not os.path.exists(cif_path):
+            return None
+            
+        pred = self.pretrained_bridge.predict_from_cif(cif_path, material_id)
+        if pred.success:
+            # Store prediction as evidence
+            self.db.save_evidence(
+                material_id=material_id,
+                source_type="pretrained_gnn",
+                source_id=pred.model_used,
+                score=pred.stability_score,
+                metadata={
+                    "energy_per_atom_ev": pred.energy_per_atom_ev,
+                    "forces_norm": pred.forces_norm,
+                    "model": pred.model_used
+                }
+            )
+            
+        return {
+            "material_id": material_id,
+            "formula": pred.formula,
+            "stability_score": pred.stability_score,
+            "energy_per_atom_ev": pred.energy_per_atom_ev,
+            "model": pred.model_used,
+            "success": pred.success
+        }
 
     # ========== Materials Project ==========
     

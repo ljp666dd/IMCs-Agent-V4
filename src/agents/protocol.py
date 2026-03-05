@@ -144,6 +144,9 @@ class QueryContext:
     target_elements: List[str] = field(default_factory=list)
     target_properties: List[str] = field(default_factory=list)
     
+    # 共享内存 (V5.4+)
+    shared_data: Dict[str, Any] = field(default_factory=dict)
+    
     # 已收集的贡献
     contributions: Dict[str, AgentContribution] = field(default_factory=dict)
     

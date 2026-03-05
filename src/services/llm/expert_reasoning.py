@@ -11,7 +11,7 @@ import os
 import json
 from typing import Dict, List, Any, Optional
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
-from src.core.logger import get_logger
+from src.core.logger import get_logger, log_exception
 from src.config.config import config
 
 # Load .env so all API keys are available
@@ -146,13 +146,14 @@ class ExpertReasoningService:
         )
         return prompt
 
+    @log_exception(logger)
     def generate_report(self, candidates: List[Dict[str, Any]], is_active_learning: bool) -> str:
         """Generate an expert reasoning report using the best available backend."""
         if not self.available:
             return self._mock_report(is_active_learning)
-
+            
         prompt = self._build_prompt(candidates, is_active_learning)
-
+        
         try:
             if self.backend == "gemini":
                 response = self._call_with_timeout(self._call_gemini, prompt)
@@ -162,34 +163,78 @@ class ExpertReasoningService:
                 response = self._call_with_timeout(self._call_openai_compatible, prompt)
                 if response:
                     return response
-            else:
-                return self._mock_report(is_active_learning)
-
         except Exception as e:
-            err_msg = str(e).lower()
-            if "leaked" in err_msg or "403" in err_msg:
-                logger.warning(f"Gemini API key issue: {e}. Falling back to other backends.")
-                # Try DeepSeek/SiliconFlow as emergency fallback
-                fallback = self._try_emergency_fallback(prompt)
-                if fallback:
-                    return fallback
-
             logger.error(f"LLM report generation failed: {e}")
-            return self._mock_report(is_active_learning)
-
-        # Timeout or empty response fallback
-        fallback = self._try_emergency_fallback(prompt)
-        if fallback:
-            return fallback
+            
         return self._mock_report(is_active_learning)
+
+    @log_exception(logger)
+    def audit_consistency(self, contributions: Dict[str, Any], candidates: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Audit the consistency between different agents' findings.
+        Identifies contradictions (e.g., high activity but low stability).
+        """
+        if not self.available:
+            return {"consistent": True, "findings": []}
+            
+        prompt = (
+            "你是一个科研审计专家。请对比以下不同智能体对材料的评价，识别是否存在逻辑冲突或数据矛盾。\n"
+            "重点关注：\n"
+            "1. 预测活性极高但形成能（Formation Energy）过大（不稳定）且没有稳定化理由的情况。\n"
+            "2. 理论计算与 ML 预测趋势完全相反的情况。\n\n"
+            "待审计候选材料：\n"
+        )
+        
+        for cand in candidates[:10]:
+            formula = cand.get("formula", "Unknown")
+            props = cand.get("properties", {})
+            prompt += f"- {formula}: 活性分={props.get('predicted_activity')}, 形成能={props.get('formation_energy')}\n"
+            
+        prompt += "\n请以 JSON 格式返回审计结果，包含 'consistent' (bool) 和 'findings' (列表，每个项包含 'material', 'issue', 'severity')。只输出 JSON，格式如：{\"consistent\": false, \"findings\": [...]}"
+        
+        try:
+            res_text = self._call_with_timeout(self._call_gemini if self.backend == "gemini" else self._call_openai_compatible, prompt)
+            
+            # Parse JSON
+            import re
+            match = re.search(r'\{.*\}', res_text, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+            return json.loads(res_text)
+        except Exception as e:
+            logger.error(f"Audit consistency failed: {e}")
+            return {"consistent": True, "findings": []}
 
     def _call_gemini(self, prompt: str) -> str:
         """Call Gemini API."""
+        import time as _time
+        _start = _time.time()
         response = self.model.generate_content(prompt)
+        _elapsed = (_time.time() - _start) * 1000
+        
+        # V5 Token Tracking
+        try:
+            from src.services.common.token_tracker import get_token_tracker
+            tracker = get_token_tracker()
+            usage = getattr(response, 'usage_metadata', None)
+            in_tok = getattr(usage, 'prompt_token_count', len(prompt) // 4) if usage else len(prompt) // 4
+            out_tok = getattr(usage, 'candidates_token_count', len(response.text) // 4) if usage else len(response.text) // 4
+            tracker.log_usage(
+                model="gemini-2.5-flash",
+                task_type="report",
+                input_tokens=in_tok,
+                output_tokens=out_tok,
+                latency_ms=_elapsed
+            )
+        except Exception:
+            pass
+        
         return response.text
 
     def _call_openai_compatible(self, prompt: str) -> str:
         """Call OpenAI-compatible API (DeepSeek / SiliconFlow)."""
+        import time as _time
+        _start = _time.time()
         response = self.client.chat.completions.create(
             model=self.deepseek_model,
             messages=[
@@ -199,6 +244,25 @@ class ExpertReasoningService:
             temperature=0.7,
             max_tokens=1024,
         )
+        _elapsed = (_time.time() - _start) * 1000
+        
+        # V5 Token Tracking
+        try:
+            from src.services.common.token_tracker import get_token_tracker
+            tracker = get_token_tracker()
+            usage = getattr(response, 'usage', None)
+            in_tok = getattr(usage, 'prompt_tokens', 0) if usage else 0
+            out_tok = getattr(usage, 'completion_tokens', 0) if usage else 0
+            tracker.log_usage(
+                model=self.deepseek_model,
+                task_type="report",
+                input_tokens=in_tok,
+                output_tokens=out_tok,
+                latency_ms=_elapsed
+            )
+        except Exception:
+            pass
+        
         return response.choices[0].message.content
 
     def _try_emergency_fallback(self, prompt: str) -> Optional[str]:

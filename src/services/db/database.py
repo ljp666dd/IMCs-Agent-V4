@@ -402,3 +402,29 @@ class DatabaseService(ChatRepoMixin, PlanRepoMixin, MaterialRepoMixin):
                         pass
                 items.append(data)
             return items
+
+    def get_system_stats(self) -> Dict[str, Any]:
+        """Get overall database system statistics (M4 feature)."""
+        stats = {
+            "total_materials": 0,
+            "total_models": 0,
+            "total_tasks": 0,
+            "total_chat_sessions": 0
+        }
+        with self._get_conn() as conn:
+            cursor = conn.cursor()
+            try:
+                cursor.execute("SELECT COUNT(*) FROM materials")
+                stats["total_materials"] = cursor.fetchone()[0]
+                
+                cursor.execute("SELECT COUNT(*) FROM models")
+                stats["total_models"] = cursor.fetchone()[0]
+                
+                cursor.execute("SELECT COUNT(*) FROM robot_tasks")
+                stats["total_tasks"] = cursor.fetchone()[0]
+                
+                cursor.execute("SELECT COUNT(*) FROM chat_sessions")
+                stats["total_chat_sessions"] = cursor.fetchone()[0]
+            except sqlite3.OperationalError:
+                pass
+        return stats

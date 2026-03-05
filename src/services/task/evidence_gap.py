@@ -251,6 +251,21 @@ def recompute_evidence_post_gap(
                         )
         except Exception as e:
             logger.warning(f"Post-gap RAG failed: {e}")
+
+        # V5 Phase E: Pretrained GNN stability enrichment
+        try:
+            theory_agent = agents.get("theory")
+            if theory_agent and hasattr(theory_agent, "predict_stability"):
+                for mat in materials[:5]:
+                    mid = mat.get("material_id")
+                    if mid:
+                        stability = theory_agent.predict_stability(mid)
+                        if stability and stability.get("success"):
+                            mat["gnn_stability"] = stability.get("stability_score", 0)
+                            logger.info(f"GNN stability for {mid}: {stability.get('stability_score'):.3f}")
+        except Exception as e:
+            logger.warning(f"Post-gap GNN stability enrichment failed: {e}")
+
     except Exception as e:
         logger.warning(f"Post-gap evidence recompute failed: {e}")
 

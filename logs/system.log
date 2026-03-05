@@ -24987,3 +24987,1733 @@ AttributeError: 'DatabaseService' object has no attribute 'update_plan_step_stat
 [2026-03-04 15:51:41] [INFO] [src.agents.query_parser] Attempting LLM intent parsing...
 [2026-03-04 15:51:46] [INFO] [src.agents.query_parser] QueryParser: elements=['Fe', 'Ni', 'Pt', 'Ru', 'Au'], reaction=HOR, constraints=['high_activity', 'low_overpotential']
 [2026-03-04 15:51:46] [INFO] [src.agents.query_parser] LLMQueryParser result: {'target_elements': ['Pt', 'Ru'], 'target_reaction': 'OER', 'constraints': {'high_activity': ['高活性', '低过电位'], 'low_cost': ['成本低一点']}, 'resource_hints': {'exclude_elements': ['Fe', 'Ni'], 'only_elements': []}}
+[2026-03-04 21:39:08] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 21:41:55] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:03:45] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:03:45] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-04 22:15:09] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:43:46] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:44:42] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:44:50] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-04 22:44:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:44:50] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-04 22:44:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 22:44:50] [INFO] [src.services.robot.protocol_generator] ProtocolGenerator initialized.
+[2026-03-04 22:46:53] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:47:01] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-04 22:47:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 22:47:01] [INFO] [src.services.robot.protocol_generator] ProtocolGenerator initialized.
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-04 22:47:01] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 22:47:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:01] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 22:47:01] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-04 22:47:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高效且低成本基于非贵金属的HOR催化剂，要求具有良好的抗CO毒化能力。
+[2026-03-04 22:47:01] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=['low_cost']
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-04 22:47:01] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-04 22:47:01] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-04 22:47:16] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 22:47:16] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-04 22:47:16] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 22:47:16] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 22:47:16] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 22:47:16] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-04 22:47:16] [ERROR] [src.agents.orchestrator] Self-audit failed: cannot access local variable 'llm_service' where it is not associated with a value
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Orchestration completed in 15.89s, 105 candidates
+[2026-03-04 22:47:16] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-04 22:47:16] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 22:47:16] [INFO] [src.agents.orchestrator] Bayesian AL: 4 candidates selected (strategy=EI)
+[2026-03-04 22:47:16] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 22:47:16] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 4 uncertain champions.
+[2026-03-04 22:47:32] [ERROR] [src.agents.orchestrator] Strategy feedback failed: 'MetaController' object has no attribute 'strategy_weights'
+[2026-03-04 23:13:57] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-04 23:13:57] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=2&sortBy=submittedDate&sortOrder=descending
+[2026-03-04 23:14:00] [INFO] [src.services.literature.crawler] Found 2 papers.
+[2026-03-04 23:14:01] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-04 23:14:01] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-04 23:15:11] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-04 23:15:11] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=2&sortBy=submittedDate&sortOrder=descending
+[2026-03-04 23:15:13] [INFO] [src.services.literature.crawler] Found 2 papers.
+[2026-03-04 23:15:14] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-04 23:15:14] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-04 23:15:18] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 23:15:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:25] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-04 23:15:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 23:15:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 23:15:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 23:15:25] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-04 23:15:25] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] Orchestrating query: 寻可用作HOR的高效非贵金属电催化剂材料，要求成本极低。
+[2026-03-04 23:15:25] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=['low_cost']
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 23:15:25] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-04 23:15:25] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-04 23:15:39] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-04 23:15:39] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 23:15:39] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 23:15:40] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-04 23:15:40] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-04 23:15:40] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 23:15:40] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 23:15:40] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 23:15:40] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 23:15:40] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 23:15:40] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-04 23:15:52] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-04 23:15:52] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-04 23:15:52] [INFO] [src.agents.orchestrator] Orchestration completed in 27.29s, 105 candidates
+[2026-03-04 23:15:52] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-04 23:15:52] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:15:52] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-04 23:21:34] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-04 23:21:34] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=2&sortBy=submittedDate&sortOrder=descending
+[2026-03-04 23:21:36] [INFO] [src.services.literature.crawler] Found 2 papers.
+[2026-03-04 23:21:37] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-04 23:21:37] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-04 23:21:40] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 23:21:40] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:21:40] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:21:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:21:47] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-04 23:21:47] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-04 23:21:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:21:47] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-04 23:21:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:21:47] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-04 23:21:47] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-04 23:21:47] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] Orchestrating query: 寻可用作HOR的高效非贵金属电催化剂材料，要求成本极低。
+[2026-03-04 23:21:47] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=['low_cost']
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-04 23:21:47] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-04 23:21:47] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-04 23:22:00] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-04 23:22:00] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-04 23:22:00] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-04 23:22:00] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-04 23:22:00] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-04 23:22:00] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-04 23:22:00] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-04 23:22:00] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-04 23:22:00] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-04 23:22:00] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 23:22:00] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-04 23:22:24] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-04 23:22:24] [WARNING] [src.agents.orchestrator] Self-audit found 10 issues
+[2026-03-04 23:22:24] [INFO] [src.agents.orchestrator] Orchestration completed in 37.56s, 105 candidates
+[2026-03-04 23:22:24] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-04 23:22:24] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-04 23:22:24] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-04 23:22:24] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-04 23:22:24] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-04 23:22:24] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-04 23:22:39] [ERROR] [src.agents.orchestrator] Strategy feedback failed: 'MetaController' object has no attribute 'strategy_weights'
+[2026-03-05 00:21:35] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-05 00:21:35] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=1&sortBy=submittedDate&sortOrder=descending
+[2026-03-05 00:21:37] [INFO] [src.services.literature.crawler] Found 1 papers.
+[2026-03-05 00:21:38] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-05 00:21:38] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 00:21:42] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:21:42] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:21:42] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:21:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:21:48] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 00:21:48] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 00:21:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:21:48] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 00:21:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:21:48] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 00:21:48] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 00:21:48] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] Orchestrating query: 请研发一个适用于碱性介质的极高活性的低成本HOR合金催化剂 (Pt, Ni, Cu, Au等候选)
+[2026-03-05 00:21:48] [INFO] [src.agents.query_parser] QueryParser: elements=['Cu', 'Ni', 'Pt', 'Au'], reaction=HOR, constraints=['high_activity', 'low_cost']
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-05 00:21:48] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 00:21:48] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 00:22:01] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 00:22:01] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 00:22:01] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 00:22:02] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 00:22:02] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 00:22:02] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 00:22:02] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 00:22:02] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 00:22:02] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 00:22:02] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:22:02] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 00:22:25] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 00:22:25] [WARNING] [src.agents.orchestrator] Self-audit found 3 issues
+[2026-03-05 00:22:25] [INFO] [src.agents.orchestrator] Orchestration completed in 36.92s, 105 candidates
+[2026-03-05 00:22:25] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 00:22:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:22:25] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 00:22:25] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 00:22:25] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:22:25] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 00:22:40] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:42] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-05 00:24:42] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=1&sortBy=submittedDate&sortOrder=descending
+[2026-03-05 00:24:44] [INFO] [src.services.literature.crawler] Found 1 papers.
+[2026-03-05 00:24:45] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-05 00:24:45] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 00:24:49] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:24:49] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:49] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:56] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:56] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 00:24:56] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 00:24:56] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:56] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 00:24:56] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:24:56] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 00:24:56] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 00:24:56] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] Orchestrating query: 请研发一个适用于碱性介质的极高活性的低成本HOR合金催化剂 (Pt, Ni, Cu, Au等候选)
+[2026-03-05 00:24:56] [INFO] [src.agents.query_parser] QueryParser: elements=['Cu', 'Au', 'Ni', 'Pt'], reaction=HOR, constraints=['high_activity', 'low_cost']
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-05 00:24:56] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 00:24:56] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 00:25:09] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 00:25:09] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 00:25:09] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 00:25:10] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 00:25:10] [INFO] [src.agents.conflict_detector] ConflictDetector: 57 conflicts, 0 consensus materials
+[2026-03-05 00:25:10] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 00:25:10] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 00:25:10] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 00:25:10] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 00:25:10] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:25:10] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 00:25:30] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 00:25:30] [WARNING] [src.agents.orchestrator] Self-audit found 11 issues
+[2026-03-05 00:25:30] [INFO] [src.agents.orchestrator] Orchestration completed in 34.04s, 105 candidates
+[2026-03-05 00:25:30] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 00:25:30] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:25:30] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 00:25:30] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 00:25:30] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:25:30] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 00:25:44] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:00] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-05 00:30:00] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=1&sortBy=submittedDate&sortOrder=descending
+[2026-03-05 00:30:03] [INFO] [src.services.literature.crawler] Found 1 papers.
+[2026-03-05 00:30:04] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-05 00:30:04] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 00:30:08] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:30:08] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:08] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:14] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 00:30:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 00:30:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 00:30:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 00:30:14] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 00:30:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] Orchestrating query: 请研发一个适用于碱性介质的极高活性的低成本HOR合金催化剂 (Pt, Ni, Cu, Au等候选)
+[2026-03-05 00:30:14] [INFO] [src.agents.query_parser] QueryParser: elements=['Cu', 'Pt', 'Au', 'Ni'], reaction=HOR, constraints=['high_activity', 'low_cost']
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-05 00:30:14] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 00:30:14] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 00:30:28] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 00:30:28] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 00:30:28] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 00:30:28] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 00:30:28] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 00:30:28] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 00:30:28] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 00:30:28] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 00:30:28] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 00:30:28] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:30:28] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 00:30:50] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 00:30:50] [WARNING] [src.agents.orchestrator] Self-audit found 3 issues
+[2026-03-05 00:30:50] [INFO] [src.agents.orchestrator] Orchestration completed in 35.34s, 105 candidates
+[2026-03-05 00:30:50] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 00:30:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:30:50] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 00:30:50] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 00:30:50] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 00:30:50] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 00:31:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 00:31:04] [INFO] [src.services.robot.protocol_generator] ProtocolGenerator initialized.
+[2026-03-05 08:34:46] [INFO] [src.services.literature.crawler] ArxivCrawler initialized. Out dir: data/literature/raw
+[2026-03-05 08:34:46] [INFO] [src.services.literature.crawler] Fetching arXiv data: http://export.arxiv.org/api/query?search_query=all%3A%22electrocatalysis%22+OR+all%3A%22hydrogen+oxidation%22+OR+all%3A%22intermetallic%22&start=0&max_results=1&sortBy=submittedDate&sortOrder=descending
+[2026-03-05 08:34:48] [INFO] [src.services.literature.crawler] Found 1 papers.
+[2026-03-05 08:34:50] [INFO] [src.services.knowledge.graph_db] KnowledgeGraphDB initialized.
+[2026-03-05 08:34:50] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:34:54] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:34:54] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:34:54] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:02] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:02] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:35:02] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:35:02] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:02] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:35:02] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:02] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:35:02] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:35:02] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] Orchestrating query: 请研发一个适用于碱性介质的极高活性的低成本HOR合金催化剂 (Pt, Ni, Cu, Au等候选)
+[2026-03-05 08:35:02] [INFO] [src.agents.query_parser] QueryParser: elements=['Au', 'Ni', 'Pt', 'Cu'], reaction=HOR, constraints=['high_activity', 'low_cost']
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.90
+[2026-03-05 08:35:02] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:35:02] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:35:15] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:35:15] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:35:15] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:35:16] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:35:16] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 08:35:16] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:35:16] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:35:16] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:35:16] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:35:16] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:35:16] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 08:35:36] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 08:35:36] [WARNING] [src.agents.orchestrator] Self-audit found 11 issues
+[2026-03-05 08:35:36] [INFO] [src.agents.orchestrator] Orchestration completed in 33.79s, 105 candidates
+[2026-03-05 08:35:36] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 08:35:36] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:36] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 08:35:36] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 08:35:36] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:35:36] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 08:35:48] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:35:48] [INFO] [src.services.robot.protocol_generator] ProtocolGenerator initialized.
+[2026-03-05 08:40:49] [WARNING] [src.api.main] MP_API_KEY is using the default placeholder; set your real API key in .env.
+[2026-03-05 08:40:49] [WARNING] [src.api.main] IMCS_CORS_ORIGINS is '*'; restrict origins for production.
+[2026-03-05 08:40:49] [WARNING] [src.api.main] CORS allow_credentials=True with wildcard origins is not recommended.
+[2026-03-05 08:40:49] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:40:57] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:40:57] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:08] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:42:22] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:42:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:29] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:29] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:42:29] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:42:29] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:29] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:42:29] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:42:29] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:42:29] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:42:29] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。
+[2026-03-05 08:42:29] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 08:42:29] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:42:29] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:42:45] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:42:45] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:42:46] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:42:46] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:42:47] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 08:42:47] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:42:47] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:42:47] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:42:47] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:42:47] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:42:47] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 08:43:13] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 08:43:13] [WARNING] [src.agents.orchestrator] Self-audit found 4 issues
+[2026-03-05 08:43:13] [INFO] [src.agents.orchestrator] Orchestration completed in 43.60s, 105 candidates
+[2026-03-05 08:43:13] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 08:43:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:13] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 08:43:13] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 08:43:13] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:43:13] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 08:43:27] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:43:47] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:43:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:47] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:43:47] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:43:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:47] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:43:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:43:47] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:43:47] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:43:47] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。
+[2026-03-05 08:43:47] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 08:43:47] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:43:47] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:44:01] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:44:01] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:44:01] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:44:02] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:44:02] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 08:44:02] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:44:02] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:44:02] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:44:02] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:44:02] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:44:02] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 08:44:12] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 08:44:12] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-05 08:44:12] [INFO] [src.agents.orchestrator] Orchestration completed in 24.88s, 105 candidates
+[2026-03-05 08:44:12] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 08:44:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:44:12] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 08:44:12] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 08:44:12] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:44:12] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 08:44:25] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:45:38] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:45:38] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:45:38] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:45:38] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:45:38] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:45:38] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:45:38] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:45:38] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:45:38] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:45:38] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:45:38] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。
+[2026-03-05 08:45:38] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:45:38] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:45:53] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:45:53] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:45:53] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:45:54] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:45:54] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 08:45:54] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:45:54] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:45:54] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:45:54] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:45:54] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:45:54] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 08:46:12] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-05 08:46:12] [INFO] [src.agents.orchestrator] Orchestration completed in 34.46s, 105 candidates
+[2026-03-05 08:46:12] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 08:46:12] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:46:12] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 08:46:12] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 08:46:12] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:46:12] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 08:46:27] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:47:43] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:06] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:49:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:23] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:49:23] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:49:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:23] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:49:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:49:23] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:49:23] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:49:23] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。
+[2026-03-05 08:49:23] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 08:49:23] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:49:23] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:49:35] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:49:35] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:49:35] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:49:36] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:49:36] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 08:49:36] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:49:36] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:49:36] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:49:36] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:49:36] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:49:36] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 08:50:01] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 08:50:01] [WARNING] [src.agents.orchestrator] Self-audit found 11 issues
+[2026-03-05 08:50:01] [INFO] [src.agents.orchestrator] Orchestration completed in 37.39s, 105 candidates
+[2026-03-05 08:50:01] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 08:50:01] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:50:01] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 08:50:01] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 08:50:01] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:50:01] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 08:50:13] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:50:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:51:06] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 08:51:06] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 08:59:45] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 08:59:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 08:59:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 08:59:45] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 08:59:45] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 08:59:45] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。
+[2026-03-05 08:59:45] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 08:59:45] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 08:59:58] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 08:59:58] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 08:59:58] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 08:59:59] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 08:59:59] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 08:59:59] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 08:59:59] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 08:59:59] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 08:59:59] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 08:59:59] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 08:59:59] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:00:10] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-05 09:00:10] [INFO] [src.agents.orchestrator] Orchestration completed in 24.53s, 105 candidates
+[2026-03-05 09:00:10] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:00:10] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:00:10] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:00:10] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:00:10] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:00:10] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:00:23] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 09:00:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:07] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:51] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 09:03:51] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 09:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:51] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 09:03:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:03:51] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 09:03:51] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 09:03:51] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 09:03:51] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 09:03:51] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 09:03:51] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 09:04:05] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence) electrocatalyst alloy exchange current density overpotential j0 Co
+[2026-03-05 09:04:07] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-03-05 09:04:07] [INFO] [src.services.literature.search_engine] Searching arXiv: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence) electrocatalyst alloy exchange current density overpotential j0 Co
+[2026-03-05 09:04:24] [INFO] [src.services.literature.search_engine] Found 0 papers on arXiv.
+[2026-03-05 09:04:24] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: "hydrogen oxidation" OR HOR electrocatalyst alloy Co
+[2026-03-05 09:04:26] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-03-05 09:04:26] [INFO] [src.services.literature.search_engine] Searching arXiv: "hydrogen oxidation" OR HOR electrocatalyst alloy Co
+[2026-03-05 09:04:27] [INFO] [src.services.literature.search_engine] Found 0 papers on arXiv.
+[2026-03-05 09:04:28] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: HOR hydrogen oxidation electrocatalyst alloy
+[2026-03-05 09:04:29] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-03-05 09:04:29] [INFO] [src.services.literature.search_engine] Searching arXiv: HOR hydrogen oxidation electrocatalyst alloy
+[2026-03-05 09:04:31] [INFO] [src.services.literature.search_engine] Found 0 papers on arXiv.
+[2026-03-05 09:04:31] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 09:04:31] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 09:04:31] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 09:04:31] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 09:04:31] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 09:04:31] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 09:04:31] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 09:04:31] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 09:04:31] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 09:04:31] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:04:31] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:04:45] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 09:04:45] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-05 09:04:45] [INFO] [src.agents.orchestrator] Orchestration completed in 53.24s, 105 candidates
+[2026-03-05 09:04:45] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:04:45] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:04:45] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:04:45] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:04:45] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:04:45] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:04:46] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 53.547656963s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 53
+}
+]
+[2026-03-05 09:04:46] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 09:05:13] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 09:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 09:05:13] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:13] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 09:05:13] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 09:05:13] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 09:05:13] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 09:05:13] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 09:05:25] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 09:05:25] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 09:05:25] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 09:05:26] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 09:05:26] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 09:05:26] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 09:05:26] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 09:05:26] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 09:05:26] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 09:05:26] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:05:26] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:05:27] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 12.254186673s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 12
+}
+]
+[2026-03-05 09:05:27] [INFO] [src.agents.orchestrator] Orchestration completed in 14.43s, 105 candidates
+[2026-03-05 09:05:27] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:05:27] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:05:27] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:05:27] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:05:27] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:05:27] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:05:28] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 10.926898199s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 10
+}
+]
+[2026-03-05 09:05:28] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 09:06:05] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 09:06:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 09:06:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:05] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 09:06:05] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 09:06:05] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 09:06:05] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 09:06:05] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 09:06:18] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 09:06:18] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 09:06:18] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 09:06:19] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 09:06:19] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 09:06:19] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 09:06:19] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 09:06:19] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 09:06:19] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 09:06:19] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:06:19] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:06:21] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 18.786762706s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 18
+}
+]
+[2026-03-05 09:06:21] [INFO] [src.agents.orchestrator] Orchestration completed in 15.51s, 105 candidates
+[2026-03-05 09:06:21] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:06:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:06:21] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:06:21] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:06:21] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:06:21] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:06:22] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 17.551957552s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 17
+}
+]
+[2026-03-05 09:06:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 09:12:21] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 09:12:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 09:12:21] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:21] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 09:12:21] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 09:12:21] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 09:12:21] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 09:12:21] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 09:12:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:22] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 09:12:22] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 09:12:22] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 09:12:22] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:22] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 09:12:22] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 09:12:23] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:23] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 09:12:23] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 09:12:23] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 09:12:23] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 09:12:23] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 09:12:23] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂，具备极高的活性且尽量减少贵金属使用。 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 09:12:23] [INFO] [src.agents.query_parser] QueryParser: elements=['Au'], reaction=HOR, constraints=[]
+[2026-03-05 09:12:23] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 09:12:27] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 09:12:27] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 09:12:28] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 09:12:28] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 09:12:28] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 09:12:28] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 09:12:41] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 09:12:41] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 09:12:43] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 09:12:49] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 09:12:49] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 09:12:49] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 09:12:49] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 09:12:49] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 09:12:50] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 09:12:50] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 09:12:50] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:12:50] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:12:50] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 09:12:50] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 09:12:50] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 09:12:50] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:12:50] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 09:12:51] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 48.325610687s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 48
+}
+]
+[2026-03-05 09:12:51] [INFO] [src.agents.orchestrator] Orchestration completed in 28.31s, 105 candidates
+[2026-03-05 09:12:51] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:12:51] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:12:51] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:12:51] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:12:51] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:12:51] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:12:52] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 46.997501463s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 46
+}
+]
+[2026-03-05 09:12:52] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:13:05] [WARNING] [src.agents.orchestrator] Self-audit found 2 issues
+[2026-03-05 09:13:05] [INFO] [src.agents.orchestrator] Orchestration completed in 44.38s, 105 candidates
+[2026-03-05 09:13:05] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 09:13:05] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 09:13:05] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 09:13:05] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 09:13:05] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 09:13:05] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 09:13:07] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 32.748582761s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 32
+}
+]
+[2026-03-05 09:13:07] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:55] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 14:25:58] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:58] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:58] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:58] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 14:25:58] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 14:25:58] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:58] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 14:25:58] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:25:58] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 14:25:58] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 14:25:58] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂 (Mandatory Constraint: Must have literature evidence)
+[2026-03-05 14:25:58] [INFO] [src.agents.query_parser] QueryParser: elements=[], reaction=HOR, constraints=[]
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 14:25:58] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 14:25:58] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 14:26:11] [INFO] [src.services.literature.search_engine] Searching Semantic Scholar: 寻找适合碱性介质的高性价比 HOR 催化剂 (Mandatory Constraint: Must have literature evidence) electrocatalyst alloy Co
+[2026-03-05 14:26:13] [INFO] [src.services.literature.search_engine] Found 0 papers on SS.
+[2026-03-05 14:26:13] [INFO] [src.services.literature.search_engine] Searching arXiv: 寻找适合碱性介质的高性价比 HOR 催化剂 (Mandatory Constraint: Must have literature evidence) electrocatalyst alloy Co
+[2026-03-05 14:26:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:14] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 14:26:14] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 14:26:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:14] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 14:26:14] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:14] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 14:26:14] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 14:26:14] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] Orchestrating query: 寻找适合碱性介质的高性价比 HOR 催化剂
+[2026-03-05 14:26:14] [INFO] [src.agents.query_parser] QueryParser: elements=[], reaction=HOR, constraints=[]
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 14:26:14] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 14:26:16] [INFO] [src.services.literature.search_engine] Found 5 papers on arXiv.
+[2026-03-05 14:26:16] [WARNING] [src.services.common.api_cache] Cache write error for key {"args": ["\u5bfb\u627e\u9002\u5408\u78b1\u6027\u4ecb\u8d28\u7684\u9ad8\u6027\u4ef7\u6bd4 HOR \u50ac\u5316\u5242 (Mandatory Constraint: Must have literature evidence) electrocatalyst alloy Co", 5], "func": "search_arxiv", "kwargs": {}, "namespace": "search_arxiv"}: Object of type PaperInfo is not JSON serializable
+[2026-03-05 14:26:16] [WARNING] [src.agents.core.literature_agent] Literature filter removed all results; returning empty list.
+[2026-03-05 14:26:17] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 14:26:17] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 14:26:19] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 14:26:27] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 14:26:27] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 14:26:27] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 14:26:27] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 14:26:28] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 14:26:28] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 14:26:28] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 14:26:28] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 14:26:28] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 14:26:28] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 14:26:28] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.20265379975874548, 'ml': 0.3323281061519904, 'experiment': 0.3673100120627261, 'literature': 0.097708082026538}
+[2026-03-05 14:26:28] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 14:26:28] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 14:26:28] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 14:26:44] [INFO] [src.services.common.token_tracker] TokenTracker initialized.
+[2026-03-05 14:26:44] [WARNING] [src.agents.orchestrator] Self-audit found 3 issues
+[2026-03-05 14:26:44] [INFO] [src.agents.orchestrator] Orchestration completed in 30.55s, 105 candidates
+[2026-03-05 14:26:44] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 14:26:44] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:44] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 14:26:44] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 14:26:44] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 14:26:44] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 14:26:49] [WARNING] [src.agents.orchestrator] Self-audit found 11 issues
+[2026-03-05 14:26:49] [INFO] [src.agents.orchestrator] Orchestration completed in 50.78s, 105 candidates
+[2026-03-05 14:26:49] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 14:26:49] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:26:49] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 14:26:49] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 14:26:49] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 14:26:49] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 14:26:50] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 49.512625056s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 49
+}
+]
+[2026-03-05 14:26:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:27:00] [INFO] [src.services.theory.market_data] MarketDataService initialized with elemental price dict.
+[2026-03-05 14:27:00] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:37:55] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:37:55] [INFO] [src.agents.core.task_manager] TaskManagerAgent initialized (v4.0 - Orchestrator Driven).
+[2026-03-05 14:37:55] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:37:55] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 14:37:55] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:37:55] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 14:37:55] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 14:37:55] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:37:55] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 14:38:01] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 14:38:01] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 14:42:47] [INFO] [src.services.db.database] Database initialized at C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\imcs.db
+[2026-03-05 14:43:56] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-03-05 14:43:56] [INFO] [src.services.ml.data_manager] Loaded 100 samples, 42 features.
+[2026-03-05 14:43:56] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=80, Test=20
+[2026-03-05 14:43:56] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-05 14:43:56] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['std_Z', 'avg_mass', 'max_electronegativity', 'avg_radius', 'max_radius', 'lattice_b', 'lattice_c', 'gamma', 'avg_lattice', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-05 14:43:56] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpepibk9gv.pkl to data/ml_agent/models\RandomForest_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\RandomForest_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpp30zn5vv.pkl to data/ml_agent/models\GradientBoosting_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\GradientBoosting_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpm53r7jnu.pkl to data/ml_agent/models\ExtraTrees_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\ExtraTrees_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp6bxp11em.pkl to data/ml_agent/models\AdaBoost_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\AdaBoost_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpgumjzybf.pkl to data/ml_agent/models\Ridge_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\Ridge_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train Ridge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpbnhnhsa8.pkl to data/ml_agent/models\BayesianRidge_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\BayesianRidge_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp8sjd9dkf.pkl to data/ml_agent/models\ElasticNet_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\ElasticNet_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmphwobunv3.pkl to data/ml_agent/models\SVR_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\SVR_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train SVR: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpddjvqtt0.pkl to data/ml_agent/models\KNN_v_20260305_144357.pkl
+[2026-03-05 14:43:57] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\KNN_best.pkl
+[2026-03-05 14:43:57] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:43:57] [ERROR] [src.services.ml.trainer] Failed to train KNN: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:43:57] [INFO] [src.services.ml.trainer] Running GridSearchCV for XGBoost (5-fold CV)...
+[2026-03-05 14:44:06] [INFO] [src.services.ml.trainer] Best params found for XGBoost: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 100}
+[2026-03-05 14:44:06] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp32hifsqj.pkl to data/ml_agent/models\XGBoost_v_20260305_144406.pkl
+[2026-03-05 14:44:06] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\XGBoost_best.pkl
+[2026-03-05 14:44:06] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:44:06] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:44:06] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpdhj05kwj.pkl to data/ml_agent/models\LightGBM_v_20260305_144406.pkl
+[2026-03-05 14:44:06] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\LightGBM_best.pkl
+[2026-03-05 14:44:06] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:44:06] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:44:06] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-05 14:44:06] [ERROR] [src.services.ml.trainer] Failed to train DNN_256_128_64: name 'ModelRegistry' is not defined
+[2026-03-05 14:44:06] [ERROR] [src.services.ml.trainer] Failed to train DNN_512_256_128: name 'ModelRegistry' is not defined
+[2026-03-05 14:44:06] [ERROR] [src.services.ml.trainer] Failed to train DNN_128_64_32: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:37] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-03-05 14:47:37] [INFO] [src.services.ml.data_manager] Loaded 100 samples, 42 features.
+[2026-03-05 14:47:37] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=80, Test=20
+[2026-03-05 14:47:37] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-05 14:47:37] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['std_Z', 'avg_mass', 'max_electronegativity', 'avg_radius', 'max_radius', 'lattice_b', 'lattice_c', 'gamma', 'avg_lattice', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-05 14:47:37] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-05 14:47:37] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp_juackjb.pkl to data/ml_agent/models\RandomForest_v_20260305_144737.pkl
+[2026-03-05 14:47:37] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:37] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmprg9hbjvr.pkl to data/ml_agent/models\GradientBoosting_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpvqhj6o8j.pkl to data/ml_agent/models\ExtraTrees_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpag0ioqk0.pkl to data/ml_agent/models\AdaBoost_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpwvwy2qvo.pkl to data/ml_agent/models\Ridge_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train Ridge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp9hlyk6ag.pkl to data/ml_agent/models\BayesianRidge_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpdh17s4d_.pkl to data/ml_agent/models\ElasticNet_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmphbwvxxix.pkl to data/ml_agent/models\SVR_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train SVR: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp5pli9dp4.pkl to data/ml_agent/models\KNN_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train KNN: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.trainer] Running GridSearchCV for XGBoost (5-fold CV)...
+[2026-03-05 14:47:38] [INFO] [src.services.ml.trainer] Best params found for XGBoost: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 100}
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp6ve_5u5v.pkl to data/ml_agent/models\XGBoost_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmprw1_3jqb.pkl to data/ml_agent/models\LightGBM_v_20260305_144738.pkl
+[2026-03-05 14:47:38] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:38] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train DNN_256_128_64: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train DNN_512_256_128: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:38] [ERROR] [src.services.ml.trainer] Failed to train DNN_128_64_32: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:46] [INFO] [src.services.ml.data_manager] Loading theory data from C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\data\theory\formation_energy_extended.json, target=formation_energy
+[2026-03-05 14:47:46] [INFO] [src.services.ml.data_manager] Loaded 100 samples, 42 features.
+[2026-03-05 14:47:46] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=80, Test=20
+[2026-03-05 14:47:46] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-05 14:47:46] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['std_Z', 'avg_mass', 'max_electronegativity', 'avg_radius', 'max_radius', 'lattice_b', 'lattice_c', 'gamma', 'avg_lattice', 'lattice_distortion', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-05 14:47:46] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-05 14:47:46] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpn56pkni6.pkl to data/ml_agent/models\RandomForest_v_20260305_144746.pkl
+[2026-03-05 14:47:46] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:46] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:46] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpmm_b3cgl.pkl to data/ml_agent/models\GradientBoosting_v_20260305_144746.pkl
+[2026-03-05 14:47:46] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:46] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:46] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpup3z4_j9.pkl to data/ml_agent/models\ExtraTrees_v_20260305_144746.pkl
+[2026-03-05 14:47:46] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:46] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmprlb18vej.pkl to data/ml_agent/models\AdaBoost_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpn8i9045w.pkl to data/ml_agent/models\Ridge_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train Ridge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpg07jv9in.pkl to data/ml_agent/models\BayesianRidge_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp88u0__n1.pkl to data/ml_agent/models\ElasticNet_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp1dy6p16f.pkl to data/ml_agent/models\SVR_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train SVR: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpex9wixea.pkl to data/ml_agent/models\KNN_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train KNN: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.trainer] Running GridSearchCV for XGBoost (5-fold CV)...
+[2026-03-05 14:47:47] [INFO] [src.services.ml.trainer] Best params found for XGBoost: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 100}
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpux7bc17r.pkl to data/ml_agent/models\XGBoost_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp7huk7snw.pkl to data/ml_agent/models\LightGBM_v_20260305_144747.pkl
+[2026-03-05 14:47:47] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:47:47] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train DNN_256_128_64: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train DNN_512_256_128: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:47] [ERROR] [src.services.ml.trainer] Failed to train DNN_128_64_32: name 'ModelRegistry' is not defined
+[2026-03-05 14:47:54] [INFO] [src.agents.core.ml_agent] Loading training data from DB (target=d_band_center)...
+[2026-03-05 14:47:54] [INFO] [src.agents.core.ml_agent] DOS target selected; using structure-only features as input.
+[2026-03-05 14:47:59] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=1342, Test=336
+[2026-03-05 14:47:59] [INFO] [src.agents.core.ml_agent] Loaded 1678 samples from DB (features=42).
+[2026-03-05 14:47:59] [INFO] [src.agents.core.ml_agent] Performing feature selection (target top_n=12)...
+[2026-03-05 14:48:00] [INFO] [src.agents.core.ml_agent] Selected 12 features: ['volume_per_atom', 'density', 'packing_fraction', 'min_Z', 'avg_electronegativity', 'max_electronegativity', 'min_electronegativity', 'range_electronegativity', 'avg_radius', 'min_radius', 'avg_valence_electrons', 'std_valence_electrons']
+[2026-03-05 14:48:00] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-05 14:48:01] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpp9yiwq_p.pkl to data/ml_agent/models\RandomForest_v_20260305_144801.pkl
+[2026-03-05 14:48:01] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\RandomForest_best.pkl
+[2026-03-05 14:48:01] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:01] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:02] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp2y07q8uz.pkl to data/ml_agent/models\GradientBoosting_v_20260305_144802.pkl
+[2026-03-05 14:48:02] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\GradientBoosting_best.pkl
+[2026-03-05 14:48:02] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:02] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmph2rheoa8.pkl to data/ml_agent/models\ExtraTrees_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\ExtraTrees_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp6jbvqc13.pkl to data/ml_agent/models\AdaBoost_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\AdaBoost_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp65oo0v54.pkl to data/ml_agent/models\Ridge_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\Ridge_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train Ridge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpo26p4ioe.pkl to data/ml_agent/models\BayesianRidge_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\BayesianRidge_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp737xb75z.pkl to data/ml_agent/models\ElasticNet_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\ElasticNet_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpk6ue0l_a.pkl to data/ml_agent/models\SVR_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\SVR_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train SVR: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp82lxdr2_.pkl to data/ml_agent/models\KNN_v_20260305_144803.pkl
+[2026-03-05 14:48:03] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\KNN_best.pkl
+[2026-03-05 14:48:03] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:03] [ERROR] [src.services.ml.trainer] Failed to train KNN: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:03] [INFO] [src.services.ml.trainer] Running GridSearchCV for XGBoost (5-fold CV)...
+[2026-03-05 14:48:04] [INFO] [src.services.ml.trainer] Best params found for XGBoost: {'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 100}
+[2026-03-05 14:48:04] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpnyfznvx6.pkl to data/ml_agent/models\XGBoost_v_20260305_144804.pkl
+[2026-03-05 14:48:04] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\XGBoost_best.pkl
+[2026-03-05 14:48:04] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:04] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:04] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmph_u5upnl.pkl to data/ml_agent/models\LightGBM_v_20260305_144804.pkl
+[2026-03-05 14:48:04] [INFO] [src.services.ml.model_registry] Updated best model reference: data/ml_agent/models\LightGBM_best.pkl
+[2026-03-05 14:48:04] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 14:48:04] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 14:48:04] [INFO] [src.services.ml.trainer] Training 3 DNN models...
+[2026-03-05 14:48:04] [ERROR] [src.services.ml.trainer] Failed to train DNN_256_128_64: name 'ModelRegistry' is not defined
+[2026-03-05 14:48:04] [ERROR] [src.services.ml.trainer] Failed to train DNN_512_256_128: name 'ModelRegistry' is not defined
+[2026-03-05 14:48:04] [ERROR] [src.services.ml.trainer] Failed to train DNN_128_64_32: name 'ModelRegistry' is not defined
+[2026-03-05 14:51:04] [INFO] [src.services.task.planner] Created plan task_20260305_145104 ([catalyst_discovery]) for: 推荐HOR有序合金催化剂、 (dynamic)
+[2026-03-05 14:51:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:25] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 14:51:25] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 14:51:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:25] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 14:51:25] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:25] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 14:51:32] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 14:51:32] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 14:51:32] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:32] [INFO] [src.services.task.executor] Executing Plan: task_20260305_145104
+[2026-03-05 14:51:32] [INFO] [src.services.task.executor] Evidence auto-fill: True (rounds=1)
+[2026-03-05 14:51:32] [INFO] [src.services.task.executor] Step step_1: [literature] search
+[2026-03-05 14:51:44] [INFO] [src.services.task.executor] Step step_2: [literature] harvest_hor_seed
+[2026-03-05 14:51:44] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 14:51:57] [ERROR] [src.agents.core.literature_agent] Exception in harvest_hor_seed: cannot access local variable 'vision_seed_data' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\core\logger.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Administrator\Desktop\课题2-有序合金-HOR\IMCs\IMCs\src\agents\core\literature_agent.py", line 376, in harvest_hor_seed
+    for item in vision_seed_data:
+                ^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'vision_seed_data' where it is not associated with a value
+[2026-03-05 14:51:57] [ERROR] [src.services.task.executor] Step step_2 failed (attempt 1): cannot access local variable 'vision_seed_data' where it is not associated with a value
+[2026-03-05 14:58:05] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:16:47] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:16:47] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:16:47] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 15:16:47] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 15:16:47] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:16:47] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 15:16:47] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:16:47] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] Orchestrating query: Find low cost HOR catalysts without Pt
+[2026-03-05 15:16:47] [INFO] [src.agents.query_parser] QueryParser: elements=['Pt'], reaction=HOR, constraints=['low_cost']
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 15:16:47] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 15:16:47] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 15:17:00] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 15:17:00] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 15:17:00] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 15:17:01] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 15:17:01] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 15:17:01] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 15:17:01] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 15:17:01] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 15:17:01] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 15:17:01] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:17:01] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 15:17:02] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 36.887926523s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 36
+}
+]
+[2026-03-05 15:17:02] [INFO] [src.agents.orchestrator] Orchestration completed in 15.42s, 105 candidates
+[2026-03-05 15:17:02] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 15:17:02] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:17:02] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 15:17:02] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 15:17:02] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:17:02] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 15:17:04] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 35.401175189s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 35
+}
+]
+[2026-03-05 15:17:04] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:23:50] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:23:50] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 15:23:50] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 15:23:50] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:23:50] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 15:23:50] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:23:50] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] Orchestrating query: Find low cost HOR catalysts without Pt
+[2026-03-05 15:23:50] [INFO] [src.agents.query_parser] QueryParser: elements=['Pt'], reaction=HOR, constraints=['low_cost']
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 15:23:50] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 15:23:50] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 15:24:04] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 15:24:04] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 15:24:04] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 15:24:04] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 15:24:05] [INFO] [src.agents.conflict_detector] ConflictDetector: 56 conflicts, 0 consensus materials
+[2026-03-05 15:24:05] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 15:24:05] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 15:24:05] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 15:24:05] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 15:24:05] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:24:05] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 15:24:06] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.148711913s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+[2026-03-05 15:24:06] [INFO] [src.agents.orchestrator] Orchestration completed in 15.99s, 105 candidates
+[2026-03-05 15:24:06] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 15:24:06] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:24:06] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 15:24:06] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 15:24:06] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:24:06] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 15:24:07] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 31.901836301s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 31
+}
+]
+[2026-03-05 15:24:07] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:25:55] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:25:55] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:25:55] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:26:09] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:09] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:26:09] [INFO] [src.services.ml.data_manager] Loading experimental data from C:\Users\ADMINI~1\AppData\Local\Temp\tmpdcjgrwf2.csv
+[2026-03-05 15:26:09] [INFO] [src.services.ml.data_manager] Split & Scaled data: Train=40, Test=10
+[2026-03-05 15:26:09] [INFO] [src.services.ml.trainer] Training 11 traditional models...
+[2026-03-05 15:26:09] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpkhifvpyy.pkl to data/ml_agent/models\RandomForest_v_20260305_152609.pkl
+[2026-03-05 15:26:09] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:09] [ERROR] [src.services.ml.trainer] Failed to train RandomForest: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpesot1haf.pkl to data/ml_agent/models\GradientBoosting_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train GradientBoosting: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp_2docj65.pkl to data/ml_agent/models\ExtraTrees_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train ExtraTrees: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpfo4i30wc.pkl to data/ml_agent/models\AdaBoost_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train AdaBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpt79k0cf7.pkl to data/ml_agent/models\Ridge_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train Ridge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpvywkarah.pkl to data/ml_agent/models\BayesianRidge_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train BayesianRidge: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp6xcpb9x2.pkl to data/ml_agent/models\ElasticNet_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train ElasticNet: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmppt3ojdaw.pkl to data/ml_agent/models\SVR_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train SVR: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmpt2kmjy12.pkl to data/ml_agent/models\KNN_v_20260305_152610.pkl
+[2026-03-05 15:26:10] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:10] [ERROR] [src.services.ml.trainer] Failed to train KNN: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:10] [INFO] [src.services.ml.trainer] Running GridSearchCV for XGBoost (5-fold CV)...
+[2026-03-05 15:26:17] [INFO] [src.services.ml.trainer] Best params found for XGBoost: {'learning_rate': 0.05, 'max_depth': 3, 'n_estimators': 50}
+[2026-03-05 15:26:17] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp3qhrv408.pkl to data/ml_agent/models\XGBoost_v_20260305_152617.pkl
+[2026-03-05 15:26:17] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:17] [ERROR] [src.services.ml.trainer] Failed to train XGBoost: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:17] [INFO] [src.services.ml.model_registry] Copied model C:\Users\ADMINI~1\AppData\Local\Temp\tmp41hds9vd.pkl to data/ml_agent/models\LightGBM_v_20260305_152617.pkl
+[2026-03-05 15:26:18] [WARNING] [src.services.ml.trainer] Could not write experiment log: name 'json' is not defined
+[2026-03-05 15:26:18] [ERROR] [src.services.ml.trainer] Failed to train LightGBM: ModelResult.__init__() got an unexpected keyword argument 'version'
+[2026-03-05 15:26:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:18] [WARNING] [src.services.ml.pretrained_bridge] PretrainedGNNBridge: No pretrained model available. Install chgnet (`pip install chgnet`) for full functionality.
+[2026-03-05 15:26:18] [INFO] [src.agents.core.theory_agent] TheoryDataAgent initialized with services and database.
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] TheoryAgent initialized with protocol
+[2026-03-05 15:26:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:18] [INFO] [src.agents.core.ml_agent] MLAgent initialized with services and database.
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] MLAgent initialized with protocol
+[2026-03-05 15:26:18] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:18] [INFO] [src.agents.core.experiment_agent] ExperimentDataAgent initialized with services and database.
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] ExperimentAgent initialized with protocol
+[2026-03-05 15:26:18] [INFO] [src.services.llm.vision_service] VisionService initialized with Gemini 1.5 Flash.
+[2026-03-05 15:26:18] [INFO] [src.agents.core.literature_agent] LiteratureAgent initialized with services.
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] LiteratureAgent initialized with protocol
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] Orchestrating query: Find low cost HOR catalysts without Pt
+[2026-03-05 15:26:18] [INFO] [src.agents.query_parser] QueryParser: elements=['Pt'], reaction=HOR, constraints=['low_cost']
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] === Iteration 1 ===
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] [theory] can_contribute=True, confidence=0.70
+[2026-03-05 15:26:18] [INFO] [src.ml.hor_predictor] HOR activity model loaded successfully
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] [ml] can_contribute=True, confidence=0.85
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] [experiment] can_contribute=True, confidence=0.90
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] [literature] can_contribute=True, confidence=0.60
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] Execution plan (DAG Layers): [['theory', 'literature'], ['ml'], ['experiment']]
+[2026-03-05 15:26:18] [INFO] [src.agents.orchestrator] Executing Layer 0: ['theory', 'literature']
+[2026-03-05 15:26:31] [INFO] [src.agents.orchestrator] Executing Layer 1: ['ml']
+[2026-03-05 15:26:31] [INFO] [src.agents.protocol_impl] MLAgent: No upstream candidates provided, fetching directly from local database...
+[2026-03-05 15:26:31] [INFO] [src.agents.protocol_impl] MLAgent: fallback fetched 100 materials from db
+[2026-03-05 15:26:31] [INFO] [src.agents.orchestrator] Executing Layer 2: ['experiment']
+[2026-03-05 15:26:32] [INFO] [src.agents.conflict_detector] ConflictDetector: 55 conflicts, 0 consensus materials
+[2026-03-05 15:26:32] [INFO] [src.agents.orchestrator] Fusing contributions with AdvancedFusionEngine...
+[2026-03-05 15:26:32] [INFO] [src.agents.fusion] Starting advanced fusion...
+[2026-03-05 15:26:32] [INFO] [src.agents.fusion] Adjusted weights: {'theory': 0.22764227642276424, 'ml': 0.2750677506775068, 'experiment': 0.31436314363143636, 'literature': 0.1829268292682927}
+[2026-03-05 15:26:32] [INFO] [src.agents.fusion] Collected 105 candidates
+[2026-03-05 15:26:32] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:26:32] [INFO] [src.agents.orchestrator] Performing global self-audit for consistency...
+[2026-03-05 15:26:33] [ERROR] [src.services.llm.expert_reasoning] Audit consistency failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 6.068946962s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 6
+}
+]
+[2026-03-05 15:26:33] [INFO] [src.agents.orchestrator] Orchestration completed in 15.72s, 105 candidates
+[2026-03-05 15:26:33] [INFO] [src.services.ml.bayesian_al] BayesianALService initialized with EI strategy (xi=0.01).
+[2026-03-05 15:26:33] [INFO] [src.services.db.database] Database initialized at data\imcs.db
+[2026-03-05 15:26:33] [INFO] [src.services.ml.bayesian_al] Selected 5 candidates via MO-AL (0 in Pareto front).
+[2026-03-05 15:26:33] [INFO] [src.agents.orchestrator] Bayesian AL: 5 candidates selected (strategy=EI)
+[2026-03-05 15:26:33] [INFO] [src.services.llm.expert_reasoning] ExpertReasoningService initialized with Gemini backend.
+[2026-03-05 15:26:33] [WARNING] [src.agents.orchestrator] Active Learning Triggered! 5 uncertain champions.
+[2026-03-05 15:26:35] [ERROR] [src.services.llm.expert_reasoning] LLM report generation failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 4.783716493s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 4
+}
+]
+[2026-03-05 15:26:35] [INFO] [src.services.db.database] Database initialized at data\imcs.db

@@ -23,6 +23,7 @@ class MetaController:
             "dos_min": 10,
         }
         self.gap_strategies = self._load_gap_strategies()
+        self.strategy_weights = self._load_strategy_weights()
 
     def _load_gap_strategies(self) -> Dict[str, Any]:
         """Load gap strategy templates from configs/gap_strategies.json."""

@@ -459,3 +459,36 @@ class KnowledgeService:
             "score": round(score, 3),
             "counts": counts
         }
+
+    def generate_structure_preview(self, material_id: str) -> Dict[str, Any]:
+        """
+        Generate a 3D HTML preview for a material's crystal structure (V5.7 Preview).
+        Uses 3Dmol.js for browser-side rendering.
+        """
+        from src.services.db.database import DatabaseService
+        db = DatabaseService(self.db_path)
+        
+        material = db.get_material_by_id(material_id)
+        if not material or not material.get("cif_path"):
+            return {"error": "Material or CIF path not found"}
+            
+        cif_content = db._read_cif_content(material["cif_path"])
+        if not cif_content:
+            return {"error": "Could not read CIF content"}
+            
+        # V6: Enhanced py3Dmol style HTML template for responsive dark mode UI
+        html_template = f"""
+        <div style="height: 100%; width: 100%; min-height: 400px; position: relative;" class='viewer_3Dmoljs' 
+             data-selectable='true' data-category='crystal' data-type='cif' data-backgroundcolor='#0e1117'
+             data-style='{{"stick": {{"radius": 0.2}}, "sphere": {{"scale": 0.3}}}}'>
+            <textarea style="display:none;">{cif_content}</textarea>
+        </div>
+        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        """
+        
+        return {
+            "success": True,
+            "material_id": material_id,
+            "html_snippet": html_template,
+            "viewer_type": "3Dmol.js"
+        }

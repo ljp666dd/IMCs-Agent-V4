@@ -17,6 +17,7 @@ from src.services.literature.parser import DocParser
 from src.services.literature.search_engine import SearchEngine
 from src.services.literature.analyzer import TopicAnalyzer
 from src.services.literature.hor_metrics import extract_hor_metrics, extract_formulas
+from src.services.llm.vision_service import get_vision_service
 
 logger = get_logger(__name__)
 
@@ -50,6 +51,7 @@ class LiteratureAgent:
         self.parser = DocParser()
         self.search_engine = SearchEngine(self.config.semantic_scholar_api)
         self.analyzer = TopicAnalyzer()
+        self.vision_service = get_vision_service()
         
         self.papers: List[PaperInfo] = []
         logger.info("LiteratureAgent initialized with services.")
@@ -342,16 +344,66 @@ class LiteratureAgent:
                     parsed = self.parser.parse_pdf(path)
                     if parsed and parsed.full_text:
                         text_blob = f"{parsed.full_text}\\n\\n{text_blob}"
+                    
+                    # V5.2: Multi-modal Vision Analysis
+                    vision_seed_data = []
+                    if self.vision_service.available:
+                        logger.info(f"Triggering vision analysis for {path}")
+                        img_paths = self.parser.render_pages_to_images(path, page_indices=[0, 1])
+                        for img_p in img_paths:
+                            # 1. 提取表格 (原有逻辑)
+                            vision_data = self.vision_service.analyze_page(img_p, task="extract_tables")
+                            if isinstance(vision_data, list) and vision_data:
+                                logger.info(f"Extracted {len(vision_data)} items via vision.")
+                                vision_seed_data.extend(vision_data)
+                            
+                            # 2. V5.5: 数字化曲线 (新增逻辑)
+                            curve_data = self.vision_service.digitize_curve(img_p)
+                            if curve_data.get("success"):
+                                logger.info(f"Digitized curve with {len(curve_data.get('data_points', []))} points.")
+                                # 赋予特殊的 insight 类型
+                                text_blob = f"--- Digitized Curve Data ---\n{json.dumps(curve_data, ensure_ascii=False)}\n\n{text_blob}"
+                                
+                            vision_text = json.dumps(vision_data, ensure_ascii=False)
+                            text_blob = f"--- Vision Data ---\n{vision_text}\n\n{text_blob}"
+                    
                     pdf_downloads += 1
 
             allowed_for_formula = set(target_elements) if target_elements else allowed
             formulas = extract_formulas(text_blob, allowed_elements=allowed_for_formula, min_elements=min_elements)
+            
+            # Incorporate vision findings directly if they match element constraints
+            for item in vision_seed_data:
+                v_formula = item.get("material", "")
+                if v_formula and v_formula not in formulas:
+                    # Check elements
+                    v_parts = re.findall(r"([A-Z][a-z]?)(\d*)", v_formula)
+                    v_els = {p[0] for p in v_parts}
+                    if not allowed_for_formula or v_els.issubset(allowed_for_formula):
+                        formulas.append(v_formula)
+
             if not formulas and not target_elements:
                 formulas = extract_formulas(text_blob, allowed_elements=allowed, min_elements=min_elements)
+            
             if not formulas:
                 continue
 
             metrics = extract_hor_metrics(text_blob)
+            
+            # Merge metrics from vision data if keys match
+            for item in vision_seed_data:
+                v_metric = item.get("metric", "").lower()
+                v_val = item.get("value")
+                v_unit = item.get("units", "")
+                
+                # Simple mapping
+                if "exchange current" in v_metric or "j0" in v_metric:
+                    metrics["exchange_current_density"] = {"value": v_val, "unit": v_unit}
+                elif "mass activity" in v_metric:
+                    metrics["mass_activity"] = {"value": v_val, "unit": v_unit}
+                elif "overpotential" in v_metric:
+                    metrics["overpotential"] = {"value": v_val, "unit": v_unit}
+            
             metrics_missing = prefer_metrics and not metrics
             for formula in formulas:
                 label = formula

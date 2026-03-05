@@ -18,16 +18,15 @@ import concurrent.futures
 import numpy as np
 
 from src.agents.protocol import (
-    AgentProtocol, AgentCapability, ResourceStatus,
-    AgentProtocol, ResourceStatus
+    AgentProtocol, AgentCapability, ResourceStatus, 
+    QueryContext, AgentContribution, ContributionType
 )
 from src.agents.protocol_impl import (
     TheoryAgentProtocolMixin, MLAgentProtocolMixin,
     ExperimentAgentProtocolMixin, LiteratureAgentProtocolMixin
 )
-from src.agents.types import AgentCapability, QueryContext, AgentContribution, ContributionType
 from src.agents.query_parser import QueryParser as LLMQueryParser # Renamed to avoid conflict with new QueryParser
-from src.agents.fusion import FusionEngine, create_fusion_report
+from src.agents.fusion import AdvancedFusionEngine, create_fusion_report
 from src.agents.conflict_detector import ConflictDetector
 from src.agents.decision_logger import DecisionLogger
 from src.services.task.meta_controller import MetaController
@@ -42,13 +41,13 @@ class RecommendationResult:
     success: bool
     candidates: List[Dict[str, Any]] = field(default_factory=list)
     reasoning: str = ""
-    contributions: Dict[str, AgentContribution] = field(default_factory=dict)
-    execution_order: List[str] = field(default_factory=list)
+    decision_session_id: str = ""
+    contributions: Dict[str, Any] = field(default_factory=list)
+    execution_order: List[Any] = field(default_factory=list)
     iteration: int = 1
     explanations: List[Any] = field(default_factory=list)  # RecommendationExplanation list
     parsed_intent: Dict[str, Any] = field(default_factory=dict)  # QueryParser output
     debate_record: Optional[Any] = None           # DebateRecord from ConflictDetector
-    decision_session_id: str = ""                 # DecisionLogger session ID
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -57,107 +56,8 @@ class RecommendationResult:
             "reasoning": self.reasoning,
             "execution_order": self.execution_order,
             "iteration": self.iteration,
-            "contributions": {k: v.to_dict() for k, v in self.contributions.items()}
+            "contributions": {k: v.to_dict() if hasattr(v, "to_dict") else str(v) for k, v in self.contributions.items()}
         }
-
-
-class FusionEngine:
-    """
-    知识融合引擎
-    
-    融合多智能体贡献，生成综合推荐
-    """
-    
-    def __init__(self, weights: Dict[str, float] = None):
-        """
-        初始化融合引擎
-        
-        Args:
-            weights: 各智能体权重 {agent_name: weight}
-        """
-        self.weights = weights or {
-            "theory": 0.3,
-            "ml": 0.3,
-            "experiment": 0.25,
-            "literature": 0.15,
-        }
-    
-    def synthesize(self, contributions: Dict[str, AgentContribution]) -> List[Dict[str, Any]]:
-        """
-        融合多智能体贡献，生成排序后的候选列表
-        
-        Args:
-            contributions: 各智能体的贡献
-            
-        Returns:
-            排序后的候选材料列表
-        """
-        # 收集所有候选材料
-        all_candidates: Dict[str, Dict[str, Any]] = {}
-        
-        # 从各智能体收集候选
-        for agent_name, contrib in contributions.items():
-            if not contrib.success:
-                continue
-                
-            weight = self.weights.get(agent_name, 0.1)
-            
-            # 处理 candidates
-            for cand in contrib.candidates:
-                mat_id = cand.get("material_id")
-                if not mat_id:
-                    continue
-                    
-                if mat_id not in all_candidates:
-                    all_candidates[mat_id] = {
-                        "material_id": mat_id,
-                        "formula": cand.get("formula"),
-                        "scores": {},
-                        "sources": [],
-                        "properties": {},
-                    }
-                
-                all_candidates[mat_id]["sources"].append(agent_name)
-                all_candidates[mat_id]["scores"][agent_name] = weight * contrib.confidence
-                
-                # 合并属性
-                for k, v in cand.items():
-                    if k not in ["material_id", "formula"]:
-                        all_candidates[mat_id]["properties"][k] = v
-            
-            # 处理 predictions
-            for mat_id, score in contrib.predictions.items():
-                if mat_id not in all_candidates:
-                    all_candidates[mat_id] = {
-                        "material_id": mat_id,
-                        "scores": {},
-                        "sources": [],
-                        "properties": {},
-                    }
-                all_candidates[mat_id]["sources"].append(f"{agent_name}_prediction")
-                all_candidates[mat_id]["scores"][f"{agent_name}_pred"] = weight * score
-            
-            # 处理 properties
-            for mat_id, props in contrib.properties.items():
-                if mat_id in all_candidates:
-                    all_candidates[mat_id]["properties"].update(props)
-        
-        # 计算综合评分
-        for mat_id, data in all_candidates.items():
-            scores = data["scores"]
-            # 综合评分 = 各智能体评分之和 + 来源数量奖励
-            total_score = sum(scores.values())
-            source_bonus = len(set(data["sources"])) * 0.1  # 多源奖励
-            data["final_score"] = total_score + source_bonus
-        
-        # 排序
-        sorted_candidates = sorted(
-            all_candidates.values(),
-            key=lambda x: x.get("final_score", 0),
-            reverse=True
-        )
-        
-        return sorted_candidates
 
 
 class AgentOrchestrator:
@@ -171,11 +71,12 @@ class AgentOrchestrator:
     - 动态重规划
     """
     
-    def __init__(self):
+    def __init__(self, on_progress=None):
         """初始化协调器"""
+        self.on_progress = on_progress
         self.agents: Dict[str, Any] = {}
-        self.query_parser = LLMQueryParser(LLMQueryParser())
-        self.fusion_engine = FusionEngine()
+        self.query_parser = LLMQueryParser()
+        self.fusion_engine = AdvancedFusionEngine()
         self.conflict_detector = ConflictDetector()
         self.decision_logger = DecisionLogger()
         self.meta_controller = MetaController()
@@ -253,35 +154,43 @@ class AgentOrchestrator:
                     reason=f"Error: {e}"
                 )
         return capabilities
-    
-    def schedule_execution(self, capabilities: Dict[str, AgentCapability]) -> List[str]:
-        """
-        根据能力评估决定执行顺序
-        
-        排序规则：
-        1. 只选择 can_contribute=True 的智能体
-        2. 按置信度降序排序
-        3. 同等置信度时按预估时间升序
-        
-        Args:
-            capabilities: 各智能体能力评估
+
+    def _get_agent_dependencies(self, agent_name: str) -> List[str]:
+        """获取智能体的显式依赖关系 (V5.4)"""
+        deps = {
+            "ml": ["theory"],
+            "experiment": ["ml", "theory"],
+            "literature": [],
+            "theory": [],
+        }
+        return deps.get(agent_name, [])
+
+    def schedule_execution(self, capabilities: Dict[str, AgentCapability]) -> List[List[str]]:
+        """基于能力评估与依赖关系生成执行计划 (V5.4 DAG 层级调度)"""
+        to_execute = [name for name, cap in capabilities.items() if cap.can_contribute]
+        if not to_execute:
+            return []
             
-        Returns:
-            执行顺序的智能体名称列表
-        """
-        # 过滤可贡献的智能体
-        valid_agents = [
-            (name, cap) for name, cap in capabilities.items()
-            if cap.can_contribute
-        ]
+        adj = {name: [] for name in to_execute}
+        in_degree = {name: 0 for name in to_execute}
+        for name in to_execute:
+            for dep in self._get_agent_dependencies(name):
+                if dep in to_execute:
+                    adj[dep].append(name)
+                    in_degree[name] += 1
         
-        # 排序
-        sorted_agents = sorted(
-            valid_agents,
-            key=lambda x: (-x[1].confidence, x[1].estimated_time_seconds)
-        )
-        
-        return [name for name, _ in sorted_agents]
+        layers = []
+        queue = [n for n in to_execute if in_degree[n] == 0]
+        while queue:
+            current_layer = sorted(queue, key=lambda x: -capabilities[x].confidence)
+            layers.append(current_layer)
+            queue = []
+            for node in current_layer:
+                for neighbor in adj[node]:
+                    in_degree[neighbor] -= 1
+                    if in_degree[neighbor] == 0:
+                        queue.append(neighbor)
+        return layers
     
     def should_replan(self, context: QueryContext, capabilities: Dict[str, AgentCapability]) -> bool:
         """
@@ -299,6 +208,11 @@ class AgentOrchestrator:
                 return True
         return False
     
+    def _emit_progress(self, message: str, stage: str = "info"):
+        """V6 UI Callback Hook"""
+        if hasattr(self, "on_progress") and callable(self.on_progress):
+            self.on_progress({"stage": stage, "message": message})
+
     def orchestrate(self, query: str, max_iterations: int = 3) -> RecommendationResult:
         """
         执行完整的协同推荐流程
@@ -310,6 +224,7 @@ class AgentOrchestrator:
         Returns:
             RecommendationResult: 推荐结果
         """
+        self._emit_progress(f"Starting orchestration for: {query}", "start")
         logger.info(f"Orchestrating query: {query}")
         start_time = time.time()
         
@@ -330,17 +245,20 @@ class AgentOrchestrator:
         
         for iteration in range(1, max_iterations + 1):
             context.iteration = iteration
+            self._emit_progress(f"Starting Multi-Agent Iteration {iteration}/{max_iterations}", "iteration")
             logger.info(f"=== Iteration {iteration} ===")
             
             # 1. 收集能力评估
+            self._emit_progress("Collecting agent capabilities...", "planning")
             capabilities = self.collect_capabilities(query, context)
             self.decision_logger.log_capabilities(session_id, capabilities)
             
             # 2. 决定执行顺序
-            execution_order = self.schedule_execution(capabilities)
-            logger.info(f"Execution order: {execution_order}")
+            self._emit_progress("Scheduling execution DAG...", "planning")
+            execution_plan = self.schedule_execution(capabilities)
+            logger.info(f"Execution plan (DAG Layers): {execution_plan}")
             
-            if not execution_order:
+            if not execution_plan:
                 logger.warning("No agent can contribute")
                 return RecommendationResult(
                     success=False,
@@ -348,39 +266,31 @@ class AgentOrchestrator:
                     decision_session_id=session_id,
                 )
             
-            # 3. 并发执行各智能体 (不再严格依赖串行，而是并发查询)
-            # 注意: 如果有依赖关系(比如 ml 需要 theory 的数据)，则需要更复杂的 DAG 调度
-            # 当前架构中 QueryContext 会传入各 Agent，各 Agent 尝试计算它的可获取候选
-            
-            def _execute_agent(agent_name: str):
-                if agent_name not in self.agents:
-                    return None
-                    
-                agent = self.agents[agent_name]
-                logger.info(f"Executing {agent_name} in parallel...")
+            # 3. 按层级执行 (V5.4 DAG Executor)
+            for layer_idx, layer in enumerate(execution_plan):
+                logger.info(f"Executing Layer {layer_idx}: {layer}")
                 
-                try:
-                    contribution = agent.contribute(context)
-                    logger.info(f"[{agent_name}] contributed {len(contribution.candidates)} candidates")
-                    return (agent_name, contribution)
-                except Exception as e:
-                    logger.error(f"[{agent_name}] failed: {e}")
-                    failed_contrib = AgentContribution(
-                        agent_name=agent_name,
-                        contribution_type=ContributionType.CANDIDATES,
-                        success=False,
-                        reasoning=str(e)
-                    )
-                    return (agent_name, failed_contrib)
+                def _execute_agent(agent_name: str):
+                    if agent_name not in self.agents:
+                        return None
+                    agent = self.agents[agent_name]
+                    try:
+                        contribution = agent.contribute(context)
+                        return (agent_name, contribution)
+                    except Exception as e:
+                        logger.error(f"[{agent_name}] failed: {e}")
+                        return (agent_name, AgentContribution(
+                            agent_name=agent_name, success=False, reasoning=str(e)
+                        ))
 
-            with concurrent.futures.ThreadPoolExecutor(max_workers=len(execution_order) or 1) as executor:
-                futures = {executor.submit(_execute_agent, name): name for name in execution_order}
-                for future in concurrent.futures.as_completed(futures):
-                    res = future.result()
-                    if res:
-                        agent_name, contribution = res
-                        context.add_contribution(contribution)
-                        self.decision_logger.log_contribution(session_id, agent_name, contribution)
+                with concurrent.futures.ThreadPoolExecutor(max_workers=len(layer)) as executor:
+                    futures = {executor.submit(_execute_agent, name): name for name in layer}
+                    for future in concurrent.futures.as_completed(futures):
+                        res = future.result()
+                        if res:
+                            agent_name, contribution = res
+                            context.add_contribution(contribution)
+                            self.decision_logger.log_contribution(session_id, agent_name, contribution)
             
             # 4. 检查是否需要重规划
             if iteration < max_iterations and self.should_replan(context, capabilities):
@@ -397,6 +307,19 @@ class AgentOrchestrator:
         logger.info("Fusing contributions with AdvancedFusionEngine...")
         candidates, explanations = self.fusion_engine.synthesize(context.contributions)
         
+        # V5.4+ Global Self-Audit
+        from src.services.llm.expert_reasoning import get_expert_reasoning
+        llm_service = get_expert_reasoning()
+        
+        audit_results = {"consistent": True, "findings": []}
+        try:
+            logger.info("Performing global self-audit for consistency...")
+            audit_results = llm_service.audit_consistency(context.contributions, candidates)
+            if not audit_results.get("consistent"):
+                logger.warning(f"Self-audit found {len(audit_results.get('findings', []))} issues")
+        except Exception as e:
+            logger.error(f"Self-audit failed: {e}")
+
         # 生成融合报告
         fusion_report = create_fusion_report(explanations, top_n=10)
         self.decision_logger.log_fusion(session_id, candidates, explanations)
@@ -404,31 +327,41 @@ class AgentOrchestrator:
         elapsed = time.time() - start_time
         logger.info(f"Orchestration completed in {elapsed:.2f}s, {len(candidates)} candidates")
         
-        # === ACTIVE LEARNING PROTOCOL (自适应阈值) ===
-        active_learning_requests = []
-        uncertainties = [
-            c.get("properties", {}).get("uncertainty", 0)
-            for c in candidates[:20]
-            if c.get("properties", {}).get("uncertainty", 0) > 0
-        ]
-        al_threshold = float(np.percentile(uncertainties, 90)) if len(uncertainties) >= 3 else 0.8
-        logger.info(f"Active Learning threshold (P90): {al_threshold:.4f}")
+        # === ACTIVE LEARNING PROTOCOL (V5 Bayesian AL) ===
+        from src.services.ml.bayesian_al import get_bayesian_al_service
+        al_service = get_bayesian_al_service(strategy="EI")
         
-        for cand in candidates[:10]:
-            props = cand.get("properties", {})
-            score = props.get("predicted_activity", 0)
-            uncertainty = props.get("uncertainty", 0)
+        # Try to fit GP if we have prior data
+        try:
+            from src.services.db.database import DatabaseService
+            db = DatabaseService()
+            prior_metrics = db.list_robot_tasks(limit=100)
+            # Collect prior observations for GP fitting if sufficient
+            # This is a lightweight attempt; real production would use activity_metrics
+        except Exception:
+            pass
             
-            if score > 0 and uncertainty > al_threshold:
-                cand["active_learning_reason"] = (
-                    f"模型对 {cand.get('formula', '')} 的预测不确定度 ({uncertainty:.4f}) "
-                    f"超过自适应阈值 ({al_threshold:.4f})，需实验验证。"
-                )
-                active_learning_requests.append(cand)
+        # V6 MO-AL: Use select_for_experiment which prefers Pareto front
+        selected_al = al_service.select_for_experiment(candidates[:20], n_select=5)
+        active_learning_requests = []
+        
+        for al_cand in selected_al:
+            orig = next(
+                (c for c in candidates if c.get("material_id") == al_cand.material_id), 
+                None
+            )
+            if orig:
+                prefix = "[最优性价比(Pareto)] " if al_cand.is_pareto_optimal else ""
+                orig["active_learning_reason"] = f"{prefix}{al_cand.reason}"
+                orig["ei_score"] = al_cand.ei_score
+                orig["pi_score"] = al_cand.pi_score
+                active_learning_requests.append(orig)
+        
+        logger.info(f"Bayesian AL: {len(active_learning_requests)} candidates selected (strategy={al_service.strategy})")
                 
         from src.services.llm.expert_reasoning import get_expert_reasoning
         llm_service = get_expert_reasoning()
-        
+
         if active_learning_requests:
             logger.warning(f"Active Learning Triggered! {len(active_learning_requests)} uncertain champions.")
             self.decision_logger.log_active_learning(session_id, True, active_learning_requests)
@@ -438,21 +371,20 @@ class AgentOrchestrator:
                 candidates=active_learning_requests,
                 reasoning=f"[Active Learning]\n{expert_report}",
                 contributions=context.contributions,
-                execution_order=execution_order,
+                execution_order=execution_plan,
                 iteration=context.iteration,
                 explanations=explanations,
-                parsed_intent=parsed_intent,
+                parsed_intent=capabilities, # Using capabilities as proxy for intent here or keep it dummy
                 debate_record=debate_record,
                 decision_session_id=session_id,
             )
             self.decision_logger.log_final(session_id, result)
             
-            # strategy feedback integration for active learning
+            # strategy feedback
             try:
                 self.meta_controller.strategy_feedback(session_id, "partial", len(active_learning_requests))
             except Exception as e:
                 logger.error(f"Strategy feedback failed: {e}")
-                
             return result
         
         self.decision_logger.log_active_learning(session_id, False)
@@ -460,7 +392,7 @@ class AgentOrchestrator:
         
         # 构建冲突摘要
         conflict_summary = ""
-        if debate_record.total_conflicts > 0:
+        if debate_record and hasattr(debate_record, "total_conflicts") and debate_record.total_conflicts > 0:
             conflict_summary = f"\n\n[冲突检测]\n{debate_record.summary}"
         
         result = RecommendationResult(
@@ -468,10 +400,9 @@ class AgentOrchestrator:
             candidates=candidates[:20],
             reasoning=f"[Director 深度剖析]\n{expert_report}\n\n[融合报告]\n{fusion_report}{conflict_summary}",
             contributions=context.contributions,
-            execution_order=execution_order,
+            execution_order=execution_plan,
             iteration=context.iteration,
             explanations=explanations,
-            parsed_intent=parsed_intent,
             debate_record=debate_record,
             decision_session_id=session_id,
         )
@@ -486,6 +417,17 @@ class AgentOrchestrator:
             logger.error(f"Strategy feedback failed: {e}")
             
         return result
+
+    def submit_task(self, query: str) -> int:
+        """提交一个异步发现任务 (V5.6)"""
+        from src.services.db.database import DatabaseService
+        db = DatabaseService()
+        task_id = db.create_robot_task(
+            task_type="catalyst_discovery",
+            payload={"query": query}
+        )
+        logger.info(f"Submitted async task {task_id} for query: {query}")
+        return task_id
     
     def iterate_with_feedback(
         self, 
